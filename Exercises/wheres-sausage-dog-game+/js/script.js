@@ -17,13 +17,16 @@ let characters = [];
 let sonicImage = undefined;
 let sonic = undefined;
 
+let welcome = undefined;
+
 ///
 function preload() {
   for (let i = 0; i < NUM_CHARACTER_IMAGES; i++) {
-    let characterImage = loadImage(`assets/images/character${i}.png`);
+    let characterImage = loadImage(`assets/images/character${i}.gif`);
     characterImages.push(characterImage); //push the character image loaded into the characterImage variable into the characterImages Array
   }
-  sonicImage = loadImage(`assets/images/sonic.png`);
+  sonicImage = loadImage(`assets/images/sonic.gif`);
+  welcome = loadImage(`assets/images/welcome.gif`);
 }
 //
 // Description of setup() goes here.
@@ -44,7 +47,7 @@ function setup() {
 }
 
 function draw() {
-  background(255, 255, 0);
+  background(welcome);
 
   for (let i = 0; i < characters.length; i++) {
     character[i].update();
