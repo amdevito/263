@@ -1,61 +1,58 @@
 /**************************************************
-263: Activity 1 - Where's Sausage Dog
+263: Exercise 1 - Find the Nintendo World Intruder!!!
 Alana DeVito
 
-A bunch of Animal objects with a 'hidding' sausage dog that you can find by clicking.
-Sausage dog spins when found.
+A bunch of classic Nintendo characters with a 'hidding' Sonic the Hedgehog that you can find by clicking.
+Sonic spins when found. ??? Sonic loses = sonic die sounds?
 **************************************************/
 "use strict";
 // set constants as number of images for the animals in program and the number displayed overall
-const NUM_ANIMAL_IMAGES = 10;
-const NUM_ANIMALS = 100;
+const NUM_CHARACTER_IMAGES = 11;
+const NUM_CHARACTERS = 100;
 
 //set arrays for images and the duplicated images of animals
-let animalImages = [];
-let animals = [];
+let characterImages = [];
+let characters = [];
 
-let sausageDogImage = undefined;
-let sausageDog = undefined;
+let sonicImage = undefined;
+let sonic = undefined;
 
 ///
 function preload() {
-  for (let i = 0; i < NUM_ANIMAL_IMAGES; i++) {
-    let animalImage = loadImage(`assets/images/animal${i}.png`);
-    animalImages.push(animalImage);
+  for (let i = 0; i < NUM_CHARACTER_IMAGES; i++) {
+    let characterImage = loadImage(`assets/images/character${i}.png`);
+    characterImages.push(characterImage); //push the character image loaded into the characterImage variable into the characterImages Array
   }
-  sausageDogImage = loadImage(`assets/images/sausage-dog.png`);
+  sonicImage = loadImage(`assets/images/sonic.png`);
 }
 //
 // Description of setup() goes here.
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  //create the animals
-  for (let i = 0; i < NUM_ANIMALS; i++) {
+  //create the characters
+  for (let i = 0; i < NUM_CHARACTERS; i++) {
     let x = random(0, width);
     let y = random(0, height);
-    let animalImage = random(animalImages);
-    let animal = new Animal(x, y, animalImage);
-    animals.push(animal);
+    let characterImage = random(characterImages);
+    let character = new Character(x, y, characterImage);
+    characters.push(character);
   }
   let x = random(0, width);
   let y = random(0, height);
-  sausageDog = new SausageDog(x, y, sausageDogImage);
+  sonic = new Sonic(x, y, sonicImage);
 }
 
-// draw()
-//
-// Description of draw() goes here.
 function draw() {
   background(255, 255, 0);
 
-  for (let i = 0; i < animals.length; i++) {
-    animals[i].update();
+  for (let i = 0; i < characters.length; i++) {
+    character[i].update();
   }
 
-  sausageDog.update();
+  sonic.update();
 }
 
 function mousePressed() {
-  sausageDog.mousePressed();
+  sonic.mousePressed();
 }

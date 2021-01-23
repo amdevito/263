@@ -1,8 +1,8 @@
-class Animal {
-  constructor(x, y, animalImage) {
+class Character {
+  constructor(x, y, characterImage) {
     this.x = x;
     this.y = y;
-    this.image = animalImage;
+    this.image = characterImage;
     this.angle = 0;
   }
   update() {
