@@ -50,7 +50,7 @@ function draw() {
   background(welcome);
 
   for (let i = 0; i < characters.length; i++) {
-    character[i].update();
+    characters[i].update();
   }
 
   sonic.update();
