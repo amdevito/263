@@ -1,5 +1,5 @@
 class Animal {
-  contructor(x, y, animalImage) {
+  constructor(x, y, animalImage) {
     this.x = x;
     this.y = y;
     this.image = animalImage;
