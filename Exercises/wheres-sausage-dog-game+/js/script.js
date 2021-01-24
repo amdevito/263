@@ -2,7 +2,7 @@
 263: Exercise 1 - Find the Nintendo World Intruder!!!
 Alana DeVito
 
-Enter screen with instruction to press shift to begin the search game.
+Enter screen with instruction to press shift to begin the search game. Background is a 8-bit nintendo skyline.
 A bunch of classic Nintendo characters with a 'hidding' Sonic the Hedgehog that you can find by clicking.
 Sonic spins and moves down and off screen when found. Sonic Death song plays.
 **************************************************/
