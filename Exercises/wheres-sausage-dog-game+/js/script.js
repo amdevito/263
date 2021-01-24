@@ -31,6 +31,15 @@ let enterScreen = {
   size: undefined,
 };
 
+let endScreen = {
+  string: `Bye Bye Sonic! \n Refresh to play again!`,
+  x: undefined,
+  y: undefined,
+  vx: undefined,
+  vy: undefined,
+  size: undefined,
+};
+
 //set inital state
 let state = `enter`; //different states: enter>title>level1>gameover>win>level2>level3
 
@@ -67,6 +76,7 @@ function setup() {
   sonic = new Sonic(x, y, sonicImage);
 
   setUpEnterScreen();
+  setUpEndScreen();
 }
 
 function draw() {
@@ -80,6 +90,8 @@ function draw() {
     enterStart();
   } else if (state === `game`) {
     gameStart();
+  } else if (state === `end`) {
+    gameEnd();
   }
 }
 
@@ -89,6 +101,14 @@ function setUpEnterScreen() {
   enterScreen.vx = 5;
   enterScreen.vy = 1;
   enterScreen.size = 30;
+}
+
+function setUpEndScreen() {
+  endScreen.x = width / 2;
+  endScreen.y = 200;
+  endScreen.vx = 5;
+  endScreen.vy = 1;
+  endScreen.size = 30;
 }
 
 function enterStart() {
@@ -114,8 +134,24 @@ function gameStart() {
   sonic.update();
 
   if (Sonic.found) {
-    play.sonicDeath();
+    sonicDeath.play();
   }
+}
+
+function gameEnd() {
+  // set up click to enter screen
+  push();
+  background(nintendo);
+  textSize(endScreen.size);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textFont("Monaco");
+  stroke(0, 0, random(0, 255));
+  strokeWeight(10);
+
+  text(endScreen.string, endScreen.x, endScreen.y);
+  pop();
 }
 
 function mousePressed() {

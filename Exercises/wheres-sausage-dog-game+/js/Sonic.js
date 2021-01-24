@@ -13,6 +13,10 @@ class Sonic extends Character {
       this.x += this.speed;
       this.y += this.speed;
     }
+    if (this.y > height || this.x > width) {
+      console.log(`off screen`);
+      state = `end`;
+    }
   }
   mousePressed() {
     if (
