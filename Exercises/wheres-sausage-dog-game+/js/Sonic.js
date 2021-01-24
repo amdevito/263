@@ -3,16 +3,15 @@ class Sonic extends Character {
     super(x, y, image);
 
     this.found = false;
-    this.rotationSpeed = 0.75;
+    this.rotationSpeed = 0.85;
     this.speed = 15;
   }
   update() {
     super.update();
-    if (this.found && this.y) {
+    if (this.found) {
       this.angle += this.rotationSpeed;
       this.x += this.speed;
       this.y += this.speed;
-      sonicDeath.play();
     }
   }
   mousePressed() {

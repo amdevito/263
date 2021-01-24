@@ -3,7 +3,7 @@
 Alana DeVito
 
 A bunch of classic Nintendo characters with a 'hidding' Sonic the Hedgehog that you can find by clicking.
-Sonic spins when found. ??? Sonic loses = sonic die sounds?
+Sonic spins and moves down and off screen when found. Sonic Death song plays.
 **************************************************/
 "use strict";
 // set constants as number of images for the animals in program and the number displayed overall
@@ -30,7 +30,9 @@ function preload() {
   sonicImage = loadImage(`assets/images/sonic.gif`);
   nintendo = loadImage(`assets/images/welcome.gif`);
 
-  sonicDeath = loadSound("assets/sounds/sonicDeath.wav");
+  soundFormats("wav", "mp3");
+
+  sonicDeath = loadSound(`assets/sounds/sonicDeath.mp3`);
 }
 //
 // Description of setup() goes here.
@@ -58,6 +60,10 @@ function draw() {
   }
 
   sonic.update();
+
+  if (Sonic.found) {
+    play.sonicDeath();
+  }
 }
 
 function mousePressed() {
