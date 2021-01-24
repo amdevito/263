@@ -42,7 +42,7 @@ let enterScreen = {
 };
 
 let endScreen = {
-  string: `Bye Bye Sonic! \n Refresh to play again!`,
+  string: `So long Sonic! \n Refresh to play again!`,
   x: undefined,
   y: undefined,
   vx: undefined,
