@@ -8,7 +8,7 @@ Sonic spins when found. ??? Sonic loses = sonic die sounds?
 "use strict";
 // set constants as number of images for the animals in program and the number displayed overall
 const NUM_CHARACTER_IMAGES = 11;
-const NUM_CHARACTERS = 100;
+const NUM_CHARACTERS = 125;
 
 //set arrays for images and the duplicated images of animals
 let characterImages = [];
