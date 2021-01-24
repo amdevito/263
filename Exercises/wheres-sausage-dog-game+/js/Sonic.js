@@ -8,10 +8,11 @@ class Sonic extends Character {
   }
   update() {
     super.update();
-    if (this.found) {
+    if (this.found && this.y) {
       this.angle += this.rotationSpeed;
       this.x += this.speed;
       this.y += this.speed;
+      sonicDeath.play();
     }
   }
   mousePressed() {

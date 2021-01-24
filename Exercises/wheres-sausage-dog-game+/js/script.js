@@ -8,7 +8,7 @@ Sonic spins when found. ??? Sonic loses = sonic die sounds?
 "use strict";
 // set constants as number of images for the animals in program and the number displayed overall
 const NUM_CHARACTER_IMAGES = 11;
-const NUM_CHARACTERS = 125;
+const NUM_CHARACTERS = 175;
 
 //set arrays for images and the duplicated images of animals
 let characterImages = [];
@@ -17,7 +17,9 @@ let characters = [];
 let sonicImage = undefined;
 let sonic = undefined;
 
-let welcome = undefined;
+let nintendo = undefined;
+
+let sonicDeath = undefined;
 
 ///
 function preload() {
@@ -26,7 +28,9 @@ function preload() {
     characterImages.push(characterImage); //push the character image loaded into the characterImage variable into the characterImages Array
   }
   sonicImage = loadImage(`assets/images/sonic.gif`);
-  welcome = loadImage(`assets/images/welcome.gif`);
+  nintendo = loadImage(`assets/images/welcome.gif`);
+
+  sonicDeath = loadSound("assets/sounds/sonicDeath.wav");
 }
 //
 // Description of setup() goes here.
@@ -47,7 +51,7 @@ function setup() {
 }
 
 function draw() {
-  background(welcome);
+  background(nintendo);
 
   for (let i = 0; i < characters.length; i++) {
     characters[i].update();
