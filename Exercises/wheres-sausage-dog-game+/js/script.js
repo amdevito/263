@@ -132,11 +132,11 @@ function gameStart() {
   }
 
   sonic.update();
-
-  if (Sonic.found) {
-    sonicDeath.play();
-  }
 }
+
+//
+//
+// }
 
 function gameEnd() {
   // set up click to enter screen
