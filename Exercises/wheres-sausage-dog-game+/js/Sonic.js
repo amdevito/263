@@ -27,7 +27,7 @@ class Sonic extends Character {
       this.found = true;
       // let panning = map(Sonic.x, 0, width, -1.0, 1.0);
       // sonicDeath.pan(panning);// << I would like to make this work so that the sound pans with the direction of the Sonic movement
-
+      // gameMusic.stop();
       sonicDeath.play(); //moving it here makes the tone not layer and go weird
     }
   }

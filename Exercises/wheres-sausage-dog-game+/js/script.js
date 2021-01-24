@@ -2,9 +2,17 @@
 263: Exercise 1 - Find the Nintendo World Intruder!!!
 Alana DeVito
 
+Meets the brief:
 Enter screen with instruction to press shift to begin the search game. Background is a 8-bit nintendo skyline.
-A bunch of classic Nintendo characters with a 'hidding' Sonic the Hedgehog that you can find by clicking.
+A bunch of classic Nintendo characters with a 'hidden' Sonic the Hedgehog that you can find by clicking.
 Sonic spins and moves down and off screen when found. Sonic Death song plays.
+
+Questions for class and more I want to add:
+1. sound to pan with the direction  of sonic
+2. game music to play with out going haywire! It must have something to do with inheritance and classes.
+
+
+
 **************************************************/
 "use strict";
 // set constants as number of images for the animals in program and the number displayed overall
@@ -21,6 +29,8 @@ let sonic = undefined;
 let nintendo = undefined;
 
 let sonicDeath = undefined;
+
+let gameMusic = undefined;
 
 let enterScreen = {
   string: `Find the Nintendo World Intruder!!! \n Please click <SHIFT> to Begin the SEARCH!`,
@@ -57,6 +67,7 @@ function preload() {
   soundFormats("wav", "mp3", "ogg");
 
   sonicDeath = loadSound(`assets/sounds/sonicDeath.mp3`);
+  gameMusic = loadSound(`assets/sounds/nintendoGameMusic.mp3`);
 }
 //
 // Description of setup() goes here.
@@ -132,6 +143,10 @@ function gameStart() {
   }
 
   sonic.update();
+  // push();
+  // gameMusic.play();
+  // gameMusic.loop();
+  // pop();
 }
 
 //
