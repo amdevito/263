@@ -100,9 +100,11 @@ function draw() {
   background(nintendo); //set background to the nintendo skyline.
 
   //pressing shift starts game (changes state from enter> game)
-  if (keyIsDown(SHIFT)) {
-    state = `game`;
-  }
+  // if (keyIsDown(SHIFT)) {
+  //   gameMusic.play();
+  //   gameMusic.loop();
+  //   state = `game`;
+  // }
 
   if (state === `enter`) {
     enterStart();
@@ -112,6 +114,14 @@ function draw() {
     gameEnd();
   }
 }
+
+// function keyPressed() {
+//   if (keyCode === SHIFT) {
+//     gameMusic.play();
+//     gameMusic.loop();
+//     state = `game`;
+//   }
+// }
 
 //both enter and end screens set with same values
 function setUpEnterScreen() {
@@ -173,5 +183,11 @@ function gameEnd() {
 
 //call function to fetch the mousePressed function in the extended character class for Sonic
 function mousePressed() {
-  sonic.mousePressed();
+  if (state === `enter`) {
+    gameMusic.play();
+    gameMusic.loop();
+    state = `game`;
+  } else if (state === `game`) {
+    sonic.mousePressed();
+  }
 }
