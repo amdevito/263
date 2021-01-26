@@ -1,3 +1,4 @@
+//set class for the Characters and the constructor elements
 class Character {
   constructor(x, y, characterImage) {
     this.x = x;
@@ -5,10 +6,12 @@ class Character {
     this.image = characterImage;
     this.angle = 0;
   }
+  //update each new character with a new display element
   update() {
     this.display();
   }
 
+  //set the character's image aspects, size, location, position
   display() {
     push();
     imageMode(CENTER);
