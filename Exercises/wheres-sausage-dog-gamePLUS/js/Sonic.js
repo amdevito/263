@@ -30,11 +30,10 @@ class Sonic extends Character {
       mouseY < this.y + this.image.height / 2
     ) {
       this.found = true;
-      //BELOW is left so that I can try and make it work eventually:
-      let panning = map(this.x, 0, width, -1.0, 1.0);
-      // << panning is mapped to the sonic character's movement direction
-      sonicDeath.pan(panning); // << I would like to make this work so that the sound pans with the direction of the Sonic movement
-      gameMusic.stop();
+
+      let panning = map(this.x, 0, width, -1.0, 1.0); // panning is mapped to the sonic character's movement direction
+      sonicDeath.pan(panning); // call panning function
+      gameMusic.stop(); // stop game music
       sonicDeath.play(); //Sonic Death song plays when Sonic is 'found', i.e. is clicked.
     }
   }

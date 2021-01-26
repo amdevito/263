@@ -3,15 +3,14 @@ CART 263: Exercise 1 - Find the Nintendo World Intruder!!! (aka Where's Sausage 
 Alana DeVito
 
 Meets the brief:
-Enter and end screen with instruction to press shift to begin the search game. Refresh screen to start again.
-Background is a 8-bit nintendo skyline.
-A bunch of classic Nintendo characters with a 'hidden' Sonic the Hedgehog that you find by clicking (Sonic is the Nintendo World Intruder since Sonic is from Sega World)
+Enter and end screen with instruction to CLICK to begin the search game. Refresh screen to start again.
+Background is a 8-bit nintendo skyline and a bunch of classic Nintendo characters with a 'hidden' Sonic the Hedgehog that you find by clicking (Sonic is the Nintendo World Intruder since Sonic is from Sega World)
 Sonic spins and moves diagonally, down and off screen when found.
 Sonic Death song plays.
 
-Questions for class and more I want to add (seperate from the brief):
-1. Sound to pan with the direction of sonic's movement > map to Sonic.x?
-2. Game music (nintendoGameMusic) to play with out going haywire! It must have something to do with inheritance and classes?
+Additional Elements:
+1. Sound pans with the direction of sonic's movement.
+2. Game music (nintendoGameMusic) plays after CLICKing to enter game
 
 
 **************************************************/
@@ -38,7 +37,7 @@ let gameMusic = undefined;
 
 //set variables for enter screen and end screens.
 let enterScreen = {
-  string: `Find the Nintendo World Intruder!!! \n Please click <SHIFT> to Begin the SEARCH!`,
+  string: `Find the Nintendo World Intruder!!! \n Please CLICK to Begin the SEARCH!`,
   x: undefined,
   y: undefined,
   vx: undefined,
@@ -99,13 +98,7 @@ function setup() {
 function draw() {
   background(nintendo); //set background to the nintendo skyline.
 
-  //pressing shift starts game (changes state from enter> game)
-  // if (keyIsDown(SHIFT)) {
-  //   gameMusic.play();
-  //   gameMusic.loop();
-  //   state = `game`;
-  // }
-
+  //as states change call functions to run different game screens
   if (state === `enter`) {
     enterStart();
   } else if (state === `game`) {
@@ -114,14 +107,6 @@ function draw() {
     gameEnd();
   }
 }
-
-// function keyPressed() {
-//   if (keyCode === SHIFT) {
-//     gameMusic.play();
-//     gameMusic.loop();
-//     state = `game`;
-//   }
-// }
 
 //both enter and end screens set with same values
 function setUpEnterScreen() {
@@ -161,9 +146,6 @@ function gameStart() {
   }
 
   sonic.update();
-  //Why isn't the below playing properly? The music seems to sustain and layer and loop uncontrollably.
-  // gameMusic.play();
-  // gameMusic.loop();
 }
 
 //set the game end screen
@@ -181,7 +163,7 @@ function gameEnd() {
   pop();
 }
 
-//call function to fetch the mousePressed function in the extended character class for Sonic
+//when mousePressed change state to enter, start and loop gameMusic and if state is 'game' then fetch the mousePressed function in the extended character class for Sonic
 function mousePressed() {
   if (state === `enter`) {
     gameMusic.play();

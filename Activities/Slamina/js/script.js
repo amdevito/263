@@ -186,7 +186,7 @@ function mousePressed() {
 
 function guessAnimal(animal) {
   currentAnimal = animal;
-  console.log(currentAnswer);
+  console.log(currentAnimal);
 }
 /**
 Reverses the provided string
