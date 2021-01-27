@@ -185,7 +185,7 @@ function mousePressed() {
 }
 
 function guessAnimal(animal) {
-  currentAnimal = animal;
+  currentAnswer = animal;
   console.log(currentAnimal);
 }
 /**
