@@ -12,6 +12,7 @@ display whether a guess is right or wrong
 **************************************************/
 "use strict";
 
+//make array with animal names to choose from
 const animals = [
   "aardvark",
   "alligator",
