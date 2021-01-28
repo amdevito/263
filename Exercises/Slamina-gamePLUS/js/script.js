@@ -1,13 +1,15 @@
 /**************************************************
-A2: Slamina Activity
+E2: Slamina Exercise
 Alana DeVito
 
-Practicing voice responsive and annyang voice recognition.
-plan
--animal name list
--choose animal to say backwards
--setup annyang to listen to guesses
-display whether a guess is right or wrong
+brief:
+1. Add counter for right and wrong answers
+2. anagram instead of reverseAnimal
+3. timer
+
+
+
+
 
 **************************************************/
 "use strict";
