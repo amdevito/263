@@ -149,14 +149,14 @@ const animals = [
   "zebra",
 ];
 
-// let state = `enter`;
+let state = `question1`;
 
 //score//
 let score = 0;
 
 let scoreDots = {
-  x: 450,
-  y: 340,
+  x: 100,
+  y: 140,
   radius: 50,
   offset1: 55,
   offset2: 110,
@@ -165,6 +165,15 @@ let scoreDots = {
   r: 255,
   g: 0,
   b: 199,
+};
+
+let question = {
+  x: 100,
+  y: 160,
+  r: 255,
+  g: 255,
+  b: 255,
+  //string: questionNumber,
 };
 
 // let enterScreen = {
@@ -194,8 +203,8 @@ let scoreDots = {
 //   size: undefined,
 // };
 
-let currentAnimal = null;
-let currentAnswer = undefined;
+let currentAnimal = ``;
+let currentAnswer = ``;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -219,17 +228,20 @@ function draw() {
   background(0);
   keepScore();
 
+  keepScore();
   text(currentAnswer, width / 2, height / 2);
-  //
-  // if (state === `enter`) {
-  //   enterStart();
-  // } else if (state === `game`) {
-  //   gameStart();
-  // } else if (state === `win`) {
-  //   gameWin();
-  // } else if (state === `gameEnd`) {
-  //   gameEnd();
-  // }
+
+  if (state === `question 1`) {
+  } else if (state === `question 2`) {
+  } else if (state === `question 3`) {
+  } else if (state === `question 4`) {
+  } else if (state === `question 5`) {
+  } else if (state === `question 6`) {
+  } else if (state === `question 7`) {
+  } else if (state === `question 8`) {
+  } else if (state === `question 9`) {
+  } else if (state === `question 10`) {
+  }
 }
 
 // function gameStart() {
@@ -341,23 +353,23 @@ function keepScore() {
   if (score >= 1) {
     fill(255, 0, 199);
     circle(scoreDots.x, scoreDots.y, scoreDots.radius);
-    console.log(`1`);
+    //console.log(`1`);
   }
   if (score >= 2) {
     circle(scoreDots.x + scoreDots.offset1, scoreDots.y, scoreDots.radius);
-    console.log(`2`);
+    //console.log(`2`);
   }
   if (score >= 3) {
     circle(scoreDots.x + scoreDots.offset2, scoreDots.y, scoreDots.radius);
-    console.log(`3`);
+    //  console.log(`3`);
   }
   if (score >= 4) {
     circle(scoreDots.x + scoreDots.offset3, scoreDots.y, scoreDots.radius);
-    console.log(`4`);
+    //console.log(`4`);
   }
   if (score >= 5) {
     circle(scoreDots.x + scoreDots.offset4, scoreDots.y, scoreDots.radius);
-    console.log(`5`);
+    //console.log(`5`);
   }
   if (score >= 6) {
     textSize(40);
