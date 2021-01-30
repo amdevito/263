@@ -173,7 +173,7 @@ let question = {
   r: 255,
   g: 255,
   b: 255,
-  string: ``,
+  string: questionNumber,
 };
 
 // let enterScreen = {
