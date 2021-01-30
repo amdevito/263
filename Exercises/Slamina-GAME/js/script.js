@@ -4,9 +4,9 @@ Alana DeVito
 
 Practicing voice responsive and annyang voice recognition.
 plan:
--start and end
+- start and end
 - counter
-- timer
+- anagrams
 
 **************************************************/
 "use strict";
@@ -149,14 +149,14 @@ const animals = [
   "zebra",
 ];
 
-let state = `enter`;
+let state = `question1`;
 
 //score//
 let score = 0;
 
 let scoreDots = {
-  x: 450,
-  y: 340,
+  x: 100,
+  y: 140,
   radius: 50,
   offset1: 55,
   offset2: 110,
@@ -166,6 +166,42 @@ let scoreDots = {
   g: 0,
   b: 199,
 };
+
+let question = {
+  x: 100,
+  y: 160,
+  r: 255,
+  g: 255,
+  b: 255,
+  string: ``,
+};
+
+// let enterScreen = {
+//   string: `Listen to the anagram \n Say, "I think it is ....." and guess the correct animal. \n Guess 6 animals correctly and win!`,
+//   x: undefined,
+//   y: undefined,
+//   vx: undefined,
+//   vy: undefined,
+//   size: undefined,
+// };
+//
+// let winScreen = {
+//   string: `You win!`,
+//   x: undefined,
+//   y: undefined,
+//   vx: undefined,
+//   vy: undefined,
+//   size: undefined,
+// };
+//
+// let endScreen = {
+//   string: `Game Over!`,
+//   x: undefined,
+//   y: undefined,
+//   vx: undefined,
+//   vy: undefined,
+//   size: undefined,
+// };
 
 let currentAnimal = ``;
 let currentAnswer = ``;
@@ -182,40 +218,116 @@ function setup() {
     textSize(32);
     textStyle(BOLD);
     textAlign(CENTER, CENTER);
+
+    // setUpEnterScreen();
+    // setUpWinScreen();
+    // setUpEndScreen();
   }
 }
-
 function draw() {
   background(0);
   keepScore();
-
   if (currentAnswer === currentAnimal) {
     fill(0, 255, 0);
     score++;
   } else {
     fill(255, 0, 0);
+    score--;
   }
+
   text(currentAnswer, width / 2, height / 2);
 
-  if (state === `enter`) {
-    enterStart();
-  } else if (state === `game`) {
-    gameStart();
-  } else if (state === `win`) {
-    gameWin();
-  } else if (state === `gameOver`) {
-    gameOver();
+  if (state === `question 1`) {
+  } else if (state === `question 2`) {
+  } else if (state === `question 3`) {
+  } else if (state === `question 4`) {
+  } else if (state === `question 5`) {
+  } else if (state === `question 6`) {
+  } else if (state === `question 7`) {
+  } else if (state === `question 8`) {
+  } else if (state === `question 9`) {
+  } else if (state === `question 10`) {
   }
 }
 
+// function gameStart() {
+//   // if (currentAnswer === currentAnimal) {
+//   //   fill(0, 255, 0);
+//   //   score++;
+//   // } else {
+//   //   fill(255, 0, 0);
+//   //   score--;
+//   // }
+//   // text(currentAnswer, width / 2, height / 2);
+// }
+//
+// function enterStart() {
+//   background(255);
+//   textSize(enterScreen.size);
+//   fill(255);
+//   textAlign(CENTER, CENTER);
+//   textStyle(BOLD);
+//   textFont("Monaco");
+//   stroke(0, 0, random(0, 255));
+//   strokeWeight(10);
+//   text(enterScreen.string, enterScreen.x, enterScreen.y);
+// }
+
+// function gameWin() {
+//   background(255);
+//   textSize(winScreen.size);
+//   fill(255);
+//   textAlign(CENTER, CENTER);
+//   textStyle(BOLD);
+//   textFont("Monaco");
+//   stroke(0, 0, random(0, 255));
+//   strokeWeight(10);
+//   text(winScreen.string, winScreen.x, winScreen.y);
+// }
+
+// function gameEnd() {
+//   background(255);
+//   textSize(endScreen.size);
+//   fill(255);
+//   textAlign(CENTER, CENTER);
+//   textStyle(BOLD);
+//   textFont("Monaco");
+//   stroke(0, 0, random(0, 255));
+//   strokeWeight(10);
+//   text(endScreen.string, endScreen.x, endScreen.y);
+// }
+//
+// function setUpEnterScreen() {
+//   enterScreen.x = width / 2;
+//   enterScreen.y = 200;
+//   enterScreen.vx = 5;
+//   enterScreen.vy = 1;
+//   enterScreen.size = 30;
+// }
+
+// function setUpWinScreen() {
+//   winScreen.x = width / 2;
+//   winScreen.y = 200;
+//   winScreen.vx = 5;
+//   winScreen.vy = 1;
+//   winScreen.size = 30;
+// }
+//
+// function setUpEndScreen() {
+//   endScreen.x = width / 2;
+//   endScreen.y = 200;
+//   endScreen.vx = 5;
+//   endScreen.vy = 1;
+//   endScreen.size = 30;
+// }
+
 function mousePressed() {
-  if (state === `enter`) {
-    state = `game`;
-  } else if (state === `game`) {
-    currentAnimal = random(animals);
-    let reverseAnimal = reverseString(currentAnimal);
-    responsiveVoice.speak(reverseAnimal);
-  }
+  // if (state === `enter`) {
+  //   state = `game`;
+  // } else if (state === `game`) {
+  currentAnimal = random(animals);
+  let reverseAnimal = reverseString(currentAnimal);
+  responsiveVoice.speak(reverseAnimal);
 }
 
 function guessAnimal(animal) {
@@ -238,22 +350,30 @@ function reverseString(string) {
 
 function keepScore() {
   if (score >= 1) {
-    fill(94, 69, 35);
+    fill(255, 0, 199);
     circle(scoreDots.x, scoreDots.y, scoreDots.radius);
-  }
-  if (score >= 2) {
+    console.log(`1`);
+  } else if (score >= 2) {
     circle(scoreDots.x + scoreDots.offset1, scoreDots.y, scoreDots.radius);
-  }
-  if (score >= 3) {
+    console.log(`2`);
+  } else if (score >= 3) {
     circle(scoreDots.x + scoreDots.offset2, scoreDots.y, scoreDots.radius);
-  }
-  if (score >= 4) {
+    console.log(`3`);
+  } else if (score >= 4) {
     circle(scoreDots.x + scoreDots.offset3, scoreDots.y, scoreDots.radius);
-  }
-  if (score >= 5) {
+    console.log(`4`);
+  } else if (score >= 5) {
     circle(scoreDots.x + scoreDots.offset4, scoreDots.y, scoreDots.radius);
-  }
-  if (score >= 6) {
-    state = "win";
+    console.log(`5`);
+  } else if (score >= 6) {
+    textSize(40);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    textFont("Monaco");
+    stroke(0, 0, random(0, 255));
+    strokeWeight(10);
+    text(`you win`, width / 2, height / 2);
+    console.log(`6`);
   }
 }
