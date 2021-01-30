@@ -1,13 +1,12 @@
 /**************************************************
-A2: Slamina Activity
+E2: Slamina New Game
 Alana DeVito
 
 Practicing voice responsive and annyang voice recognition.
-plan
--animal name list
--choose animal to say backwards
--setup annyang to listen to guesses
-display whether a guess is right or wrong
+plan:
+-start and end
+- counter
+- timer
 
 **************************************************/
 "use strict";
@@ -150,6 +149,24 @@ const animals = [
   "zebra",
 ];
 
+let state = `enter`;
+
+//score//
+let score = 0;
+
+let scoreDots = {
+  x: 450,
+  y: 340,
+  radius: 50,
+  offset1: 55,
+  offset2: 110,
+  offset3: 165,
+  offset4: 220,
+  r: 255,
+  g: 0,
+  b: 199,
+};
+
 let currentAnimal = ``;
 let currentAnswer = ``;
 
@@ -170,19 +187,35 @@ function setup() {
 
 function draw() {
   background(0);
+  keepScore();
 
   if (currentAnswer === currentAnimal) {
     fill(0, 255, 0);
+    score++;
   } else {
     fill(255, 0, 0);
   }
   text(currentAnswer, width / 2, height / 2);
+
+  if (state === `enter`) {
+    enterStart();
+  } else if (state === `game`) {
+    gameStart();
+  } else if (state === `win`) {
+    gameWin();
+  } else if (state === `gameOver`) {
+    gameOver();
+  }
 }
 
 function mousePressed() {
-  currentAnimal = random(animals);
-  let reverseAnimal = reverseString(currentAnimal);
-  responsiveVoice.speak(reverseAnimal);
+  if (state === `enter`) {
+    state = `game`;
+  } else if (state === `game`) {
+    currentAnimal = random(animals);
+    let reverseAnimal = reverseString(currentAnimal);
+    responsiveVoice.speak(reverseAnimal);
+  }
 }
 
 function guessAnimal(animal) {
@@ -201,4 +234,26 @@ function reverseString(string) {
   let result = reverseCharacters.join("");
   // Return the result
   return result;
+}
+
+function keepScore() {
+  if (score >= 1) {
+    fill(94, 69, 35);
+    circle(scoreDots.x, scoreDots.y, scoreDots.radius);
+  }
+  if (score >= 2) {
+    circle(scoreDots.x + scoreDots.offset1, scoreDots.y, scoreDots.radius);
+  }
+  if (score >= 3) {
+    circle(scoreDots.x + scoreDots.offset2, scoreDots.y, scoreDots.radius);
+  }
+  if (score >= 4) {
+    circle(scoreDots.x + scoreDots.offset3, scoreDots.y, scoreDots.radius);
+  }
+  if (score >= 5) {
+    circle(scoreDots.x + scoreDots.offset4, scoreDots.y, scoreDots.radius);
+  }
+  if (score >= 6) {
+    state = "win";
+  }
 }
