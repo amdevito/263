@@ -11,7 +11,7 @@ plan:
 **************************************************/
 "use strict";
 
-let hint = {
+let hintAnagrams = {
   string: `Listen to the anagram \n Say, "I think it is ....." and guess the correct animal. \n Guess 6 animals correctly and win!`,
   x: undefined,
   y: undefined,
@@ -20,7 +20,7 @@ let hint = {
   size: undefined,
 };
 
-let list = {
+let hintList = {
   string: `Listen to the anagram \n Say, "I think it is ....." and guess the correct animal. \n Guess 6 animals correctly and win!`,
   x: undefined,
   y: undefined,
