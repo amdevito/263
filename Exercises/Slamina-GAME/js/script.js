@@ -10,9 +10,10 @@ plan:
 
 **************************************************/
 "use strict";
+let anagramAnimal = ``;
 
 let hintAnagrams = {
-  string: `Listen to the anagram \n Say, "I think it is ....." and guess the correct animal. \n Guess 6 animals correctly and win!`,
+  string: anagramAnimal,
   x: undefined,
   y: undefined,
   vx: undefined,
@@ -21,7 +22,47 @@ let hintAnagrams = {
 };
 
 let hintList = {
-  string: `Listen to the anagram \n Say, "I think it is ....." and guess the correct animal. \n Guess 6 animals correctly and win!`,
+  string: `Alligator
+Alton Pee
+Armadillo
+Bat
+Bear
+Bison
+Boar
+Buffalo
+Camel
+Canary \n
+Cat
+Chameleon
+Chimpanzee
+Chinchilla
+Chipmunk
+Coyote
+Crocodile
+Donkey
+Elephant
+Goat \n
+Ground hog
+Guinea Pig
+Hamster
+Kangaroo
+Koala
+Lamb
+Leopard
+Llama
+Mole
+Otter \n
+Panther
+Porcupine
+Raccoon
+Rhinoceros
+Seal
+Snake
+Toad
+Turtle
+Wolf
+Wolverine
+Zebra`,
   x: undefined,
   y: undefined,
   vx: undefined,
@@ -99,9 +140,9 @@ function setup() {
     textStyle(BOLD);
     textAlign(CENTER, CENTER);
 
-    // setUpEnterScreen();
-    // setUpWinScreen();
-    // setUpEndScreen();
+    setUpEnterScreen();
+    setUpWinScreen();
+    setUpEndScreen();
   }
 }
 function draw() {
@@ -112,7 +153,9 @@ function draw() {
   text(currentAnswer, width / 2, height / 2);
 
   if (state === `enter`) {
+    enterStart();
   } else if (state === `game`) {
+    //gamePlay();??? -- make function for this
   }
 }
 
@@ -127,17 +170,17 @@ function draw() {
 //   // text(currentAnswer, width / 2, height / 2);
 // }
 //
-// function enterStart() {
-//   background(255);
-//   textSize(enterScreen.size);
-//   fill(255);
-//   textAlign(CENTER, CENTER);
-//   textStyle(BOLD);
-//   textFont("Monaco");
-//   stroke(0, 0, random(0, 255));
-//   strokeWeight(10);
-//   text(enterScreen.string, enterScreen.x, enterScreen.y);
-// }
+function enterStart() {
+  background(255);
+  textSize(enterScreen.size);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textFont("Monaco");
+  stroke(0, 0, random(0, 255));
+  strokeWeight(10);
+  text(enterScreen.string, enterScreen.x, enterScreen.y);
+}
 
 // function gameWin() {
 //   background(255);
@@ -163,33 +206,34 @@ function draw() {
 //   text(endScreen.string, endScreen.x, endScreen.y);
 // }
 //
-// function setUpEnterScreen() {
-//   enterScreen.x = width / 2;
-//   enterScreen.y = 200;
-//   enterScreen.vx = 5;
-//   enterScreen.vy = 1;
-//   enterScreen.size = 30;
-// }
+function setUpEnterScreen() {
+  enterScreen.x = width / 2;
+  enterScreen.y = 200;
+  enterScreen.vx = 5;
+  enterScreen.vy = 1;
+  enterScreen.size = 30;
+}
 
-// function setUpWinScreen() {
-//   winScreen.x = width / 2;
-//   winScreen.y = 200;
-//   winScreen.vx = 5;
-//   winScreen.vy = 1;
-//   winScreen.size = 30;
-// }
+function setUpWinScreen() {
+  winScreen.x = width / 2;
+  winScreen.y = 200;
+  winScreen.vx = 5;
+  winScreen.vy = 1;
+  winScreen.size = 30;
+}
 //
-// function setUpEndScreen() {
-//   endScreen.x = width / 2;
-//   endScreen.y = 200;
-//   endScreen.vx = 5;
-//   endScreen.vy = 1;
-//   endScreen.size = 30;
-// }
+function setUpEndScreen() {
+  endScreen.x = width / 2;
+  endScreen.y = 200;
+  endScreen.vx = 5;
+  endScreen.vy = 1;
+  endScreen.size = 30;
+}
 
 function mousePressed() {
   currentAnimal = random(animals);
   anagramCreator();
+  responsiveVoice.speak(anagramAnimal);
   // if (state === `enter`) {
   //   state = `game`;
   // } else if (state === `game`) {
@@ -209,19 +253,8 @@ function guessAnimal(animal) {
     score--;
   }
 }
-/**
-Reverses the provided string
-*/
-// function reverseString(string) {
-//   // Split the string into an array of characters
-//   let characters = string.split("");
-//   // Reverse the array of characters
-//   let reverseCharacters = characters.reverse();
-//   // Join the array of characters back into a string
-//   let result = reverseCharacters.join("");
-//   // Return the result
-//   return result;
-// }
+
+function getHint() {}
 
 function keepScore() {
   if (score >= 1) {
@@ -264,89 +297,89 @@ function youWin() {
 
 function anagramCreator() {
   if (currentAnimal === `Alligator`) {
-    responsiveVoice.speak(`Lita Largo`);
+    let anagramAnimal = `Lita Largo`;
   } else if (currentAnimal === `Antelope`) {
-    responsiveVoice.speak(`Alton Pee`);
+    let anagramAnimal = `Alton Pee`;
   } else if (currentAnimal === `Ape`) {
-    responsiveVoice.speak(`Pea`);
+    let anagramAnimal = `Pea`;
   } else if (currentAnimal === `Armadillo`) {
-    responsiveVoice.speak(`Admiral Lo`);
+    let anagramAnimal = `Admiral Lo`;
   } else if (currentAnimal === `Bat`) {
-    responsiveVoice.speak(`Tab`);
+    let anagramAnimal = `Tab`;
   } else if (currentAnimal === `Bear`) {
-    responsiveVoice.speak(`Reba`);
+    let anagramAnimal = `Reba`;
   } else if (currentAnimal === `Bison`) {
-    responsiveVoice.speak(`I snob`);
+    let anagramAnimal = `I snob`;
   } else if (currentAnimal === `Boar`) {
-    responsiveVoice.speak(`A bro`);
+    let anagramAnimal = `A bro`;
   } else if (currentAnimal === `Buffalo`) {
-    responsiveVoice.speak(`Fab foul`);
+    let anagramAnimal = `Fab foul`;
   } else if (currentAnimal === `Camel`) {
-    responsiveVoice.speak(`El Mac`);
+    let anagramAnimal = `El Mac`;
   } else if (currentAnimal === `Canary`) {
-    responsiveVoice.speak(`A Caryn`);
+    let anagramAnimal = `A Caryn`;
   } else if (currentAnimal === `Cat`) {
-    responsiveVoice.speak(`Act`);
+    let anagramAnimal = `Act`;
   } else if (currentAnimal === `Chameleon`) {
-    responsiveVoice.speak(`Ache Lemon`);
+    let anagramAnimal = `Ache Lemon`;
   } else if (currentAnimal === `Chimpanzee`) {
-    responsiveVoice.speak(`Impeach Zen`);
+    let anagramAnimal = `Impeach Zen`;
   } else if (currentAnimal === `Chinchilla`) {
-    responsiveVoice.speak(`Chain Chill`);
+    let anagramAnimal = `Chain Chill`;
   } else if (currentAnimal === `Chipmunk`) {
-    responsiveVoice.speak(`Kim Punch`);
+    let anagramAnimal = `Kim Punch`;
   } else if (currentAnimal === `Coyote`) {
-    responsiveVoice.speak(`Eco Toy`);
+    let anagramAnimal = `Eco Toy`;
   } else if (currentAnimal === `Crocodile`) {
-    responsiveVoice.speak(`Cecil Odor`);
+    let anagramAnimal = `Cecil Odor`;
   } else if (currentAnimal === `Donkey`) {
-    responsiveVoice.speak(`Deny ok`);
+    let anagramAnimal = `Deny ok`;
   } else if (currentAnimal === `Elephant`) {
-    responsiveVoice.speak(`Eh planet`);
+    let anagramAnimal = `Eh planet`;
   } else if (currentAnimal === `Goat`) {
-    responsiveVoice.speak(`Toga`);
+    let anagramAnimal = `Toga`;
   } else if (currentAnimal === `Ground hog`) {
-    responsiveVoice.speak(`hog rod gun`);
+    let anagramAnimal = `hog rod gun`;
   } else if (currentAnimal === `Guinea Pig`) {
-    responsiveVoice.speak(`Paige Gains`);
+    let anagramAnimal = `Paige Gains`;
   } else if (currentAnimal === `Hamster`) {
-    responsiveVoice.speak(`Mesh art`);
+    let anagramAnimal = `Mesh art`;
   } else if (currentAnimal === `Kangaroo`) {
-    responsiveVoice.speak(`A Kong Ora`);
+    let anagramAnimal = `A Kong Ora`;
   } else if (currentAnimal === `Koala`) {
-    responsiveVoice.speak(`A la ok`);
+    let anagramAnimal = `A la ok`;
   } else if (currentAnimal === `Lamb`) {
-    responsiveVoice.speak(`Balm`);
+    let anagramAnimal = `Balm`;
   } else if (currentAnimal === `Leopard`) {
-    responsiveVoice.speak(`Paroled`);
+    let anagramAnimal = `Paroled`;
   } else if (currentAnimal === `Llama`) {
-    responsiveVoice.speak(`A mall`);
+    let anagramAnimal = `A mall`;
   } else if (currentAnimal === `Mole`) {
-    responsiveVoice.speak(`Elmo`);
+    let anagramAnimal = `Elmo`;
   } else if (currentAnimal === `Otter`) {
-    responsiveVoice.speak(`Torte`);
+    let anagramAnimal = `Torte`;
   } else if (currentAnimal === `Panther`) {
-    responsiveVoice.speak(`Harp net`);
+    let anagramAnimal = `Harp net`;
   } else if (currentAnimal === `Porcupine`) {
-    responsiveVoice.speak(`Price Upon`);
+    let anagramAnimal = `Price Upon`;
   } else if (currentAnimal === `Raccoon`) {
-    responsiveVoice.speak(`Acorn Co.`);
+    let anagramAnimal = `Acorn Co.`;
   } else if (currentAnimal === `Rhinoceros`) {
-    responsiveVoice.speak(`Choir snore`);
+    let anagramAnimal = `Choir snore`;
   } else if (currentAnimal === `Seal`) {
-    responsiveVoice.speak(`Ales`);
+    let anagramAnimal = `Ales`;
   } else if (currentAnimal === `Snake`) {
-    responsiveVoice.speak(`Sneak`);
+    let anagramAnimal = `Sneak`;
   } else if (currentAnimal === `Toad`) {
-    responsiveVoice.speak(`A dot`);
+    let anagramAnimal = `A dot`;
   } else if (currentAnimal === `Turtle`) {
-    responsiveVoice.speak(`Let rut`);
+    let anagramAnimal = `Let rut`;
   } else if (currentAnimal === `Wolf`) {
-    responsiveVoice.speak(`Flow`);
+    let anagramAnimal = `Flow`;
   } else if (currentAnimal === `Wolverine`) {
-    responsiveVoice.speak(`Evil owner`);
+    let anagramAnimal = `Evil owner`;
   } else if (currentAnimal === `Zebra`) {
-    responsiveVoice.speak(`Braze`);
+    let anagramAnimal = `Braze`;
   }
 }
 ///make function for key is down shift - show the anagram ? another spacebar is down? show list.
