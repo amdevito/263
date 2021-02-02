@@ -326,7 +326,7 @@ function getHint() {
     if (key == "a") {
       strokeWeight(5);
       stroke(0, 0, random(0, 255));
-      fill(255);
+      fill(0);
       rect(
         width / 4 - 10, //x coorinate,
         height / 4 - 60, // y coordinate,
@@ -339,9 +339,10 @@ function getHint() {
       );
       noStroke();
       textSize(enterScreen.size);
-      fill(255);
+
       textAlign(CENTER, CENTER);
       textFont("Tahoma");
+      fill(255);
       text(anagramAnimal, hintAnagram.x, hintAnagram.y);
     } else if (key == "l") {
       //this should show the bubble in the random location with the 7 random hints and 1 real one. replace with calling the OOP function
