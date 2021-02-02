@@ -10,6 +10,7 @@ plan:
 
 **************************************************/
 "use strict";
+
 let anagramAnimal = ``;
 
 let hintAnagrams = {
@@ -88,15 +89,6 @@ let scoreDots = {
   b: 199,
 };
 
-// let question = {
-//   x: 100,
-//   y: 160,
-//   r: 255,
-//   g: 255,
-//   b: 255,
-//   //string: questionNumber,
-// };
-
 let enterScreen = {
   string: `Listen to the anagram \n Say, "I think it is ....." and guess the correct animal. \n Guess 6 animals correctly and win!`,
   x: undefined,
@@ -155,57 +147,51 @@ function draw() {
   if (state === `enter`) {
     enterStart();
   } else if (state === `game`) {
-    //gamePlay();??? -- make function for this
+    gamePlay();
+    // ??? -- make function for this
   }
 }
 
-// function gameStart() {
-//   // if (currentAnswer === currentAnimal) {
-//   //   fill(0, 255, 0);
-//   //   score++;
-//   // } else {
-//   //   fill(255, 0, 0);
-//   //   score--;
-//   // }
-//   // text(currentAnswer, width / 2, height / 2);
-// }
-//
+function gamePlay() {
+  getHint();
+}
+
 function enterStart() {
   background(255);
   textSize(enterScreen.size);
   fill(255);
   textAlign(CENTER, CENTER);
   textStyle(BOLD);
-  textFont("Monaco");
+  textFont("GEORGIA");
   stroke(0, 0, random(0, 255));
   strokeWeight(10);
   text(enterScreen.string, enterScreen.x, enterScreen.y);
 }
 
-// function gameWin() {
-//   background(255);
-//   textSize(winScreen.size);
-//   fill(255);
-//   textAlign(CENTER, CENTER);
-//   textStyle(BOLD);
-//   textFont("Monaco");
-//   stroke(0, 0, random(0, 255));
-//   strokeWeight(10);
-//   text(winScreen.string, winScreen.x, winScreen.y);
-// }
+function gameWin() {
+  background(255);
+  textSize(winScreen.size);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textFont("GEORGIA");
+  stroke(0, 0, random(0, 255));
+  strokeWeight(10);
+  text(winScreen.string, winScreen.x, winScreen.y);
+}
 
-// function gameEnd() {
-//   background(255);
-//   textSize(endScreen.size);
-//   fill(255);
-//   textAlign(CENTER, CENTER);
-//   textStyle(BOLD);
-//   textFont("Monaco");
-//   stroke(0, 0, random(0, 255));
-//   strokeWeight(10);
-//   text(endScreen.string, endScreen.x, endScreen.y);
-// }
-//
+function gameEnd() {
+  background(255);
+  textSize(endScreen.size);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textFont("GEORGIA");
+  stroke(0, 0, random(0, 255));
+  strokeWeight(10);
+  text(endScreen.string, endScreen.x, endScreen.y);
+}
+
 function setUpEnterScreen() {
   enterScreen.x = width / 2;
   enterScreen.y = 200;
@@ -230,16 +216,29 @@ function setUpEndScreen() {
   endScreen.size = 30;
 }
 
+function setUpHintAnagram() {
+  endScreen.x = width / 2;
+  endScreen.y = 200;
+  endScreen.vx = 5;
+  endScreen.vy = 1;
+  endScreen.size = 30;
+}
+
+function setUpHintList() {
+  endScreen.x = width / 2;
+  endScreen.y = 200;
+  endScreen.vx = 5;
+  endScreen.vy = 1;
+  endScreen.size = 30;
+}
+
 function mousePressed() {
   currentAnimal = random(animals);
   anagramCreator();
   responsiveVoice.speak(anagramAnimal);
-  // if (state === `enter`) {
-  //   state = `game`;
-  // } else if (state === `game`) {
-  // currentAnimal = random(animals);
-  // let reverseAnimal = reverseString(currentAnimal);
-  // responsiveVoice.speak(reverseAnimal);
+  if (state === `enter`) {
+    state = `game`;
+  }
 }
 
 function guessAnimal(animal) {
@@ -254,7 +253,33 @@ function guessAnimal(animal) {
   }
 }
 
-function getHint() {}
+function getHint() {
+  if (keyIsPressed) {
+    if (key == "a") {
+      stroke(0, 0, random(0, 255));
+      rect(30, 20, 55, 55, 20, 15, 10, 5);
+      textSize(30);
+      fill(255);
+      textAlign(CENTER, CENTER);
+      textStyle(BOLD);
+      textFont("GEORGIA");
+      stroke(0, 0, random(0, 255));
+      strokeWeight(10);
+      text(hintAnagrams.string, hintAnagrams.x, hintAnagrams.y);
+    } else if (key == "l") {
+      stroke(0, 0, random(0, 255));
+      rect(30, 20, 55, 55, 20, 15, 10, 5);
+      textSize(30);
+      fill(255);
+      textAlign(CENTER, CENTER);
+      textStyle(BOLD);
+      textFont("GEORGIA");
+      stroke(0, 0, random(0, 255));
+      strokeWeight(10);
+      text(hintList.string, hintList.x, hintList.y);
+    }
+  }
+}
 
 function keepScore() {
   if (score >= 1) {
@@ -288,7 +313,7 @@ function youWin() {
   fill(255);
   textAlign(CENTER, CENTER);
   textStyle(BOLD);
-  textFont("Monaco");
+  textFont("GEORGIA");
   stroke(0, 0, random(0, 255));
   strokeWeight(10);
   text(`you win`, width / 2, height / 2);
