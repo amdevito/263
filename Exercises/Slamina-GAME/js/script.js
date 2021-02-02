@@ -67,49 +67,7 @@ const animals = [
   `Zebra`,
 ];
 
-let hintList = [
-  `Alligator`,
-  `Antelope`,
-  `Armadillo`,
-  `Bat`,
-  `Bear`,
-  `Bison`,
-  `Boar`,
-  `Buffalo`,
-  `Camel`,
-  `Canary`,
-  `Cat`,
-  `Chameleon`,
-  `Chimpanzee`,
-  `Chinchilla`,
-  `Chipmunk`,
-  `Coyote`,
-  `Crocodile`,
-  `Donkey`,
-  `Elephant`,
-  `Goat`,
-  `Ground hog`,
-  `Guinea Pig`,
-  `Hamster`,
-  `Kangaroo`,
-  `Koala`,
-  `Lamb`,
-  `Leopard`,
-  `Llama`,
-  `Mole`,
-  `Otter`,
-  `Panther`,
-  `Porcupine`,
-  `Raccoon`,
-  `Rhinoceros`,
-  `Seal`,
-  `Snake`,
-  `Toad`,
-  `Turtle`,
-  `Wolf`,
-  `Wolverine`,
-  `Zebra`,
-];
+let hintList = [];
 
 let state = `enter`;
 
@@ -169,13 +127,6 @@ function setup() {
     annyang.start();
 
     //get the random hints, push hints in to the 8 hint slots, include the correct animal, display in bubble just for duration of key press. Bubble appears in random location on screen.
-    for (let i = 0; i < NUM_HINTS; i++) {
-      let x = random(0, width);
-      let y = random(0, height);
-      let hint = new HintList(x, y);
-      hintList.push(hint);
-      hintList.push(); //actual currentAnswer
-    }
 
     textSize(32);
     textStyle(BOLD);
@@ -300,13 +251,23 @@ function mousePressed() {
     let anagramAnimal = anagramCreator(currentAnimal);
     responsiveVoice.speak(anagramAnimal);
     console.log(anagramAnimal);
+    for (let i = 0; i < NUM_HINTS; i++) {
+      let x = random(0, width);
+      let y = random(0, height);
+      let hint = new Hint(x, y, random(animals));
+      hintList.push(hint);
+    }
+    let x = random(0, width);
+    let y = random(0, height);
+    let hint = new Hint(x, y, currentAnimal);
+    hintList.push(hint);
   }
 }
 
 function guessAnimal(animal) {
   currentAnswer = animal;
   console.log(currentAnswer);
-  if (currentAnswer === currentAnimal) {
+  if (currentAnswer.toLowerCase() === currentAnimal.toLowerCase()) {
     fill(0, 255, 0);
     score++;
   } else {
@@ -323,10 +284,12 @@ function getHintList() {
 
 function getHint() {
   if (keyIsPressed) {
-    if (key == "a") {
+    if (key === "a") {
+      push();
       strokeWeight(5);
       stroke(0, 0, random(0, 255));
       fill(0);
+
       rect(
         width / 4 - 10, //x coorinate,
         height / 4 - 60, // y coordinate,
@@ -337,14 +300,16 @@ function getHint() {
         40, //radius of bottomright corner,
         1 // radius of bottom left corner
       );
+      pop();
+
       noStroke();
       textSize(enterScreen.size);
 
       textAlign(CENTER, CENTER);
       textFont("Tahoma");
       fill(255);
-      text(anagramAnimal, hintAnagram.x, hintAnagram.y);
-    } else if (key == "l") {
+      text(anagramCreator(currentAnimal), width / 4 - 10, height / 4 - 60); //adjust location of anagram hint.
+    } else if (key === "l") {
       //this should show the bubble in the random location with the 7 random hints and 1 real one. replace with calling the OOP function
       getHintList();
     }
@@ -390,94 +355,96 @@ function youWin() {
   console.log(`6`);
 }
 
-function anagramCreator(anagramAnimal) {
-  if (currentAnimal === `Alligator`) {
-    let anagramAnimal = `Lita Largo`;
-  } else if (currentAnimal === `Antelope`) {
-    let anagramAnimal = `Alton Pee`;
-  } else if (currentAnimal === `Ape`) {
-    let anagramAnimal = `Pea`;
-  } else if (currentAnimal === `Armadillo`) {
-    let anagramAnimal = `Admiral Lo`;
-  } else if (currentAnimal === `Bat`) {
-    let anagramAnimal = `Tab`;
-  } else if (currentAnimal === `Bear`) {
-    let anagramAnimal = `Reba`;
-  } else if (currentAnimal === `Bison`) {
-    let anagramAnimal = `I snob`;
-  } else if (currentAnimal === `Boar`) {
-    let anagramAnimal = `A bro`;
-  } else if (currentAnimal === `Buffalo`) {
-    let anagramAnimal = `Fab foul`;
-  } else if (currentAnimal === `Camel`) {
-    let anagramAnimal = `El Mac`;
-  } else if (currentAnimal === `Canary`) {
-    let anagramAnimal = `A Caryn`;
-  } else if (currentAnimal === `Cat`) {
-    let anagramAnimal = `Act`;
-  } else if (currentAnimal === `Chameleon`) {
-    let anagramAnimal = `Ache Lemon`;
-  } else if (currentAnimal === `Chimpanzee`) {
-    let anagramAnimal = `Impeach Zen`;
-  } else if (currentAnimal === `Chinchilla`) {
-    let anagramAnimal = `Chain Chill`;
-  } else if (currentAnimal === `Chipmunk`) {
-    let anagramAnimal = `Kim Punch`;
-  } else if (currentAnimal === `Coyote`) {
-    let anagramAnimal = `Eco Toy`;
-  } else if (currentAnimal === `Crocodile`) {
-    let anagramAnimal = `Cecil Odor`;
-  } else if (currentAnimal === `Donkey`) {
-    let anagramAnimal = `Deny ok`;
-  } else if (currentAnimal === `Elephant`) {
-    let anagramAnimal = `Eh planet`;
-  } else if (currentAnimal === `Goat`) {
-    let anagramAnimal = `Toga`;
-  } else if (currentAnimal === `Ground hog`) {
-    let anagramAnimal = `hog rod gun`;
-  } else if (currentAnimal === `Guinea Pig`) {
-    let anagramAnimal = `Paige Gains`;
-  } else if (currentAnimal === `Hamster`) {
-    let anagramAnimal = `Mesh art`;
-  } else if (currentAnimal === `Kangaroo`) {
-    let anagramAnimal = `A Kong Ora`;
-  } else if (currentAnimal === `Koala`) {
-    let anagramAnimal = `A la ok`;
-  } else if (currentAnimal === `Lamb`) {
-    let anagramAnimal = `Balm`;
-  } else if (currentAnimal === `Leopard`) {
-    let anagramAnimal = `Paroled`;
-  } else if (currentAnimal === `Llama`) {
-    let anagramAnimal = `A mall`;
-  } else if (currentAnimal === `Mole`) {
-    let anagramAnimal = `Elmo`;
-  } else if (currentAnimal === `Otter`) {
-    let anagramAnimal = `Torte`;
-  } else if (currentAnimal === `Panther`) {
-    let anagramAnimal = `Harp net`;
-  } else if (currentAnimal === `Porcupine`) {
-    let anagramAnimal = `Price Upon`;
-  } else if (currentAnimal === `Raccoon`) {
-    let anagramAnimal = `Acorn Co.`;
-  } else if (currentAnimal === `Rhinoceros`) {
-    let anagramAnimal = `Choir snore`;
-  } else if (currentAnimal === `Seal`) {
-    let anagramAnimal = `Ales`;
-  } else if (currentAnimal === `Snake`) {
-    let anagramAnimal = `Sneak`;
-  } else if (currentAnimal === `Toad`) {
-    let anagramAnimal = `A dot`;
-  } else if (currentAnimal === `Turtle`) {
-    let anagramAnimal = `Let rut`;
-  } else if (currentAnimal === `Wolf`) {
-    let anagramAnimal = `Flow`;
-  } else if (currentAnimal === `Wolverine`) {
-    let anagramAnimal = `Evil owner`;
-  } else if (currentAnimal === `Zebra`) {
-    let anagramAnimal = `Braze`;
+function anagramCreator(animal) {
+  //NOTE: parameter here is a local variable that exists in this specific function, but when you send a global vaiable from somewhere else ... ie. line 251 - currentAnimal... it will be a different name.
+  let anagramAnimal = ``;
+  if (animal === `Alligator`) {
+    anagramAnimal = `Lita Largo`;
+  } else if (animal === `Antelope`) {
+    anagramAnimal = `Alton Pee`;
+  } else if (animal === `Ape`) {
+    anagramAnimal = `Pea`;
+  } else if (animal === `Armadillo`) {
+    anagramAnimal = `Admiral Lo`;
+  } else if (animal === `Bat`) {
+    anagramAnimal = `Tab`;
+  } else if (animal === `Bear`) {
+    anagramAnimal = `Reba`;
+  } else if (animal === `Bison`) {
+    anagramAnimal = `I snob`;
+  } else if (animal === `Boar`) {
+    anagramAnimal = `A bro`;
+  } else if (animal === `Buffalo`) {
+    anagramAnimal = `Fab foul`;
+  } else if (animal === `Camel`) {
+    anagramAnimal = `El Mac`;
+  } else if (animal === `Canary`) {
+    anagramAnimal = `A Caryn`;
+  } else if (animal === `Cat`) {
+    anagramAnimal = `Act`;
+  } else if (animal === `Chameleon`) {
+    anagramAnimal = `Ache Lemon`;
+  } else if (animal === `Chimpanzee`) {
+    anagramAnimal = `Impeach Zen`;
+  } else if (animal === `Chinchilla`) {
+    anagramAnimal = `Chain Chill`;
+  } else if (animal === `Chipmunk`) {
+    anagramAnimal = `Kim Punch`;
+  } else if (animal === `Coyote`) {
+    anagramAnimal = `Eco Toy`;
+  } else if (animal === `Crocodile`) {
+    anagramAnimal = `Cecil Odor`;
+  } else if (animal === `Donkey`) {
+    anagramAnimal = `Deny ok`;
+  } else if (animal === `Elephant`) {
+    anagramAnimal = `Eh planet`;
+  } else if (animal === `Goat`) {
+    anagramAnimal = `Toga`;
+  } else if (animal === `Ground hog`) {
+    anagramAnimal = `hog rod gun`;
+  } else if (animal === `Guinea Pig`) {
+    anagramAnimal = `Paige Gains`;
+  } else if (animal === `Hamster`) {
+    anagramAnimal = `Mesh art`;
+  } else if (animal === `Kangaroo`) {
+    anagramAnimal = `A Kong Ora`;
+  } else if (animal === `Koala`) {
+    anagramAnimal = `A la ok`;
+  } else if (animal === `Lamb`) {
+    anagramAnimal = `Balm`;
+  } else if (animal === `Leopard`) {
+    anagramAnimal = `Paroled`;
+  } else if (animal === `Llama`) {
+    anagramAnimal = `A mall`;
+  } else if (animal === `Mole`) {
+    anagramAnimal = `Elmo`;
+  } else if (animal === `Otter`) {
+    anagramAnimal = `Torte`;
+  } else if (animal === `Panther`) {
+    anagramAnimal = `Harp net`;
+  } else if (animal === `Porcupine`) {
+    anagramAnimal = `Price Upon`;
+  } else if (animal === `Raccoon`) {
+    anagramAnimal = `Acorn Co.`;
+  } else if (animal === `Rhinoceros`) {
+    anagramAnimal = `Choir snore`;
+  } else if (animal === `Seal`) {
+    anagramAnimal = `Ales`;
+  } else if (animal === `Snake`) {
+    anagramAnimal = `Sneak`;
+  } else if (animal === `Toad`) {
+    anagramAnimal = `A dot`;
+  } else if (animal === `Turtle`) {
+    anagramAnimal = `Let rut`;
+  } else if (animal === `Wolf`) {
+    anagramAnimal = `Flow`;
+  } else if (animal === `Wolverine`) {
+    anagramAnimal = `Evil owner`;
+  } else if (animal === `Zebra`) {
+    anagramAnimal = `Braze`;
   }
-  return anagramAnimal;
   console.log(anagramAnimal);
+  return anagramAnimal;
 }
 ///make function for key is down shift - show the anagram ? another spacebar is down? show list.
 //states with opening and ending, instructions and number of question? 10 questions?
