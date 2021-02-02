@@ -296,9 +296,10 @@ function mousePressed() {
     state = `game`;
   } else if (state === `game`) {
     currentAnimal = random(animals);
-    anagramCreator();
+    // anagramCreator();
     let anagramAnimal = anagramCreator(currentAnimal);
     responsiveVoice.speak(anagramAnimal);
+    console.log(anagramAnimal);
   }
 }
 
@@ -323,15 +324,24 @@ function getHintList() {
 function getHint() {
   if (keyIsPressed) {
     if (key == "a") {
+      strokeWeight(5);
       stroke(0, 0, random(0, 255));
-      rect(30, 20, 55, 55, 20, 15, 10, 5);
-      textSize(30);
+      fill(255);
+      rect(
+        width / 4 - 10, //x coorinate,
+        height / 4 - 60, // y coordinate,
+        width / 2 + 20, //width of rect,
+        height / 4 - 40, //height of rect,
+        40, //radius of topleft corner,
+        45, //radius of topright corner,
+        40, //radius of bottomright corner,
+        1 // radius of bottom left corner
+      );
+      noStroke();
+      textSize(enterScreen.size);
       fill(255);
       textAlign(CENTER, CENTER);
-      textStyle(BOLD);
-      textFont("GEORGIA");
-      stroke(0, 0, random(0, 255));
-      strokeWeight(10);
+      textFont("Tahoma");
       text(anagramAnimal, hintAnagram.x, hintAnagram.y);
     } else if (key == "l") {
       //this should show the bubble in the random location with the 7 random hints and 1 real one. replace with calling the OOP function
@@ -379,7 +389,7 @@ function youWin() {
   console.log(`6`);
 }
 
-function anagramCreator(string) {
+function anagramCreator(anagramAnimal) {
   if (currentAnimal === `Alligator`) {
     let anagramAnimal = `Lita Largo`;
   } else if (currentAnimal === `Antelope`) {
@@ -465,7 +475,8 @@ function anagramCreator(string) {
   } else if (currentAnimal === `Zebra`) {
     let anagramAnimal = `Braze`;
   }
-  return anagramAnimal; // do I do return?
+  return anagramAnimal;
+  console.log(anagramAnimal);
 }
 ///make function for key is down shift - show the anagram ? another spacebar is down? show list.
 //states with opening and ending, instructions and number of question? 10 questions?
