@@ -4,16 +4,20 @@ Alana DeVito
 
 Practicing voice responsive and annyang voice recognition.
 plan:
-- start and end
-- counter
-- anagrams
+- start page - and end - page shows up after 6 answers correct
+- counter - 6 answers correct, you win, but if you get one wrong, one point is taken away
+- anagrams - you hear an anagram of the animals
+- hint - press a shows the typed anagram, press l for a random list (8) of animals with one that is the real answer.
 
 **************************************************/
 "use strict";
+const NUM_HINTS = 8;
+
+let hintList = undefined;
 
 let anagramAnimal = ``;
 
-let hintAnagrams = {
+let hintAnagram = {
   string: anagramAnimal,
   x: undefined,
   y: undefined,
@@ -21,6 +25,48 @@ let hintAnagrams = {
   vy: undefined,
   size: undefined,
 };
+const animals = [
+  `Alligator`,
+  `Alton Pee`,
+  `Armadillo`,
+  `Bat`,
+  `Bear`,
+  `Bison`,
+  `Boar`,
+  `Buffalo`,
+  `Camel`,
+  `Canary`,
+  `Cat`,
+  `Chameleon`,
+  `Chimpanzee`,
+  `Chinchilla`,
+  `Chipmunk`,
+  `Coyote`,
+  `Crocodile`,
+  `Donkey`,
+  `Elephant``Goat`,
+  `Ground hog`,
+  `Guinea Pig`,
+  `Hamster`,
+  `Kangaroo`,
+  `Koala`,
+  `Lamb`,
+  `Leopard`,
+  `Llama`,
+  `Mole`,
+  `Otter`,
+  `Panther`,
+  `Porcupine`,
+  `Raccoon`,
+  `Rhinoceros`,
+  `Seal`,
+  `Snake`,
+  `Toad`,
+  `Turtle`,
+  `Wolf`,
+  `Wolverine`,
+  `Zebra`,
+];
 
 let hintList = {
   string: `Alligator
@@ -128,6 +174,15 @@ function setup() {
     annyang.addCommands(commands);
     annyang.start();
 
+    //get the random hints, push hints in to the 8 hint slots, include the correct animal, display in bubble just for duration of key press. Bubble appears in random location on screen.
+    for (let i = 0; i < NUM_HINTS; i++) {
+      let x = random(0, width);
+      let y = random(0, height);
+      let hint = new HintList(x, y);
+      hintList.push(hint);
+      hintList.push(); //actual currentAnswer
+    }
+
     textSize(32);
     textStyle(BOLD);
     textAlign(CENTER, CENTER);
@@ -141,14 +196,12 @@ function draw() {
   background(0);
   keepScore();
 
-  keepScore();
   text(currentAnswer, width / 2, height / 2);
 
   if (state === `enter`) {
     enterStart();
   } else if (state === `game`) {
     gamePlay();
-    // ??? -- make function for this
   }
 }
 
@@ -253,6 +306,12 @@ function guessAnimal(animal) {
   }
 }
 
+function getHintList() {
+  for (let i = 0; i < hintList.length; i++) {
+    hintList[i].update();
+  }
+}
+
 function getHint() {
   if (keyIsPressed) {
     if (key == "a") {
@@ -265,18 +324,10 @@ function getHint() {
       textFont("GEORGIA");
       stroke(0, 0, random(0, 255));
       strokeWeight(10);
-      text(hintAnagrams.string, hintAnagrams.x, hintAnagrams.y);
+      text(anagramAnimal, hintAnagram.x, hintAnagram.y);
     } else if (key == "l") {
-      stroke(0, 0, random(0, 255));
-      rect(30, 20, 55, 55, 20, 15, 10, 5);
-      textSize(30);
-      fill(255);
-      textAlign(CENTER, CENTER);
-      textStyle(BOLD);
-      textFont("GEORGIA");
-      stroke(0, 0, random(0, 255));
-      strokeWeight(10);
-      text(hintList.string, hintList.x, hintList.y);
+      //this should show the bubble in the random location with the 7 random hints and 1 real one. replace with calling the OOP function
+      getHintList();
     }
   }
 }
