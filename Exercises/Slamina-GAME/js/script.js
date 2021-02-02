@@ -189,9 +189,7 @@ function setup() {
 function draw() {
   background(0);
   keepScore();
-
   text(currentAnswer, width / 2, height / 2);
-
   if (state === `enter`) {
     enterStart();
   } else if (state === `game`) {
@@ -299,6 +297,7 @@ function mousePressed() {
   } else if (state === `game`) {
     currentAnimal = random(animals);
     anagramCreator();
+    let anagramAnimal = anagramCreator(currentAnimal);
     responsiveVoice.speak(anagramAnimal);
   }
 }
@@ -380,7 +379,7 @@ function youWin() {
   console.log(`6`);
 }
 
-function anagramCreator() {
+function anagramCreator(string) {
   if (currentAnimal === `Alligator`) {
     let anagramAnimal = `Lita Largo`;
   } else if (currentAnimal === `Antelope`) {
@@ -466,6 +465,7 @@ function anagramCreator() {
   } else if (currentAnimal === `Zebra`) {
     let anagramAnimal = `Braze`;
   }
+  return anagramAnimal; // do I do return?
 }
 ///make function for key is down shift - show the anagram ? another spacebar is down? show list.
 //states with opening and ending, instructions and number of question? 10 questions?
