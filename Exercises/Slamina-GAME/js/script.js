@@ -13,8 +13,6 @@ plan:
 "use strict";
 const NUM_HINTS = 8;
 
-let hintList = undefined;
-
 let anagramAnimal = ``;
 
 let hintAnagram = {
@@ -27,7 +25,7 @@ let hintAnagram = {
 };
 const animals = [
   `Alligator`,
-  `Alton Pee`,
+  `Antelope`,
   `Armadillo`,
   `Bat`,
   `Bear`,
@@ -44,7 +42,8 @@ const animals = [
   `Coyote`,
   `Crocodile`,
   `Donkey`,
-  `Elephant``Goat`,
+  `Elephant`,
+  `Goat`,
   `Ground hog`,
   `Guinea Pig`,
   `Hamster`,
@@ -68,54 +67,49 @@ const animals = [
   `Zebra`,
 ];
 
-let hintList = {
-  string: `Alligator
-Alton Pee
-Armadillo
-Bat
-Bear
-Bison
-Boar
-Buffalo
-Camel
-Canary \n
-Cat
-Chameleon
-Chimpanzee
-Chinchilla
-Chipmunk
-Coyote
-Crocodile
-Donkey
-Elephant
-Goat \n
-Ground hog
-Guinea Pig
-Hamster
-Kangaroo
-Koala
-Lamb
-Leopard
-Llama
-Mole
-Otter \n
-Panther
-Porcupine
-Raccoon
-Rhinoceros
-Seal
-Snake
-Toad
-Turtle
-Wolf
-Wolverine
-Zebra`,
-  x: undefined,
-  y: undefined,
-  vx: undefined,
-  vy: undefined,
-  size: undefined,
-};
+let hintList = [
+  `Alligator`,
+  `Antelope`,
+  `Armadillo`,
+  `Bat`,
+  `Bear`,
+  `Bison`,
+  `Boar`,
+  `Buffalo`,
+  `Camel`,
+  `Canary`,
+  `Cat`,
+  `Chameleon`,
+  `Chimpanzee`,
+  `Chinchilla`,
+  `Chipmunk`,
+  `Coyote`,
+  `Crocodile`,
+  `Donkey`,
+  `Elephant`,
+  `Goat`,
+  `Ground hog`,
+  `Guinea Pig`,
+  `Hamster`,
+  `Kangaroo`,
+  `Koala`,
+  `Lamb`,
+  `Leopard`,
+  `Llama`,
+  `Mole`,
+  `Otter`,
+  `Panther`,
+  `Porcupine`,
+  `Raccoon`,
+  `Rhinoceros`,
+  `Seal`,
+  `Snake`,
+  `Toad`,
+  `Turtle`,
+  `Wolf`,
+  `Wolverine`,
+  `Zebra`,
+];
 
 let state = `enter`;
 
@@ -136,7 +130,7 @@ let scoreDots = {
 };
 
 let enterScreen = {
-  string: `Listen to the anagram \n Say, "I think it is ....." and guess the correct animal. \n Guess 6 animals correctly and win!`,
+  string: `Click to enter game. Then click to hear the Anagram. \n Listen to the anagram \n Say, "I think it is ....." and guess the correct animal. \n GET HINTS: Press 'A' to see the anagram. \n Press 'L' to see a list of possible animals. \n Guess 6 animals correctly and win!`,
   x: undefined,
   y: undefined,
   vx: undefined,
@@ -210,15 +204,28 @@ function gamePlay() {
 }
 
 function enterStart() {
-  background(255);
-  textSize(enterScreen.size);
+  push();
+  background(0);
   fill(255);
-  textAlign(CENTER, CENTER);
-  textStyle(BOLD);
-  textFont("GEORGIA");
+  strokeWeight(5);
   stroke(0, 0, random(0, 255));
-  strokeWeight(10);
+  rect(
+    width / 4 - 10, //x coorinate,
+    height / 4 - 60, // y coordinate,
+    width / 2 + 20, //width of rect,
+    height / 4 - 40, //height of rect,
+    40, //radius of topleft corner,
+    45, //radius of topright corner,
+    40, //radius of bottomright corner,
+    1 // radius of bottom left corner
+  );
+  noStroke();
+  textSize(enterScreen.size);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  textFont("Tahoma");
   text(enterScreen.string, enterScreen.x, enterScreen.y);
+  pop();
 }
 
 function gameWin() {
@@ -250,7 +257,7 @@ function setUpEnterScreen() {
   enterScreen.y = 200;
   enterScreen.vx = 5;
   enterScreen.vy = 1;
-  enterScreen.size = 30;
+  enterScreen.size = 15;
 }
 
 function setUpWinScreen() {
@@ -285,12 +292,14 @@ function setUpHintList() {
   endScreen.size = 30;
 }
 
+//if mouse pressed when state is `enter`, change state to `game`, else if state is `game` then say the anagramAnimal
 function mousePressed() {
-  currentAnimal = random(animals);
-  anagramCreator();
-  responsiveVoice.speak(anagramAnimal);
   if (state === `enter`) {
     state = `game`;
+  } else if (state === `game`) {
+    currentAnimal = random(animals);
+    anagramCreator();
+    responsiveVoice.speak(anagramAnimal);
   }
 }
 
