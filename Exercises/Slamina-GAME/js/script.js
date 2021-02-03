@@ -49,7 +49,7 @@ const animals = [
   `Donkey`,
   `Elephant`,
   `Goat`,
-  `Ground hog`,
+  `Groundhog`,
   `Guinea Pig`,
   `Hamster`,
   `Kangaroo`,
@@ -97,7 +97,7 @@ let scoreDots = {
 
 //set up enter screen with enclosed introduction string.
 let enterScreen = {
-  string: `Click to enter game. Then click to hear the Anagram. \n Listen to the anagram \n Say, "I think it is ....." and guess the correct animal. \n GET HINTS: Press 'A' to see the anagram. \n Press 'L' to see a list of possible animals. \n Guess 6 animals correctly and win!`,
+  string: `Click to enter game, and then click to hear the Anagram. \n Listen to the anagram. \n Say, "I think it is ....." and guess the correct animal. \n GET HINTS: Press 'A' to see the anagram. Press 'L' to see all the possible animals. \n Guess 6 animals correctly and win! BE CAREFUL! If you're wrong we take a point away!`,
   x: undefined,
   y: undefined,
   vx: undefined,
@@ -107,7 +107,7 @@ let enterScreen = {
 
 //Set up win screen for end of game.
 let winScreen = {
-  string: `You win! Click to play again!`,
+  string: `You win! REFRESH to play again!`,
   x: undefined,
   y: undefined,
   vx: undefined,
@@ -146,7 +146,7 @@ function setup() {
     //call set up functions for different screens for different states.
     setUpEnterScreen();
     setUpWinScreen();
-    setUpEndScreen(); // comment this out?
+    setUpHintList(); // comment this out?
   }
 }
 function draw() {
@@ -268,11 +268,9 @@ function setUpHintAnagram() {
 }
 
 function setUpHintList() {
-  endScreen.x = width / 2;
-  endScreen.y = 200;
-  endScreen.vx = 5;
-  endScreen.vy = 1;
-  endScreen.size = 30; //comment this out?
+  hintList.x = random(0, width);
+  hintList.y = random(0, height);
+  hintList.size = 15;
 }
 
 //if mouse pressed when state is `enter`, change state to `game`, else if state is `game` then say the anagramAnimal, if you win go back to enter (DO THIS)
@@ -297,6 +295,8 @@ function mousePressed() {
     let y = random(0, height);
     let hint = new Hint(x, y, currentAnimal);
     hintList.push(hint); //push into
+  } else if (state === `win`) {
+    state = `enter`;
   }
 }
 
@@ -306,40 +306,40 @@ function guessAnimal(animal) {
   //if user's answer matches the Animal Anagram add a point. If wrong, take point away.
   if (currentAnswer.toLowerCase() === currentAnimal.toLowerCase()) {
     //set current answer and current animal to lowercase to ensure program recognizes similarities.
-    fill(0, 255, 0);
+    // fill(0, 255, 0);
     score++;
   } else {
-    fill(255, 0, 0);
+    // fill(255, 0, 0);
     score--;
   }
 }
 
 //call hints to be updated from class and display
 function getHintList() {
-  for (let i = 0; i < hintList.length; i++) {
+  for (let i = 0; i < NUM_HINTS; i++) {
     hintList[i].update();
   }
+  let x = random(0, width);
+  let y = random(0, height);
+  let hint = new Hint(x, y, currentAnimal);
+  hintList.push(hint); //push into hintList array
+  //Include the real animal in the list hint (key press 'L') - last minute troubleshoot/correction.
+  push();
+  stroke(0, 0, random(0, 255));
+  textSize(hintList.size);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textFont("Tahoma");
+  stroke(0, 0, random(0, 255));
+  strokeWeight(2);
+  text(currentAnimal, hintList.x, hintList.y);
+  pop();
 }
 
 function getHint() {
   if (keyIsPressed) {
     if (key === "a") {
-      // push();
-      // strokeWeight(5);
-      // stroke(0, 0, random(0, 255));
-      // fill(0);
-      //
-      // rect(
-      //   width / 4 - 10, //x coorinate,
-      //   height / 4 - 60, // y coordinate,
-      //   width / 2 + 20, //width of rect,
-      //   height / 4 - 40, //height of rect,
-      //   40, //radius of topleft corner,
-      //   45, //radius of topright corner,
-      //   40, //radius of bottomright corner,
-      //   1 // radius of bottom left corner
-      // );
-      // pop();
       //display the anagram for a hint to the user.
       push();
       noStroke();
@@ -347,7 +347,7 @@ function getHint() {
       textAlign(CENTER, CENTER);
       textFont("Tahoma");
       fill(255);
-      text(anagramCreator(currentAnimal), width / 4 - 10, height / 4 - 60); //call anagramCreator function and send the currentAnimal variable to retrieve appropriate anagram.
+      text(anagramCreator(currentAnimal), width / 2, height / 4 - 60); //call anagramCreator function and send the currentAnimal variable to retrieve appropriate anagram.
       pop();
     } else if (key === "l") {
       //shows 8 possible animals (with one correct) at random locations on screen.
@@ -389,19 +389,20 @@ function youWin() {
   push();
   textSize(40);
   fill(255);
+  textSize(winScreen.size);
   textAlign(CENTER, CENTER);
   textStyle(BOLD);
-  textFont("GEORGIA");
+  textFont("Tahoma");
   stroke(0, 0, random(0, 255));
   strokeWeight(10);
-  text(`you win`, width / 2, height / 2);
-  console.log(`6`); ///comment this out?
+  text(winScreen.string, winScreen.x, winScreen.y);
+  // console.log(`6`); ///comment this out?
   pop();
 }
 
 //anagrams were precreated and are assigned to appropriate animal with else if statements. Function returns anagramAnimal
 function anagramCreator(animal) {
-  //NOTE: parameter here is a local variable that exists in this specific function, but when you send a global vaiable from somewhere else ... ie. line 251 - currentAnimal... it will be a different name.
+  //NOTE TO FUTURE SELF: parameter here is a local variable that exists in this specific function, but when you send a global vaiable from somewhere else ... ie. line 251 - currentAnimal... it will be a different name.
   let anagramAnimal = ``;
   if (animal === `Alligator`) {
     anagramAnimal = `Lita Largo`;
@@ -445,7 +446,7 @@ function anagramCreator(animal) {
     anagramAnimal = `Eh planet`;
   } else if (animal === `Goat`) {
     anagramAnimal = `Toga`;
-  } else if (animal === `Ground hog`) {
+  } else if (animal === `Groundhog`) {
     anagramAnimal = `hog rod gun`;
   } else if (animal === `Guinea Pig`) {
     anagramAnimal = `Paige Gains`;
