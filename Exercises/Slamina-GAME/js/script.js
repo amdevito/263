@@ -5,7 +5,7 @@ Alana DeVito
 Practicing voice responsive and annyang voice recognition.
 Meets Brief:
 - Added start page and end page - end page shows up after 6 answers correct
-- counter - 6 answers correct, you win, but if you get one wrong, one point is taken away. Points are pink circles.
+- counter using score Dots - 6 answers correct, you win, but if you get one wrong, one point is taken away. Points are circles that change colour depending if you gain or lose a point, or win.
 - Anagrams instead of backwards animal names - you hear an anagram of the animals
 - Additional: Get HINTS! - press 'A' shows the typed anagram, press 'L' for a random list (8) of animals with one that is the real answer.
 - text changes color depending on if you gain or lose a point. Text goes bright yellow if you win.
@@ -20,6 +20,7 @@ const NUM_HINTS = 8;
 //set empty string for the Animal name in anagram form
 let anagramAnimal = ``;
 
+//set color variables to change throughout game play
 let scoreColor = {
   r: 255,
   g: 0,
