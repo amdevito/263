@@ -1,5 +1,5 @@
 /**************************************************
-E2: Manila: The New Game
+E3: Manila: The New Game
 Alana DeVito
 
 Practicing voice responsive and annyang voice recognition.
