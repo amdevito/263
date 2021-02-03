@@ -8,6 +8,9 @@ Meets Brief:
 - counter - 6 answers correct, you win, but if you get one wrong, one point is taken away. Points are pink circles.
 - Anagrams instead of backwards animal names - you hear an anagram of the animals
 - Additional: Get HINTS! - press 'A' shows the typed anagram, press 'L' for a random list (8) of animals with one that is the real answer.
+- text changes color depending on if you gain or lose a point. Text goes bright yellow if you win.
+- game tells you when you are correct or wrong.
+- game tells you that you win and to refresh when you get 6 points.
 
 **************************************************/
 "use strict";
@@ -16,6 +19,12 @@ const NUM_HINTS = 8;
 
 //set empty string for the Animal name in anagram form
 let anagramAnimal = ``;
+
+let scoreColor = {
+  r: 255,
+  g: 0,
+  b: 199,
+};
 
 //set up variable for the anagram Hint
 let hintAnagram = {
@@ -227,8 +236,8 @@ function setUpHintAnagram() {
 }
 
 function setUpHintList() {
-  hintList.x = random(0, width);
-  hintList.y = random(0, height);
+  hintList.x = random(80, width - 50);
+  hintList.y = random(80, height - 50);
   hintList.size = 15;
 }
 
@@ -244,14 +253,14 @@ function mousePressed() {
 
     //retrieve random hints, push into the 8 hint slots, fetch hint from class, push to hint list array
     for (let i = 0; i < NUM_HINTS; i++) {
-      let x = random(0, width); //place hints in random locations on screen
-      let y = random(0, height); //place hints in random locations on screen
+      let x = random(80, width - 50); //place hints in random locations on screen
+      let y = random(80, height - 50); //place hints in random locations on screen
       let hint = new Hint(x, y, random(animals)); //get random animals from array
       hintList.push(hint);
     }
     //include the correct animal in the hints array and display
-    let x = random(0, width);
-    let y = random(0, height);
+    let x = random(80, width - 50);
+    let y = random(80, height - 50);
     let hint = new Hint(x, y, currentAnimal);
     hintList.push(hint); //push into hintList array
   } else if (state === `win`) {
@@ -265,8 +274,16 @@ function guessAnimal(animal) {
   if (currentAnswer.toLowerCase() === currentAnimal.toLowerCase()) {
     //set current answer and current animal to lowercase to ensure program recognizes similarities.
     score++;
+    responsiveVoice.speak(`That is correct!`); //game tells you that you are right!
+    scoreColor.r = 255; //if you gain a point, the text is bright pink
+    scoreColor.g = 0;
+    scoreColor.b = 199;
   } else {
     score--;
+    scoreColor.r = 0; // if you loose a point text goes dark blue
+    scoreColor.g = 0;
+    scoreColor.b = 199;
+    responsiveVoice.speak(`Wrong! You lose a point!`); //games tells you you are wrong.
   }
 }
 
@@ -315,7 +332,7 @@ function getHint() {
 //function to record points for each correct guess and display pink circles for points.
 function keepScore() {
   if (score >= 1) {
-    fill(255, 0, 199);
+    fill(scoreColor.r, scoreColor.g, scoreColor.b);
     circle(scoreDots.x, scoreDots.y, scoreDots.radius);
   }
   if (score >= 2) {
@@ -333,6 +350,10 @@ function keepScore() {
   if (score >= 6) {
     // you get 6 animals right, you win, show win screen.
     youWin();
+    scoreColor.r = 255; //change text to yellow when you win
+    scoreColor.g = 233;
+    scoreColor.b = 0;
+    responsiveVoice.speak(`You Win! Please refresh to play again!`); //tell user that they win and to refresh. For some reason this is a delayed playback. I have tried many different locations and it never triggers quicker!
   }
 }
 
