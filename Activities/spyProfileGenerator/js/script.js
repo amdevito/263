@@ -2,7 +2,8 @@
 
 /*****************
 Spy Profile Generator
-Alana 
+Alana
+
 Asks the user for their name and generates a spy profile for them! Uses
 JSON data to create the profile. Generates a password and requires that
 password to view the profile when the program is loaded again.
