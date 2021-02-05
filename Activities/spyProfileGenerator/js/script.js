@@ -27,17 +27,23 @@ let spyProfile = {
   password: `**REDACTED**`,
 };
 // Variables to store JSON data for generating the profile
-// let tarotData;
-// let objectsData;
-// let instrumentsData;
+let tarotData = undefined;
+let objectData = undefined;
+let instrumentData = undefined;
 
 /**
 Loads the JSON data used to generate the profile
 */
 function preload() {
-  // tarotData = loadJSON(TAROT_DATA_URL);
-  // objectsData = loadJSON(OBJECT_DATA_URL);
-  // instrumentsData = loadJSON(INSTRUMENT_DATA_URL);
+  tarotData = loadJSON(
+    `https://raw.githubusercontent.com/dariusk/corpora/master/data/music/instrument.json`
+  );
+  objectData = loadJSON(
+    `https://raw.githubusercontent.com/dariusk/corpora/master/data/objects/objects.json`
+  );
+  instrumentData = loadJSON(
+    `https://raw.githubusercontent.com/dariusk/corpora/master/data/divination/tarot_interpretations.json`
+  );
 }
 
 /**
@@ -48,7 +54,7 @@ function setup() {
   // Create the canvas
   createCanvas(windowWidth, windowHeight);
 
-  spyProfile.name = prompt(`Agent! What is your name?!`);
+  generateSpyProfile();
   // Try to load the data
   // let data = JSON.parse(localStorage.getItem(PROFILE_DATA_KEY));
   // // Check if there was data to load
@@ -68,12 +74,15 @@ function setup() {
 /**
 Assigns across the profile properties from the data to the current profile
 */
-// function setupSpyProfile(data) {
-//   spyProfile.name = data.name;
-//   spyProfile.alias = data.alias;
-//   spyProfile.secretWeapon = data.secretWeapon;
-//   spyProfile.password = data.password;
-// }
+function generateSpyProfile() {
+  spyProfile.name = prompt(`Agent! What is your name?!`);
+  let instrument = random(instrumentData.instruments);
+  spyProfile.alias = `The ${instrument}`;
+  spyProfile.secretWeapon = random(objectData.objects);
+  let card = random(tarotData.tarot_interpreations);
+  // spyProfile.secretWeapon = data.secretWeapon;
+  spyProfile.password = random(card.keywords);
+}
 //
 // /**
 // Generates a spy profile from JSON data
@@ -97,22 +106,22 @@ Assigns across the profile properties from the data to the current profile
 // */
 function draw() {
   background(255);
-  //
-  //   // Generate the profile as a string using the data
-  //   let spyText = `** TOP SECRET SPY PROFILE **
-  // Name: ${spyProfile.name}
-  // Alias: ${spyProfile.alias}
-  // Secret Weapon: ${spyProfile.secretWeapon}
-  // Password: ${spyProfile.password}`;
 
-  // Display the profile
+  let profile = `** SPY PROFILE! Do NOT DISTRIBUTE! **
+
+
+  Name: ${spyProfile.name}
+  Alias: ${spyProfile.alias}
+  Secret Weapon: ${spyProfile.secretWeapon};
+  Password: ${spyProfile.password}`;
+
   push();
-  textSize(32);
-  textAlign(LEFT, TOP);
   textFont(`Courier, monospace`);
+  textSize(24);
+  textAlign(LEFT, TOP);
   fill(0);
   text(spyProfile.name, 100, 100);
-  text(spyProfile.alias, 0, 0);
+  text(spyProfile.alias, 100, 200);
 
   pop();
 }
