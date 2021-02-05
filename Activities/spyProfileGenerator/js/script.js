@@ -112,7 +112,7 @@ function draw() {
 
   Name: ${spyProfile.name}
   Alias: ${spyProfile.alias}
-  Secret Weapon: ${spyProfile.secretWeapon};
+  Secret Weapon: ${spyProfile.secretWeapon}
   Password: ${spyProfile.password}`;
 
   push();
