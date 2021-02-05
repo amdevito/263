@@ -27,22 +27,22 @@ let spyProfile = {
   password: `**REDACTED**`,
 };
 // Variables to store JSON data for generating the profile
-let tarotData = undefined;
-let objectData = undefined;
 let instrumentData = undefined;
+let objectData = undefined;
+let tarotData = undefined;
 
 /**
 Loads the JSON data used to generate the profile
 */
 function preload() {
   tarotData = loadJSON(
-    `https://raw.githubusercontent.com/dariusk/corpora/master/data/music/instrument.json`
+    `https://raw.githubusercontent.com/dariusk/corpora/master/data/divination/tarot_interpretations.json`
   );
   objectData = loadJSON(
     `https://raw.githubusercontent.com/dariusk/corpora/master/data/objects/objects.json`
   );
   instrumentData = loadJSON(
-    `https://raw.githubusercontent.com/dariusk/corpora/master/data/divination/tarot_interpretations.json`
+    `https://raw.githubusercontent.com/dariusk/corpora/master/data/music/instruments.json`
   );
 }
 
@@ -79,7 +79,7 @@ function generateSpyProfile() {
   let instrument = random(instrumentData.instruments);
   spyProfile.alias = `The ${instrument}`;
   spyProfile.secretWeapon = random(objectData.objects);
-  let card = random(tarotData.tarot_interpreations);
+  let card = random(tarotData.tarot_interpretations);
   // spyProfile.secretWeapon = data.secretWeapon;
   spyProfile.password = random(card.keywords);
 }
@@ -120,8 +120,7 @@ function draw() {
   textSize(24);
   textAlign(LEFT, TOP);
   fill(0);
-  text(spyProfile.name, 100, 100);
-  text(spyProfile.alias, 100, 200);
+  text(profile, 100, 100);
 
   pop();
 }
