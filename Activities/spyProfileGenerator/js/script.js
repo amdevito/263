@@ -52,11 +52,23 @@ and generating a profile as necessary.
 */
 function setup() {
   // Create the canvas
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(370, 670); //size of cell phone
 
-  generateSpyProfile();
+  // generateSpyProfile();
+
   // Try to load the data
-  // let data = JSON.parse(localStorage.getItem(PROFILE_DATA_KEY));
+  let data = JSON.parse(localStorage.getItem(`spy-profile-data`));
+  if (data !== null) {
+    let password = prompt(`Agent! What is your password??`);
+    if (password === data.password) {
+      spyProfile.name = data.name;
+      spyProfile.alias = data.alias;
+      spyProfile.secretWeapon = data.secretWeapon;
+      spyProfile.password = data.password;
+    }
+  } else {
+    generateSpyProfile();
+  }
   // // Check if there was data to load
   // if (data) {
   //   // If so, ask for the password
@@ -82,6 +94,12 @@ function generateSpyProfile() {
   let card = random(tarotData.tarot_interpretations);
   // spyProfile.secretWeapon = data.secretWeapon;
   spyProfile.password = random(card.keywords);
+
+  localStorage.setItem(`spy-profile-data`, JSON.stringify(spyProfile));
+  //localStorage is the object that knows how to save things
+  //setItem is the method that does the saving
+  //'spy-profile-data' is the key
+  //stringify the thing you want to save
 }
 //
 // /**
@@ -105,7 +123,7 @@ function generateSpyProfile() {
 // Displays the current spy profile.
 // */
 function draw() {
-  background(255);
+  background(0);
 
   let profile = `** SPY PROFILE! Do NOT DISTRIBUTE! **
 
@@ -117,10 +135,10 @@ function draw() {
 
   push();
   textFont(`Courier, monospace`);
-  textSize(24);
+  textSize(12);
   textAlign(LEFT, TOP);
-  fill(0);
-  text(profile, 100, 100);
+  fill(255);
+  text(profile, 50, 50);
 
   pop();
 }
