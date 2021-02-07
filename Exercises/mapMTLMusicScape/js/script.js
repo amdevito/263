@@ -67,13 +67,13 @@ let instrumentData = undefined;
 let objectData = undefined;
 let tarotData = undefined;
 
-let mmmBanner = undefined;
+let mmmBanner = undefined; // take this out if issue persists
 
 /**
 Loads the JSON data used to generate the profile
 */
 function preload() {
-  mmmBanner = loadImage(`assets/images/mmmBanner.png`);
+  mmmBanner = loadImage(`assets/images/mmmBanner.png`); //take this out of issue persists
 
   tarotData = loadJSON(
     `https://raw.githubusercontent.com/dariusk/corpora/master/data/divination/tarot_interpretations.json`
