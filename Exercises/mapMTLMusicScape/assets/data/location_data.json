@@ -150,6 +150,36 @@
       "location": "5M_Lat_2M_Long",
       "date_added": 02_02_2021,
       "neighbourhood": "NDG CDN"
+    },
+    {
+      "soundscape": [
+        "hochelagaMaisonneuve_soundscape1",
+        "hochelagaMaisonneuve_soundscape2",
+        "hochelagaMaisonneuve_soundscape3",
+        "hochelagaMaisonneuve_soundscape4"
+      ],
+      "interview": [
+        "hochelagaMaisonneuve_interview1",
+        "hochelagaMaisonneuve_interview2",
+        "hochelagaMaisonneuve_interview3",
+        "hochelagaMaisonneuve_interview4"
+      ],
+
+      "story": [
+        "hochelagaMaisonneuve_story1",
+        "hochelagaMaisonneuve_story2",
+        "hochelagaMaisonneuve_story3",
+        "hochelagaMaisonneuve_story4"
+      ],
+      "playlist": [
+        "hochelagaMaisonneuve_playlist1",
+        "hochelagaMaisonneuve_playlist2",
+        "hochelagaMaisonneuve_playlist3",
+        "hochelagaMaisonneuve_playlist4"
+      ],
+      "location": "-2M_Long_2M_Lat",
+      "date_added": 02_02_2021,
+      "neighbourhood": "Hochelaga Maisonneuve"
     }
   ]
 }
