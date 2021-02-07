@@ -67,18 +67,11 @@ let instrumentData = undefined;
 let objectData = undefined;
 let tarotData = undefined;
 
-let mmmBanner = undefined;
-
 /**
 Loads the JSON data used to generate the profile
 */
 function preload() {
-  mmmBanner = loadImage(`assets/images/mmmBanner.png`);
-
-  tarotData = loadJSON(
-    `https://raw.githubusercontent.com/dariusk/corpora/master/data/divination/tarot_interpretations.json`
-  );
-  // locationData = loadJSON(`assets/data/location_data.json`);
+  locationData = loadJSON(`assets/data/location_data.json`);
   objectData = loadJSON(
     `https://raw.githubusercontent.com/dariusk/corpora/master/data/objects/objects.json`
   );
@@ -128,8 +121,7 @@ function setup() {
 Assigns across the profile properties from the data to the current profile
 */
 function generateSpyProfile() {
-  spyProfile.name = prompt(`Agent! What is your
-name?!`);
+  spyProfile.name = prompt(`Agent! What is your name?!`);
   let instrument = random(instrumentData.instruments);
   spyProfile.alias = `The ${instrument}`;
   spyProfile.secretWeapon = random(objectData.objects);
@@ -165,7 +157,7 @@ name?!`);
 // Displays the current spy profile.
 // */
 function draw() {
-  background(255);
+  background(0);
 
   let profile = `** SPY PROFILE! Do NOT DISTRIBUTE! **
 
@@ -176,7 +168,6 @@ function draw() {
   Password: ${spyProfile.password}`;
 
   push();
-  image(mmmBanner, width / 2, height);
   textFont(`Courier, monospace`);
   textSize(12);
   textAlign(LEFT, TOP);
@@ -184,5 +175,4 @@ function draw() {
   text(profile, 50, 50);
 
   pop();
-  // console.log(width);
 }
