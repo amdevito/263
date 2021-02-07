@@ -67,7 +67,14 @@ let instrumentData = undefined;
 let objectData = undefined;
 let tarotData = undefined;
 
-let mmmBanner = undefined; // take this out if issue persists
+let mmmBanner = undefined; // set app banner design
+
+///
+let userName = undefined;
+let userHomeHood = undefined;
+let userChooseMethod = undefined; //random or select
+let userSelection = undefined; //randomized if userChooseMethod is random, else user enter soundscape, interview, story, playlist
+let userHuntMethod = undefined; //Mystery walk (listen to a ambient playlist with abstract audio direction only. A audio signal will get louder or quieter as you get closer to an item.) Direct me with words. Show me a map. ( please be careful).
 
 /**
 Loads the JSON data used to generate the profile
@@ -165,24 +172,49 @@ name?!`);
 // Displays the current spy profile.
 // */
 function draw() {
-  background(255);
+  background(0);
 
-  let profile = `** SPY PROFILE! Do NOT DISTRIBUTE! **
+  let profile = `
+  AudioScape Profile:
 
+  Name:
+  ${spyProfile.name}
+  My Home Neighbourhood:
+  ${spyProfile.alias}
+  Audio Gems Collected:
+  ${spyProfile.secretWeapon}
+  Cue Word:
+  ${spyProfile.password}
 
-  Name: ${spyProfile.name}
-  Alias: ${spyProfile.alias}
-  Secret Weapon: ${spyProfile.secretWeapon}
-  Password: ${spyProfile.password}`;
+  My Current Location:
+  ${spyProfile.name}
+  Search Selection or Random:
+  ${spyProfile.alias}
+  My Current Hunt (type of audio gem):
+  ${spyProfile.secretWeapon}
+  My Current Neighbourhood:
+  ${spyProfile.password}`;
+  // Name: entered from input and stored in localStorage
+  //my home neighbourhood: user enter
+  //audio gems collected: track irl hit detection from lat and long and geolocation
+  //cue word _ password?
+  //
+  //my current location : fill with geolocation
+  //search selection or method: user input )random or selection(
+  //My current hunt: soundscape, interview, story, playlist
+  //my current neghbourhood: take the lat and long and map it to a neighbourhood.
 
   push();
-  image(mmmBanner, width / 2, height);
-  textFont(`Courier, monospace`);
+  image(mmmBanner, 0, 0);
+  textFont(`Tahoma`);
   textSize(12);
   textAlign(LEFT, TOP);
   fill(255);
-  text(profile, 50, 50);
+  text(profile, 30, 115);
 
   pop();
-  // console.log(width);
+
+  push();
+
+  pop();
 }
