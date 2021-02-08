@@ -55,10 +55,10 @@ https://github.com/dariusk/corpora/
 // The spy profile data while the program is running
 let spyProfile = {
   //change to montrealMuMapProfile
-  name: `**REDACTED**`,
-  alias: `**REDACTED**`, //my neighbourhood
-  secretWeapon: `**REDACTED**`, //number of audio gems Collected
-  password: `**REDACTED**`, //user chooses own password (just double the user prompts)
+  name: `**********`,
+  alias: `**********`, //my neighbourhood
+  secretWeapon: `**********`, //number of audio gems Collected
+  password: `**********`, //user chooses own password (just double the user prompts)
   //current gem hunt: --if choose random, generate randomly, else, choose in app, not in prompt
 };
 // Variables to store JSON data for generating the profile
@@ -70,15 +70,23 @@ let tarotData = undefined;
 let mmmBanner = undefined; // set app banner design
 
 ///
-let userName = undefined;
-let userHomeHood = undefined;
-let userChooseMethod = undefined; //random or select
-let userSelection = undefined; //randomized if userChooseMethod is random, else user enter soundscape, interview, story, playlist
-let userHuntMethod = undefined; //Mystery walk (listen to a ambient playlist with abstract audio direction only. A audio signal will get louder or quieter as you get closer to an item.) Direct me with words. Show me a map. ( please be careful).
+// let userInputName = undefined; already defined in the inital prompt
+let userInputHomeHood = undefined; //user enters the name of their local neighourhood to them
+let userInputChooseMethod = undefined; //random or select
+let userInputSelection = undefined; //randomized if userChooseMethod is random, else user enter soundscape, interview, story, playlist
+let userInputHuntMethod = undefined; //Mystery walk (listen to a ambient playlist with abstract audio direction only. A audio signal will get louder or quieter as you get closer to an item.) Direct me with words. Show me a map. ( please be careful).
 
+// buttons
+let inputHomeHoodButton = undefined; //user enters the name of their local neighourhood to them
+let inputChooseMethodButton = undefined; //random or select
+let inputSelectionButton = undefined; //randomized if userChooseMethod is random, else user enter soundscape, interview, story, playlist
+let inputHuntMethodButton = undefined; //Mystery walk (listen to a ambient playlist with abstract audio direction only. A audio signal will get louder or quieter as you get closer to an item.) Direct me with words. Show me a map. ( please be careful).
 /**
 Loads the JSON data used to generate the profile
 */
+
+let seeMapButton = undefined;
+
 function preload() {
   mmmBanner = loadImage(`assets/images/mmmBanner.png`); //take this out of issue persists
 
@@ -104,6 +112,61 @@ function setup() {
 
   // generateSpyProfile();
 
+  //input submit boxes
+  userInputHomeHood = createInput();
+  userInputChooseMethod = createInput();
+  userInputSelection = createInput();
+  userInputHuntMethod = createInput();
+
+  //text boxes
+
+  userInputHomeHood.position(35, 455);
+  userInputChooseMethod.position(35, 510);
+  userInputSelection.position(35, 565);
+  userInputHuntMethod.position(35, 620);
+
+  userInputHomeHood.size(200, 15);
+  userInputChooseMethod.size(200, 15);
+  userInputSelection.size(200, 15);
+  userInputHuntMethod.size(200, 15);
+
+  //input submit buttons
+
+  seeMapButton = createButton("See MMMAP");
+  seeMapButton.position(userInputHomeHood.x + userInputHomeHood.width, 110); //located above the input box
+  seeMapButton.mousePressed(sendMapButton); //do a function when mouse is pressed
+  seeMapButton.size(100, 50);
+
+  inputHomeHoodButton = createButton("submit");
+  inputHomeHoodButton.position(
+    userInputHomeHood.x + userInputHomeHood.width + 30,
+    455
+  ); //located above the input box
+  inputHomeHoodButton.mousePressed(sendHomeHood); //do a function when mouse is pressed
+
+  inputChooseMethodButton = createButton("submit");
+  inputChooseMethodButton.position(
+    userInputChooseMethod.x + userInputChooseMethod.width + 30,
+    510
+  ); //located above the input box
+  inputChooseMethodButton.mousePressed(sendChooseMethod); //do a function when mouse is pressed
+
+  inputSelectionButton = createButton("submit");
+  inputSelectionButton.position(
+    userInputSelection.x + userInputSelection.width + 30,
+    565
+  ); //located above the input box
+  inputSelectionButton.mousePressed(sendSelection); //do a function when mouse is pressed
+
+  inputHuntMethodButton = createButton("submit");
+  inputHuntMethodButton.position(
+    userInputHuntMethod.x + userInputHuntMethod.width + 30,
+    620
+  ); ///located above the input box
+  inputHuntMethodButton.mousePressed(sendHuntMethod); //do a function when mouse is pressed
+
+  ///\When above information is submitted the sectons above that currently say REDACTED ARE filled with the appropriate inforation in a NEW COLOR.
+
   // Try to load the data
   let data = JSON.parse(localStorage.getItem(`spy-profile-data`));
   if (data !== null) {
@@ -117,6 +180,7 @@ function setup() {
   } else {
     generateSpyProfile();
   }
+
   // // Check if there was data to load
   // if (data) {
   //   // If so, ask for the password
@@ -175,7 +239,7 @@ function draw() {
   background(0);
 
   let profile = `
-  AudioScape Profile:
+  AudioScape Profile
 
   Name:
   ${spyProfile.name}
@@ -183,16 +247,13 @@ function draw() {
   ${spyProfile.alias}
   Audio Gems Collected:
   ${spyProfile.secretWeapon}
-  Cue Word:
-  ${spyProfile.password}
-
   My Current Location:
   ${spyProfile.name}
   Search Selection or Random:
   ${spyProfile.alias}
-  My Current Hunt (type of audio gem):
+  My Current Hunt Type (of audio gem):
   ${spyProfile.secretWeapon}
-  My Current Neighbourhood:
+  My Current Hunt Neighbourhood:
   ${spyProfile.password}`;
   // Name: entered from input and stored in localStorage
   //my home neighbourhood: user enter
@@ -203,14 +264,17 @@ function draw() {
   //search selection or method: user input )random or selection(
   //My current hunt: soundscape, interview, story, playlist
   //my current neghbourhood: take the lat and long and map it to a neighbourhood.
+  //
+  // removed:   Cue Word:
+  //   ${spyProfile.password}
 
   push();
   image(mmmBanner, 0, 0);
   textFont(`Tahoma`);
-  textSize(12);
+  textSize(16);
   textAlign(LEFT, TOP);
   fill(255);
-  text(profile, 30, 115);
+  text(profile, 30, 100);
 
   pop();
 
@@ -218,3 +282,10 @@ function draw() {
 
   pop();
 }
+
+function sendHomeHood() {}
+function sendChooseMethod() {}
+function sendSelection() {}
+function sendHuntMethod() {}
+
+function sendMapButton() {}
