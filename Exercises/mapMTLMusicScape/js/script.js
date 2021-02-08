@@ -114,46 +114,67 @@ function setup() {
 
   //input submit boxes
   userInputHomeHood = createInput();
-  userInputChooseMethod = createInput();
-  userInputSelection = createInput();
-  userInputHuntMethod = createInput();
+  // userInputChooseMethod = createInput();
+  // userInputSelection = createInput();
+
+  //drop down menu
+  userInputHuntMethod = createSelect();
+  userInputHuntMethod.position(38, 420);
+  userInputHuntMethod.option("Choose the type or randomize.");
+  userInputHuntMethod.option("Random");
+  userInputHuntMethod.option(" Mystery Walk w/ Audio Cue");
+  userInputHuntMethod.option("Direct me with voice");
+  userInputHuntMethod.option("Map only");
+  userInputHuntMethod.changed(sendHuntMethod); // to create action after the input drop down is changed.
+
+  userInputSelection = createSelect();
+  userInputSelection.position(38, 480);
+  userInputSelection.option("Choose the type or randomize.");
+  userInputSelection.option("Random");
+  userInputSelection.option("Interview");
+  userInputSelection.option("Story");
+  userInputSelection.option("Playlist");
+  userInputSelection.option("User Created"); //to find gems left by other users.< will need to be monitored. will be rated by other users.
+  userInputSelection.changed(sendSelection); // to create action after the input drop down is changed.
+
+  // userInputChooseMethod.selected('kiwi');
+  // userInputChooseMethod.changed(userInputChooseMethod);// to create action after the input drop down is changed.
+
+  // userInputHuntMethod = createInput();
 
   //text boxes
 
-  userInputHomeHood.position(35, 455);
-  userInputChooseMethod.position(35, 510);
-  userInputSelection.position(35, 565);
-  userInputHuntMethod.position(35, 620);
+  userInputHomeHood.position(230, 215); /// fills in My Home Neighbourhood.
+  // userInputChooseMethod.position(35, 510); ////fills search selection with random or select
+  // userInputSelection.position(35, 565); //soundscape, interview, story or playlist  (if random will create itself.)
+  // userInputHuntMethod.position(35, 620); //choose Mystery walk (listen to a ambient playlist with abstract audio direction only - A audio signal will get louder or quieter as you get closer to an item.)  Direct me with words. Show me a map. ( please be careful).
 
-  userInputHomeHood.size(200, 15);
-  userInputChooseMethod.size(200, 15);
-  userInputSelection.size(200, 15);
-  userInputHuntMethod.size(200, 15);
+  userInputHomeHood.size(100, 15);
+  // userInputChooseMethod.size(200, 15);
+  // userInputSelection.size(200, 15);
+  // userInputHuntMethod.size(200, 15);
 
   //input submit buttons
 
   seeMapButton = createButton("See MMMAP");
-  seeMapButton.position(userInputHomeHood.x + userInputHomeHood.width, 110); //located above the input box
+  seeMapButton.position(userInputHomeHood.x, 110); //located above the input box
   seeMapButton.mousePressed(sendMapButton); //do a function when mouse is pressed
-  seeMapButton.size(100, 50);
+  seeMapButton.size(105, 50);
 
   inputHomeHoodButton = createButton("submit");
-  inputHomeHoodButton.position(
-    userInputHomeHood.x + userInputHomeHood.width + 30,
-    455
-  ); //located above the input box
+  inputHomeHoodButton.position(userInputHomeHood.x, 240); //located above the input box
   inputHomeHoodButton.mousePressed(sendHomeHood); //do a function when mouse is pressed
 
-  inputChooseMethodButton = createButton("submit");
-  inputChooseMethodButton.position(
-    userInputChooseMethod.x + userInputChooseMethod.width + 30,
-    510
-  ); //located above the input box
-  inputChooseMethodButton.mousePressed(sendChooseMethod); //do a function when mouse is pressed
+  // inputChooseMethodButton = createButton("submit");
+  // inputChooseMethodButton.position(
+  //   userInputChooseMethod.x + userInputChooseMethod.width + 30,
+  //   510
+  // ); //located above the input box
+  // inputChooseMethodButton.mousePressed(sendChooseMethod); //do a function when mouse is pressed
 
   inputSelectionButton = createButton("submit");
   inputSelectionButton.position(
-    userInputSelection.x + userInputSelection.width + 30,
+    userInputHomeHood.x + userInputHomeHood.width + 30,
     565
   ); //located above the input box
   inputSelectionButton.mousePressed(sendSelection); //do a function when mouse is pressed
@@ -243,16 +264,22 @@ function draw() {
 
   Name:
   ${spyProfile.name}
+
   My Home Neighbourhood:
   ${spyProfile.alias}
+
   Audio Gems Collected:
   ${spyProfile.secretWeapon}
-  My Current Location:
+
+  My Current Location (Lat + Long auto gen):
   ${spyProfile.name}
-  Search Selection or Random:
-  ${spyProfile.alias}
-  My Current Hunt Type (of audio gem):
-  ${spyProfile.secretWeapon}
+
+  How would you like to hunt?:
+
+
+  What kind of audio gem are you hunting?
+
+
   My Current Hunt Neighbourhood:
   ${spyProfile.password}`;
   // Name: entered from input and stored in localStorage
