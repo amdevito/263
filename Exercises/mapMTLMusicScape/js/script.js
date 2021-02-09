@@ -100,7 +100,7 @@ let mmmBanner = undefined; // set app banner design
 ///
 // let userInputName = undefined; already defined in the inital prompt
 let userInputHomeHood = undefined; //user enters the name of their local neighourhood to them
-let userInputChooseMethod = undefined; //random or select
+// let userInputChooseMethod = undefined; //random or select
 let userInputSelection = undefined; //randomized if userChooseMethod is random, else user enter soundscape, interview, story, playlist
 let userInputHuntMethod = undefined; //Mystery walk (listen to a ambient playlist with abstract audio direction only. A audio signal will get louder or quieter as you get closer to an item.) Direct me with words. Show me a map. ( please be careful).
 
@@ -134,7 +134,7 @@ and generating a profile as necessary.
 */
 function setup() {
   // Create the canvas
-  createCanvas(370, 670); //size of cell phone
+  createCanvas(375, 667); //size of cell phone
 
   // generateSpyProfile();
 
@@ -323,8 +323,8 @@ function draw() {
 
 
   My Current Hunt:
-   ${mmMapProfile.currentHuntHood} ${mmMapProfile.selection}
-   ${mmMapProfile.huntMethod}
+   ${mmMapProfile.currentHuntHood} ${mmMapProfile.huntMethod}
+   ${mmMapProfile.selection}
 
   Current Geolocation Hunt Address:
    ${mmMapProfile.huntAddress}`;
@@ -356,15 +356,29 @@ function draw() {
 function sendHomeHood() {
   mmMapProfile.homeHood = userInputHomeHood.value();
   userInputHomeHood.value("");
+  ///QUESTION: how do i save this to the profile for next time? stringify? same with send Hunt Method. Also for my hunt and send selection.
 }
-function sendChooseMethod() {}
+// function sendChooseMethod() {}
+
 function sendHuntMethod() {
   mmMapProfile.huntMethod = userInputHuntMethod.value();
-  userInputHuntMethod.value("");
+
+  if (mmMapProfile.huntMethod === `Random`) {
+    mmMapProfile.huntMethod = random(huntType);
+    userInputHuntMethod.value(`Choose the method or randomize.`);
+  } else {
+    userInputHuntMethod.value(`Choose the method or randomize.`);
+  }
 }
 function sendSelection() {
   mmMapProfile.selection = userInputSelection.value();
-  userInputSelection.value("");
+
+  if (mmMapProfile.selection === `Random`) {
+    mmMapProfile.selection = random(audioGems);
+    userInputSelection.value(`Choose the type or randomize.`);
+  } else {
+    userInputSelection.value(`Choose the type or randomize.`);
+  }
 }
 
 function sendMapButton() {}
