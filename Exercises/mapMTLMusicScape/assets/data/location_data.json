@@ -27,6 +27,12 @@
         "plateauMontRoyalOutremont_playlist3",
         "plateauMontRoyalOutremont_playlist4"
       ],
+      "user created": [
+        "plateauMontRoyalOutremont_userCreated1",
+        "plateauMontRoyalOutremont_userCreated2",
+        "plateauMontRoyalOutremont_userCreated3",
+        "plateauMontRoyalOutremont_userCreated4"
+      ],
       "location": "North_2M_Lat",
       "date_added": "02 02 2021",
       "neighbourhood": "Plateau Mont Royal Outremont"
@@ -56,6 +62,12 @@
         "villerayRosemont_playlist2",
         "villerayRosemont_playlist3",
         "villerayRosemont_playlist4"
+      ],
+      "user created": [
+        "villerayRosemont_userCreated1",
+        "villerayRosemont_userCreated2",
+        "villerayRosemont_userCreated3",
+        "villerayRosemont_userCreated4"
       ],
       "location": "South_2M_Lat",
       "date_added": "02 02 2021",
@@ -87,6 +99,12 @@
         "sudOuest_playlist3",
         "sudOuest_playlist4"
       ],
+      "user created": [
+        "sudOuest_userCreated1",
+        "sudOuest_userCreated2",
+        "sudOuest_userCreated3",
+        "sudOuest_userCreated4"
+      ],
       "location": "East_2M_Long",
       "date_added": "02 02 2021",
       "neighbourhood": "Sud Ouest"
@@ -116,6 +134,12 @@
         "villeMarie_playlist2",
         "villeMarie_playlist3",
         "villeMarie_playlist4"
+      ],
+      "user created": [
+        "villeMarie_userCreated1",
+        "villeMarie_userCreated2",
+        "villeMarie_userCreated3",
+        "villeMarie_userCreated4"
       ],
       "location": "West_2M_Long",
       "date_added": "02 02 2021",
@@ -147,6 +171,12 @@
         "NDG_CDN_playlist3",
         "NDG_CDN_playlist4"
       ],
+      "user created": [
+        "NDG_CDN_userCreated1",
+        "NDG_CDN_userCreated2",
+        "NDG_CDN_userCreated3",
+        "NDG_CDN_userCreated4"
+      ],
       "location": "5M_Lat_2M_Long",
       "date_added": "02 02 2021",
       "neighbourhood": "NDG CDN"
@@ -176,6 +206,12 @@
         "hochelagaMaisonneuve_playlist2",
         "hochelagaMaisonneuve_playlist3",
         "hochelagaMaisonneuve_playlist4"
+      ],
+      "user created": [
+        "hochelagaMaisonneuve_userCreated1",
+        "hochelagaMaisonneuve_userCreated2",
+        "hochelagaMaisonneuve_userCreated3",
+        "hochelagaMaisonneuve_userCreated4"
       ],
       "location": "-2M_Long_2M_Lat",
       "date_added": "02 02 2021",

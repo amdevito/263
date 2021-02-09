@@ -62,7 +62,7 @@ let mmMapProfile = {
   //change to montrealMuMapProfile
   name: `**********`,
   homeHood: `**********`, //my neighbourhood - this is the prompt instead of password.
-  audioGemsCollected: `0`, //number of audio gems Collected
+  audioGemsCollected: 0, //number of audio gems Collected
   currentLocation: `**********`, ///geolocation - fetch lat and long
   huntMethod: `**********`,
   selection: `**********`, ///current gem hunt: --if choose random, generate randomly, else, choose in app, not in prompt
@@ -114,6 +114,10 @@ and generating a profile as necessary.
 function setup() {
   // Create the canvas
   createCanvas(375, 667); //size of iphone 6/7/8 - mobile first then make responsive to other shapes.
+
+  let savedProfile = localStorage.getItem(`mmMap-profile-data`);
+
+  mmMapProfile = JSON.parse(savedProfile);
 
   //input submit boxes
   userInputHomeHood = createInput();
@@ -207,32 +211,32 @@ function draw() {
   background(0);
 
   let profile = `
-  AudioScape Profile
+  AudioCast Profile
 
   Name:
-   ${mmMapProfile.name}
+  ${mmMapProfile.name}
 
-  My Home Neighbourhood:
-   ${mmMapProfile.homeHood}
+  Hunt Neighbourhood:
+  ${mmMapProfile.homeHood}
 
   Audio Gems Collected:
-   ${mmMapProfile.audioGemsCollected}
+  ${mmMapProfile.audioGemsCollected}
 
-  My Current Location (Lat + Long):
-   ${mmMapProfile.currentLocation}
+  My Geolocation (coming soon!):
+  ${mmMapProfile.currentLocation}
 
-  How would you like to hunt?:
+  How would you like to hunt?
 
 
   What kind of audio gem are you hunting?
 
 
   My Current Hunt:
-   ${mmMapProfile.currentHuntHood} ${mmMapProfile.huntMethod}
-   ${mmMapProfile.selection}
+  *${mmMapProfile.huntMethod}*   to
+  *${mmMapProfile.selection}*
 
-  Current Geolocation Hunt Address:
-   ${mmMapProfile.huntAddress}`;
+  Currently Hunting:
+  ${mmMapProfile.huntAddress}`;
 
   // Name: entered from input and stored in localStorage
   //my home neighbourhood: user enter
@@ -257,6 +261,8 @@ function draw() {
 function sendHomeHood() {
   mmMapProfile.homeHood = userInputHomeHood.value();
   userInputHomeHood.value("");
+  localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile));
+
   ///QUESTION: how do i save this to the profile for next time? stringify? same with send Hunt Method. Also for my hunt and send selection.
 }
 
@@ -269,6 +275,7 @@ function sendHuntMethod() {
   } else {
     userInputHuntMethod.value(`Choose the method or randomize.`);
   }
+  localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile));
 }
 function sendSelection() {
   mmMapProfile.selection = userInputSelection.value();
@@ -279,6 +286,22 @@ function sendSelection() {
   } else {
     userInputSelection.value(`Choose the type or randomize.`);
   }
+  localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile));
+
+  for (let i = 0; i < audioScapeData.location_audioGems.length; i++) {
+    if (
+      audioScapeData.location_audioGems[i].neighbourhood ===
+      mmMapProfile.homeHood
+    ) {
+      audioScapeData.location_audioGems[i][mmMapProfile.selection];
+      mmMapProfile.huntAddress = random(
+        audioScapeData.location_audioGems[i][
+          mmMapProfile.selection.toLowerCase()
+        ]
+      );
+    }
+  }
+  mmMapProfile.audioGemsCollected++; //for now just add a gem once you choose one
 }
 
 function sendMapButton() {}
