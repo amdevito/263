@@ -40,10 +40,12 @@ Brief:
 
 NEXT STEPS: Mon feb 8:
 - inital prompts for name and password
-- take the user entered information and save
-- audio gems colelcted should read 0 at first unless old profile is pulled up
+- take the user entered information and save (drop down menues into slots below and in local storage.)
+- audio gems collcted should read 0 at first unless old profile is pulled up x
 - how you you like to hunt? take the answer and put below unless random, then chose the value randomly and put below
-- what kind of audio gem?
+-
+-  what kind of audio gem? - make array and choose from the array, then find a gem in the general vacinity and report back address. in the my current hunt section.
+-
 
 
 
@@ -147,7 +149,7 @@ function setup() {
   userInputHuntMethod.changed(sendHuntMethod); // to create action after the input drop down is changed.
 
   userInputSelection = createSelect();
-  userInputSelection.position(32, 522);
+  userInputSelection.position(32, 480);
   userInputSelection.option("Choose the type or randomize.");
   userInputSelection.option("Random");
   userInputSelection.option("Interview");
@@ -292,15 +294,15 @@ function draw() {
   How would you like to hunt?:
 
 
-   ${mmMapProfile.huntMethod}
-
   What kind of audio gem are you hunting?
 
 
-   ${mmMapProfile.selection}
+  My Current Hunt:
+   ${mmMapProfile.currentHuntHood} ${mmMapProfile.selection}
+   ${mmMapProfile.huntMethod}
 
-  My Current Hunt (auto gen):
-   ${mmMapProfile.currentHuntHood} ${mmMapProfile.selection} ${mmMapProfile.huntAddress}`;
+  Geolocation Address:
+   ${mmMapProfile.huntAddress}`;
 
   // Name: entered from input and stored in localStorage
   //my home neighbourhood: user enter
@@ -331,7 +333,13 @@ function sendHomeHood() {
   userInputHomeHood.value("");
 }
 function sendChooseMethod() {}
-function sendSelection() {}
-function sendHuntMethod() {}
+function sendSelection() {
+  mmMapProfile.selection = userInputSelection.value();
+  userInputSelection.value("select");
+}
+function sendHuntMethod() {
+  mmMapProfile.huntMethod = userInputHuntMethod.value();
+  userInputHuntMethod.value("select");
+}
 
 function sendMapButton() {}
