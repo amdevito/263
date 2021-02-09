@@ -2,7 +2,7 @@
 
 /*****************
 e3: Spy Profile Generator PLUS -- Mapping the Montreal Musicscape
--- a audio scavenger hunt
+-- an audio scavenger hunt APP
 --- walk through the city listening to an ambient soundscape until you enter certain locations. A cue sound indicates that you are getting close and the closer (will get louder and more frequent as you get closer to the 'audioGem')
 
 (Mock Up using location relative to the user's starting point. Eventually these will be connected to specific neighbourhood locations in Montreal.)
@@ -119,18 +119,30 @@ function setup() {
 
   mmMapProfile = JSON.parse(savedProfile);
 
-  //input submit boxes
-  userInputHomeHood = createInput();
-  userInputHomeHood.position(230, 215); /// fills in My Home Neighbourhood.
-  userInputHomeHood.size(100, 15);
+  // //input submit boxes
+  // userInputHomeHood = createInput();
+  // userInputHomeHood.position(230, 215); /// fills in My Home Neighbourhood.
+  // userInputHomeHood.size(100, 15);
+  //
+  // inputHomeHoodButton = createButton("submit");
+  // inputHomeHoodButton.position(userInputHomeHood.x, 240); //located above the input box
+  // inputHomeHoodButton.mousePressed(sendHomeHood); //do a function when mouse is pressed
+  //
 
-  inputHomeHoodButton = createButton("submit");
-  inputHomeHoodButton.position(userInputHomeHood.x, 240); //located above the input box
-  inputHomeHoodButton.mousePressed(sendHomeHood); //do a function when mouse is pressed
+  //drop down menues
+  userInputHomeHood = createSelect();
+  userInputHomeHood.position(110, 245);
+  userInputHomeHood.option("Choose where you would like to hunt.");
+  userInputHomeHood.option("Plateau Mont Royal Outremont");
+  userInputHomeHood.option("Villeray and Rosemont");
+  userInputHomeHood.option("Ville Marie");
+  userInputHomeHood.option("NDG CDN");
+  userInputHomeHood.option("Hochelaga Maisonneuve");
+  userInputHomeHood.option("Sud Ouest");
+  userInputHomeHood.changed(sendHomeHood); // to create action after the input drop down is changed.
 
-  //drop down menu
   userInputHuntMethod = createSelect();
-  userInputHuntMethod.position(32, 420);
+  userInputHuntMethod.position(130, 420);
   userInputHuntMethod.option("Choose the method or randomize.");
   userInputHuntMethod.option("Random");
   userInputHuntMethod.option("Mystery Walk w/ Audio Cue");
@@ -139,7 +151,7 @@ function setup() {
   userInputHuntMethod.changed(sendHuntMethod); // to create action after the input drop down is changed.
 
   userInputSelection = createSelect();
-  userInputSelection.position(32, 480);
+  userInputSelection.position(149, 480);
   userInputSelection.option("Choose the type or randomize.");
   userInputSelection.option("Random");
   userInputSelection.option("Interview");
@@ -151,7 +163,7 @@ function setup() {
   //input submit buttons
 
   seeMapButton = createButton("See MMMAP");
-  seeMapButton.position(userInputHomeHood.x, 110); //located above the input box
+  seeMapButton.position(250, 110); //located above the input box
   seeMapButton.mousePressed(sendMapButton); //do a function when mouse is pressed
   seeMapButton.size(105, 50);
 
@@ -188,8 +200,7 @@ function setup() {
 Assigns across the profile properties from the data to the current profile
 */
 function generateAudioScapeProfile() {
-  mmMapProfile.name = prompt(`What is your
-name?`);
+  mmMapProfile.name = prompt(`What is your name?`);
   mmMapProfile.password = prompt(`Please create a password.`);
 
   localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile));
@@ -217,7 +228,7 @@ function draw() {
   ${mmMapProfile.name}
 
   Hunt Neighbourhood:
-  ${mmMapProfile.homeHood}
+
 
   Audio Gems Collected:
   ${mmMapProfile.audioGemsCollected}
@@ -233,7 +244,7 @@ function draw() {
 
   My Current Hunt:
   *${mmMapProfile.huntMethod}*   to
-  *${mmMapProfile.selection}*
+  *${mmMapProfile.selection}* in *${mmMapProfile.homeHood}*
 
   Currently Hunting:
   ${mmMapProfile.huntAddress}`;
@@ -253,7 +264,7 @@ function draw() {
   textSize(16);
   textAlign(LEFT, TOP);
   fill(255);
-  text(profile, 20, 100);
+  text(profile, 10, 100);
 
   pop();
 }
@@ -262,6 +273,7 @@ function sendHomeHood() {
   mmMapProfile.homeHood = userInputHomeHood.value();
   userInputHomeHood.value("");
   localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile));
+  userInputHomeHood.value(`Choose where you would like to hunt.`);
 
   ///QUESTION: how do i save this to the profile for next time? stringify? same with send Hunt Method. Also for my hunt and send selection.
 }
@@ -286,7 +298,6 @@ function sendSelection() {
   } else {
     userInputSelection.value(`Choose the type or randomize.`);
   }
-  localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile));
 
   for (let i = 0; i < audioScapeData.location_audioGems.length; i++) {
     if (
@@ -302,6 +313,7 @@ function sendSelection() {
     }
   }
   mmMapProfile.audioGemsCollected++; //for now just add a gem once you choose one
+  localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile));
 }
 
 function sendMapButton() {}
