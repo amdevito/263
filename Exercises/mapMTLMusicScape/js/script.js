@@ -44,7 +44,10 @@ NEXT STEPS: Mon feb 8:
 - audio gems collcted should read 0 at first unless old profile is pulled up x
 - how you you like to hunt? take the answer and put below unless random, then chose the value randomly and put below
 -
--  what kind of audio gem? - make array and choose from the array, then find a gem in the general vacinity and report back address. in the my current hunt section.
+- ><><****Need to take the type of hunt, the audio gem and the lat and long or home neighbourhood and return the appropriate audio hunt for the user from the JSON file.. Then just tally when you return the location and item to the auudio gem. (No need for actual direction and searching at this point.)
+- the geolocation hunt address will just be the appropriate neighbouthood lat and long for now -- see the p5.js example that sends this back..
+
+- what kind of audio gem? - make array and choose from the array, then find a gem in the general vacinity and report back address. in the my current hunt section.
 - geolocation data: https://editor.p5js.org/shiffman/sketches/HkQ8kMdee
 
 
