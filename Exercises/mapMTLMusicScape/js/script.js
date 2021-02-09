@@ -38,11 +38,17 @@ Brief:
 
       Finding location...
 
+NEXT STEPS: Mon feb 8:
+- inital prompts for name and password
+- take the user entered information and save
+- audio gems colelcted should read 0 at first unless old profile is pulled up
+- how you you like to hunt? take the answer and put below unless random, then chose the value randomly and put below
+- what kind of audio gem?
 
 
 
-Darius Kazemi's corpora project:
-https://github.com/dariusk/corpora/
+
+
 ******************/
 
 // // URLs to JSON data
@@ -63,6 +69,7 @@ let mmMapProfile = {
   selection: `**********`, ///current gem hunt: --if choose random, generate randomly, else, choose in app, not in prompt
   currentHuntHood: `**********`, //neighbourhood determined by geolocation
   password: `**********`,
+  huntAddress: "*********", ///where you are going to find the audio gem (shown just in mockup prototype) this is where the user is led.
 };
 // Variables to store JSON data for generating the profile
 //change to variables to store JSON data per neighbourhood
@@ -72,6 +79,8 @@ let homeHoodData = undefined;
 let audioGemsCollectedData = 0;
 let currentLocationData = undefined;
 let currentHuntHoodData = undefined;
+
+let huntAddressData = undefined; ///where you are going to find the audio gem (shown just in mockup prototype) this is where the user is led.
 
 let mmmBanner = undefined; // set app banner design
 
@@ -197,6 +206,7 @@ function setup() {
   if (data !== null) {
     let name = prompt(`What is your name??`);
     if (name === data.name) {
+      mmMapProfile.name = data.name;
       mmMapProfile.homeHood = data.homeHood;
       mmMapProfile.audioGemsCollected = data.audioGemsCollected;
       mmMapProfile.huntMethod = data.huntMethod;
@@ -289,8 +299,8 @@ function draw() {
 
    ${mmMapProfile.selection}
 
-  My Current Hunt Neighbourhood (auto gen):
-   ${mmMapProfile.currentHuntHood}`;
+  My Current Hunt (auto gen):
+   ${mmMapProfile.currentHuntHood} ${mmMapProfile.selection} ${mmMapProfile.huntAddress}`;
 
   // Name: entered from input and stored in localStorage
   //my home neighbourhood: user enter
@@ -317,7 +327,8 @@ function draw() {
 }
 
 function sendHomeHood() {
-  homeHoodData = userInputHomeHood.value();
+  mmMapProfile.homeHood = userInputHomeHood.value();
+  userInputHomeHood.value("");
 }
 function sendChooseMethod() {}
 function sendSelection() {}
