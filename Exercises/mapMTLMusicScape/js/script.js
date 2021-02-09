@@ -39,15 +39,15 @@ Next steps...
 // The audio scape  profile data while the program is running
 let mmMapProfile = {
   //change to montrealMuMapProfile
-  name: `**********`,
-  homeHood: `**********`, //my neighbourhood - this is the prompt instead of password.
+  name: ``,
+  homeHood: ``, //my neighbourhood - this is the prompt instead of password.
   audioGemsCollected: 0, //number of audio gems Collected
-  currentLocation: `**********`, ///geolocation - fetch lat and long
-  huntMethod: `**********`,
-  selection: `**********`, ///current gem hunt: --if choose random, generate randomly, else, choose in app, not in prompt
-  currentHuntHood: `**********`, //neighbourhood determined by geolocation
-  password: `**********`,
-  huntAddress: "*********", ///where you are going to find the audio gem (shown just in mockup prototype) this is where the user is led.
+  currentLocation: ``, ///geolocation - fetch lat and long
+  huntMethod: ``,
+  selection: ``, ///current gem hunt: --if choose random, generate randomly, else, choose in app, not in prompt
+  currentHuntHood: ``, //neighbourhood determined by geolocation
+  password: ``,
+  huntAddress: "", ///where you are going to find the audio gem (shown just in mockup prototype) this is where the user is led.
 };
 // Variables to store JSON data for generating the profile
 //change to variables to store JSON data per neighbourhood
@@ -98,14 +98,6 @@ function setup() {
 
   mmMapProfile = JSON.parse(savedProfile);
 
-  // //input submit boxes
-  // userInputHomeHood = createInput();
-  // userInputHomeHood.position(230, 215); /// fills in My Home Neighbourhood.
-  // userInputHomeHood.size(100, 15);
-  //
-  // inputHomeHoodButton = createButton("submit");
-  // inputHomeHoodButton.position(userInputHomeHood.x, 240); //located above the input box
-  // inputHomeHoodButton.mousePressed(sendHomeHood); //do a function when mouse is pressed
   //
 
   //drop down menues
@@ -142,7 +134,7 @@ function setup() {
   //input submit buttons
 
   seeMapButton = createButton("See MMMAP");
-  seeMapButton.position(250, 110); //located above the input box
+  seeMapButton.position(250, 115); //located above the input box
   seeMapButton.mousePressed(sendMapButton); //do a function when mouse is pressed
   seeMapButton.size(105, 50);
 
@@ -189,31 +181,63 @@ function generateAudioScapeProfile() {
   //stringify the thing you want to save
 }
 
-//
-// /**
-// Generates a  profile from JSON data
-// */
-// //
-// // /**
-// Displays the current spy profile.
-// */
 function draw() {
   background(0);
+  //coloured boxes behind data entered information.
+  //name box - blue
+  push();
+  fill(35, 184, 198, 200);
+  stroke(255);
+  rect(22, 177, 200, 20, 6);
+  pop();
+  //audio gems tally box - pink
+
+  push();
+  fill(250, 72, 138, 200);
+  stroke(255);
+  rect(22, 297, 100, 20, 6);
+
+  pop();
+
+  //my geolocation box - orange
+
+  push();
+  fill(188, 250, 100, 177);
+  stroke(255);
+  rect(22, 358, 200, 20, 6);
+
+  pop();
+
+  //Your Hunt details - pink -- eventually these will change colour when changed in THIS session.
+  push();
+  fill(250, 72, 138, 200);
+  stroke(255);
+  rect(22, 536, 335, 45, 6);
+  pop();
+
+  //my currently hunting box - green -- eventually these will change colour when changed in THIS session.
+
+  push();
+  fill(240, 183, 48, 200);
+  stroke(255);
+  rect(22, 619, 335, 19, 6);
+
+  pop();
 
   let profile = `
   AudioCast Profile
 
   Name:
-  ${mmMapProfile.name}
+    ${mmMapProfile.name}
 
   Hunt Neighbourhood:
 
 
   Audio Gems Collected:
-  ${mmMapProfile.audioGemsCollected}
+    ${mmMapProfile.audioGemsCollected}
 
   My Geolocation (coming soon!):
-  ${mmMapProfile.currentLocation}
+    ${mmMapProfile.currentLocation}
 
   How would you like to hunt?
 
@@ -222,11 +246,11 @@ function draw() {
 
 
   My Current Hunt:
-  *${mmMapProfile.huntMethod}*   to
-  *${mmMapProfile.selection}* in *${mmMapProfile.homeHood}*
+    ${mmMapProfile.huntMethod}   TO
+    ${mmMapProfile.selection}  IN  ${mmMapProfile.homeHood}
 
   Currently Hunting:
-  ${mmMapProfile.huntAddress}`;
+    ${mmMapProfile.huntAddress}`;
 
   push();
   image(mmmBanner, 0, 0);
@@ -239,6 +263,8 @@ function draw() {
   pop();
 }
 
+//take dropdown selection from Hunt neighbourhood and set it to mmMapProfile.homeHood.
+//save in local storgae and reset the dropdown menu to Choose...
 function sendHomeHood() {
   mmMapProfile.homeHood = userInputHomeHood.value();
   userInputHomeHood.value("");
