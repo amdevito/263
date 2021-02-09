@@ -1,59 +1,38 @@
 "use strict";
 
 /*****************
-e3: Spy Profile Generator PLUS -- Mapping the Montreal Musicscape
+E3: Spy Profile Generator PLUS -- Mapping the Montreal Musicscape, An Interactive AudioCast.
+By: Alana DeVito
 -- an audio scavenger hunt APP
 --- walk through the city listening to an ambient soundscape until you enter certain locations. A cue sound indicates that you are getting close and the closer (will get louder and more frequent as you get closer to the 'audioGem')
 
-(Mock Up using location relative to the user's starting point. Eventually these will be connected to specific neighbourhood locations in Montreal.)
+(This is only a Mock Up using location relative to the user's starting point. Eventually these will be connected to specific neighbourhood locations in Montreal.)
 - although you must go to these locations to initially find the items, once found you can access them again from anywhere (they are saved to your local storage in your profile. you can also reset your storage to start fresh.)
-Alana
+
 Brief:
-- *use geolocation api to find sound files items in your general vacinity
 - *Create the design of the application for a mobile app (improve the mobile display)
-- Add the ability to delete the current profile data with a keyboard command or button (reset)
-- store the items you searched for at each visit
-- *Allow the user to selectively regenerate specific categories in the profile (by clicking on them? with keyboard keys? with their voice?) to get one they like
-    *** could this be what kind of oudn pieces they would like to hear?
-      - ambient, playlist, interview, soundscape, experimental?
-
-      Enter your name and password please.
-
-      What kind of Montreal Audio Gem would you like to discover today?
-      Show me my old profile.
-      Or
-      Choose:
+- Add the ability to delete the current profile data with a keyboard command or button (reset) QUESTION  - how to do this?
+- *store the items you searched for at each visit
+- *Allow the user to selectively regenerate specific categories in the profile using drop down menues.
+  - they choose the type of audio they would like to hunt for, the location and the method that they would like to do the hunting.
+      - Choose:
       Random
       Soundscape
       Interview
       Story
       Playlist
-
-      How would you like to find it?
+      User Created
+      -How would you like to find it?
       Mystery walk (listen to a ambient playlist with abstract audio direction only. A audio signal will get louder or quieter as you get closer to an item.)
       Direct me with words.
       Show me a map. ( please be careful).
 
-      **show current profile with the items choices***
+- Enter your name and password, if you type 'create new' then you are asked to create them.
+- If they do not match what is already on file, the system will just ask you to generate a new one.
+- *  audio gems collected should read 0 at first unless old profile is pulled up x - every time you activate a new audio gem search you add a gem to your tally (eventually this will only be added when you actually hunt and find the audio gem in that location).
 
-      Finding location...
-
-NEXT STEPS: Mon feb 8:
-- inital prompts for name and password x
-- take the user entered information and save (drop down menues into slots below and in local storage.) x still need to move to local storage
-- audio gems collcted should read 0 at first unless old profile is pulled up x
-- how you you like to hunt? take the answer and put below unless random, then chose the value randomly and put below x
--
-- ><><****Need to take the type of hunt, the audio gem and the lat and long or home neighbourhood and return the appropriate audio hunt for the user from the JSON file.. Then just tally when you return the location and item to the auudio gem. (No need for actual direction and searching at this point.)
-- the geolocation hunt address will just be the appropriate neighbouthood lat and long for now -- see the p5.js example that sends this back..
-
-- what kind of audio gem? - make array and choose from the array, then find a gem in the general vacinity and report back address. in the my current hunt section.
+Next steps...
 - geolocation data: https://editor.p5js.org/shiffman/sketches/HkQ8kMdee
-
-
-
-
-
 
 ******************/
 
@@ -249,15 +228,6 @@ function draw() {
   Currently Hunting:
   ${mmMapProfile.huntAddress}`;
 
-  // Name: entered from input and stored in localStorage
-  //my home neighbourhood: user enter
-  //audio gems collected: track irl hit detection from lat and long and geolocation
-  //cue word _ password?
-  //
-  //my current location : fill with geolocation
-  //My current hunt: soundscape, interview, story, playlist or user (eventually people can create and leave their own audio gems - must be monitored...)
-  //my current neghbourhood: take the lat and long and map it to a neighbourhood.
-
   push();
   image(mmmBanner, 0, 0);
   textFont(`Tahoma`);
@@ -316,4 +286,4 @@ function sendSelection() {
   localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile));
 }
 
-function sendMapButton() {}
+function sendMapButton() {} /// Not currently active. Eventually this will bring up a small map showing the location of the audioGems to hunt for.
