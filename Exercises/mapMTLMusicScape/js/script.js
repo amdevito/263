@@ -1,7 +1,7 @@
 "use strict";
 
 /*****************
-Spy Profile Generator PLUS -- Mapping the Montreal Musicscape
+e3: Spy Profile Generator PLUS -- Mapping the Montreal Musicscape
 -- a audio scavenger hunt
 --- walk through the city listening to an ambient soundscape until you enter certain locations. A cue sound indicates that you are getting close and the closer (will get louder and more frequent as you get closer to the 'audioGem')
 
@@ -53,19 +53,25 @@ https://github.com/dariusk/corpora/
 // const PROFILE_DATA_KEY = `spy-profile-data`;
 
 // The spy profile data while the program is running
-let spyProfile = {
+let mmMapProfile = {
   //change to montrealMuMapProfile
   name: `**********`,
-  alias: `**********`, //my neighbourhood
-  secretWeapon: `**********`, //number of audio gems Collected
-  password: `**********`, //user chooses own password (just double the user prompts)
-  //current gem hunt: --if choose random, generate randomly, else, choose in app, not in prompt
+  homeHood: `**********`, //my neighbourhood - this is the prompt instead of password.
+  audioGemsCollected: `0`, //number of audio gems Collected
+  currentLocation: `**********`, ///geolocation - fetch lat and long
+  huntMethod: `**********`,
+  selection: `**********`, ///current gem hunt: --if choose random, generate randomly, else, choose in app, not in prompt
+  currentHuntHood: `**********`, //neighbourhood determined by geolocation
+  password: `**********`,
 };
 // Variables to store JSON data for generating the profile
 //change to variables to store JSON data per neighbourhood
-let instrumentData = undefined;
-let objectData = undefined;
-let tarotData = undefined;
+let audioScapeData = undefined;
+
+let homeHoodData = undefined;
+let audioGemsCollectedData = 0;
+let currentLocationData = undefined;
+let currentHuntHoodData = undefined;
 
 let mmmBanner = undefined; // set app banner design
 
@@ -78,9 +84,9 @@ let userInputHuntMethod = undefined; //Mystery walk (listen to a ambient playlis
 
 // buttons
 let inputHomeHoodButton = undefined; //user enters the name of their local neighourhood to them
-let inputChooseMethodButton = undefined; //random or select
-let inputSelectionButton = undefined; //randomized if userChooseMethod is random, else user enter soundscape, interview, story, playlist
-let inputHuntMethodButton = undefined; //Mystery walk (listen to a ambient playlist with abstract audio direction only. A audio signal will get louder or quieter as you get closer to an item.) Direct me with words. Show me a map. ( please be careful).
+// let inputChooseMethodButton = undefined; //random or select
+// let inputSelectionButton = undefined; //randomized if userChooseMethod is random, else user enter soundscape, interview, story, playlist
+// let inputHuntMethodButton = undefined; //Mystery walk (listen to a ambient playlist with abstract audio direction only. A audio signal will get louder or quieter as you get closer to an item.) Direct me with words. Show me a map. ( please be careful).
 /**
 Loads the JSON data used to generate the profile
 */
@@ -90,16 +96,14 @@ let seeMapButton = undefined;
 function preload() {
   mmmBanner = loadImage(`assets/images/mmmBanner.png`); //take this out of issue persists
 
-  tarotData = loadJSON(
-    `https://raw.githubusercontent.com/dariusk/corpora/master/data/divination/tarot_interpretations.json`
-  );
+  audioScapeData = loadJSON(`assets/data/location_data.json`);
   // locationData = loadJSON(`assets/data/location_data.json`);
-  objectData = loadJSON(
-    `https://raw.githubusercontent.com/dariusk/corpora/master/data/objects/objects.json`
-  );
-  instrumentData = loadJSON(
-    `https://raw.githubusercontent.com/dariusk/corpora/master/data/music/instruments.json`
-  );
+  // objectData = loadJSON(
+  //   `https://raw.githubusercontent.com/dariusk/corpora/master/data/objects/objects.json`
+  // );
+  // instrumentData = loadJSON(
+  //   `https://raw.githubusercontent.com/dariusk/corpora/master/data/music/instruments.json`
+  // );
 }
 
 /**
@@ -114,21 +118,27 @@ function setup() {
 
   //input submit boxes
   userInputHomeHood = createInput();
+  userInputHomeHood.position(230, 215); /// fills in My Home Neighbourhood.
+  userInputHomeHood.size(100, 15);
+
+  inputHomeHoodButton = createButton("submit");
+  inputHomeHoodButton.position(userInputHomeHood.x, 240); //located above the input box
+  inputHomeHoodButton.mousePressed(sendHomeHood); //do a function when mouse is pressed
   // userInputChooseMethod = createInput();
   // userInputSelection = createInput();
 
   //drop down menu
   userInputHuntMethod = createSelect();
-  userInputHuntMethod.position(38, 420);
-  userInputHuntMethod.option("Choose the type or randomize.");
+  userInputHuntMethod.position(32, 420);
+  userInputHuntMethod.option("Choose the method or randomize.");
   userInputHuntMethod.option("Random");
-  userInputHuntMethod.option(" Mystery Walk w/ Audio Cue");
+  userInputHuntMethod.option("Mystery Walk w/ Audio Cue");
   userInputHuntMethod.option("Direct me with voice");
   userInputHuntMethod.option("Map only");
   userInputHuntMethod.changed(sendHuntMethod); // to create action after the input drop down is changed.
 
   userInputSelection = createSelect();
-  userInputSelection.position(38, 480);
+  userInputSelection.position(32, 522);
   userInputSelection.option("Choose the type or randomize.");
   userInputSelection.option("Random");
   userInputSelection.option("Interview");
@@ -144,12 +154,10 @@ function setup() {
 
   //text boxes
 
-  userInputHomeHood.position(230, 215); /// fills in My Home Neighbourhood.
   // userInputChooseMethod.position(35, 510); ////fills search selection with random or select
   // userInputSelection.position(35, 565); //soundscape, interview, story or playlist  (if random will create itself.)
   // userInputHuntMethod.position(35, 620); //choose Mystery walk (listen to a ambient playlist with abstract audio direction only - A audio signal will get louder or quieter as you get closer to an item.)  Direct me with words. Show me a map. ( please be careful).
 
-  userInputHomeHood.size(100, 15);
   // userInputChooseMethod.size(200, 15);
   // userInputSelection.size(200, 15);
   // userInputHuntMethod.size(200, 15);
@@ -161,10 +169,6 @@ function setup() {
   seeMapButton.mousePressed(sendMapButton); //do a function when mouse is pressed
   seeMapButton.size(105, 50);
 
-  inputHomeHoodButton = createButton("submit");
-  inputHomeHoodButton.position(userInputHomeHood.x, 240); //located above the input box
-  inputHomeHoodButton.mousePressed(sendHomeHood); //do a function when mouse is pressed
-
   // inputChooseMethodButton = createButton("submit");
   // inputChooseMethodButton.position(
   //   userInputChooseMethod.x + userInputChooseMethod.width + 30,
@@ -172,34 +176,34 @@ function setup() {
   // ); //located above the input box
   // inputChooseMethodButton.mousePressed(sendChooseMethod); //do a function when mouse is pressed
 
-  inputSelectionButton = createButton("submit");
-  inputSelectionButton.position(
-    userInputHomeHood.x + userInputHomeHood.width + 30,
-    565
-  ); //located above the input box
-  inputSelectionButton.mousePressed(sendSelection); //do a function when mouse is pressed
+  // inputSelectionButton = createButton("submit");
+  // inputSelectionButton.position(
+  //   userInputHomeHood.x + userInputHomeHood.width + 30,
+  //   565
+  // ); //located above the input box
+  // inputSelectionButton.mousePressed(sendSelection); //do a function when mouse is pressed
 
-  inputHuntMethodButton = createButton("submit");
-  inputHuntMethodButton.position(
-    userInputHuntMethod.x + userInputHuntMethod.width + 30,
-    620
-  ); ///located above the input box
-  inputHuntMethodButton.mousePressed(sendHuntMethod); //do a function when mouse is pressed
+  // inputHuntMethodButton = createButton("submit");
+  // inputHuntMethodButton.position(
+  //   userInputHuntMethod.x + userInputHuntMethod.width + 30,
+  //   620
+  // ); ///located above the input box
+  // inputHuntMethodButton.mousePressed(sendHuntMethod); //do a function when mouse is pressed
 
   ///\When above information is submitted the sectons above that currently say REDACTED ARE filled with the appropriate inforation in a NEW COLOR.
 
   // Try to load the data
-  let data = JSON.parse(localStorage.getItem(`spy-profile-data`));
+  let data = JSON.parse(localStorage.getItem(`mmMap-profile-data`));
   if (data !== null) {
-    let password = prompt(`Agent! What is your password??`);
-    if (password === data.password) {
-      spyProfile.name = data.name;
-      spyProfile.alias = data.alias;
-      spyProfile.secretWeapon = data.secretWeapon;
-      spyProfile.password = data.password;
+    let name = prompt(`What is your name??`);
+    if (name === data.name) {
+      mmMapProfile.homeHood = data.homeHood;
+      mmMapProfile.audioGemsCollected = data.audioGemsCollected;
+      mmMapProfile.huntMethod = data.huntMethod;
+      mmMapProfile.selection = data.selection;
     }
   } else {
-    generateSpyProfile();
+    generateAudioScapeProfile();
   }
 
   // // Check if there was data to load
@@ -219,22 +223,23 @@ function setup() {
 /**
 Assigns across the profile properties from the data to the current profile
 */
-function generateSpyProfile() {
-  spyProfile.name = prompt(`Agent! What is your
-name?!`);
-  let instrument = random(instrumentData.instruments);
-  spyProfile.alias = `The ${instrument}`;
-  spyProfile.secretWeapon = random(objectData.objects);
-  let card = random(tarotData.tarot_interpretations);
-  // spyProfile.secretWeapon = data.secretWeapon;
-  spyProfile.password = random(card.keywords);
+function generateAudioScapeProfile() {
+  mmMapProfile.name = prompt(`What is your
+name?`);
+  // let instrument = random(instrumentData.instruments);
+  // mmMapProfile.alias = `${instrument}`;
+  // mmMapProfile.secretWeapon = random(objectData.objects);
+  // let card = random(tarotData.tarot_interpretations);
+  // // spyProfile.secretWeapon = data.secretWeapon;
+  // mmMapProfile.password = random(card.keywords);
 
-  localStorage.setItem(`spy-profile-data`, JSON.stringify(spyProfile));
+  localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile));
   //localStorage is the object that knows how to save things
   //setItem is the method that does the saving
   //'spy-profile-data' is the key
   //stringify the thing you want to save
 }
+
 //
 // /**
 // Generates a spy profile from JSON data
@@ -263,25 +268,30 @@ function draw() {
   AudioScape Profile
 
   Name:
-  ${spyProfile.name}
+   ${mmMapProfile.name}
 
   My Home Neighbourhood:
-  ${spyProfile.alias}
+   ${mmMapProfile.homeHood}
 
   Audio Gems Collected:
-  ${spyProfile.secretWeapon}
+   ${mmMapProfile.audioGemsCollected}
 
   My Current Location (Lat + Long auto gen):
-  ${spyProfile.name}
+   ${mmMapProfile.currentLocation}
 
   How would you like to hunt?:
 
 
+   ${mmMapProfile.huntMethod}
+
   What kind of audio gem are you hunting?
 
 
-  My Current Hunt Neighbourhood:
-  ${spyProfile.password}`;
+   ${mmMapProfile.selection}
+
+  My Current Hunt Neighbourhood (auto gen):
+   ${mmMapProfile.currentHuntHood}`;
+
   // Name: entered from input and stored in localStorage
   //my home neighbourhood: user enter
   //audio gems collected: track irl hit detection from lat and long and geolocation
@@ -301,16 +311,14 @@ function draw() {
   textSize(16);
   textAlign(LEFT, TOP);
   fill(255);
-  text(profile, 30, 100);
-
-  pop();
-
-  push();
+  text(profile, 20, 100);
 
   pop();
 }
 
-function sendHomeHood() {}
+function sendHomeHood() {
+  homeHoodData = userInputHomeHood.value();
+}
 function sendChooseMethod() {}
 function sendSelection() {}
 function sendHuntMethod() {}
