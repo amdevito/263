@@ -215,15 +215,28 @@ function setup() {
   ///\When above information is submitted the sectons above that currently say REDACTED ARE filled with the appropriate inforation in a NEW COLOR.
 
   // Try to load the data
+
+  //open this eventually--
   let data = JSON.parse(localStorage.getItem(`mmMap-profile-data`));
   if (data !== null) {
-    let name = prompt(`What is your name??`);
-    if (name === data.name) {
-      mmMapProfile.name = data.name;
-      mmMapProfile.homeHood = data.homeHood;
-      mmMapProfile.audioGemsCollected = data.audioGemsCollected;
-      mmMapProfile.huntMethod = data.huntMethod;
-      mmMapProfile.selection = data.selection;
+    let name = prompt(`What is your user name? Or type "create new"`);
+    if (name === `create new`) {
+      generateAudioScapeProfile();
+    } else {
+      let password = prompt(`What is your password? Or type "create new"`);
+      if (password === data.password && name === data.name) {
+        mmMapProfile.name = data.name;
+        mmMapProfile.homeHood = data.homeHood;
+        mmMapProfile.audioGemsCollected = data.audioGemsCollected;
+        mmMapProfile.huntMethod = data.huntMethod;
+        mmMapProfile.selection = data.selection;
+      } else if (
+        (password !== data.password && name !== data.name) ||
+        (name === data.name && password !== data.password) ||
+        (name !== data.name && password === `create new`)
+      ) {
+        generateAudioScapeProfile();
+      }
     }
   } else {
     generateAudioScapeProfile();
@@ -249,6 +262,7 @@ Assigns across the profile properties from the data to the current profile
 function generateAudioScapeProfile() {
   mmMapProfile.name = prompt(`What is your
 name?`);
+  mmMapProfile.password = prompt(`Please create a password.`);
   // let instrument = random(instrumentData.instruments);
   // mmMapProfile.alias = `${instrument}`;
   // mmMapProfile.secretWeapon = random(objectData.objects);
@@ -344,13 +358,13 @@ function sendHomeHood() {
   userInputHomeHood.value("");
 }
 function sendChooseMethod() {}
-function sendSelection() {
-  mmMapProfile.selection = userInputSelection.value();
-  userInputSelection.value("select");
-}
 function sendHuntMethod() {
   mmMapProfile.huntMethod = userInputHuntMethod.value();
-  userInputHuntMethod.value("select");
+  userInputHuntMethod.value("");
+}
+function sendSelection() {
+  mmMapProfile.selection = userInputSelection.value();
+  userInputSelection.value("");
 }
 
 function sendMapButton() {}
