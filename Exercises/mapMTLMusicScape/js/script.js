@@ -45,7 +45,8 @@ NEXT STEPS: Mon feb 8:
 - how you you like to hunt? take the answer and put below unless random, then chose the value randomly and put below
 -
 -  what kind of audio gem? - make array and choose from the array, then find a gem in the general vacinity and report back address. in the my current hunt section.
--
+- geolocation data: https://editor.p5js.org/shiffman/sketches/HkQ8kMdee
+
 
 
 
@@ -81,6 +82,13 @@ let homeHoodData = undefined;
 let audioGemsCollectedData = 0;
 let currentLocationData = undefined;
 let currentHuntHoodData = undefined;
+
+let audioGems = ["Interview", "Story", "Playlist", "User Created"];
+let huntType = [
+  "Mystery Walk w/ Audio Cue",
+  "Direct Me with Voice",
+  "Map Only",
+];
 
 let huntAddressData = undefined; ///where you are going to find the audio gem (shown just in mockup prototype) this is where the user is led.
 
@@ -288,7 +296,7 @@ function draw() {
   Audio Gems Collected:
    ${mmMapProfile.audioGemsCollected}
 
-  My Current Location (Lat + Long auto gen):
+  My Current Location (Lat + Long):
    ${mmMapProfile.currentLocation}
 
   How would you like to hunt?:
@@ -301,7 +309,7 @@ function draw() {
    ${mmMapProfile.currentHuntHood} ${mmMapProfile.selection}
    ${mmMapProfile.huntMethod}
 
-  Geolocation Address:
+  Current Geolocation Hunt Address:
    ${mmMapProfile.huntAddress}`;
 
   // Name: entered from input and stored in localStorage
