@@ -1,48 +1,69 @@
 "use strict";
 
 /*****************
-E3: Spy Profile Generator PLUS -- Mapping the Montreal Musicscape, An Interactive AudioCast.
+E3: Spy Profile Generator PLUS
+-- Mapping the Montreal Musicscape, An Interactive AudioCast.
 By: Alana DeVito
--- an audio scavenger hunt APP
---- walk through the city listening to an ambient soundscape until you enter certain locations. A cue sound indicates that you are getting close and the closer (will get louder and more frequent as you get closer to the 'audioGem')
 
-(This is only a Mock Up using location relative to the user's starting point. Eventually these will be connected to specific neighbourhood locations in Montreal.)
-- although you must go to these locations to initially find the items, once found you can access them again from anywhere (they are saved to your local storage in your profile. you can also reset your storage to start fresh.)
+Mapping the Montreal MusicScape is an Interactive AudioCast that leads users to different locations around Montreal to uncover, listen to and collect different 'Audio Gems' that represent that unqiue neighbourhood in Montreal. The soundscape, playlist, interview, story or some other type of audio piece created and submitted by an audioCast user can be found by users when their geolocation tracked by the app enters specific lat and long points in that neighbourhood. While the user can only access these 'audio Gems' when they enter that specific location, they can collect those pieces and listen or re-listen later when they are no longer in that location.
+
+This is a mockup app that only retrieves, displays saves and stores data that would then be used to direct the user to the appropriate audio pieces (or 'gems') 'hidden' around the city.
+There are currently no audio files active in this mock-up.
+The design is only a rough sketch of the actual mobile app graphic design and user interface. All graphics, font and colours should be considered temporary.
+
+Interaction and User Direction:
+-Upon opening up the app or going to the website on your mobile phone (can be accessed on desktops/laptops as well, but it is not size responsive to a larger screen)- the user is prompted to enter in a User Name and Password if they have not logged on before. If they have, and get their name or password incorrect, they will be asked to create a new user name and password.
+
+- NOT YET IMPLIMENTED, TO BE ADDED: Next prompt will ask the user is they would like to listen to CJLO live online or listen to a generative ambient soundscape during their audio hunt (this will stop once they find the 'audioGems').
+
+- The user name will be displayed on the app under name (in the blue box).
+- NEXT: The user chooses the neighbourhood that they would like to start their audioCast hunt in (choose the neighbourhood that best describes where they are) with the drop down menu that says 'Choose where you would like to hunt.' below 'Hunt Neighbourhood'.
+
+- NEXT: The user chooses how they would like to hunt for the audio under 'How would you like to hunt?'' in the dropbox underneath that says 'Choose the method or randomize.'
+  - the Hunt methods are :
+    - Mystery walk (Abstract audio direction only. A audio signal will get louder or quieter as they get closer or further away from an item they are searching.)
+    - Direct me with words.
+    - Map only. ( Pressing the 'See MMMap' Button in the upper right corner will always show the map, but this method will not provide other assistance. (the 'See MMMAP' button is not active in this mock-up.)
+    - Random will choose one of the above methods.
+
+- NEXT: The user chooses the type of audio gem that they would like to seek out under 'What kind of audio gem are you hunting?' in the dropdown menu that says 'Choose the type or randomize.'
+  - the Audio Gem types are:
+    - Soundscape
+    - Interview
+    - Story
+    - Playlist
+    - User Created - Users can create their own audio Gems and submit to be included in their chosen neighbourhood (preferrably something that represents the neighbourhood to them).
+    - Random will choose one of the above methods.
+- NEXT: At the bottom of the app, the user's choices will be displayed - 'how they are searching' TO 'what type of audio gem' IN 'neighbourhood' - this section is in pink under 'My Current Hunt'.
+    - Also, the title of what they will be searching for is in the yellow box at the very bottom under 'Currently Hunting'.
+
+- NEXT (NOT ACTIVE) : The user will listen to an ambient soundscape or  CJLO live radio while they hunt for the audio gems in their neighbourhood.
+- As the user collects 'Audio Gems' they can see the amount they've collected in a pink box titled 'Audio Gems Collected'.
+
+- Each time a user opens their app their last search will be active until they change the parameters, ending with the audio gem type.
+
+Next steps will be integrating geolocation into this app.
+- geolocation data: https://editor.p5js.org/shiffman/sketches/HkQ8kMdee
+
 
 Brief:
 - *Create the design of the application for a mobile app (improve the mobile display)
 - Add the ability to delete the current profile data with a keyboard command or button (reset) QUESTION  - how to do this?
 - *store the items you searched for at each visit
 - *Allow the user to selectively regenerate specific categories in the profile using drop down menues.
-  - they choose the type of audio they would like to hunt for, the location and the method that they would like to do the hunting.
-      - Choose:
-      Random
-      Soundscape
-      Interview
-      Story
-      Playlist
-      User Created
-      -How would you like to find it?
-      Mystery walk (listen to a ambient playlist with abstract audio direction only. A audio signal will get louder or quieter as you get closer to an item.)
-      Direct me with words.
-      Show me a map. ( please be careful).
-
 - Enter your name and password, if you type 'create new' then you are asked to create them.
 - If they do not match what is already on file, the system will just ask you to generate a new one.
-- *  audio gems collected should read 0 at first unless old profile is pulled up x - every time you activate a new audio gem search you add a gem to your tally (eventually this will only be added when you actually hunt and find the audio gem in that location).
+- *audio gems collected should read 0 at first unless old profile is pulled up x - every time you activate a new audio gem search you add a gem to your tally (eventually this will only be added when you actually hunt and find the audio gem in that location).
 
-Next steps...
-- geolocation data: https://editor.p5js.org/shiffman/sketches/HkQ8kMdee
 
 ******************/
 
-// The audio scape  profile data while the program is running
+// The audio scape profile data while the program is running
 let mmMapProfile = {
-  //change to montrealMuMapProfile
   name: ``,
-  homeHood: ``, //my neighbourhood - this is the prompt instead of password.
+  homeHood: ``, //hunt neighbourhood
   audioGemsCollected: 0, //number of audio gems Collected
-  currentLocation: ``, ///geolocation - fetch lat and long
+  currentLocation: ``, ///geolocation - fetch lat and long - not yet active, just placeholder for now
   huntMethod: ``,
   selection: ``, ///current gem hunt: --if choose random, generate randomly, else, choose in app, not in prompt
   currentHuntHood: ``, //neighbourhood determined by geolocation
@@ -58,11 +79,11 @@ let audioGemsCollectedData = 0;
 let currentLocationData = undefined;
 let currentHuntHoodData = undefined;
 
-let audioGems = ["Interview", "Story", "Playlist", "User Created"];
+let audioGems = ["Interview", "Story", "Playlist", "User created"];
 let huntType = [
-  "Mystery Walk w/ Audio Cue",
-  "Direct Me with Voice",
-  "Map Only",
+  "Mystery walk w/ audio cue",
+  "Direct me with voice",
+  "Map only",
 ];
 
 let huntAddressData = undefined; ///where you are going to find the audio gem (shown just in mockup prototype) this is where the user is led.
@@ -116,7 +137,7 @@ function setup() {
   userInputHuntMethod.position(130, 420);
   userInputHuntMethod.option("Choose the method or randomize.");
   userInputHuntMethod.option("Random");
-  userInputHuntMethod.option("Mystery Walk w/ Audio Cue");
+  userInputHuntMethod.option("Mystery walk w/ audio cue");
   userInputHuntMethod.option("Direct me with voice");
   userInputHuntMethod.option("Map only");
   userInputHuntMethod.changed(sendHuntMethod); // to create action after the input drop down is changed.
@@ -128,7 +149,7 @@ function setup() {
   userInputSelection.option("Interview");
   userInputSelection.option("Story");
   userInputSelection.option("Playlist");
-  userInputSelection.option("User Created"); //to find gems left by other users.< will need to be monitored. will be rated by other users.
+  userInputSelection.option("User created"); //to find gems left by other users.< will need to be monitored. will be rated by other users.
   userInputSelection.changed(sendSelection); // to create action after the input drop down is changed.
 
   //input submit buttons
@@ -212,7 +233,7 @@ function draw() {
   push();
   fill(250, 72, 138, 200);
   stroke(255);
-  rect(22, 536, 335, 45, 6);
+  rect(22, 537, 335, 41, 6);
   pop();
 
   //my currently hunting box - green -- eventually these will change colour when changed in THIS session.
@@ -236,7 +257,7 @@ function draw() {
   Audio Gems Collected:
     ${mmMapProfile.audioGemsCollected}
 
-  My Geolocation (coming soon!):
+  My Geolocation (coming soon!)
     ${mmMapProfile.currentLocation}
 
   How would you like to hunt?
@@ -246,8 +267,8 @@ function draw() {
 
 
   My Current Hunt:
-    ${mmMapProfile.huntMethod}   TO
-    ${mmMapProfile.selection}  IN  ${mmMapProfile.homeHood}
+    ${mmMapProfile.huntMethod} TO ${mmMapProfile.selection}
+    IN ${mmMapProfile.homeHood}
 
   Currently Hunting:
     ${mmMapProfile.huntAddress}`;
