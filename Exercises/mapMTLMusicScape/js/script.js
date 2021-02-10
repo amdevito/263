@@ -291,6 +291,8 @@ function draw() {
   pop();
 }
 
+//NOTE: User must do the audio gem last for the 'currently hunting' section to update to the correct audioGem destination. Will need to look into this.
+
 //take dropdown selection from Hunt neighbourhood and set it to mmMapProfile.homeHood.
 //save in local storage and reset the dropdown menu to Choose...
 function sendHomeHood() {
