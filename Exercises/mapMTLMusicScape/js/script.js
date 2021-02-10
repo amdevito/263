@@ -269,8 +269,8 @@ function draw() {
 
 
   My Current Hunt:
-    ${mmMapProfile.huntMethod} TO ${mmMapProfile.selection}
-    IN ${mmMapProfile.homeHood}
+    ${mmMapProfile.huntMethod} to ${mmMapProfile.selection}
+    in ${mmMapProfile.homeHood}
 
   Currently Hunting:
     ${mmMapProfile.huntAddress}`;
