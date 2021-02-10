@@ -60,12 +60,12 @@ Brief:
 // The audio scape profile data while the program is running
 let mmMapProfile = {
   name: ``,
-  homeHood: ``, //hunt neighbourhood
+  homeHood: `********`, //hunt neighbourhood
   audioGemsCollected: 0, //number of audio gems Collected
   currentLocation: ``, ///geolocation - fetch lat and long - not yet active, just placeholder for now
-  huntMethod: ``, //how the user wants to be led to the audioGem
-  selection: ``, ///current audioGem: --if choose random, generate randomly, else, choose in app, not in prompt
-  currentHuntHood: ``, //neighbourhood determined by geolocation
+  huntMethod: `*********`, //how the user wants to be led to the audioGem
+  selection: `*********`, ///current audioGem: --if choose random, generate randomly, else, choose in app, not in prompt
+  currentHuntHood: `*********`, //neighbourhood determined by geolocation
   password: ``, // save the user's password entered in prompt.
   huntAddress: ``, ///where you are going to find the audio gem (shown just in mockup prototype) this is where the user is led - currently it just shows the name of the AudioGem that the user is hunting.
 };
