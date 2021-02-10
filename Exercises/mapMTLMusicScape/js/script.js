@@ -113,10 +113,14 @@ function setup() {
   // Create the canvas
   createCanvas(375, 667); //size of iphone 6/7/8 - mobile first then make responsive to other shapes and sizes.
 
-  let savedProfile = localStorage.getItem(`mmMap-profile-data`); //set prior information from the local storage into the savedProfile variable
+  //
 
-  //set mmMapProfile as the savedProfile recived in localStorage.getItem
-  mmMapProfile = JSON.parse(savedProfile);
+  //commented out below because it was causing issues on first visit.
+  //will revisit when I explore further.
+  // let savedProfile = localStorage.getItem(`mmMap-profile-data`); //set prior information from the local storage into the savedProfile variable
+  //
+  // //set mmMapProfile as the savedProfile recived in localStorage.getItem
+  // mmMapProfile = JSON.parse(savedProfile);
 
   //
 
