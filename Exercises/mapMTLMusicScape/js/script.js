@@ -295,9 +295,9 @@ function draw() {
 //save in local storage and reset the dropdown menu to Choose...
 function sendHomeHood() {
   mmMapProfile.homeHood = userInputHomeHood.value();
-  userInputHomeHood.value("");
+  // userInputHomeHood.value("");
   localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile));
-  userInputHomeHood.value(`Choose where you would like to hunt.`);
+  // userInputHomeHood.value(`Choose where you would like to hunt.`);
 }
 //take dropdown selection from Hunt method and set it to mmMapProfile.huntMethod.
 //save in local storage and reset the dropdown menu to Choose...
@@ -308,7 +308,7 @@ function sendHuntMethod() {
     mmMapProfile.huntMethod = random(huntType); //if RANDOM, fetch random selection from the huntType array
     userInputHuntMethod.value(`Choose the method or randomize.`);
   } else {
-    userInputHuntMethod.value(`Choose the method or randomize.`);
+    // userInputHuntMethod.value(`Choose the method or randomize.`);
   }
   localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile));
 }
@@ -319,7 +319,7 @@ function sendSelection() {
     mmMapProfile.selection = random(audioGems); //if RANDOM, fetch random selection from the audioGems array
     userInputSelection.value(`Choose the type or randomize.`);
   } else {
-    userInputSelection.value(`Choose the type or randomize.`);
+    // userInputSelection.value(`Choose the type or randomize.`);
   }
 
   for (let i = 0; i < audioScapeData.location_audioGems.length; i++) {
