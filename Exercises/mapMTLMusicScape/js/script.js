@@ -55,7 +55,6 @@ Brief:
 - If they do not match what is already on file, the system will just ask you to generate a new one.
 - *audio gems collected should read 0 at first unless old profile is pulled up x - every time you activate a new audio gem search you add a gem to your tally (eventually this will only be added when you actually hunt and find the audio gem in that location).
 
-
 ******************/
 
 // The audio scape profile data while the program is running
@@ -64,14 +63,14 @@ let mmMapProfile = {
   homeHood: ``, //hunt neighbourhood
   audioGemsCollected: 0, //number of audio gems Collected
   currentLocation: ``, ///geolocation - fetch lat and long - not yet active, just placeholder for now
-  huntMethod: ``,
-  selection: ``, ///current gem hunt: --if choose random, generate randomly, else, choose in app, not in prompt
+  huntMethod: ``, //how the user wants to be led to the audioGem
+  selection: ``, ///current audioGem: --if choose random, generate randomly, else, choose in app, not in prompt
   currentHuntHood: ``, //neighbourhood determined by geolocation
-  password: ``,
-  huntAddress: "", ///where you are going to find the audio gem (shown just in mockup prototype) this is where the user is led.
+  password: ``, // save the user's password entered in prompt.
+  huntAddress: ``, ///where you are going to find the audio gem (shown just in mockup prototype) this is where the user is led - currently it just shows the name of the AudioGem that the user is hunting.
 };
 // Variables to store JSON data for generating the profile
-//change to variables to store JSON data per neighbourhood
+
 let audioScapeData = undefined;
 
 let homeHoodData = undefined;
@@ -79,6 +78,7 @@ let audioGemsCollectedData = 0;
 let currentLocationData = undefined;
 let currentHuntHoodData = undefined;
 
+//arrays for audioGem types and audio hunt types - access for random selections.
 let audioGems = ["Interview", "Story", "Playlist", "User created"];
 let huntType = [
   "Mystery walk w/ audio cue",
@@ -86,43 +86,43 @@ let huntType = [
   "Map only",
 ];
 
-let huntAddressData = undefined; ///where you are going to find the audio gem (shown just in mockup prototype) this is where the user is led.
+let huntAddressData = undefined; ///where you are going to find the audio gem (shown as just the title of the audioGem being hunted in the mockup prototype) - this is where the user is led.
 
-let mmmBanner = undefined; // set app banner design
+let mmmBanner = undefined; // set app banner image variable
 
-///
+///variables for user inputs
 
-let userInputHomeHood = undefined; //user enters the name of their local neighourhood to them
-let userInputSelection = undefined; //randomized if userChooseMethod is random, else user enter soundscape, interview, story, playlist
-let userInputHuntMethod = undefined; //Mystery walk (listen to a ambient playlist with abstract audio direction only. A audio signal will get louder or quieter as you get closer to an item.) Direct me with words. Show me a map. ( please be careful).
+let userInputHomeHood = undefined; //user enters the name of the local neighourhood to hunt
+let userInputSelection = undefined; //randomized if choice is random, else user enter soundscape, interview, story, playlist or user created.
+let userInputHuntMethod = undefined; //choices are : Mystery walk (listen to a ambient playlist with abstract audio direction only. A audio signal will get louder or quieter as you get closer to an item.) Direct me with words. Show me a map. ( please be careful).
 
-// buttons
-let inputHomeHoodButton = undefined; //user enters the name of their local neighourhood to them
-
-let seeMapButton = undefined;
+// buttons variables
+let seeMapButton = undefined; //click to show the audiogems on a map (not active in mock up).
 
 function preload() {
-  mmmBanner = loadImage(`assets/images/mmmBanner.png`); //take this out of issue persists
+  mmmBanner = loadImage(`assets/images/mmmBanner.png`); //load the banner image into the mmmBanner variable
 
-  audioScapeData = loadJSON(`assets/data/location_data.json`);
+  audioScapeData = loadJSON(`assets/data/location_data.json`); //load the JSON file containing the neighbourhood audioGem titles, sorted by types and neighbourhood.
 }
 
 /**
 Creates a canvas then handles loading profile data, checking password,
-and generating a profile as necessary.
+and generating a profile.
 */
 function setup() {
   // Create the canvas
-  createCanvas(375, 667); //size of iphone 6/7/8 - mobile first then make responsive to other shapes.
+  createCanvas(375, 667); //size of iphone 6/7/8 - mobile first then make responsive to other shapes and sizes.
 
-  let savedProfile = localStorage.getItem(`mmMap-profile-data`);
+  let savedProfile = localStorage.getItem(`mmMap-profile-data`); //set prior information from the local storage into the savedProfile variable
 
+  //set mmMapProfile as the savedProfile recived in localStorage.getItem
   mmMapProfile = JSON.parse(savedProfile);
 
   //
 
   //drop down menues
-  userInputHomeHood = createSelect();
+  //user choose their hunt neighbourhood
+  userInputHomeHood = createSelect(); //create dropdown menu with p5.js function
   userInputHomeHood.position(110, 245);
   userInputHomeHood.option("Choose where you would like to hunt.");
   userInputHomeHood.option("Plateau Mont Royal Outremont");
@@ -131,17 +131,19 @@ function setup() {
   userInputHomeHood.option("NDG CDN");
   userInputHomeHood.option("Hochelaga Maisonneuve");
   userInputHomeHood.option("Sud Ouest");
-  userInputHomeHood.changed(sendHomeHood); // to create action after the input drop down is changed.
+  userInputHomeHood.changed(sendHomeHood); // create action after the input drop down is changed - send to / call the sendHomHood function.
 
-  userInputHuntMethod = createSelect();
+  //choose their hunt method
+  userInputHuntMethod = createSelect(); //create dropdown menu with p5.js function
   userInputHuntMethod.position(130, 420);
   userInputHuntMethod.option("Choose the method or randomize.");
   userInputHuntMethod.option("Random");
   userInputHuntMethod.option("Mystery walk w/ audio cue");
   userInputHuntMethod.option("Direct me with voice");
   userInputHuntMethod.option("Map only");
-  userInputHuntMethod.changed(sendHuntMethod); // to create action after the input drop down is changed.
+  userInputHuntMethod.changed(sendHuntMethod); // create action after the input drop down is changed - send to / call the sendHuntMethod function.
 
+  //choose their audio Gem selection to hunt
   userInputSelection = createSelect();
   userInputSelection.position(149, 480);
   userInputSelection.option("Choose the type or randomize.");
@@ -149,24 +151,24 @@ function setup() {
   userInputSelection.option("Interview");
   userInputSelection.option("Story");
   userInputSelection.option("Playlist");
-  userInputSelection.option("User created"); //to find gems left by other users.< will need to be monitored. will be rated by other users.
-  userInputSelection.changed(sendSelection); // to create action after the input drop down is changed.
+  userInputSelection.option("User created"); //to find gems left by other users.< will need to be monitored. will be rated by other users?.
+  userInputSelection.changed(sendSelection); // create action after the input drop down is changed - send to / call the sendSelection function.
 
-  //input submit buttons
+  //create button
 
   seeMapButton = createButton("See MMMAP");
-  seeMapButton.position(250, 115); //located above the input box
-  seeMapButton.mousePressed(sendMapButton); //do a function when mouse is pressed
+  seeMapButton.position(250, 115); //located at upper right corner
+  seeMapButton.mousePressed(sendMapButton); //call a function when mouse is pressed
   seeMapButton.size(105, 50);
 
-  ///When above information is submitted the sectons above that currently say REDACTED ARE filled with the appropriate inforation in a NEW COLOR.
+  ///When above information is submitted the data fills the coloured boxes in the app.
 
-  // Check of there is and try to load the data
+  // Check of there is a saved profile and try to load the data
   let data = JSON.parse(localStorage.getItem(`mmMap-profile-data`));
   if (data !== null) {
-    let name = prompt(`What is your user name? Or type "create new"`);
+    let name = prompt(`What is your user name? Or type "create new"`); //enter user name or ask to create new one
     if (name === `create new`) {
-      generateAudioScapeProfile();
+      generateAudioScapeProfile(); //create new profile
     } else {
       let password = prompt(`What is your password? Or type "create new"`);
       if (password === data.password && name === data.name) {
@@ -180,6 +182,7 @@ function setup() {
         (name === data.name && password !== data.password) ||
         (name !== data.name && password === `create new`)
       ) {
+        //if password and usernames dont match one on file, generate new profile.
         generateAudioScapeProfile();
       }
     }
@@ -192,8 +195,8 @@ function setup() {
 Assigns across the profile properties from the data to the current profile
 */
 function generateAudioScapeProfile() {
-  mmMapProfile.name = prompt(`What is your name?`);
-  mmMapProfile.password = prompt(`Please create a password.`);
+  mmMapProfile.name = prompt(`What is your name?`); //prompt answer saved into the variable
+  mmMapProfile.password = prompt(`Please create a password.`); //prompt answer saved into the variable
 
   localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile));
   //localStorage is the object that knows how to save things
@@ -211,8 +214,8 @@ function draw() {
   stroke(255);
   rect(22, 177, 200, 20, 6);
   pop();
-  //audio gems tally box - pink
 
+  //audio gems tally box - pink
   push();
   fill(250, 72, 138, 200);
   stroke(255);
@@ -220,8 +223,7 @@ function draw() {
 
   pop();
 
-  //my geolocation box - orange
-
+  //my geolocation box - green
   push();
   fill(188, 250, 100, 177);
   stroke(255);
@@ -229,15 +231,14 @@ function draw() {
 
   pop();
 
-  //Your Hunt details - pink -- eventually these will change colour when changed in THIS session.
+  //My Current Hunt details - pink -- eventually these will change colour when changed in THIS session.
   push();
   fill(250, 72, 138, 200);
   stroke(255);
   rect(22, 537, 335, 41, 6);
   pop();
 
-  //my currently hunting box - green -- eventually these will change colour when changed in THIS session.
-
+  //Currently Hunting box - green -- eventually these will change colour when changed in THIS session.
   push();
   fill(240, 183, 48, 200);
   stroke(255);
@@ -245,6 +246,7 @@ function draw() {
 
   pop();
 
+  //profle text with changing data in the template literals
   let profile = `
   AudioCast Profile
 
@@ -273,6 +275,7 @@ function draw() {
   Currently Hunting:
     ${mmMapProfile.huntAddress}`;
 
+  //display the text along with the design banner at the top
   push();
   image(mmmBanner, 0, 0);
   textFont(`Tahoma`);
@@ -285,21 +288,20 @@ function draw() {
 }
 
 //take dropdown selection from Hunt neighbourhood and set it to mmMapProfile.homeHood.
-//save in local storgae and reset the dropdown menu to Choose...
+//save in local storage and reset the dropdown menu to Choose...
 function sendHomeHood() {
   mmMapProfile.homeHood = userInputHomeHood.value();
   userInputHomeHood.value("");
   localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile));
   userInputHomeHood.value(`Choose where you would like to hunt.`);
-
-  ///QUESTION: how do i save this to the profile for next time? stringify? same with send Hunt Method. Also for my hunt and send selection.
 }
-
+//take dropdown selection from Hunt method and set it to mmMapProfile.huntMethod.
+//save in local storage and reset the dropdown menu to Choose...
 function sendHuntMethod() {
   mmMapProfile.huntMethod = userInputHuntMethod.value();
 
   if (mmMapProfile.huntMethod === `Random`) {
-    mmMapProfile.huntMethod = random(huntType);
+    mmMapProfile.huntMethod = random(huntType); //if RANDOM, fetch random selection from the huntType array
     userInputHuntMethod.value(`Choose the method or randomize.`);
   } else {
     userInputHuntMethod.value(`Choose the method or randomize.`);
@@ -310,13 +312,14 @@ function sendSelection() {
   mmMapProfile.selection = userInputSelection.value();
 
   if (mmMapProfile.selection === `Random`) {
-    mmMapProfile.selection = random(audioGems);
+    mmMapProfile.selection = random(audioGems); //if RANDOM, fetch random selection from the audioGems array
     userInputSelection.value(`Choose the type or randomize.`);
   } else {
     userInputSelection.value(`Choose the type or randomize.`);
   }
 
   for (let i = 0; i < audioScapeData.location_audioGems.length; i++) {
+    //go through the JSON data set with the for loop and find the user's audio gem selection for their choosen neighbourhood.
     if (
       audioScapeData.location_audioGems[i].neighbourhood ===
       mmMapProfile.homeHood
@@ -324,13 +327,13 @@ function sendSelection() {
       audioScapeData.location_audioGems[i][mmMapProfile.selection];
       mmMapProfile.huntAddress = random(
         audioScapeData.location_audioGems[i][
-          mmMapProfile.selection.toLowerCase()
+          mmMapProfile.selection.toLowerCase() //set to lower case so that the if statement will match
         ]
       );
     }
   }
-  mmMapProfile.audioGemsCollected++; //for now just add a gem once you choose one
-  localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile));
+  mmMapProfile.audioGemsCollected++; //for now just add a gem once you choose oneto search for. Will change to add one when the user actually enters that location.
+  localStorage.setItem(`mmMap-profile-data`, JSON.stringify(mmMapProfile)); //store the number of gems the user collects.
 }
 
 function sendMapButton() {} /// Not currently active. Eventually this will bring up a small map showing the location of the audioGems to hunt for.

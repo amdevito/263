@@ -1,4 +1,4 @@
-# Mapping the Montreal Musicscape, An Interactive AudioCast.
+# Mapping the Montreal Musicscape, An Interactive AudioCast APP
 
 By: Alana DeVito
 
@@ -11,7 +11,7 @@ The design is only a rough sketch of the actual mobile app graphic design and us
 Interaction and User Direction:
 -Upon opening up the app or going to the website on your mobile phone (can be accessed on desktops/laptops as well, but it is not size responsive to a larger screen)- the user is prompted to enter in a User Name and Password if they have not logged on before. If they have, and get their name or password incorrect, they will be asked to create a new user name and password.
 
-- NOT YET IMPLIMENTED, TO BE ADDED: Next prompt will ask the user is they would like to listen to CJLO live online or listen to a generative ambient soundscape during their audio hunt (this will stop once they find the 'audioGems').
+- NOT YET IMPLEMENTED, TO BE ADDED: Next prompt will ask the user is they would like to listen to CJLO live online or listen to a generative ambient soundscape during their audio hunt (this will stop once they find the 'audioGems').
 
 - The user name will be displayed on the app under name (in the blue box).
 - NEXT: The user chooses the neighbourhood that they would like to start their audioCast hunt in (choose the neighbourhood that best describes where they are) with the drop down menu that says 'Choose where you would like to hunt.' below 'Hunt Neighbourhood'.
@@ -30,7 +30,7 @@ Interaction and User Direction:
     - Interview
     - Story
     - Playlist
-    - User Created - Users can create their own audio Gems and submit to be included in their chosen neighbourhood (preferrably something that represents the neighbourhood to them).
+    - User Created - Users can create their own audio Gems and submit to be included in their chosen neighbourhood (preferably something that represents the neighbourhood to them).
     - Random will choose one of the above methods.
 - NEXT: At the bottom of the app, the user's choices will be displayed - 'how they are searching' TO 'what type of audio gem' IN 'neighbourhood' - this section is in pink under 'My Current Hunt'.
 
