@@ -2,7 +2,8 @@
 E4: Bubble Popper PLUS
 Alana DeVito
 
-Pop bubbles with your index finger as a pin!
+Pop bubbles with your index finger as a pin or change to a hand tool and
+bounce them around.
 
 Brief:
 - change colour when bubbles popped.
@@ -11,14 +12,8 @@ Brief:
 
 - start screen
 
-- when poped bubbles, use Open Sound Control to affect a hydra drawing online.
+- User closes hand, pin turns into hand and you can bounce bubbles instead. When bounced start flasing.
 
->>>>
-User closes hand, pin turns into hand and you can bounce bubbles instead. When bounced start flasing.
-- Let the user change between different tools by closing and opening their hand? -
-
-(How would you detect a closed hand? Their finger-tips would be closer than usual to the base of their palm…)
-- count how many bubbles the user pops
 
 **************************************************/
 
