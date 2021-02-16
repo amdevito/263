@@ -12,7 +12,8 @@ Brief:
 
 - start screen
 
-- User closes hand, pin turns into hand and you can bounce bubbles instead. When bounced start flasing.
+- User closes hand, pin turns into hand and you can bounce bubbles downwards instead.
+Bounced bubble flashes greenish.
 
 
 **************************************************/
@@ -49,7 +50,7 @@ let state = "enter";
 
 //setup text for start up screen
 let enterScreen = {
-  string: `Pop the bubbles with the \n pin and watch them change colors! \n Your webcam will map your finger to the pin. \n Please CLICK to Begin!`,
+  string: `Pop the bubbles with the \n pin and watch them change colors! \n Pinch your index finger and thumb together to change to a hand. \n As a hand you bounce the bubbles back down. \n NOTE: The bubble must touch the top left tip of the hand. \n Your webcam will map your finger to the pin. \n Please CLICK to Begin!`,
   x: undefined,
   y: undefined,
   vx: undefined,
@@ -218,8 +219,7 @@ function drawHand() {
   // change colour when popping
   let d = dist(tipX, tipY, bubble.x, bubble.y);
   if (d < bubble.size / 2) {
-    bubble.x += random(width);
-    bubble.y += random(height);
+    bubble.vy = 10;
     bubble.g = random(0, 255);
   }
 
@@ -227,9 +227,8 @@ function drawHand() {
   bubble.x += bubble.vx;
   bubble.y += bubble.vy;
 
-  if (bubble.y < 0 || bubble.x < 0 || bubble.x > 0) {
-    bubble.x = random(width);
-    bubble.y = height;
+  if (bubble.y > height) {
+    bubble.vy = -3;
   }
 }
 
@@ -243,7 +242,7 @@ function setUpEnterScreen() {
   enterScreen.y = 200;
   enterScreen.vx = 5;
   enterScreen.vy = 1;
-  enterScreen.size = 20;
+  enterScreen.size = 15;
 }
 
 function enterStart() {
