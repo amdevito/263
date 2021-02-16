@@ -58,7 +58,7 @@ let enterScreen = {
 };
 
 // How close the thumb tip should be to the index tip to change tools
-const MIN_CHANGE_DISTANCE = 10;
+const MIN_CHANGE_DISTANCE = 100;
 
 //whether or not the user can change the tool currently
 let canChange = true;
@@ -112,7 +112,7 @@ function draw() {
     gameStart();
     drawPin();
   } else if (state === `gameHand`) {
-    gameState();
+    gameStart();
     drawHand();
   }
 }
@@ -160,6 +160,8 @@ function gameStart() {
     noStroke();
     ellipse(bubble.x, bubble.y, bubble.size);
     pop();
+
+    console.log(distIndexThumb);
   }
 }
 
@@ -210,12 +212,6 @@ function drawHand() {
 
   image(handTool, tipX, tipY);
 
-  pop();
-
-  push();
-  noStroke();
-  fill(255, 0, 0);
-  ellipse(baseX, baseY, 20);
   pop();
 
   //check bubble bounce
