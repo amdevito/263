@@ -132,57 +132,37 @@ function gameStart() {
     ellipse(bubble.x, bubble.y, bubble.size);
     pop();
   }
+}
 
-  function setUpEnterScreen() {
-    enterScreen.x = width / 2;
-    enterScreen.y = 200;
-    enterScreen.vx = 5;
-    enterScreen.vy = 1;
-    enterScreen.size = 20;
-  }
+function drawPin() {
+  push();
+  noFill();
+  stroke(255);
+  line(baseX, baseY, tipX, tipY);
+  strokeWeight(2);
+  pop();
 
-  function enterStart() {
-    background(0);
-    textSize(enterScreen.size);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textStyle(BOLD);
-    textFont("Monaco");
+  push();
+  noStroke();
+  fill(255, 0, 0);
+  ellipse(baseX, baseY, 20);
+  pop();
 
-    noStroke();
-    text(enterScreen.string, enterScreen.x, enterScreen.y);
-  }
-
-  function drawPin() {
-    push();
-    noFill();
-    stroke(255);
-    line(baseX, baseY, tipX, tipY);
-    strokeWeight(2);
-    pop();
-
-    push();
-    noStroke();
-    fill(255, 0, 0);
-    ellipse(baseX, baseY, 20);
-    pop();
-
-    //check bubble popping
-    // change colour when popping
-    let d = dist(tipX, tipY, bubble.x, bubble.y);
-    if (d < bubble.size / 2) {
-      popSound.play();
-      bubble.x = random(width);
-      bubble.y = height;
-      if (bubble.r < 255) {
-        bubble.r += 30;
-      } else if (bubble.r > 254 && bubble.g < 255) {
-        bubble.g += 30;
-      } else {
-        bubble.r = 0;
-        bubble.g = 0;
-        bubble.b = 255;
-      }
+  //check bubble popping
+  // change colour when popping
+  let d = dist(tipX, tipY, bubble.x, bubble.y);
+  if (d < bubble.size / 2) {
+    popSound.play();
+    bubble.x = random(width);
+    bubble.y = height;
+    if (bubble.r < 255) {
+      bubble.r += 30;
+    } else if (bubble.r > 254 && bubble.g < 255) {
+      bubble.g += 30;
+    } else {
+      bubble.r = 0;
+      bubble.g = 0;
+      bubble.b = 255;
     }
   }
 
@@ -232,4 +212,23 @@ function mousePressed() {
   if (state === `enter`) {
     state = `game`;
   }
+}
+function setUpEnterScreen() {
+  enterScreen.x = width / 2;
+  enterScreen.y = 200;
+  enterScreen.vx = 5;
+  enterScreen.vy = 1;
+  enterScreen.size = 20;
+}
+
+function enterStart() {
+  background(0);
+  textSize(enterScreen.size);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textFont("Monaco");
+
+  noStroke();
+  text(enterScreen.string, enterScreen.x, enterScreen.y);
 }
