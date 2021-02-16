@@ -123,7 +123,7 @@ function gameStart() {
     if (distIndexThumb < 2 && state === `game`) {
       state = `gameHand`;
     } else if (distIndexThumb < 2 && state === `gameHand`) {
-      state = "game";
+      state = `game`;
     }
 
     push();
@@ -208,6 +208,24 @@ function drawHand() {
   fill(255, 0, 0);
   ellipse(baseX, baseY, 20);
   pop();
+
+  //check bubble bounce
+  // change colour when popping
+  let d = dist(tipX, tipY, bubble.x, bubble.y);
+  if (d < bubble.size / 2) {
+    bubble.x += random(width);
+    bubble.y += random(height);
+    bubble.g = random(0, 255);
+  }
+
+  //move the bubble
+  bubble.x += bubble.vx;
+  bubble.y += bubble.vy;
+
+  if (bubble.y < 0 || bubble.x < 0 || bubble.x > 0) {
+    bubble.x = random(width);
+    bubble.y = height;
+  }
 }
 
 function mousePressed() {
