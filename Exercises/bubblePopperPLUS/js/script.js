@@ -22,8 +22,6 @@ User closes hand, pin turns into hand and you can bounce bubbles instead. When b
 
 **************************************************/
 
-// setup()
-//
 //store user's webcam
 let video = undefined;
 
@@ -41,7 +39,7 @@ let handTool = undefined;
 //current set of predictions
 let predictions = [];
 
-//declare variables from each function
+//declare variables for the digits being used
 
 let tipX = undefined;
 let tipY = undefined;
@@ -51,8 +49,10 @@ let baseY = undefined;
 let thumbTipX = undefined;
 let thumbTipY = undefined;
 
+//starting state is enter
 let state = "enter";
 
+//setup text for start up screen
 let enterScreen = {
   string: `Pop the bubbles with the \n pin and watch them change colors! \n Your webcam will map your finger to the pin. \n Please CLICK to Begin!`,
   x: undefined,
@@ -62,6 +62,13 @@ let enterScreen = {
   size: undefined,
 };
 
+// How close the thumb tip should be to the index tip to change tools
+const MIN_CHANGE_DISTANCE = 10;
+
+//whether or not the user can change the tool currently
+let canChange = true;
+
+//load sounds and images used in this game
 function preload() {
   popSound = loadSound(`assets/sounds/pop.ogg`);
   handTool = loadImage(`assets/images/handTool.png`);
@@ -106,7 +113,7 @@ function draw() {
 
   if (state === `enter`) {
     enterStart();
-  } else if (state === `game`) {
+  } else if (state === `gamePin`) {
     gameStart();
     drawPin();
   } else if (state === `gameHand`) {
@@ -136,12 +143,23 @@ function gameStart() {
     //if index finger and thumb touch, change to hand image, if hand image is the current state, change to  pin
     let distIndexThumb = dist(tipX, tipY, thumbTipX, thumbTipY);
 
-    if (distIndexThumb < 2 && state === `game`) {
+    if (
+      distIndexThumb < MIN_CHANGE_DISTANCE &&
+      state === `gamePin` &&
+      canChange
+    ) {
       state = `gameHand`;
-    } else if (distIndexThumb < 2 && state === `gameHand`) {
-      state = `game`;
+      canChange = false;
+    } else if (
+      distIndexThumb < MIN_CHANGE_DISTANCE &&
+      state === `gameHand` &&
+      canChange
+    ) {
+      state = `gamePin`;
+      canChange = false;
+    } else if (distIndexThumb > MIN_CHANGE_DISTANCE && !canChange) {
+      canChange = true;
     }
-
     push();
     fill(bubble.r, bubble.g, bubble.b);
     noStroke();
@@ -226,7 +244,7 @@ function drawHand() {
 
 function mousePressed() {
   if (state === `enter`) {
-    state = `game`;
+    state = `gamePin`;
   }
 }
 function setUpEnterScreen() {
