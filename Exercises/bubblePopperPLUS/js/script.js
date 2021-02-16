@@ -40,7 +40,7 @@ let predictions = [];
 let state = "enter";
 
 let enterScreen = {
-  string: `Pop the bubbles with the \n pin and watch them change colors! \n Please CLICK to Begin!`,
+  string: `Pop the bubbles with the \n pin and watch them change colors! \n Your webcam will map your finger to the pin. \n Please CLICK to Begin!`,
   x: undefined,
   y: undefined,
   vx: undefined,
