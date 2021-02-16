@@ -5,12 +5,13 @@ Alana DeVito
 Pop bubbles with your index finger as a pin!
 
 Brief:
+- change colour when bubbles popped
 - count how many bubbles the user pops
 - popping sound when bubble popped. Colour of bubble changes when popped?
+
 - Let the user change between different tools by closing and opening their hand?
 (How would you detect a closed hand? Their finger-tips would be closer than usual to the base of their palm…)
-Or
-- Put a different tool on each finger of the user’s hand? - image?
+
 
 **************************************************/
 
@@ -51,6 +52,9 @@ function setup() {
     x: random(width),
     y: height,
     size: 100,
+    r: 0,
+    g: 100,
+    b: 200,
     vx: 0,
     vy: -3,
   };
@@ -86,10 +90,20 @@ function draw() {
     pop();
 
     //check bubble popping
+    // chang colour when popping
     let d = dist(tipX, tipY, bubble.x, bubble.y);
     if (d < bubble.size / 2) {
       bubble.x = random(width);
       bubble.y = height;
+      if (bubble.r < 255) {
+        bubble.r += 30;
+      } else if (bubble.r > 254 && bubble.g < 255) {
+        bubble.g += 30;
+      } else {
+        bubble.r = 0;
+        bubble.g = 0;
+        bubble.b = 255;
+      }
     }
   }
 
@@ -103,7 +117,7 @@ function draw() {
   }
 
   push();
-  fill(0, 100, 200);
+  fill(bubble.r, bubble.g, bubble.b);
   noStroke();
   ellipse(bubble.x, bubble.y, bubble.size);
   pop();
