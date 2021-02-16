@@ -40,7 +40,7 @@ let predictions = [];
 let state = "enter";
 
 let enterScreen = {
-  string: `Pop the bubbles with the pin and watch them change colors! \n Please CLICK to Begin!`,
+  string: `Pop the bubbles with the \n pin and watch them change colors! \n Please CLICK to Begin!`,
   x: undefined,
   y: undefined,
   vx: undefined,
@@ -160,7 +160,7 @@ function setUpEnterScreen() {
   enterScreen.y = 200;
   enterScreen.vx = 5;
   enterScreen.vy = 1;
-  enterScreen.size = 30;
+  enterScreen.size = 20;
 }
 
 function enterStart() {
