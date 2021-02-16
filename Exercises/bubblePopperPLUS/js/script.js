@@ -124,6 +124,7 @@ function gameStart() {
     // chang colour when popping
     let d = dist(tipX, tipY, bubble.x, bubble.y);
     if (d < bubble.size / 2) {
+      popSound.play();
       bubble.x = random(width);
       bubble.y = height;
       if (bubble.r < 255) {
@@ -163,14 +164,14 @@ function setUpEnterScreen() {
 }
 
 function enterStart() {
-  background(nintendo);
+  background(0);
   textSize(enterScreen.size);
   fill(255);
   textAlign(CENTER, CENTER);
   textStyle(BOLD);
   textFont("Monaco");
-  stroke(0, 0, random(0, 255));
-  strokeWeight(10);
+
+  noStroke();
   text(enterScreen.string, enterScreen.x, enterScreen.y);
 }
 
