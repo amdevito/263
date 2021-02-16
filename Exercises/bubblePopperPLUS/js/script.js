@@ -5,13 +5,19 @@ Alana DeVito
 Pop bubbles with your index finger as a pin!
 
 Brief:
-- change colour when bubbles popped
-- count how many bubbles the user pops
+- change colour when bubbles popped.
+
 - popping sound when bubble popped. Colour of bubble changes when popped?
 
-- Let the user change between different tools by closing and opening their hand?
-(How would you detect a closed hand? Their finger-tips would be closer than usual to the base of their palm…)
+- start screen
 
+- when poped bubbles, use Open Sound Control to affect a hydra drawing online.
+
+>>>>
+- Let the user change between different tools by closing and opening their hand? -
+
+(How would you detect a closed hand? Their finger-tips would be closer than usual to the base of their palm…)
+- count how many bubbles the user pops
 
 **************************************************/
 
@@ -25,11 +31,31 @@ let handpose = undefined;
 //the bubble
 let bubble = undefined;
 
+//bubble sound
+let popSound = undefined;
+
 //current set of predictions
 let predictions = [];
 
+let state = "enter";
+
+let enterScreen = {
+  string: `Pop the bubbles with the pin and watch them change colors! \n Please CLICK to Begin!`,
+  x: undefined,
+  y: undefined,
+  vx: undefined,
+  vy: undefined,
+  size: undefined,
+};
+
+function preload() {
+  popSound = loadSound(`assets/sounds/pop.ogg`);
+}
+
 function setup() {
   createCanvas(640, 480);
+
+  setUpEnterScreen();
 
   //access user;s webcam
   video = createCapture(VIDEO);
@@ -60,12 +86,17 @@ function setup() {
   };
 }
 
-// draw()
-//
-// Description of draw() goes here.
 function draw() {
   background(0);
 
+  if (state === `enter`) {
+    enterStart();
+  } else if (state === `game`) {
+    gameStart();
+  }
+}
+
+function gameStart() {
   if (predictions.length > 0) {
     let hand = predictions[0];
     let index = hand.annotations.indexFinger;
@@ -121,4 +152,30 @@ function draw() {
   noStroke();
   ellipse(bubble.x, bubble.y, bubble.size);
   pop();
+}
+
+function setUpEnterScreen() {
+  enterScreen.x = width / 2;
+  enterScreen.y = 200;
+  enterScreen.vx = 5;
+  enterScreen.vy = 1;
+  enterScreen.size = 30;
+}
+
+function enterStart() {
+  background(nintendo);
+  textSize(enterScreen.size);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textFont("Monaco");
+  stroke(0, 0, random(0, 255));
+  strokeWeight(10);
+  text(enterScreen.string, enterScreen.x, enterScreen.y);
+}
+
+function mousePressed() {
+  if (state === `enter`) {
+    state = `game`;
+  }
 }
