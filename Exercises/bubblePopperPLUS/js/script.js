@@ -41,6 +41,16 @@ let handTool = undefined;
 //current set of predictions
 let predictions = [];
 
+//declare variables from each function
+
+let tipX = undefined;
+let tipY = undefined;
+let baseX = undefined;
+let baseY = undefined;
+
+let thumbTipX = undefined;
+let thumbTipY = undefined;
+
 let state = "enter";
 
 let enterScreen = {
@@ -108,14 +118,20 @@ function draw() {
 function gameStart() {
   if (predictions.length > 0) {
     let hand = predictions[0];
+
     let index = hand.annotations.indexFinger;
-    let thumb = hand.annotations.thumb;
+
     let tip = index[3];
     let base = index[0];
-    let tipX = tip[0];
-    let tipY = tip[1];
-    let baseX = base[0];
-    let baseY = base[1];
+    tipX = tip[0];
+    tipY = tip[1];
+    baseX = base[0];
+    baseY = base[1];
+
+    let thumb = hand.annotations.thumb;
+    let thumbTip = thumb[3];
+    thumbTipX = thumbTip[0];
+    thumbTipY = thumbTip[1];
 
     //if index finger and thumb touch, change to hand image, if hand image is the current state, change to  pin
     let distIndexThumb = dist(tipX, tipY, thumbTipX, thumbTipY);
