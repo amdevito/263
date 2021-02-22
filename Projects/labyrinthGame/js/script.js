@@ -66,12 +66,31 @@ let whatType = {
 };
 
 let inputBox = {
-  name: 255,
-  collectedCharacters: 255,
-  collectedItems: 255,
-  geolocation: 255,
-  current: 255,
-  hunting: 255,
+  name: {
+    r: 255,
+    g: 255,
+    b: 255,
+  },
+  collectedCharacters: {
+    r: 255,
+    g: 255,
+    b: 255,
+  },
+  collectedItems: {
+    r: 255,
+    g: 255,
+    b: 255,
+  },
+  geolocation: {
+    r: 255,
+    g: 255,
+    b: 255,
+  },
+  current: {
+    r: 255,
+    g: 255,
+    b: 255,
+  },
 };
 
 let inputBoxStroke = {
@@ -202,51 +221,7 @@ function draw() {
     lose();
   }
 
-  //coloured boxes behind data entered information.
-  //name box
-  push();
-  fill(inputBox.name);
-  stroke(253, 132, 0);
-  rect(22, 138, 200, 20, 6);
-  pop();
-
-  //characters tally box
-  push();
-  fill(inputBox.collectedCharacters);
-  stroke(253, 132, 0);
-  rect(22, 257, 100, 20, 6);
-  pop();
-
-  //items tally box
-  push();
-  fill(inputBox.collectedItems);
-  stroke(253, 132, 0);
-  rect(22, 297, 100, 20, 6);
-
-  pop();
-
-  //my geolocation box
-  push();
-  fill(inputBox.geolocation);
-  stroke(253, 132, 0);
-  rect(22, 360, 100, 20, 6);
-
-  pop();
-
-  // Story line BOX.
-  push();
-  fill(inputBox.current);
-  stroke(253, 132, 0);
-  rect(22, 475, 330, 158, 6);
-  pop();
-
-  // //Currently Hunting box  -- eventually these will change colour when changed in THIS session.
-  // push();
-  // fill(inputBox.hunting);
-  // stroke(253, 132, 0);
-  // rect(22, 619, 335, 19, 6);
-  //
-  // pop();
+  inputBoxes();
 
   //profle text with changing data in the template literals
   let profile = `
@@ -363,8 +338,6 @@ function sceneOne() {
   searchLocation.two = `Behind Curtain`;
   searchLocation.three = `In Bookshelf`;
   searchLocation.four = `In Closet`;
-
-  //assign
 }
 
 function sceneTwo() {}
@@ -395,8 +368,8 @@ function dropMenus() {
   userInputSelection = createSelect();
   userInputSelection.position(22, 430);
   userInputSelection.option("Character? or Item?");
-  userInputSelection.option("Character");
-  userInputSelection.option("Item");
+  userInputSelection.option(whatType.one);
+  userInputSelection.option(whatType.two);
   userInputSelection.changed(sendSelection); // create action after the input drop down is changed - send to / call the sendSelection function.
   //
 
@@ -410,4 +383,60 @@ function dropMenus() {
   // userInputHuntMethod.option("Direct me with voice");
   // userInputHuntMethod.option("Map only");
   // userInputHuntMethod.changed(sendHuntMethod); // create action after the input drop down is changed - send to / call the sendHuntMethod function.
+}
+
+function inputBoxes() {
+  //coloured boxes behind data entered information.
+  //name box
+  push();
+  fill(inputBox.name.r, inputBox.name.g, inputBox.name.b);
+  stroke(253, 132, 0);
+  rect(22, 138, 200, 20, 6);
+  pop();
+
+  //characters tally box
+  push();
+  fill(
+    inputBox.collectedCharacters.r,
+    inputBox.collectedCharacters.g,
+    inputBox.collectedCharacters.b
+  );
+  stroke(253, 132, 0);
+  rect(22, 257, 100, 20, 6);
+  pop();
+
+  //items tally box
+  push();
+  fill(
+    inputBox.collectedItems.r,
+    inputBox.collectedItems.g,
+    inputBox.collectedItems.b
+  );
+  stroke(253, 132, 0);
+  rect(22, 297, 100, 20, 6);
+
+  pop();
+
+  //my geolocation box
+  push();
+  fill(inputBox.geolocation.r, inputBox.geolocation.g, inputBox.geolocation.b);
+  stroke(253, 132, 0);
+  rect(22, 360, 100, 20, 6);
+
+  pop();
+
+  // Story line BOX.
+  push();
+  fill(inputBox.current.r, inputBox.current.g, inputBox.current.b);
+  stroke(253, 132, 0);
+  rect(22, 475, 330, 158, 6);
+  pop();
+
+  // //Currently Hunting box  -- eventually these will change colour when changed in THIS session.
+  // push();
+  // fill(inputBox.hunting);
+  // stroke(253, 132, 0);
+  // rect(22, 619, 335, 19, 6);
+  //
+  // pop();
 }
