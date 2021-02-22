@@ -4,8 +4,8 @@
 Project One: Labyrinth GO (the game)
 By: Alana DeVito
 
-You are Sarah from the movie the Labyrinth.
-You find out your brother has disappeared and need to search the labyrinth for characters and items in order to find the Goblin King, Jareth and get your baby brother, Toby back!
+You are the main character from the movie the Labyrinth.
+You find out your brother, Toby has disappeared and need to search the labyrinth for characters and items in order to find the Goblin King, Jareth and get your baby brother, Toby back!
 
 - states to follow the different levels
 
@@ -13,6 +13,7 @@ You find out your brother has disappeared and need to search the labyrinth for c
 - you choose what to look for in the dropdown (different at each level)
 - you must walk around your space until the item pops up on your screen
 - after catching a specific number of chanracters and items you meet the Goblin king and rescue Toby!
+
 ******************/
 
 // The audio scape profile data while the program is running
@@ -306,15 +307,15 @@ function sendSelection() {
     // userInputSelection.value(`Choose the type or randomize.`);
   }
 
-  for (let i = 0; i < audioScapeData.location_audioGems.length; i++) {
+  for (let i = 0; i < audioScapeData.location_finds.length; i++) {
     //go through the JSON data set with the for loop and find the user's audio gem selection for their choosen neighbourhood.
     if (
-      audioScapeData.location_audioGems[i].neighbourhood ===
+      audioScapeData.location_finds[i].neighbourhood ===
       labyrinthProfile.homeHood
     ) {
-      audioScapeData.location_audioGems[i][labyrinthProfile.selection];
+      audioScapeData.location_finds[i][labyrinthProfile.selection];
       labyrinthProfile.huntAddress = random(
-        audioScapeData.location_audioGems[i][
+        audioScapeData.location_finds[i][
           labyrinthProfile.selection.toLowerCase() //set to lower case so that the if statement will match
         ]
       );
