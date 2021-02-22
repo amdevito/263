@@ -21,7 +21,7 @@ let state = "scene_One";
 // The audio scape profile data while the program is running
 let labyrinthProfile = {
   name: ``,
-  searchLocation: `----------`, //hunt neighbourhood
+  searchLocation: `----------`, //search in that scene
   charactersCollected: 0, //number of audio gems Collected
   itemsCollected: 0,
   currentLocation: ``, ///geolocation - fetch lat and long - not yet active, just placeholder for now
@@ -257,7 +257,7 @@ function draw() {
   //display the text along with the design banner at the top
   push();
   image(labyrinthBanner, 0, 0);
-  textFont(`Tahoma`);
+  textFont(`American Typewriter`);
   textSize(16);
   textAlign(LEFT, TOP);
   fill(0, 139, 140);
@@ -272,6 +272,7 @@ function draw() {
 //save in local storage and reset the dropdown menu to Choose...
 function sendSearchLocation() {
   labyrinthProfile.searchLocation = userInputLocation.value();
+
   // userInputLocation.value("");
   localStorage.setItem(
     `labyrinth-profile-data`,
@@ -281,36 +282,33 @@ function sendSearchLocation() {
 }
 //take dropdown selection from Hunt method and set it to labyrinthProfile.huntMethod.
 //save in local storage and reset the dropdown menu to Choose...
-function sendHuntMethod() {
-  labyrinthProfile.huntMethod = userInputHuntMethod.value();
-
-  if (labyrinthProfile.huntMethod === `Random`) {
-    labyrinthProfile.huntMethod = random(huntType); //if RANDOM, fetch random selection from the huntType array
-    userInputHuntMethod.value(`Choose the method or randomize.`);
-  } else {
-    // userInputHuntMethod.value(`Choose the method or randomize.`);
-  }
-  localStorage.setItem(
-    `labyrinth-profile-data`,
-    JSON.stringify(labyrinthProfile)
-  );
-}
+// function sendHuntMethod() {
+//   labyrinthProfile.huntMethod = userInputHuntMethod.value();
+//
+//   if (labyrinthProfile.huntMethod === `Random`) {
+//     labyrinthProfile.huntMethod = random(huntType); //if RANDOM, fetch random selection from the huntType array
+//     userInputHuntMethod.value(`Choose the method or randomize.`);
+//   } else {
+//     // userInputHuntMethod.value(`Choose the method or randomize.`);
+//   }
+//   localStorage.setItem(
+//     `labyrinth-profile-data`,
+//     JSON.stringify(labyrinthProfile)
+//   );
+// }
 function sendSelection() {
   labyrinthProfile.selection = userInputSelection.value();
 
-  if (labyrinthProfile.selection === `Random`) {
-    labyrinthProfile.selection = random(audioGems); //if RANDOM, fetch random selection from the audioGems array
-    userInputSelection.value(`Choose the type or randomize.`);
-  } else {
-    // userInputSelection.value(`Choose the type or randomize.`);
-  }
+  // if (labyrinthProfile.selection === `Random`) {
+  //   labyrinthProfile.selection = random(audioGems); //if RANDOM, fetch random selection from the audioGems array
+  //   userInputSelection.value(`Choose the type or randomize.`);
+  // } else {
+  //   // userInputSelection.value(`Choose the type or randomize.`);
+  // }
 
   for (let i = 0; i < gameData.location_finds.length; i++) {
-    //go through the JSON data set with the for loop and find the user's audio gem selection for their choosen neighbourhood.
-    if (
-      gameData.location_finds[i].neighbourhood ===
-      labyrinthProfile.searchLocation
-    ) {
+    //go through the JSON data set with the for loop and find the user's  selection for their scene location
+    if (gameData.location_finds[i].scene === labyrinthProfile.searchLocation) {
       gameData.location_finds[i][labyrinthProfile.selection];
       labyrinthProfile.huntAddress = random(
         gameData.location_finds[i][
