@@ -15,12 +15,15 @@ You find out your brother, Toby has disappeared and need to search the labyrinth
 - after catching a specific number of chanracters and items you meet the Goblin king and rescue Toby!
 
 ******************/
+//set state
+let state = "scene_One";
 
 // The audio scape profile data while the program is running
 let labyrinthProfile = {
   name: ``,
-  homeHood: `----------`, //hunt neighbourhood
-  audioGemsCollected: 0, //number of audio gems Collected
+  searchLocation: `----------`, //hunt neighbourhood
+  charactersCollected: 0, //number of audio gems Collected
+  itemsCollected: 0,
   currentLocation: ``, ///geolocation - fetch lat and long - not yet active, just placeholder for now
   huntMethod: `----------`, //how the user wants to be led to the audioGem
   selection: `----------`, ///current audioGem: --if choose random, generate randomly, else, choose in app, not in prompt
@@ -30,10 +33,15 @@ let labyrinthProfile = {
 };
 // Variables to store JSON data for generating the profile
 
-let audioScapeData = undefined;
+// let audioScapeData = undefined;
 
-let homeHoodData = undefined;
-let audioGemsCollectedData = 0;
+let gameData = undefined;
+
+// let homeHoodData = undefined;
+
+let charactersCollectedData = 0;
+let itemsCollectedData = 0;
+
 let currentLocationData = undefined;
 let currentHuntHoodData = undefined;
 
@@ -44,6 +52,18 @@ let huntType = [
   "Direct me with voice",
   "Map only",
 ];
+
+let searchLocation = {
+  one: ``,
+  two: ``,
+  three: ``,
+  four: ``,
+};
+
+let whatType = {
+  one: `Character`,
+  two: `Item`,
+};
 
 let inputBox = {
   name: 255,
@@ -61,7 +81,9 @@ let inputBoxStroke = {
   current: 255,
   hunting: 255,
 };
-let huntAddressData = undefined; ///where you are going to find the audio gem (shown as just the title of the audioGem being hunted in the mockup prototype) - this is where the user is led.
+// let huntAddressData = undefined; ///where you are going to find the audio gem (shown as just the title of the audioGem being hunted in the mockup prototype) - this is where the user is led.
+
+let searchItemFound = undefined; ///title of the item/character found from the JSON file
 
 let labyrinthBanner = undefined; // set app banner image variable
 
@@ -77,7 +99,7 @@ let seeMapButton = undefined; //click to show the audiogems on a map (not active
 function preload() {
   labyrinthBanner = loadImage(`assets/images/labyrinthBanner.png`); //load the banner image into the labyrinthBanner variable
 
-  audioScapeData = loadJSON(`assets/data/location_data.json`); //load the JSON file containing the neighbourhood audioGem titles, sorted by types and neighbourhood.
+  gameData = loadJSON(`assets/data/location_data.json`); //load the JSON file containing the neighbourhood audioGem titles, sorted by types and neighbourhood.
 }
 
 /**
@@ -92,58 +114,24 @@ function setup() {
 
   //commented out below because it was causing issues on first visit.
   //will revisit when I explore further.
-  // let savedProfile = localStorage.getItem(`mmMap-profile-data`); //set prior information from the local storage into the savedProfile variable
+  // let savedProfile = localStorage.getItem(`labyrinth-profile-data`); //set prior information from the local storage into the savedProfile variable
   //
   // //set labyrinthProfile as the savedProfile recived in localStorage.getItem
   // labyrinthProfile = JSON.parse(savedProfile);
 
   //
 
-  //drop down menues
-  //user choose their hunt location
-  userInputLocation = createSelect(); //create dropdown menu with p5.js function
-  userInputLocation.position(110, 210); ///where on app
-  userInputLocation.option("Choose where you would like to hunt.");
-  userInputLocation.option("Plateau Mont Royal Outremont");
-  userInputLocation.option("Villeray and Rosemont");
-  userInputLocation.option("Ville Marie");
-  userInputLocation.option("NDG CDN");
-  userInputLocation.option("Hochelaga Maisonneuve");
-  userInputLocation.option("Sud Ouest");
-  userInputLocation.changed(sendHomeHood); // create action after the input drop down is changed - send to / call the sendHomHood function.
-
-  //choose what to hunt
-  userInputSelection = createSelect();
-  userInputSelection.position(149, 430);
-  userInputSelection.option("Choose the type or randomize.");
-  userInputSelection.option("Random");
-  userInputSelection.option("Interview");
-  userInputSelection.option("Story");
-  userInputSelection.option("Playlist");
-  userInputSelection.option("User created"); //to find gems left by other users.< will need to be monitored. will be rated by other users?.
-  userInputSelection.changed(sendSelection); // create action after the input drop down is changed - send to / call the sendSelection function.
-
-  //choose their hunt method
-  userInputHuntMethod = createSelect(); //create dropdown menu with p5.js function
-  userInputHuntMethod.position(133, 500);
-  userInputHuntMethod.option("Choose the method or randomize.");
-  userInputHuntMethod.option("Random");
-  userInputHuntMethod.option("Mystery walk w/ audio cue");
-  userInputHuntMethod.option("Direct me with voice");
-  userInputHuntMethod.option("Map only");
-  userInputHuntMethod.changed(sendHuntMethod); // create action after the input drop down is changed - send to / call the sendHuntMethod function.
-
   //create button
 
   seeMapButton = createButton("See the Labyrinth");
-  seeMapButton.position(250, 135); //located at upper right corner
+  seeMapButton.position(250, 120); //located at upper right corner
   seeMapButton.mousePressed(sendMapButton); //call a function when mouse is pressed
   seeMapButton.size(105, 50);
 
   ///When above information is submitted the data fills the coloured boxes in the app.
 
   // Check of there is a saved profile and try to load the data
-  let data = JSON.parse(localStorage.getItem(`mmMap-profile-data`));
+  let data = JSON.parse(localStorage.getItem(`labyrinth-profile-data`));
   if (data !== null) {
     let name = prompt(`What is your user name? Or type "create new"`); //enter user name or ask to create new one
     if (name === `create new`) {
@@ -152,8 +140,9 @@ function setup() {
       let password = prompt(`What is your password? Or type "create new"`);
       if (password === data.password && name === data.name) {
         labyrinthProfile.name = data.name;
-        labyrinthProfile.homeHood = data.homeHood;
-        labyrinthProfile.audioGemsCollected = data.audioGemsCollected;
+        labyrinthProfile.searchLocation = data.searchLocation;
+        labyrinthProfile.charactersCollected = data.charactersCollected;
+        labyrinthProfile.itemsCollected = data.itemsCollected;
         labyrinthProfile.huntMethod = data.huntMethod;
         labyrinthProfile.selection = data.selection;
       } else if (
@@ -177,21 +166,48 @@ function generateAudioScapeProfile() {
   labyrinthProfile.name = prompt(`What is your name?`); //prompt answer saved into the variable
   labyrinthProfile.password = prompt(`Please create a password.`); //prompt answer saved into the variable
 
-  localStorage.setItem(`mmMap-profile-data`, JSON.stringify(labyrinthProfile));
+  localStorage.setItem(
+    `labyrinth-profile-data`,
+    JSON.stringify(labyrinthProfile)
+  );
   //localStorage is the object that knows how to save things
   //setItem is the method that does the saving
-  //'mmMap-profile-data' is the key
+  //'labyrinth-profile-data' is the key
   //stringify the thing you want to save
 }
 
 function draw() {
   background(0);
+
+  //different states for the different scenes/levels and win or lose screens
+  if (state === `enter`) {
+    enter();
+  } else if (state === `scene_One`) {
+    sceneOne();
+  } else if (state === `scene_Two`) {
+    sceneTwo();
+  } else if (state === `scene_Three`) {
+    sceneThree();
+  } else if (state === `scene_Four`) {
+    sceneFour();
+  } else if (state === `scene_Five`) {
+    sceneFive();
+  } else if (state === `scene_Six`) {
+    sceneSix();
+  } else if (state === `scene_Seven`) {
+    sceneSeven();
+  } else if (state === `win`) {
+    win();
+  } else if (state === `lose`) {
+    lose();
+  }
+
   //coloured boxes behind data entered information.
   //name box
   push();
   fill(inputBox.name);
   stroke(253, 132, 0);
-  rect(22, 149, 200, 20, 6);
+  rect(22, 138, 200, 20, 6);
   pop();
 
   //characters tally box
@@ -217,33 +233,33 @@ function draw() {
 
   pop();
 
-  //My Current Hunt details  -- eventually these will change colour when changed in THIS session.
+  // Story line BOX.
   push();
   fill(inputBox.current);
   stroke(253, 132, 0);
-  rect(22, 537, 335, 41, 6);
+  rect(22, 475, 330, 158, 6);
   pop();
 
-  //Currently Hunting box  -- eventually these will change colour when changed in THIS session.
-  push();
-  fill(inputBox.hunting);
-  stroke(253, 132, 0);
-  rect(22, 619, 335, 19, 6);
-
-  pop();
+  // //Currently Hunting box  -- eventually these will change colour when changed in THIS session.
+  // push();
+  // fill(inputBox.hunting);
+  // stroke(253, 132, 0);
+  // rect(22, 619, 335, 19, 6);
+  //
+  // pop();
 
   //profle text with changing data in the template literals
   let profile = `
   Name:
     ${labyrinthProfile.name}
 
-  Choose your hunt location:
+  Where would you like to search?
 
 
   Characters Collected:
-    ${labyrinthProfile.audioGemsCollected}
+    ${labyrinthProfile.charactersCollected}
   Items Collected:
-    ${labyrinthProfile.audioGemsCollected}
+    ${labyrinthProfile.itemsCollected}
 
   My Geolocation:
     ${labyrinthProfile.currentLocation}
@@ -251,17 +267,18 @@ function draw() {
   What are you looking for?
 
 
-
-  How would you like to hunt?
-
-
-  My Current Hunt:
-    ${labyrinthProfile.huntMethod} to ${labyrinthProfile.selection}
-    in ${labyrinthProfile.homeHood}
-
-  Currently Hunting:
-    ${labyrinthProfile.huntAddress}`;
-
+`;
+  // REMOVED FROM THE PROFILE VARIABLE ABOVE
+  // How would you like to hunt?
+  //
+  //
+  // My Current Hunt:
+  //   ${labyrinthProfile.huntMethod} to ${labyrinthProfile.selection}
+  //   in ${labyrinthProfile.searchLocation}
+  //
+  // Currently Hunting:
+  //   ${labyrinthProfile.huntAddress}
+  //
   //display the text along with the design banner at the top
   push();
   image(labyrinthBanner, 0, 0);
@@ -278,10 +295,13 @@ function draw() {
 
 //take dropdown selection from Hunt neighbourhood and set it to labyrinthProfile.homeHood.
 //save in local storage and reset the dropdown menu to Choose...
-function sendHomeHood() {
-  labyrinthProfile.homeHood = userInputLocation.value();
+function sendSearchLocation() {
+  labyrinthProfile.searchLocation = userInputLocation.value();
   // userInputLocation.value("");
-  localStorage.setItem(`mmMap-profile-data`, JSON.stringify(labyrinthProfile));
+  localStorage.setItem(
+    `labyrinth-profile-data`,
+    JSON.stringify(labyrinthProfile)
+  );
   // userInputLocation.value(`Choose where you would like to hunt.`);
 }
 //take dropdown selection from Hunt method and set it to labyrinthProfile.huntMethod.
@@ -295,7 +315,10 @@ function sendHuntMethod() {
   } else {
     // userInputHuntMethod.value(`Choose the method or randomize.`);
   }
-  localStorage.setItem(`mmMap-profile-data`, JSON.stringify(labyrinthProfile));
+  localStorage.setItem(
+    `labyrinth-profile-data`,
+    JSON.stringify(labyrinthProfile)
+  );
 }
 function sendSelection() {
   labyrinthProfile.selection = userInputSelection.value();
@@ -307,22 +330,84 @@ function sendSelection() {
     // userInputSelection.value(`Choose the type or randomize.`);
   }
 
-  for (let i = 0; i < audioScapeData.location_finds.length; i++) {
+  for (let i = 0; i < gameData.location_finds.length; i++) {
     //go through the JSON data set with the for loop and find the user's audio gem selection for their choosen neighbourhood.
     if (
-      audioScapeData.location_finds[i].neighbourhood ===
-      labyrinthProfile.homeHood
+      gameData.location_finds[i].neighbourhood ===
+      labyrinthProfile.searchLocation
     ) {
-      audioScapeData.location_finds[i][labyrinthProfile.selection];
+      gameData.location_finds[i][labyrinthProfile.selection];
       labyrinthProfile.huntAddress = random(
-        audioScapeData.location_finds[i][
+        gameData.location_finds[i][
           labyrinthProfile.selection.toLowerCase() //set to lower case so that the if statement will match
         ]
       );
     }
   }
-  labyrinthProfile.audioGemsCollected++; //for now just add a gem once you choose oneto search for. Will change to add one when the user actually enters that location.
-  localStorage.setItem(`mmMap-profile-data`, JSON.stringify(labyrinthProfile)); //store the number of gems the user collects.
+  labyrinthProfile.charactersCollected++; //for now just add a gem once you choose oneto search for. Will change to add one when the user actually enters that location.
+  labyrinthProfile.itemsCollected++;
+  localStorage.setItem(
+    `labyrinth-profile-data`,
+    JSON.stringify(labyrinthProfile)
+  ); //store the number of gems the user collects.
 }
 
 function sendMapButton() {} /// Not currently active. Eventually this will bring up a small map showing the location of the audioGems to hunt for.
+
+function sceneOne() {
+  //user choose their search location in that scene
+  dropMenus();
+
+  //assign locations specific to this scene
+  searchLocation.one = `Under Bed`;
+  searchLocation.two = `Behind Curtain`;
+  searchLocation.three = `In Bookshelf`;
+  searchLocation.four = `In Closet`;
+
+  //assign
+}
+
+function sceneTwo() {}
+
+function sceneThree() {}
+
+function sceneFour() {}
+
+function sceneFive() {}
+
+function sceneSix() {}
+
+function sceneSeven() {}
+
+function dropMenus() {
+  //drop down menus
+  //user choose their search location
+  userInputLocation = createSelect(); //create dropdown menu with p5.js function
+  userInputLocation.position(22, 210); ///where on app
+  userInputLocation.option("Location in Scene.");
+  userInputLocation.option(searchLocation.one);
+  userInputLocation.option(searchLocation.two);
+  userInputLocation.option(searchLocation.three);
+  userInputLocation.option(searchLocation.four);
+  userInputLocation.changed(sendSearchLocation); // create action after the input drop down is changed - send to / call the sendSearchLocation function.
+
+  //choose what to search> Character or item
+  userInputSelection = createSelect();
+  userInputSelection.position(22, 430);
+  userInputSelection.option("Character? or Item?");
+  userInputSelection.option("Character");
+  userInputSelection.option("Item");
+  userInputSelection.changed(sendSelection); // create action after the input drop down is changed - send to / call the sendSelection function.
+  //
+
+  //NOT changing the searching methods, so this can be removed.
+  // //choose their hunt method
+  // userInputHuntMethod = createSelect(); //create dropdown menu with p5.js function
+  // userInputHuntMethod.position(133, 500);
+  // userInputHuntMethod.option("Choose the method or randomize.");
+  // userInputHuntMethod.option("Random");
+  // userInputHuntMethod.option("Mystery walk w/ audio cue");
+  // userInputHuntMethod.option("Direct me with voice");
+  // userInputHuntMethod.option("Map only");
+  // userInputHuntMethod.changed(sendHuntMethod); // create action after the input drop down is changed - send to / call the sendHuntMethod function.
+}

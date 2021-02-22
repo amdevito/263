@@ -2,87 +2,78 @@
   "description": "Labyrinth GO",
   "location_finds": [
     {
-      "underBed": ["sceneOne_underBed_character1", "sceneOne_underBed_item1"],
-      "behindCurtain": [
-        "sceneOne_behindCurtain_character1",
-        "sceneOne_behindCurtain_item1"
+      "Under Bed": ["sceneOne_underBed_character", "sceneOne_underBed_item"],
+      "Behind Curtain": [
+        "sceneOne_behindCurtain_character",
+        "sceneOne_behindCurtain_item"
       ],
 
       "scene": "one"
     },
     {
-      "underRock": [
-        "sceneTwo_underRock_character1",
-        "sceneTwo_underRock_item1"
-      ],
+      "underRock": ["sceneTwo_underRock_character", "sceneTwo_underRock_item"],
       "behindTree": [
-        "sceneTwo_behindTree_character1",
-        "sceneTwo_behindTree_item1"
+        "sceneTwo_behindTree_character",
+        "sceneTwo_behindTree_item"
       ],
 
       "scene": "two"
     },
     {
       "checkWall": [
-        "sceneThree_checkWall_character1",
-        "sceneThree_checkWall_item1"
+        "sceneThree_checkWall_character",
+        "sceneThree_checkWall_item"
       ],
       "checkGround": [
-        "sceneThree_checkGround_character1",
-        "sceneThree_checkGround_item1"
+        "sceneThree_checkGround_character",
+        "sceneThree_checkGround_item"
       ],
 
       "scene": "three"
     },
     {
-      "checkDoorOne": [
-        "sceneFour_doorOne_character1",
-        "sceneFour_doorOne_item1"
-      ],
-      "checkDoorTwo": [
-        "sceneFour_doorTwo_character1",
-        "sceneFour_doorTwo_item1"
-      ],
+      "checkDoorOne": ["sceneFour_doorOne_character", "sceneFour_doorOne_item"],
+      "checkDoorTwo": ["sceneFour_doorTwo_character", "sceneFour_doorTwo_item"],
 
       "scene": "four"
     },
     {
       "lookLeftCorner": [
-        "sceneFive_doorOne_character1",
-        "sceneFive_doorOne_item1"
+        "sceneFive_doorOne_character",
+        "sceneFive_doorOne_item"
       ],
       "lookRightCorner": [
-        "sceneFive_doorTwo_character1",
-        "sceneFive_doorTwo_item1"
+        "sceneFive_doorTwo_character",
+        "sceneFive_doorTwo_item"
       ],
 
       "scene": "five"
     },
     {
-      "goInHut": ["sceneSix_goInHut_character1", "sceneSix_goInHut_item1"],
+      "goInHut": ["sceneSix_goInHut_character", "sceneSix_goInHut_item"],
       "runForward": [
-        "sceneSix_runForward_character1",
-        "sceneSix_runForward_item1"
+        "sceneSix_runForward_character",
+        "sceneSix_runForward_item"
       ],
 
       "scene": "six"
     },
     {
       "climbUpStairs": [
-        "sceneSeven_climbUpStairs_character1",
-        "sceneSeven_climbUpStairs_item1"
+        "sceneSeven_climbUpStairs_character",
+        "sceneSeven_climbUpStairs_item"
       ],
       "goDownStairs": [
-        "sceneSeven_goDownStairs_character1",
-        "sceneSeven_goDownStairs_item1"
+        "sceneSeven_goDownStairs_character",
+        "sceneSeven_goDownStairs_item"
       ],
       "goThroughDoorway": [
-        "sceneSeven_goThroughDoorway_character1",
-        "sceneSeven_goThroughDoorway_item1"
+        "sceneSeven_goThroughDoorway_character",
+        "sceneSeven_goThroughDoorway_item"
       ],
       "jumpOffLedge": [
-        "sceneSeven_jumpOffLedge_character1",
-        "sceneSeven_jumpOffLedge_item1"
+        "sceneSeven_jumpOffLedge_character",
+        "sceneSeven_jumpOffLedge_item"
       ],
 
       "scene": "seven"
