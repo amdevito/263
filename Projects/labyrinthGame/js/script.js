@@ -18,6 +18,8 @@ You find out your brother, Toby has disappeared and need to search the labyrinth
 //set state
 let state = "scene_One";
 
+let scene = `one`;
+
 // The audio scape profile data while the program is running
 let labyrinthProfile = {
   name: ``,
@@ -28,7 +30,7 @@ let labyrinthProfile = {
   currentScene: ``,
   // huntMethod: `----------`, //
   selection: `----------`, ///current type of search - item or character
-  currentHuntHood: `----------`, //neighbourhood determined by geolocation
+  // currentHuntHood: `----------`, //neighbourhood determined by geolocation
   password: ``, // save the user's password entered in prompt.
   // huntAddress: ``, ///where you are going to find the audio gem (shown just in mockup prototype) this is where the user is led - currently it just shows the name of the AudioGem that the user is hunting.
   hiddenThingFound: ``, // name of thing hidden in that scene name is like 'sceneThree_checkGround_character'
@@ -45,7 +47,7 @@ let charactersCollectedData = 0;
 let itemsCollectedData = 0;
 
 let currentLocationData = undefined;
-let currentHuntHoodData = undefined;
+// let currentHuntHoodData = undefined;
 
 //arrays for audioGem types and audio hunt types - access for random selections.
 // let audioGems = ["Interview", "Story", "Playlist", "User created"];
@@ -111,7 +113,7 @@ let labyrinthBanner = undefined; // set app banner image variable
 
 ///variables for user inputs
 
-let userInputLocation = undefined; //user enters the name of the local neighourhood to hunt
+let userInputLocation = undefined; //user enters where they want to search in the scene
 let userInputSelection = undefined; //randomized if choice is random, else user enter soundscape, interview, story, playlist or user created.
 // let userInputHuntMethod = undefined; //choices are : Mystery walk (listen to a ambient playlist with abstract audio direction only. A audio signal will get louder or quieter as you get closer to an item.) Direct me with words. Show me a map. ( please be careful).
 
@@ -157,7 +159,7 @@ function setup() {
   if (data !== null) {
     let name = prompt(`What is your user name? Or type "create new"`); //enter user name or ask to create new one
     if (name === `create new`) {
-      generateAudioScapeProfile(); //create new profile
+      generateLabyrinthProfile(); //create new profile
     } else {
       let password = prompt(`What is your password? Or type "create new"`);
       if (password === data.password && name === data.name) {
@@ -174,18 +176,18 @@ function setup() {
         (name !== data.name && password === `create new`)
       ) {
         //if password and usernames dont match one on file, generate new profile.
-        generateAudioScapeProfile();
+        generateLabyrinthProfile();
       }
     }
   } else {
-    generateAudioScapeProfile();
+    generateLabyrinthProfile();
   }
 }
 
 /**
 Assigns across the profile properties from the data to the current profile
 */
-function generateAudioScapeProfile() {
+function generateLabyrinthProfile() {
   labyrinthProfile.name = prompt(`What is your name?`); //prompt answer saved into the variable
   labyrinthProfile.password = prompt(`Please create a password.`); //prompt answer saved into the variable
 
@@ -346,17 +348,71 @@ function sceneOne() {
   searchLocation.four = `In Closet`;
 }
 
-function sceneTwo() {}
+function sceneTwo() {
+  //user choose their search location in that scene
+  dropMenus();
 
-function sceneThree() {}
+  //assign locations specific to this scene
+  searchLocation.one = `Under Bed`;
+  searchLocation.two = `Behind Curtain`;
+  searchLocation.three = `In Bookshelf`;
+  searchLocation.four = `In Closet`;
+}
 
-function sceneFour() {}
+function sceneThree() {
+  //user choose their search location in that scene
+  dropMenus();
 
-function sceneFive() {}
+  //assign locations specific to this scene
+  searchLocation.one = `Under Bed`;
+  searchLocation.two = `Behind Curtain`;
+  searchLocation.three = `In Bookshelf`;
+  searchLocation.four = `In Closet`;
+}
 
-function sceneSix() {}
+function sceneFour() {
+  //user choose their search location in that scene
+  dropMenus();
 
-function sceneSeven() {}
+  //assign locations specific to this scene
+  searchLocation.one = `Under Bed`;
+  searchLocation.two = `Behind Curtain`;
+  searchLocation.three = `In Bookshelf`;
+  searchLocation.four = `In Closet`;
+}
+
+function sceneFive() {
+  //user choose their search location in that scene
+  dropMenus();
+
+  //assign locations specific to this scene
+  searchLocation.one = `Under Bed`;
+  searchLocation.two = `Behind Curtain`;
+  searchLocation.three = `In Bookshelf`;
+  searchLocation.four = `In Closet`;
+}
+
+function sceneSix() {
+  //user choose their search location in that scene
+  dropMenus();
+
+  //assign locations specific to this scene
+  searchLocation.one = `Under Bed`;
+  searchLocation.two = `Behind Curtain`;
+  searchLocation.three = `In Bookshelf`;
+  searchLocation.four = `In Closet`;
+}
+
+function sceneSeven() {
+  //user choose their search location in that scene
+  dropMenus();
+
+  //assign locations specific to this scene
+  searchLocation.one = `Under Bed`;
+  searchLocation.two = `Behind Curtain`;
+  searchLocation.three = `In Bookshelf`;
+  searchLocation.four = `In Closet`;
+}
 
 function dropMenus() {
   //drop down menus
