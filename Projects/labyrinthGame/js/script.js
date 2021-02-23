@@ -9,6 +9,8 @@ You find out your brother, Toby has disappeared and need to search the labyrinth
 
 - states to follow the different levels
 
+- must collect the correct items with out finding a game over item (remembering patterns?)
+
 - a story line and image pops at each state change to give directions
 - you choose what to look for in the dropdown (different at each level)
 - you must walk around your space until the item pops up on your screen
@@ -217,10 +219,6 @@ function draw() {
     sceneFour();
   } else if (state === `scene_Five`) {
     sceneFive();
-  } else if (state === `scene_Six`) {
-    sceneSix();
-  } else if (state === `scene_Seven`) {
-    sceneSeven();
   } else if (state === `win`) {
     win();
   } else if (state === `lose`) {
@@ -338,80 +336,62 @@ function sendSelection() {
 function sendMapButton() {} /// Not currently active. Eventually this will bring up a small map showing the location of the audioGems to hunt for.
 
 function sceneOne() {
+  /// sarah'e bedroom - find goblins, snake, goblin king, clock
   //user choose their search location in that scene
   dropMenus();
 
   //assign locations specific to this scene
-  searchLocation.one = `Under Bed`;
-  searchLocation.two = `Behind Curtain`;
-  searchLocation.three = `In Bookshelf`;
-  searchLocation.four = `In Closet`;
+  searchLocation.one = `under bed`;
+  searchLocation.two = `behind curtain`;
+  searchLocation.three = `in bookshelf`;
+  searchLocation.four = `in closet`;
 }
 
 function sceneTwo() {
+  //at the entrance of labyrinth - find hoggle [behind tree], faeries[under rock], bracelet [on ground], 'hello' caterpillar[at wall]
   //user choose their search location in that scene
   dropMenus();
 
   //assign locations specific to this scene
-  searchLocation.one = `Under Bed`;
-  searchLocation.two = `Behind Curtain`;
-  searchLocation.three = `In Bookshelf`;
-  searchLocation.four = `In Closet`;
+  searchLocation.one = `check wall`;
+  searchLocation.two = `check ground`;
+  searchLocation.three = `behind tree`;
+  searchLocation.four = `under rock`;
 }
 
 function sceneThree() {
+  ///2 characters guarding doors that lie. 'certain death!'  - collect the doom stones (the faces that say, 'turnback!!'), a lamp and the helping hands
   //user choose their search location in that scene
   dropMenus();
 
   //assign locations specific to this scene
-  searchLocation.one = `Under Bed`;
-  searchLocation.two = `Behind Curtain`;
-  searchLocation.three = `In Bookshelf`;
-  searchLocation.four = `In Closet`;
+  searchLocation.one = `check door one`;
+  searchLocation.two = `check door two`; // locked in the obliette, game over
+  searchLocation.three = `check left corridor`;
+  searchLocation.four = `check right corridor`;
 }
 
 function sceneFour() {
+  // dark forest - collect the posion peach, the orange dancing bouncing head characters,
   //user choose their search location in that scene
   dropMenus();
-
   //assign locations specific to this scene
-  searchLocation.one = `Under Bed`;
-  searchLocation.two = `Behind Curtain`;
-  searchLocation.three = `In Bookshelf`;
-  searchLocation.four = `In Closet`;
+  searchLocation.one = `look around tree`; //ludo
+  searchLocation.two = `look in bush`; ///dancing characters
+  searchLocation.three = `look in dark tunnel`; /// get thrown into the bog of eternal stench and game over
+  searchLocation.four = `climb tree`; //posion peach
 }
 
 function sceneFive() {
+  //final labyrinth -
   //user choose their search location in that scene
   dropMenus();
 
   //assign locations specific to this scene
-  searchLocation.one = `Under Bed`;
-  searchLocation.two = `Behind Curtain`;
-  searchLocation.three = `In Bookshelf`;
-  searchLocation.four = `In Closet`;
-}
-
-function sceneSix() {
-  //user choose their search location in that scene
-  dropMenus();
-
-  //assign locations specific to this scene
-  searchLocation.one = `Under Bed`;
-  searchLocation.two = `Behind Curtain`;
-  searchLocation.three = `In Bookshelf`;
-  searchLocation.four = `In Closet`;
-}
-
-function sceneSeven() {
-  //user choose their search location in that scene
-  dropMenus();
-
-  //assign locations specific to this scene
-  searchLocation.one = `Under Bed`;
-  searchLocation.two = `Behind Curtain`;
-  searchLocation.three = `In Bookshelf`;
-  searchLocation.four = `In Closet`;
+  searchLocation.one = `climb up stairs`; //fall in love with Jareth game over
+  searchLocation.two = `go down stairs`; //run out of time game over
+  searchLocation.three = `go through doorway`; //meet Jareth and beat him [you win] (must enter the correct passage from the book 'you have no power over me')
+  searchLocation.four = `jump off ledge`; //get Toby [you win]
 }
 
 function dropMenus() {

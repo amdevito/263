@@ -2,81 +2,94 @@
   "description": "Labyrinth GO",
   "location_finds": [
     {
-      "Under Bed": ["sceneOne_underBed_character", "sceneOne_underBed_item"],
-      "Behind Curtain": [
+      "under bed": ["sceneOne_underBed_character", "sceneOne_underBed_item"],
+      "behind curtain": [
         "sceneOne_behindCurtain_character",
         "sceneOne_behindCurtain_item"
       ],
+      "in bookshelf": [
+        "sceneOne_in bookshelf_character",
+        "sceneOne_in bookshelf_item"
+      ],
+      "in closet": ["sceneOne_in closet_character", "sceneOne_in closet_item"],
 
       "scene": "one"
     },
     {
-      "underRock": ["sceneTwo_underRock_character", "sceneTwo_underRock_item"],
-      "behindTree": [
+      "under rock": ["sceneTwo_underRock_character", "sceneTwo_underRock_item"],
+      "behind tree": [
         "sceneTwo_behindTree_character",
         "sceneTwo_behindTree_item"
+      ],
+      "check wall": ["sceneTwo_checkWall_character", "sceneTwo_checkWall_item"],
+      "check ground": [
+        "sceneTwo_checkGround_character",
+        "sceneTwo_checkGround_item"
       ],
 
       "scene": "two"
     },
+
     {
-      "checkWall": [
-        "sceneThree_checkWall_character",
-        "sceneThree_checkWall_item"
+      "check door one": [
+        "sceneThree_doorOne_character",
+        "sceneThree_doorOne_item"
       ],
-      "checkGround": [
-        "sceneThree_checkGround_character",
-        "sceneThree_checkGround_item"
+      "check door two": [
+        "sceneThree_doorTwo_character",
+        "sceneThree_doorTwo_item"
+      ],
+      "check left corridor": [
+        "sceneThree_leftCorridor_character",
+        "sceneThree_leftCorridor_item"
+      ],
+      "check right corridor": [
+        "sceneThree_rightCorridor_character",
+        "sceneThree_rightCorridor_item"
       ],
 
       "scene": "three"
     },
     {
-      "checkDoorOne": ["sceneFour_doorOne_character", "sceneFour_doorOne_item"],
-      "checkDoorTwo": ["sceneFour_doorTwo_character", "sceneFour_doorTwo_item"],
+      "look around tree": [
+        "sceneFour_lookAroundTree_character",
+        "sceneFour_lookAroundTree_item"
+      ],
+      "look in bush": [
+        "sceneFour_lookInBush_character",
+        "sceneFour_lookInBush_item"
+      ],
+      "look in dark tunnel": [
+        "sceneFour_lookInDarkTunnel_character",
+        "sceneFour_lookInDarkTunnel_item"
+      ],
+      "climb tree": [
+        "sceneFour_climbTree_character",
+        "sceneFour_climbTree_item"
+      ],
 
       "scene": "four"
     },
+
     {
-      "lookLeftCorner": [
-        "sceneFive_doorOne_character",
-        "sceneFive_doorOne_item"
+      "climb up stairs": [
+        "sceneFive_climbUpStairs_character",
+        "sceneFive_climbUpStairs_item"
       ],
-      "lookRightCorner": [
-        "sceneFive_doorTwo_character",
-        "sceneFive_doorTwo_item"
+      "go down stairs": [
+        "sceneFive_goDownStairs_character",
+        "sceneFive_goDownStairs_item"
+      ],
+      "go through doorway": [
+        "sceneFive_goThroughDoorway_character",
+        "sceneFive_goThroughDoorway_item"
+      ],
+      "jump off ledge": [
+        "sceneFive_jumpOffLedge_character",
+        "sceneFive_jumpOffLedge_item"
       ],
 
       "scene": "five"
-    },
-    {
-      "goInHut": ["sceneSix_goInHut_character", "sceneSix_goInHut_item"],
-      "runForward": [
-        "sceneSix_runForward_character",
-        "sceneSix_runForward_item"
-      ],
-
-      "scene": "six"
-    },
-    {
-      "climbUpStairs": [
-        "sceneSeven_climbUpStairs_character",
-        "sceneSeven_climbUpStairs_item"
-      ],
-      "goDownStairs": [
-        "sceneSeven_goDownStairs_character",
-        "sceneSeven_goDownStairs_item"
-      ],
-      "goThroughDoorway": [
-        "sceneSeven_goThroughDoorway_character",
-        "sceneSeven_goThroughDoorway_item"
-      ],
-      "jumpOffLedge": [
-        "sceneSeven_jumpOffLedge_character",
-        "sceneSeven_jumpOffLedge_item"
-      ],
-
-      "scene": "seven"
     }
   ]
 }
