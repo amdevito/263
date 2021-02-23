@@ -25,11 +25,13 @@ let labyrinthProfile = {
   charactersCollected: 0, //number of audio gems Collected
   itemsCollected: 0,
   currentLocation: ``, ///geolocation - fetch lat and long - not yet active, just placeholder for now
-  huntMethod: `----------`, //how the user wants to be led to the audioGem
-  selection: `----------`, ///current audioGem: --if choose random, generate randomly, else, choose in app, not in prompt
+  currentScene: ``,
+  // huntMethod: `----------`, //
+  selection: `----------`, ///current type of search - item or character
   currentHuntHood: `----------`, //neighbourhood determined by geolocation
   password: ``, // save the user's password entered in prompt.
-  huntAddress: ``, ///where you are going to find the audio gem (shown just in mockup prototype) this is where the user is led - currently it just shows the name of the AudioGem that the user is hunting.
+  // huntAddress: ``, ///where you are going to find the audio gem (shown just in mockup prototype) this is where the user is led - currently it just shows the name of the AudioGem that the user is hunting.
+  hiddenThingFound: ``, // name of thing hidden in that scene name is like 'sceneThree_checkGround_character'
 };
 // Variables to store JSON data for generating the profile
 
@@ -46,12 +48,13 @@ let currentLocationData = undefined;
 let currentHuntHoodData = undefined;
 
 //arrays for audioGem types and audio hunt types - access for random selections.
-let audioGems = ["Interview", "Story", "Playlist", "User created"];
-let huntType = [
-  "Mystery walk w/ audio cue",
-  "Direct me with voice",
-  "Map only",
-];
+// let audioGems = ["Interview", "Story", "Playlist", "User created"];
+// let huntType = [
+//   "Mystery walk w/ audio cue",
+//   "Direct me with voice",
+//   "Map only",
+// ];
+// let types = ["Character", "Item",];
 
 let searchLocation = {
   one: ``,
@@ -100,7 +103,7 @@ let inputBoxStroke = {
   current: 255,
   hunting: 255,
 };
-// let huntAddressData = undefined; ///where you are going to find the audio gem (shown as just the title of the audioGem being hunted in the mockup prototype) - this is where the user is led.
+// let hiddenThingFoundData = undefined; /// ??? the name of the the hidden thing you find - shown as just the title of the item or character
 
 let searchItemFound = undefined; ///title of the item/character found from the JSON file
 
@@ -110,7 +113,7 @@ let labyrinthBanner = undefined; // set app banner image variable
 
 let userInputLocation = undefined; //user enters the name of the local neighourhood to hunt
 let userInputSelection = undefined; //randomized if choice is random, else user enter soundscape, interview, story, playlist or user created.
-let userInputHuntMethod = undefined; //choices are : Mystery walk (listen to a ambient playlist with abstract audio direction only. A audio signal will get louder or quieter as you get closer to an item.) Direct me with words. Show me a map. ( please be careful).
+// let userInputHuntMethod = undefined; //choices are : Mystery walk (listen to a ambient playlist with abstract audio direction only. A audio signal will get louder or quieter as you get closer to an item.) Direct me with words. Show me a map. ( please be careful).
 
 // buttons variables
 let seeMapButton = undefined; //click to show the audiogems on a map (not active in mock up).
@@ -161,8 +164,9 @@ function setup() {
         labyrinthProfile.name = data.name;
         labyrinthProfile.searchLocation = data.searchLocation;
         labyrinthProfile.charactersCollected = data.charactersCollected;
+        labyrinthProfile.currentScene = data.currentScene;
         labyrinthProfile.itemsCollected = data.itemsCollected;
-        labyrinthProfile.huntMethod = data.huntMethod;
+        // labyrinthProfile.huntMethod = data.huntMethod;
         labyrinthProfile.selection = data.selection;
       } else if (
         (password !== data.password && name !== data.name) ||
@@ -241,6 +245,10 @@ function draw() {
 
   What are you looking for?
 
+  Item Found:
+  ${labyrinthProfile.hiddenThingFound}
+
+  Current Scene: ${labyrinthProfile.currentScene}
 
 `;
   // REMOVED FROM THE PROFILE VARIABLE ABOVE
@@ -252,7 +260,7 @@ function draw() {
   //   in ${labyrinthProfile.searchLocation}
   //
   // Currently Hunting:
-  //   ${labyrinthProfile.huntAddress}
+  //   ${labyrinthProfile.hiddenThingFound}
   //
   //display the text along with the design banner at the top
   push();
@@ -310,7 +318,7 @@ function sendSelection() {
     //go through the JSON data set with the for loop and find the user's  selection for their scene location
     if (gameData.location_finds[i].scene === labyrinthProfile.searchLocation) {
       gameData.location_finds[i][labyrinthProfile.selection];
-      labyrinthProfile.huntAddress = random(
+      labyrinthProfile.hiddenThingFound = random(
         gameData.location_finds[i][
           labyrinthProfile.selection.toLowerCase() //set to lower case so that the if statement will match
         ]
