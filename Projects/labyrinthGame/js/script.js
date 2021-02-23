@@ -20,16 +20,16 @@ You find out your brother, Toby has disappeared and need to search the labyrinth
 //set state
 let state = "scene_One";
 
-let scene = `one`;
+let scene = ``;
 
-// The audio scape profile data while the program is running
+// The game profile data while the program is running
 let labyrinthProfile = {
   name: ``,
-  searchLocation: `----------`, //search in that scene
+  searchLocation: `----------`, //search a place in that scene
   charactersCollected: 0, //number of audio gems Collected
   itemsCollected: 0,
   currentLocation: ``, ///geolocation - fetch lat and long - not yet active, just placeholder for now
-  currentScene: ``,
+  currentScene: 0,
   // huntMethod: `----------`, //
   selection: `----------`, ///current type of search - item or character
   // currentHuntHood: `----------`, //neighbourhood determined by geolocation
@@ -245,10 +245,14 @@ function draw() {
 
   What are you looking for?
 
-  Item Found:
-  ${labyrinthProfile.hiddenThingFound}
 
-  Current Scene: ${labyrinthProfile.currentScene}
+
+    Current Scene: ${labyrinthProfile.currentScene}
+
+    Item Found:
+    ${labyrinthProfile.hiddenThingFound}
+
+
 
 `;
   // REMOVED FROM THE PROFILE VARIABLE ABOVE
@@ -338,8 +342,9 @@ function sendMapButton() {} /// Not currently active. Eventually this will bring
 function sceneOne() {
   /// sarah'e bedroom - find goblins, snake, goblin king, clock
   //user choose their search location in that scene
-  dropMenus();
 
+  dropMenus();
+  labyrinthProfile.currentScene = 1;
   //assign locations specific to this scene
   searchLocation.one = `under bed`;
   searchLocation.two = `behind curtain`;
@@ -351,7 +356,7 @@ function sceneTwo() {
   //at the entrance of labyrinth - find hoggle [behind tree], faeries[under rock], bracelet [on ground], 'hello' caterpillar[at wall]
   //user choose their search location in that scene
   dropMenus();
-
+  labyrinthProfile.currentScene++;
   //assign locations specific to this scene
   searchLocation.one = `check wall`;
   searchLocation.two = `check ground`;
@@ -363,7 +368,7 @@ function sceneThree() {
   ///2 characters guarding doors that lie. 'certain death!'  - collect the doom stones (the faces that say, 'turnback!!'), a lamp and the helping hands
   //user choose their search location in that scene
   dropMenus();
-
+  labyrinthProfile.currentScene++;
   //assign locations specific to this scene
   searchLocation.one = `check door one`;
   searchLocation.two = `check door two`; // locked in the obliette, game over
@@ -375,6 +380,7 @@ function sceneFour() {
   // dark forest - collect the posion peach, the orange dancing bouncing head characters,
   //user choose their search location in that scene
   dropMenus();
+  labyrinthProfile.currentScene++;
   //assign locations specific to this scene
   searchLocation.one = `look around tree`; //ludo
   searchLocation.two = `look in bush`; ///dancing characters
@@ -386,7 +392,7 @@ function sceneFive() {
   //final labyrinth -
   //user choose their search location in that scene
   dropMenus();
-
+  labyrinthProfile.currentScene++;
   //assign locations specific to this scene
   searchLocation.one = `climb up stairs`; //fall in love with Jareth game over
   searchLocation.two = `go down stairs`; //run out of time game over
