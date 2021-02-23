@@ -2,16 +2,19 @@
   "description": "Labyrinth GO",
   "location_finds": [
     {
-      "under bed": ["sceneOne_underBed_character", "sceneOne_underBed_item"],
+      "under bed": [
+        "character_sceneOne_underBed",
+        "item_sceneOne_underBed_item"
+      ],
       "behind curtain": [
-        "sceneOne_behindCurtain_character",
-        "sceneOne_behindCurtain_item"
+        "character_sceneOne_behindCurtain",
+        "item_sceneOne_behindCurtain"
       ],
       "in bookshelf": [
-        "sceneOne_in bookshelf_character",
-        "sceneOne_in bookshelf_item"
+        "character_sceneOne_in bookshelf",
+        "item_sceneOne_in bookshelf"
       ],
-      "in closet": ["sceneOne_in closet_character", "sceneOne_in closet_item"],
+      "in closet": ["character_sceneOne_in closet", "item_sceneOne_in closet"],
 
       "scene": "one"
     },

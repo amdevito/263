@@ -130,6 +130,8 @@ function setup() {
     //error getting geolocation
   }
 
+  sceneOne(); //only temporary - put back after - call function scene one gets called
+
   watchPosition(positionChanged);
 
   console.log(realLocationData.latitude);
@@ -203,7 +205,7 @@ function draw() {
   if (state === `enter`) {
     enter();
   } else if (state === `scene_One`) {
-    sceneOne();
+    // sceneOne();
   } else if (state === `scene_Two`) {
     sceneTwo();
   } else if (state === `scene_Three`) {
@@ -280,49 +282,52 @@ My Geolocation:
 function sendSearchLocation() {
   labyrinthProfile.searchLocation = userInputLocation.value();
 
+  console.log(labyrinthProfile.searchLocation);
   // userInputLocation.value("");
-  localStorage.setItem(
-    `labyrinth-profile-data`,
-    JSON.stringify(labyrinthProfile)
-  );
+  // localStorage.setItem(
+  //   `labyrinth-profile-data`,
+  //   JSON.stringify(labyrinthProfile)
+  // );
   // userInputLocation.value(`Choose where you would like to hunt.`);
 }
 
 function sendSelection() {
   labyrinthProfile.selection = userInputSelection.value();
 
-  for (let i = 0; i < gameData.location_finds.length; i++) {
-    //go through the JSON data set with the for loop and find the user's  selection for their scene location
-    if (gameData.location_finds[i].scene === labyrinthProfile.searchLocation) {
-      gameData.location_finds[i][labyrinthProfile.selection];
-      labyrinthProfile.hiddenThingFound = random(
-        gameData.location_finds[i][
-          labyrinthProfile.selection.toLowerCase() //set to lower case so that the if statement will match
-        ]
-      );
-    }
-  }
+  /// if else matching the different selection and location matches possible and what to get from JSON.
+
+  // for (let i = 0; i < gameData.location_finds.length; i++) {
+  //   //go through the JSON data set with the for loop and find the user's  selection for their scene location
+  //   if (gameData.location_finds[i].scene === labyrinthProfile.searchLocation) {
+  //     gameData.location_finds[i][labyrinthProfile.selection];
+  //     labyrinthProfile.hiddenThingFound = random(
+  //       gameData.location_finds[i][
+  //         labyrinthProfile.selection.toLowerCase() //set to lower case so that the if statement will match
+  //       ]
+  //     );
+  //   }
+  // }
   labyrinthProfile.charactersCollected++; //add one when you find chanracter
   labyrinthProfile.itemsCollected++; // add one when you find item
-  localStorage.setItem(
-    `labyrinth-profile-data`,
-    JSON.stringify(labyrinthProfile)
-  ); //store the number of items and characters the user collects.
+  // localStorage.setItem(
+  //   `labyrinth-profile-data`,
+  //   JSON.stringify(labyrinthProfile)
+  // ); //store the number of items and characters the user collects.
 }
 
 function sendMapButton() {} /// Not currently active. Show labyrinth 'trick' map [optical illusion]
 
 function sceneOne() {
-  /// sarah'e bedroom - find goblins, snake, goblin king, clock
+  /// user's bedroom - find goblins, snake, goblin king, clock
   //user choose their search location in that scene
 
-  dropMenus();
   labyrinthProfile.currentScene = 1;
   //assign locations specific to this scene
-  searchLocation.one = `under bed`;
-  searchLocation.two = `behind curtain`;
-  searchLocation.three = `in bookshelf`;
-  searchLocation.four = `in closet`;
+  searchLocation.one = `under bed`; //find goblins
+  searchLocation.two = `behind curtain`; //goblin king
+  searchLocation.three = `in bookshelf`; //snake
+  searchLocation.four = `in closet`; //clock
+  dropMenus();
 }
 
 function sceneTwo() {
