@@ -455,3 +455,22 @@ function positionChanged(position) {
   labyrinthProfile.currentLocationLat = position.latitude;
   labyrinthProfile.currentLocationLong = position.longitude;
 }
+
+function mousePressed() {
+  ///just to test and then change mousePressed to something else (a new function) and trigger on a movement event via the geolocation distance?
+  if (state === `enter`) {
+    state = `scene_One`;
+  } else if (state === `scene_One`) {
+    state = `scene_Two`;
+  } else if (state === `scene_Two`) {
+    state = `scene_Three`;
+  } else if (state === `scene_Three`) {
+    `scene_Four`;
+  } else if (state === `scene_Four`) {
+    `scene_Five`;
+  } else if (state === `scene_Five`) {
+    sceneFive();
+  } else if (state === `win`) {
+    `win`;
+  }
+}
