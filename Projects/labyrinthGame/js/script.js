@@ -44,6 +44,12 @@ let labyrinthProfile = {
 
 let gameData = undefined;
 
+//button variables
+let buttonXPosition = 250;
+let buttonYPosition = 120;
+let buttonXSize = 105;
+let buttonYSize = 50;
+
 let enterIntroInfo = undefined;
 let enterOneInfo = undefined;
 let enterTwoInfo = undefined;
@@ -111,6 +117,21 @@ let inputBoxStroke = {
   current: 255,
   hunting: 255,
 };
+
+let dropMenuLocation = {
+  x: 22,
+  y: 210,
+  xv: 1,
+  yv: 1,
+};
+
+let dropMenuSelection = {
+  x: 22,
+  y: 430,
+  xv: 1,
+  yv: 1,
+};
+
 // let hiddenThingFoundData = undefined; /// ??? the name of the the hidden thing you find - shown as just the title of the item or character
 
 let searchItemFound = undefined; ///title of the item/character found from the JSON file
@@ -253,6 +274,15 @@ function draw() {
     win();
   } else if (state === `lose`) {
     lose();
+  } else if (
+    state === `map` ||
+    state === `map1` ||
+    state === `map2` ||
+    state === `map3` ||
+    state === `map4` ||
+    state === `map5`
+  ) {
+    trickMap();
   }
 
   console.log(state);
@@ -348,8 +378,47 @@ function sendSelection() {
   // ); //store the number of items and characters the user collects.
 }
 
-function sendMapButton() {} /// Not currently active. Show labyrinth 'trick' map [optical illusion]
+function sendMapButton() {
+  if (state === `scene_One`) {
+    state = `map1`;
+  } else if (state === `scene_Two`) {
+    state = `map2`;
+  } else if (state === `scene_Three`) {
+    state = `map3`;
+  } else if (state === `scene_Four`) {
+    state = `map4`;
+  } else if (state === `enter_scene_Five`) {
+    state = `map5`;
+  }
+}
 
+function returnMapButton() {
+  if (state === `map1`) {
+    state = `scene_One`;
+  } else if (state === `map2`) {
+    state = `scene_Two`;
+  } else if (state === `map3`) {
+    state = `scene_Three`;
+  } else if (state === `map4`) {
+    state = ` scene_Four`;
+  } else if (state === `map5`) {
+    state = ` enter_scene_Five`;
+  }
+}
+
+function trickMap() {
+  push();
+  imageMode(CENTER);
+  image(labyrinthTrickMap, width / 2 + 7, height / 2 + 35);
+
+  //create selects (menus) go off screen -
+
+  seeMapButton = createButton("Nothing is as it seems");
+  seeMapButton.position(250, 120); //located at upper right corner
+  seeMapButton.mousePressed(returnMapButton); //call a function when mouse is pressed
+  seeMapButton.size(105, 50);
+  pop();
+}
 //boxes and box dropshadows for each story scene
 function introStoryBoxes() {
   push();
@@ -591,7 +660,7 @@ function dropMenus() {
   //drop down menus
   //user choose their search location
   userInputLocation = createSelect(); //create dropdown menu with p5.js function
-  userInputLocation.position(22, 210); ///where on app
+  userInputLocation.position(dropMenuLocation.x, dropMenuLocation.y); ///where on app
   userInputLocation.option("Location in Scene.");
   userInputLocation.option(searchLocation.one);
   userInputLocation.option(searchLocation.two);
@@ -601,7 +670,7 @@ function dropMenus() {
 
   //choose what to search> Character or item
   userInputSelection = createSelect();
-  userInputSelection.position(22, 430);
+  userInputSelection.position(dropMenuSelection.x, dropMenuSelection.y);
   userInputSelection.option("Character? or Item?");
   userInputSelection.option(whatType.one);
   userInputSelection.option(whatType.two);
