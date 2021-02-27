@@ -20,7 +20,7 @@ You find out your brother, Toby has disappeared and need to search the labyrinth
 
 ******************/
 //set state
-let state = "scene_One";
+let state = "enter";
 
 let lat;
 let long;
@@ -130,7 +130,7 @@ function setup() {
     //error getting geolocation
   }
 
-  sceneOne(); //only temporary - put back after - call function scene one gets called
+  // sceneOne(); //only temporary - put back after - call function scene one gets called
 
   watchPosition(positionChanged);
 
@@ -141,13 +141,6 @@ function setup() {
   console.log(realLocationData.altitudeAccuracy);
   console.log(realLocationData.heading);
   console.log(realLocationData.speed);
-
-  //create button
-
-  seeMapButton = createButton("See the Labyrinth");
-  seeMapButton.position(250, 120); //located at upper right corner
-  seeMapButton.mousePressed(sendMapButton); //call a function when mouse is pressed
-  seeMapButton.size(105, 50);
 
   ///When above information is submitted the data fills the white boxes in the app.
 
@@ -203,9 +196,9 @@ function draw() {
 
   //different states for the different scenes/levels and win or lose screens
   if (state === `enter`) {
-    enter();
+    enterIntro();
   } else if (state === `scene_One`) {
-    // sceneOne();
+    sceneOne();
   } else if (state === `scene_Two`) {
     sceneTwo();
   } else if (state === `scene_Three`) {
@@ -219,6 +212,176 @@ function draw() {
   } else if (state === `lose`) {
     lose();
   }
+
+  console.log(state);
+}
+
+//save in local storage and reset the dropdown menu to Choose...
+function sendSearchLocation() {
+  labyrinthProfile.searchLocation = userInputLocation.value();
+
+  console.log(labyrinthProfile.searchLocation);
+}
+
+function profileMainPage() {
+  inputBoxes();
+
+  //profle text with changing data in the template literals
+  let profile = `
+  Name:
+    ${labyrinthProfile.name}
+
+  Where would you like to search?
+
+
+  Characters Collected:
+    ${labyrinthProfile.charactersCollected}
+  Items Collected:
+    ${labyrinthProfile.itemsCollected}
+
+
+
+
+  What are you looking for?
+
+
+
+    Current Scene: ${labyrinthProfile.currentScene}
+
+    Item Found:
+    ${labyrinthProfile.hiddenThingFound}
+
+
+
+`;
+
+  //display the text along with the design banner at the top
+  push();
+  image(labyrinthBanner, 0, 0);
+  textFont(`American Typewriter`);
+  textSize(16);
+  textAlign(LEFT, TOP);
+  fill(0, 139, 140);
+  text(profile, 10, 100);
+
+  pop();
+
+  let geolocationProfile = `
+My Geolocation:
+ Lat: ${labyrinthProfile.currentLocationLat}
+ Long: ${labyrinthProfile.currentLocationLong}
+    `;
+  push();
+
+  textFont(`American Typewriter`);
+  textSize(16);
+  textAlign(LEFT, TOP);
+  fill(0, 139, 140);
+  text(geolocationProfile, 22, 300);
+
+  pop();
+}
+
+function sendSelection() {
+  labyrinthProfile.selection = userInputSelection.value();
+
+  /// if else matching the different selection and location matches possible and what to get from JSON.
+
+  // for (let i = 0; i < gameData.location_finds.length; i++) {
+  //   //go through the JSON data set with the for loop and find the user's  selection for their scene location
+  //   if (gameData.location_finds[i].scene === labyrinthProfile.searchLocation) {
+  //     gameData.location_finds[i][labyrinthProfile.selection];
+  //     labyrinthProfile.hiddenThingFound = random(
+  //       gameData.location_finds[i][
+  //         labyrinthProfile.selection.toLowerCase() //set to lower case so that the if statement will match
+  //       ]
+  //     );
+  //   }
+  // }
+  labyrinthProfile.charactersCollected++; //add one when you find chanracter
+  labyrinthProfile.itemsCollected++; // add one when you find item
+  // localStorage.setItem(
+  //   `labyrinth-profile-data`,
+  //   JSON.stringify(labyrinthProfile)
+  // ); //store the number of items and characters the user collects.
+}
+
+function sendMapButton() {} /// Not currently active. Show labyrinth 'trick' map [optical illusion]
+
+function enterIntro() {
+  fill(0);
+  // rect(0, 0, 375, 667);
+  tint(75);
+  image(labyrinthBanner, 0, 0);
+  rectMode(CENTER);
+  rect(width / 2, height / 2 + 40, 330, 380, 50, 50);
+  strokeWeight(5);
+  stroke(176);
+}
+function enterOne() {
+  fill(0);
+  // rect(0, 0, 375, 667);
+  tint(75);
+  image(labyrinthBanner, 0, 0);
+  rectMode(CENTER);
+  rect(width / 2, height / 2 + 40, 330, 380, 50, 50);
+  strokeWeight(5);
+  stroke(176);
+}
+function enterTwo() {
+  fill(0);
+  // rect(0, 0, 375, 667);
+  tint(75);
+  image(labyrinthBanner, 0, 0);
+  rectMode(CENTER);
+  rect(width / 2, height / 2 + 40, 330, 380, 50, 50);
+  strokeWeight(5);
+  stroke(176);
+}
+function enterThree() {
+  fill(0);
+  // rect(0, 0, 375, 667);
+  tint(75);
+  image(labyrinthBanner, 0, 0);
+  rectMode(CENTER);
+  rect(width / 2, height / 2 + 40, 330, 380, 50, 50);
+  strokeWeight(5);
+  stroke(176);
+}
+function enterFour() {
+  fill(0);
+  // rect(0, 0, 375, 667);
+  tint(75);
+  image(labyrinthBanner, 0, 0);
+  rectMode(CENTER);
+  rect(width / 2, height / 2 + 40, 330, 380, 50, 50);
+  strokeWeight(5);
+  stroke(176);
+}
+function enterFive() {
+  fill(0);
+  // rect(0, 0, 375, 667);
+  tint(75);
+  image(labyrinthBanner, 0, 0);
+  rectMode(CENTER);
+  rect(width / 2, height / 2 + 40, 330, 380, 50, 50);
+  strokeWeight(5);
+  stroke(176);
+}
+
+function mainProfilePage() {
+  //create button
+
+  seeMapButton = createButton("See the Labyrinth");
+  seeMapButton.position(250, 120); //located at upper right corner
+  seeMapButton.mousePressed(sendMapButton); //call a function when mouse is pressed
+  seeMapButton.size(105, 50);
+
+  push();
+  fill(255);
+  rect(0, 0, 375, 667);
+  tint(255, 126);
+  pop();
 
   inputBoxes();
 
@@ -278,46 +441,59 @@ My Geolocation:
   pop();
 }
 
-//save in local storage and reset the dropdown menu to Choose...
-function sendSearchLocation() {
-  labyrinthProfile.searchLocation = userInputLocation.value();
-
-  console.log(labyrinthProfile.searchLocation);
-  // userInputLocation.value("");
-  // localStorage.setItem(
-  //   `labyrinth-profile-data`,
-  //   JSON.stringify(labyrinthProfile)
-  // );
-  // userInputLocation.value(`Choose where you would like to hunt.`);
-}
-
-function sendSelection() {
-  labyrinthProfile.selection = userInputSelection.value();
-
-  /// if else matching the different selection and location matches possible and what to get from JSON.
-
-  // for (let i = 0; i < gameData.location_finds.length; i++) {
-  //   //go through the JSON data set with the for loop and find the user's  selection for their scene location
-  //   if (gameData.location_finds[i].scene === labyrinthProfile.searchLocation) {
-  //     gameData.location_finds[i][labyrinthProfile.selection];
-  //     labyrinthProfile.hiddenThingFound = random(
-  //       gameData.location_finds[i][
-  //         labyrinthProfile.selection.toLowerCase() //set to lower case so that the if statement will match
-  //       ]
-  //     );
-  //   }
-  // }
-  labyrinthProfile.charactersCollected++; //add one when you find chanracter
-  labyrinthProfile.itemsCollected++; // add one when you find item
-  // localStorage.setItem(
-  //   `labyrinth-profile-data`,
-  //   JSON.stringify(labyrinthProfile)
-  // ); //store the number of items and characters the user collects.
-}
-
-function sendMapButton() {} /// Not currently active. Show labyrinth 'trick' map [optical illusion]
-
 function sceneOne() {
+  mainProfilePage();
+  sceneOneMenus();
+}
+
+function sceneTwo() {
+  push();
+  fill(255);
+  rect(0, 0, 375, 667);
+  tint(255, 126);
+  pop();
+}
+
+function sceneThree() {
+  push();
+  fill(255);
+  rect(0, 0, 375, 667);
+  tint(255, 126);
+  pop();
+}
+
+function sceneFour() {
+  push();
+  fill(255);
+  rect(0, 0, 375, 667);
+  tint(255, 126);
+  pop();
+}
+
+function sceneFive() {
+  push();
+  fill(255);
+  rect(0, 0, 375, 667);
+  tint(255, 126);
+  pop();
+}
+
+function win() {
+  push();
+  fill(0);
+  rect(0, 0, 375, 667);
+  tint(255, 126);
+  pop();
+}
+function lose() {
+  push();
+  fill(255);
+  rect(0, 0, 375, 667);
+  tint(255, 126);
+  pop();
+}
+
+function sceneOneMenus() {
   /// user's bedroom - find goblins, snake, goblin king, clock
   //user choose their search location in that scene
 
@@ -330,7 +506,7 @@ function sceneOne() {
   dropMenus();
 }
 
-function sceneTwo() {
+function sceneTwoMenus() {
   //at the entrance of labyrinth - find hoggle [behind tree], faeries[under rock], bracelet [on ground], 'hello' caterpillar[at wall]
   //user choose their search location in that scene
   dropMenus();
@@ -342,7 +518,7 @@ function sceneTwo() {
   searchLocation.four = `under rock`;
 }
 
-function sceneThree() {
+function sceneThreeMenus() {
   ///2 characters guarding doors that lie. 'certain death!'  - collect the doom stones (the faces that say, 'turnback!!'), a lamp and the helping hands
   //user choose their search location in that scene
   dropMenus();
@@ -354,7 +530,7 @@ function sceneThree() {
   searchLocation.four = `check right corridor`;
 }
 
-function sceneFour() {
+function sceneFourMenus() {
   // dark forest - collect the posion peach, the orange dancing bouncing head characters,
   //user choose their search location in that scene
   dropMenus();
@@ -366,7 +542,7 @@ function sceneFour() {
   searchLocation.four = `climb tree`; //posion peach
 }
 
-function sceneFive() {
+function sceneFiveMenus() {
   //final labyrinth -
   //user choose their search location in that scene
   dropMenus();
@@ -374,7 +550,7 @@ function sceneFive() {
   //assign locations specific to this scene
   searchLocation.one = `climb up stairs`; //fall in love with Jareth game over
   searchLocation.two = `go down stairs`; //run out of time game over
-  searchLocation.three = `go through doorway`; //meet Jareth and beat him [you win] (must enter the correct passage from the book 'you have no power over me')
+  searchLocation.three = `go through doorway`; //meet Jareth and beat him [you win] (must enterIntro the correct passage from the book 'you have no power over me')
   searchLocation.four = `jump off ledge`; //get Toby [you win]
 }
 
@@ -460,17 +636,18 @@ function mousePressed() {
   ///just to test and then change mousePressed to something else (a new function) and trigger on a movement event via the geolocation distance?
   if (state === `enter`) {
     state = `scene_One`;
+    sceneOneMenus();
   } else if (state === `scene_One`) {
     state = `scene_Two`;
+    sceneTwoMenus();
   } else if (state === `scene_Two`) {
     state = `scene_Three`;
+    sceneThreeMenus();
   } else if (state === `scene_Three`) {
     `scene_Four`;
+    sceneFourMenus();
   } else if (state === `scene_Four`) {
     `scene_Five`;
-  } else if (state === `scene_Five`) {
-    sceneFive();
-  } else if (state === `win`) {
-    `win`;
+    sceneFiveMenus();
   }
 }
