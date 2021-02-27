@@ -124,7 +124,7 @@ function preload() {
   ///typing gifs with each scene's storyline typing out : from http://wigflip.com/minifesto/
 
   enterIntroInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
-  enterOneInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
+  enterOneInfo = loadImage(`assets/images/enterOneInfo.gif`); //load the optical illusion labyrinth trick map
   enterTwoInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
   enterThreeInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
   enterFourInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
@@ -213,14 +213,24 @@ function draw() {
   //different states for the different scenes/levels and win or lose screens
   if (state === `enter`) {
     enterIntro();
+  } else if (state === `enter_scene_One`) {
+    enterOne();
   } else if (state === `scene_One`) {
     sceneOne();
+  } else if (state === `enter_scene_Two`) {
+    enterTwo();
   } else if (state === `scene_Two`) {
     sceneTwo();
+  } else if (state === `enter_scene_Three`) {
+    enterThree();
   } else if (state === `scene_Three`) {
     sceneThree();
+  } else if (state === `enter_scene_Four`) {
+    enterFour();
   } else if (state === `scene_Four`) {
     sceneFour();
+  } else if (state === `enter_scene_Five`) {
+    enterFive();
   } else if (state === `scene_Five`) {
     sceneFive();
   } else if (state === `win`) {
@@ -334,13 +344,13 @@ function introStoryBoxes() {
   image(labyrinthBanner, 0, 0);
   strokeWeight(3);
   rectMode(CENTER);
-  rect(width / 2 - 7, height / 2 + 50, 330, 410);
+  rect(width / 2 - 7, height / 2 + 55, 330, 480);
   strokeWeight(3);
   stroke(250, 233, 0);
 
   fill(0);
 
-  rect(width / 2 + 10, height / 2 + 28, 330, 410);
+  rect(width / 2 + 7, height / 2 + 35, 330, 480);
   pop();
 }
 
@@ -349,7 +359,7 @@ function enterIntro() {
 
   push();
   imageMode(CENTER);
-  image(enterIntroInfo, width / 2 + 7, height / 2 + 23);
+  image(enterIntroInfo, width / 2 + 7, height / 2 + 35);
   pop();
 }
 function enterOne() {
@@ -357,7 +367,7 @@ function enterOne() {
 
   push();
   imageMode(CENTER);
-  image(enterOneInfo, width / 2 + 7, height / 2 + 23);
+  image(enterOneInfo, width / 2 + 7, height / 4);
   pop();
 }
 function enterTwo() {
@@ -461,27 +471,27 @@ My Geolocation:
 
 function sceneOne() {
   mainProfilePage();
-  sceneOneMenus();
+  // sceneOneMenus(); called on click after story told and user wants to search.
 }
 
 function sceneTwo() {
   mainProfilePage();
-  sceneTwoMenus();
+  // sceneTwoMenus();
 }
 
 function sceneThree() {
   mainProfilePage();
-  sceneThreeMenus();
+  // sceneThreeMenus();
 }
 
 function sceneFour() {
   mainProfilePage();
-  sceneFourMenus();
+  // sceneFourMenus();
 }
 
 function sceneFive() {
   mainProfilePage();
-  sceneFiveMenus();
+  // sceneFiveMenus();
 }
 
 function win() {
@@ -641,6 +651,8 @@ function positionChanged(position) {
 function mousePressed() {
   ///just to test and then change mousePressed to something else (a new function) and trigger on a movement event via the geolocation distance?
   if (state === `enter`) {
+    state = `enter_scene_One`;
+  } else if (state === `enter_scene_One`) {
     state = `scene_One`;
     sceneOneMenus();
   }
