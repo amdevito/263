@@ -51,6 +51,14 @@ let enterThreeInfo = undefined;
 let enterFourInfo = undefined;
 let enterFiveInfo = undefined;
 
+let sceneOneIntroImage = undefined;
+let sceneTwoIntroImage = undefined;
+let sceneThreeIntroImage = undefined;
+let sceneFourIntroImage = undefined;
+let sceneFiveIntroImage = undefined;
+let winImage = undefined;
+let loseImage = undefined;
+
 let charactersCollectedData = 0;
 let itemsCollectedData = 0;
 
@@ -129,6 +137,14 @@ function preload() {
   enterThreeInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
   enterFourInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
   enterFiveInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
+
+  sceneOneIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
+  sceneTwoIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
+  sceneThreeIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
+  sceneFourIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
+  sceneFiveIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
+  winImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
+  loseImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
 
   gameData = loadJSON(`assets/data/location_data.json`); //load the JSON file containing the neighbourhood audioGem titles, sorted by types and neighbourhood.
 
@@ -310,8 +326,8 @@ My Geolocation:
 
 function sendSelection() {
   labyrinthProfile.selection = userInputSelection.value();
-
-  /// if else matching the different selection and location matches possible and what to get from JSON.
+  // if (labyrinthProfile.selection = )
+  //   /// if else matching the different selection and location matches possible and what to get from JSON.
 
   // for (let i = 0; i < gameData.location_finds.length; i++) {
   //   //go through the JSON data set with the for loop and find the user's  selection for their scene location
@@ -368,6 +384,7 @@ function enterOne() {
   push();
   imageMode(CENTER);
   image(enterOneInfo, width / 2 + 7, height / 4);
+  image(sceneOneIntroImage, width / 2 + 7, height / 4 + 250);
   pop();
 }
 function enterTwo() {
