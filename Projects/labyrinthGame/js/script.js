@@ -44,6 +44,13 @@ let labyrinthProfile = {
 
 let gameData = undefined;
 
+let enterIntroInfo = undefined;
+let enterOneInfo = undefined;
+let enterTwoInfo = undefined;
+let enterThreeInfo = undefined;
+let enterFourInfo = undefined;
+let enterFiveInfo = undefined;
+
 let charactersCollectedData = 0;
 let itemsCollectedData = 0;
 
@@ -113,6 +120,15 @@ let seeMapButton = undefined; //click to show the labyrinth (just a trick! an op
 function preload() {
   labyrinthBanner = loadImage(`assets/images/labyrinthBanner.png`); //load the banner image into the labyrinthBanner variable
   labyrinthTrickMap = loadImage(`assets/images/labyrinthBackground.jpg`); //load the optical illusion labyrinth trick map
+
+  ///typing gifs with each scene's storyline typing out : from http://wigflip.com/minifesto/
+
+  enterIntroInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
+  enterOneInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
+  enterTwoInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
+  enterThreeInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
+  enterFourInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
+  enterFiveInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
 
   gameData = loadJSON(`assets/data/location_data.json`); //load the JSON file containing the neighbourhood audioGem titles, sorted by types and neighbourhood.
 
@@ -308,65 +324,73 @@ function sendSelection() {
 
 function sendMapButton() {} /// Not currently active. Show labyrinth 'trick' map [optical illusion]
 
-function enterIntro() {
-  fill(0);
-  // rect(0, 0, 375, 667);
+//boxes and box dropshadows for each story scene
+function introStoryBoxes() {
+  push();
+  fill(200, 100, 0, 75);
   tint(75);
+  stroke(0, 61, 61);
+
   image(labyrinthBanner, 0, 0);
+  strokeWeight(3);
   rectMode(CENTER);
-  rect(width / 2, height / 2 + 40, 330, 380, 50, 50);
-  strokeWeight(5);
-  stroke(176);
+  rect(width / 2 - 7, height / 2 + 50, 330, 410);
+  strokeWeight(3);
+  stroke(250, 233, 0);
+
+  fill(0);
+
+  rect(width / 2 + 10, height / 2 + 28, 330, 410);
+  pop();
+}
+
+function enterIntro() {
+  introStoryBoxes();
+
+  push();
+  imageMode(CENTER);
+  image(enterIntroInfo, width / 2 + 7, height / 2 + 23);
+  pop();
 }
 function enterOne() {
-  fill(0);
-  // rect(0, 0, 375, 667);
-  tint(75);
-  image(labyrinthBanner, 0, 0);
-  rectMode(CENTER);
-  rect(width / 2, height / 2 + 40, 330, 380, 50, 50);
-  strokeWeight(5);
-  stroke(176);
+  introStoryBoxes();
+
+  push();
+  imageMode(CENTER);
+  image(enterOneInfo, width / 2 + 7, height / 2 + 23);
+  pop();
 }
 function enterTwo() {
-  fill(0);
-  // rect(0, 0, 375, 667);
-  tint(75);
-  image(labyrinthBanner, 0, 0);
-  rectMode(CENTER);
-  rect(width / 2, height / 2 + 40, 330, 380, 50, 50);
-  strokeWeight(5);
-  stroke(176);
+  introStoryBoxes();
+
+  push();
+  imageMode(CENTER);
+  image(enterTwoInfo, width / 2 + 7, height / 2 + 23);
+  pop();
 }
 function enterThree() {
-  fill(0);
-  // rect(0, 0, 375, 667);
-  tint(75);
-  image(labyrinthBanner, 0, 0);
-  rectMode(CENTER);
-  rect(width / 2, height / 2 + 40, 330, 380, 50, 50);
-  strokeWeight(5);
-  stroke(176);
+  introStoryBoxes();
+
+  push();
+  imageMode(CENTER);
+  image(enterThreeInfo, width / 2 + 7, height / 2 + 23);
+  pop();
 }
 function enterFour() {
-  fill(0);
-  // rect(0, 0, 375, 667);
-  tint(75);
-  image(labyrinthBanner, 0, 0);
-  rectMode(CENTER);
-  rect(width / 2, height / 2 + 40, 330, 380, 50, 50);
-  strokeWeight(5);
-  stroke(176);
+  introStoryBoxes();
+
+  push();
+  imageMode(CENTER);
+  image(enterFourInfo, width / 2 + 7, height / 2 + 23);
+  pop();
 }
 function enterFive() {
-  fill(0);
-  // rect(0, 0, 375, 667);
-  tint(75);
-  image(labyrinthBanner, 0, 0);
-  rectMode(CENTER);
-  rect(width / 2, height / 2 + 40, 330, 380, 50, 50);
-  strokeWeight(5);
-  stroke(176);
+  introStoryBoxes();
+
+  push();
+  imageMode(CENTER);
+  image(enterFiveInfo, width / 2 + 7, height / 2 + 23);
+  pop();
 }
 
 function mainProfilePage() {
@@ -376,12 +400,6 @@ function mainProfilePage() {
   seeMapButton.position(250, 120); //located at upper right corner
   seeMapButton.mousePressed(sendMapButton); //call a function when mouse is pressed
   seeMapButton.size(105, 50);
-
-  push();
-  fill(255);
-  rect(0, 0, 375, 667);
-  tint(255, 126);
-  pop();
 
   inputBoxes();
 
@@ -447,35 +465,23 @@ function sceneOne() {
 }
 
 function sceneTwo() {
-  push();
-  fill(255);
-  rect(0, 0, 375, 667);
-  tint(255, 126);
-  pop();
+  mainProfilePage();
+  sceneTwoMenus();
 }
 
 function sceneThree() {
-  push();
-  fill(255);
-  rect(0, 0, 375, 667);
-  tint(255, 126);
-  pop();
+  mainProfilePage();
+  sceneThreeMenus();
 }
 
 function sceneFour() {
-  push();
-  fill(255);
-  rect(0, 0, 375, 667);
-  tint(255, 126);
-  pop();
+  mainProfilePage();
+  sceneFourMenus();
 }
 
 function sceneFive() {
-  push();
-  fill(255);
-  rect(0, 0, 375, 667);
-  tint(255, 126);
-  pop();
+  mainProfilePage();
+  sceneFiveMenus();
 }
 
 function win() {
@@ -637,17 +643,20 @@ function mousePressed() {
   if (state === `enter`) {
     state = `scene_One`;
     sceneOneMenus();
-  } else if (state === `scene_One`) {
-    state = `scene_Two`;
-    sceneTwoMenus();
-  } else if (state === `scene_Two`) {
-    state = `scene_Three`;
-    sceneThreeMenus();
-  } else if (state === `scene_Three`) {
-    `scene_Four`;
-    sceneFourMenus();
-  } else if (state === `scene_Four`) {
-    `scene_Five`;
-    sceneFiveMenus();
   }
+
+  //these will be triggered with the geolocation movement
+  // } else if (state === `scene_One`) {
+  //   state = `scene_Two`;
+  //   sceneTwoMenus();
+  // } else if (state === `scene_Two`) {
+  //   state = `scene_Three`;
+  //   sceneThreeMenus();
+  // } else if (state === `scene_Three`) {
+  //   `scene_Four`;
+  //   sceneFourMenus();
+  // } else if (state === `scene_Four`) {
+  //   `scene_Five`;
+  //   sceneFiveMenus();
+  // }
 }
