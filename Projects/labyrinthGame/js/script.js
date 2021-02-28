@@ -360,11 +360,19 @@ My Geolocation:
 
 function sendSelection() {
   labyrinthProfile.selection = userInputSelection.value();
-  // if (labyrinthProfile.selection = `character` && labyrinthProfile.location = `under bed`){
-  // labyrinthProfile.hiddenThingFound = goblins
-  // } else if (labyrinthProfile.selection = `item` && labyrinthProfile.location = `under bed`){
-  // labyrinthProfile.hiddenThingFound = `There's nothing there.`
-  // }
+
+  if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.location === `under bed`
+  ) {
+    labyrinthProfile.hiddenThingFound = gameData.location_finds[0][0].scene;
+    // eventually, it will send back a storyline explaining that goblins were found under the bed
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.location === `under bed`
+  ) {
+    labyrinthProfile.hiddenThingFound = `There's nothing there. Try again.`;
+  }
 
   // searchLocation.one = `under bed`; //find goblins
   // searchLocation.two = `behind curtain`; //goblin king
