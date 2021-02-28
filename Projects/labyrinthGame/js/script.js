@@ -145,6 +145,8 @@ let userInputLocation = undefined; //user enters where they want to search in th
 let userInputSelection = undefined; //is user looking for an item or character?
 // buttons variables
 let seeMapButton = undefined; //click to show the labyrinth (just a trick! an optical illusion! - it should say- 'IN THE LABYRINTH, NOTHING IS WHAT IT SEEMS!')
+let nextSceneButton = undefined;
+let nothingIsAsItSeemsButton = undefined;
 
 function preload() {
   labyrinthBanner = loadImage(`assets/images/labyrinthBanner.png`); //load the banner image into the labyrinthBanner variable
@@ -352,11 +354,23 @@ My Geolocation:
   text(geolocationProfile, 22, 300);
 
   pop();
+
+  ///if state 'find' show button - 'click to collect' - else - 'go to next scene'
 }
 
 function sendSelection() {
   labyrinthProfile.selection = userInputSelection.value();
-  // if (labyrinthProfile.selection = )
+  // if (labyrinthProfile.selection = `character` && labyrinthProfile.location = `under bed`){
+  // labyrinthProfile.hiddenThingFound = goblins
+  // } else if (labyrinthProfile.selection = `item` && labyrinthProfile.location = `under bed`){
+  // labyrinthProfile.hiddenThingFound = `There's nothing there.`
+  // }
+
+  // searchLocation.one = `under bed`; //find goblins
+  // searchLocation.two = `behind curtain`; //goblin king
+  // searchLocation.three = `in bookshelf`; //snake
+  // searchLocation.four = `in closet`; //clock
+
   //   /// if else matching the different selection and location matches possible and what to get from JSON.
 
   // for (let i = 0; i < gameData.location_finds.length; i++) {
@@ -387,7 +401,7 @@ function sendMapButton() {
     state = `map3`;
   } else if (state === `scene_Four`) {
     state = `map4`;
-  } else if (state === `enter_scene_Five`) {
+  } else if (state === `scene_Five`) {
     state = `map5`;
   }
 
@@ -407,7 +421,7 @@ function returnMapButton() {
   } else if (state === `map4`) {
     state = ` scene_Four`;
   } else if (state === `map5`) {
-    state = ` enter_scene_Five`;
+    state = `scene_Five`;
   }
 }
 
@@ -470,7 +484,8 @@ function enterTwo() {
 
   push();
   imageMode(CENTER);
-  image(enterTwoInfo, width / 2 + 7, height / 2 + 23);
+  image(enterOneInfo, width / 2 + 7, height / 4);
+  image(sceneOneIntroImage, width / 2 + 7, height / 4 + 250);
   pop();
 }
 function enterThree() {
@@ -529,7 +544,6 @@ function mainProfilePage() {
 
 
     Current Scene: ${labyrinthProfile.currentScene}
-
     Item Found:
     ${labyrinthProfile.hiddenThingFound}
 
@@ -562,6 +576,26 @@ My Geolocation:
   text(geolocationProfile, 22, 300);
 
   pop();
+
+  ///if state 'find' show button - 'click to collect' - else - 'go to next scene'
+  push();
+  nextSceneButton = createButton("Done Searching, Go to Next Scene");
+  nextSceneButton.position(width - 135, height - 90); //located at upper right corner
+  nextSceneButton.mousePressed(goToNextScene); //call a function when mouse is pressed
+  nextSceneButton.size(105, 50);
+  pop();
+}
+
+function goToNextScene() {
+  if (state === `scene_One`) {
+    state = `enter_scene_Two`;
+  } else if (state === `scene_Two`) {
+    state = `enter_scene_Three`;
+  } else if (state === `scene_Three`) {
+    state = `enter_scene_Four`;
+  } else if (state === `scene_Four`) {
+    state = `enter_scene_Five`;
+  }
 }
 
 function sceneOne() {
