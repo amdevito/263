@@ -156,13 +156,13 @@ function preload() {
 
   enterIntroInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
   enterOneInfo = loadImage(`assets/images/enterOneInfo.gif`); //load the optical illusion labyrinth trick map
-  enterTwoInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
+  enterTwoInfo = loadImage(`assets/images/enterTwoInfo.gif`); //load the optical illusion labyrinth trick map
   enterThreeInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
   enterFourInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
   enterFiveInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
 
   sceneOneIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
-  sceneTwoIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
+  sceneTwoIntroImage = loadImage(`assets/images/sceneTwoIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneThreeIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneFourIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneFiveIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
@@ -492,8 +492,8 @@ function enterTwo() {
 
   push();
   imageMode(CENTER);
-  image(enterOneInfo, width / 2 + 7, height / 4);
-  image(sceneOneIntroImage, width / 2 + 7, height / 4 + 250);
+  image(enterTwoInfo, width / 2 + 7, height / 4 + 15);
+  image(sceneTwoIntroImage, width / 2 + 7, height / 4 + 250);
   pop();
 }
 function enterThree() {
@@ -501,7 +501,8 @@ function enterThree() {
 
   push();
   imageMode(CENTER);
-  image(enterThreeInfo, width / 2 + 7, height / 2 + 23);
+  image(enterThreeInfo, width / 2 + 7, height / 4 + 15);
+  image(sceneThreeIntroImage, width / 2 + 7, height / 4 + 250);
   pop();
 }
 function enterFour() {
@@ -509,7 +510,8 @@ function enterFour() {
 
   push();
   imageMode(CENTER);
-  image(enterFourInfo, width / 2 + 7, height / 2 + 23);
+  image(enterFourInfo, width / 2 + 7, height / 4 + 15);
+  image(sceneFourIntroImage, width / 2 + 7, height / 4 + 250);
   pop();
 }
 function enterFive() {
@@ -517,7 +519,8 @@ function enterFive() {
 
   push();
   imageMode(CENTER);
-  image(enterFiveInfo, width / 2 + 7, height / 2 + 23);
+  image(enterFiveInfo, width / 2 + 7, height / 4 + 15);
+  image(sceneFiveIntroImage, width / 2 + 7, height / 4 + 250);
   pop();
 }
 
