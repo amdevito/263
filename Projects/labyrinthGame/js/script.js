@@ -390,6 +390,11 @@ function sendMapButton() {
   } else if (state === `enter_scene_Five`) {
     state = `map5`;
   }
+
+  // searchLocation.one = `Nothing is as it seems`; //
+  // searchLocation.two = `Nothing is as it seems`; //
+  // searchLocation.three = `Smees ti sa si gnihton.`; //
+  // searchLocation.four = `Smees ti sa si gnihton.`; //
 }
 
 function returnMapButton() {
@@ -418,6 +423,10 @@ function trickMap() {
   seeMapButton.mousePressed(returnMapButton); //call a function when mouse is pressed
   seeMapButton.size(105, 50);
   pop();
+
+  // dropMenuLocation.x = dropMenuLocation.x + 20;
+  // dropMenuSelection.x += 20;
+  // console.log(dropMenuLocation.x, dropMenuSelection.x);
 }
 //boxes and box dropshadows for each story scene
 function introStoryBoxes() {
