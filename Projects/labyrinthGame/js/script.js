@@ -284,7 +284,7 @@ function draw() {
     state === `map4` ||
     state === `map5`
   ) {
-    trickMap();
+    trickMapImage();
   }
 
   console.log(state);
@@ -359,17 +359,21 @@ My Geolocation:
 }
 
 function sendSelection() {
-  labyrinthProfile.selection = userInputSelection.value();
-
+  console.log(gameData);
+  console.log(labyrinthProfile.searchLocation);
+  labyrinthProfile.selection = userInputSelection.value().toLowerCase();
+  console.log(labyrinthProfile.selection);
   if (
     labyrinthProfile.selection === `character` &&
-    labyrinthProfile.location === `under bed`
+    labyrinthProfile.searchLocation === `under bed`
   ) {
-    labyrinthProfile.hiddenThingFound = gameData.location_finds[0][0].scene;
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[0][`under bed`][0];
+    console.log(gameData.location_finds[0][`under bed`][0]);
     // eventually, it will send back a storyline explaining that goblins were found under the bed
   } else if (
     labyrinthProfile.selection === `item` &&
-    labyrinthProfile.location === `under bed`
+    labyrinthProfile.searchLocation === `under bed`
   ) {
     labyrinthProfile.hiddenThingFound = `There's nothing there. Try again.`;
   }
@@ -403,48 +407,79 @@ function sendSelection() {
 function sendMapButton() {
   if (state === `scene_One`) {
     state = `map1`;
+    trickMap();
   } else if (state === `scene_Two`) {
     state = `map2`;
+    trickMap();
   } else if (state === `scene_Three`) {
     state = `map3`;
+    trickMap();
   } else if (state === `scene_Four`) {
     state = `map4`;
+    trickMap();
   } else if (state === `scene_Five`) {
     state = `map5`;
+    trickMap();
   }
 
-  // searchLocation.one = `Nothing is as it seems`; //
-  // searchLocation.two = `Nothing is as it seems`; //
-  // searchLocation.three = `Smees ti sa si gnihton.`; //
-  // searchLocation.four = `Smees ti sa si gnihton.`; //
+  buttonRemover();
+  // userInputLocation.remove();
+  // userInputSelection.remove();
+  // nextSceneButton.remove();
+}
+
+function buttonRemover() {
+  userInputLocation.remove();
+  userInputSelection.remove();
+  nextSceneButton.remove();
+  seeMapButton.remove();
+}
+
+function buttonMaker() {
+  nextSceneButton = createButton("Done Searching, Go to Next Scene");
+  seeMapButton = createButton("See the Labyrinth"); ///make a function for the button creation
 }
 
 function returnMapButton() {
   if (state === `map1`) {
     state = `scene_One`;
+    dropMenus();
+    buttonMaker();
+    nothingIsAsItSeemsButton.remove();
+    // nextSceneButton = createButton("Done Searching, Go to Next Scene");
   } else if (state === `map2`) {
     state = `scene_Two`;
+    dropMenus();
+    buttonMaker();
   } else if (state === `map3`) {
     state = `scene_Three`;
+    dropMenus();
+    buttonMaker();
   } else if (state === `map4`) {
     state = ` scene_Four`;
+    dropMenus();
+    buttonMaker();
   } else if (state === `map5`) {
     state = `scene_Five`;
+    dropMenus();
+    buttonMaker();
   }
 }
 
-function trickMap() {
+function trickMapImage() {
   push();
   imageMode(CENTER);
   image(labyrinthTrickMap, width / 2 + 7, height / 2 + 35);
-
-  //create selects (menus) go off screen -
-
-  seeMapButton = createButton("Nothing is as it seems");
-  seeMapButton.position(250, 120); //located at upper right corner
-  seeMapButton.mousePressed(returnMapButton); //call a function when mouse is pressed
-  seeMapButton.size(105, 50);
   pop();
+}
+
+function trickMap() {
+  //create selects (menus) go off screen -
+  //seeMapButton
+  nothingIsAsItSeemsButton = createButton("Nothing is as it seems");
+  nothingIsAsItSeemsButton.position(250, 120); //located at upper right corner
+  nothingIsAsItSeemsButton.mousePressed(returnMapButton); //call a function when mouse is pressed
+  nothingIsAsItSeemsButton.size(105, 50);
 
   // dropMenuLocation.x = dropMenuLocation.x + 20;
   // dropMenuSelection.x += 20;
@@ -527,7 +562,6 @@ function enterFive() {
 function mainProfilePage() {
   //create button
 
-  seeMapButton = createButton("See the Labyrinth");
   seeMapButton.position(250, 120); //located at upper right corner
   seeMapButton.mousePressed(sendMapButton); //call a function when mouse is pressed
   seeMapButton.size(105, 50);
@@ -590,7 +624,6 @@ My Geolocation:
 
   ///if state 'find' show button - 'click to collect' - else - 'go to next scene'
   push();
-  nextSceneButton = createButton("Done Searching, Go to Next Scene");
   nextSceneButton.position(width - 135, height - 90); //located at upper right corner
   nextSceneButton.mousePressed(goToNextScene); //call a function when mouse is pressed
   nextSceneButton.size(105, 50);
@@ -600,6 +633,7 @@ My Geolocation:
 function goToNextScene() {
   if (state === `scene_One`) {
     state = `enter_scene_Two`;
+    buttonRemover();
   } else if (state === `scene_Two`) {
     state = `enter_scene_Three`;
   } else if (state === `scene_Three`) {
@@ -660,12 +694,16 @@ function sceneOneMenus() {
   searchLocation.three = `in bookshelf`; //snake
   searchLocation.four = `in closet`; //clock
   dropMenus();
+  buttonMaker();
+  // nextSceneButton = createButton("Done Searching, Go to Next Scene");
+  // seeMapButton = createButton("See the Labyrinth"); ///make a function for the button creation
 }
 
 function sceneTwoMenus() {
   //at the entrance of labyrinth - find hoggle [behind tree], faeries[under rock], bracelet [on ground], 'hello' caterpillar[at wall]
   //user choose their search location in that scene
   dropMenus();
+  buttonMaker();
   labyrinthProfile.currentScene++;
   //assign locations specific to this scene
   searchLocation.one = `check wall`;
@@ -678,6 +716,7 @@ function sceneThreeMenus() {
   ///2 characters guarding doors that lie. 'certain death!'  - collect the doom stones (the faces that say, 'turnback!!'), a lamp and the helping hands
   //user choose their search location in that scene
   dropMenus();
+  buttonMaker();
   labyrinthProfile.currentScene++;
   //assign locations specific to this scene
   searchLocation.one = `check door one`;
@@ -690,6 +729,7 @@ function sceneFourMenus() {
   // dark forest - collect the posion peach, the orange dancing bouncing head characters,
   //user choose their search location in that scene
   dropMenus();
+  buttonMaker();
   labyrinthProfile.currentScene++;
   //assign locations specific to this scene
   searchLocation.one = `look around tree`; //ludo
@@ -702,6 +742,7 @@ function sceneFiveMenus() {
   //final labyrinth -
   //user choose their search location in that scene
   dropMenus();
+  buttonMaker();
   labyrinthProfile.currentScene++;
   //assign locations specific to this scene
   searchLocation.one = `climb up stairs`; //fall in love with Jareth game over
