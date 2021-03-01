@@ -163,7 +163,7 @@ function preload() {
 
   sceneOneIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneTwoIntroImage = loadImage(`assets/images/sceneTwoIntroImage.jpg`); //load the optical illusion labyrinth trick map
-  sceneThreeIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
+  sceneThreeIntroImage = loadImage(`assets/images/sceneThreeIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneFourIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneFiveIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
   winImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
