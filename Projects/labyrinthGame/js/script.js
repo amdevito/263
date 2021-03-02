@@ -158,7 +158,7 @@ function preload() {
   enterIntroInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
   enterOneInfo = loadImage(`assets/images/enterOneInfo.gif`); //load the optical illusion labyrinth trick map
   enterTwoInfo = loadImage(`assets/images/enterTwoInfo.gif`); //load the optical illusion labyrinth trick map
-  enterThreeInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
+  enterThreeInfo = loadImage(`assets/images/sceneThreeInfo.gif`); //load the optical illusion labyrinth trick map
   enterFourInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
   enterFiveInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
 
@@ -491,6 +491,7 @@ function sendSelection() {
       gameData.location_finds[1][`check ground`][1];
     labyrinthProfile.itemsCollected++;
   }
+  ///sceneThree
 }
 
 function sendMapButton() {
@@ -675,8 +676,8 @@ function enterThree() {
   buttonRemover();
   push();
   imageMode(CENTER);
-  image(enterThreeInfo, width / 2 + 7, height / 4 + 15);
-  image(sceneThreeIntroImage, width / 2 + 7, height / 4 + 250);
+  image(enterThreeInfo, width / 2 + 7, height / 4 + 35);
+  image(sceneThreeIntroImage, width / 2 + 7, height / 4 + 225);
   pop();
 }
 function enterFour() {
