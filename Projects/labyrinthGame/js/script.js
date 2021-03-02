@@ -147,6 +147,7 @@ let userInputSelection = undefined; //is user looking for an item or character?
 let seeMapButton = undefined; //click to show the labyrinth (just a trick! an optical illusion! - it should say- 'IN THE LABYRINTH, NOTHING IS WHAT IT SEEMS!')
 let nextSceneButton = undefined;
 let nothingIsAsItSeemsButton = undefined;
+let advanceToScene = undefined;
 
 function preload() {
   labyrinthBanner = loadImage(`assets/images/labyrinthBanner.png`); //load the banner image into the labyrinthBanner variable
@@ -255,23 +256,29 @@ function draw() {
   } else if (state === `enter_scene_One`) {
     enterOne();
   } else if (state === `scene_One`) {
-    sceneOne();
+    mainProfilePage();
+    // sceneOne();
   } else if (state === `enter_scene_Two`) {
     enterTwo();
   } else if (state === `scene_Two`) {
-    sceneTwo();
+    mainProfilePage();
+
+    // sceneTwo();
   } else if (state === `enter_scene_Three`) {
     enterThree();
   } else if (state === `scene_Three`) {
-    sceneThree();
+    mainProfilePage();
+    // sceneThree();
   } else if (state === `enter_scene_Four`) {
     enterFour();
   } else if (state === `scene_Four`) {
-    sceneFour();
+    mainProfilePage();
+    // sceneFour();
   } else if (state === `enter_scene_Five`) {
     enterFive();
   } else if (state === `scene_Five`) {
-    sceneFive();
+    mainProfilePage();
+    // sceneFive();
   } else if (state === `win`) {
     win();
   } else if (state === `lose`) {
@@ -298,6 +305,7 @@ function sendSearchLocation() {
 }
 
 function profileMainPage() {
+  advanceToScene.remove();
   inputBoxes();
 
   //profle text with changing data in the template literals
@@ -369,7 +377,8 @@ function sendSelection() {
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[0][`under bed`][0];
-    console.log(gameData.location_finds[0][`under bed`][0]);
+    labyrinthProfile.charactersCollected++;
+    console.log(gameData.location_finds[0][`under bed`][0]); ///firs [0] refers to the scene, [location in the scene], [0] - character, [1]
     // eventually, it will send back a storyline explaining that goblins were found under the bed
   } else if (
     labyrinthProfile.selection === `item` &&
@@ -396,8 +405,9 @@ function sendSelection() {
   //     );
   //   }
   // }
-  labyrinthProfile.charactersCollected++; //add one when you find chanracter
-  labyrinthProfile.itemsCollected++; // add one when you find item
+  // labyrinthProfile.charactersCollected++; //add one when you find chanracter
+  // labyrinthProfile.itemsCollected++; // add one when you find item
+
   // localStorage.setItem(
   //   `labyrinth-profile-data`,
   //   JSON.stringify(labyrinthProfile)
@@ -438,6 +448,42 @@ function buttonRemover() {
 function buttonMaker() {
   nextSceneButton = createButton("Done Searching, Go to Next Scene");
   seeMapButton = createButton("See the Labyrinth"); ///make a function for the button creation
+}
+
+function introAdvanceButton() {
+  advanceToScene = createButton("Start your search");
+  advanceToScene.position(150, 550); //located at bottom center
+  advanceToScene.mousePressed(returnAdvanceButton); //call a function when mouse is pressed
+  advanceToScene.size(105, 50);
+}
+
+function returnAdvanceButton() {
+  if (state === `enter_scene_One`) {
+    state = `scene_One`;
+    // mainProfilePage();
+
+    sceneOneMenus();
+    dropMenus();
+    buttonMaker();
+  } else if (state === `enter_scene_Two`) {
+    state = `scene_Two`;
+    // mainProfilePage();
+
+    dropMenus();
+    buttonMaker();
+  } else if (state === `enter_scene_Three`) {
+    state = `scene_Three`;
+    dropMenus();
+    buttonMaker();
+  } else if (state === `enter_scene_Four`) {
+    state = `scene_Four`;
+    dropMenus();
+    buttonMaker();
+  } else if (state === `enter_scene_Five`) {
+    state = `scene_Five`;
+    dropMenus();
+    buttonMaker();
+  }
 }
 
 function returnMapButton() {
@@ -515,7 +561,7 @@ function enterIntro() {
 }
 function enterOne() {
   introStoryBoxes();
-
+  introAdvanceButton();
   push();
   imageMode(CENTER);
   image(enterOneInfo, width / 2 + 7, height / 4);
@@ -524,12 +570,14 @@ function enterOne() {
 }
 function enterTwo() {
   introStoryBoxes();
-
+  introAdvanceButton();
   push();
   imageMode(CENTER);
   image(enterTwoInfo, width / 2 + 7, height / 4 + 15);
   image(sceneTwoIntroImage, width / 2 + 7, height / 4 + 250);
   pop();
+
+  //createButton to move to sceneTwo -- begin your search Button -- if statements advancing to the main scenes if they are on the enter intrroa
 }
 function enterThree() {
   introStoryBoxes();
@@ -695,6 +743,7 @@ function sceneOneMenus() {
   searchLocation.four = `in closet`; //clock
   dropMenus();
   buttonMaker();
+
   // nextSceneButton = createButton("Done Searching, Go to Next Scene");
   // seeMapButton = createButton("See the Labyrinth"); ///make a function for the button creation
 }
@@ -833,10 +882,11 @@ function mousePressed() {
   ///just to test and then change mousePressed to something else (a new function) and trigger on a movement event via the geolocation distance?
   if (state === `enter`) {
     state = `enter_scene_One`;
-  } else if (state === `enter_scene_One`) {
-    state = `scene_One`;
-    sceneOneMenus();
   }
+  // else if (state === `enter_scene_One`) {
+  //   state = `scene_One`;
+  //   sceneOneMenus();
+  // }
 
   //these will be triggered with the geolocation movement
   // } else if (state === `scene_One`) {

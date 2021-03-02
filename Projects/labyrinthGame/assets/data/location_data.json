@@ -3,12 +3,12 @@
   "location_finds": [
     {
       "under bed": [
-        "character_sceneOne_underBed",
+        "You've found the goblins! \n      The Goblin King must be close by...",
         "item_sceneOne_underBed_item"
       ],
       "behind curtain": [
-        "character_sceneOne_behindCurtain",
-        "item_sceneOne_behindCurtain"
+        "character_sceneOne_behindCurtain - You've found the Goblin King, Jareth!",
+        "item_sceneOne_behindCurtain - You've been suprised by a snake!"
       ],
       "in bookshelf": [
         "character_sceneOne_in bookshelf",
