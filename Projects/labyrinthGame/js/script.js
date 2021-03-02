@@ -548,6 +548,63 @@ function sendSelection() {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[2][`check door two`][1];
   }
+  ///sceneFour
+  else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `look around tree`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[3][`look around tree`][0];
+    labyrinthProfile.charactersCollected++;
+    console.log(gameData.location_finds[0][`look around tree`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
+    //
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `look around tree`
+  ) {
+    //
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[3][`look around tree`][1];
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `look in bush`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[3][`look in bush`][0];
+    // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `look in bush`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[3][`look in bush`][1];
+    // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `look in dark tunnel`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[3][`look in dark tunnel`][0];
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `look in dark tunnel`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[3][`look in dark tunnel`][1];
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `climb tree`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[3][`climb tree`][0];
+    labyrinthProfile.itemsCollected++;
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `climb tree`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[3][`climb tree`][1];
+  }
 }
 
 function sendMapButton() {
