@@ -577,7 +577,7 @@ function enterOne() {
 }
 function enterTwo() {
   introStoryBoxes();
-  introAdvanceButton();
+  // introAdvanceButton();
 
   push();
   imageMode(CENTER);
@@ -589,7 +589,7 @@ function enterTwo() {
 }
 function enterThree() {
   introStoryBoxes();
-  introAdvanceButton();
+  // introAdvanceButton();
 
   push();
   imageMode(CENTER);
@@ -692,13 +692,17 @@ My Geolocation:
 function goToNextScene() {
   if (state === `scene_One`) {
     state = `enter_scene_Two`;
-    // buttonRemover();
+    introAdvanceButton();
+    // buttonRemover();// DOESNT WORK HERE
   } else if (state === `scene_Two`) {
     state = `enter_scene_Three`;
+    introAdvanceButton();
   } else if (state === `scene_Three`) {
     state = `enter_scene_Four`;
+    introAdvanceButton();
   } else if (state === `scene_Four`) {
     state = `enter_scene_Five`;
+    introAdvanceButton();
   }
 }
 
@@ -752,7 +756,7 @@ function sceneOneMenus() {
   searchLocation.two = `behind curtain`; //goblin king
   searchLocation.three = `in bookshelf`; //snake
   searchLocation.four = `in closet`; //clock
-  dropMenus();
+  // dropMenus();
   // buttonMaker();
 
   // nextSceneButton = createButton("Done Searching, Go to Next Scene");
@@ -762,7 +766,7 @@ function sceneOneMenus() {
 function sceneTwoMenus() {
   //at the entrance of labyrinth - find hoggle [behind tree], faeries[under rock], bracelet [on ground], 'hello' caterpillar[at wall]
   //user choose their search location in that scene
-  dropMenus();
+  // dropMenus();
   // buttonMaker();
   labyrinthProfile.currentScene++;
   //assign locations specific to this scene
@@ -775,7 +779,7 @@ function sceneTwoMenus() {
 function sceneThreeMenus() {
   ///2 characters guarding doors that lie. 'certain death!'  - collect the doom stones (the faces that say, 'turnback!!'), a lamp and the helping hands
   //user choose their search location in that scene
-  dropMenus();
+  // dropMenus();
   // buttonMaker();
   labyrinthProfile.currentScene++;
   //assign locations specific to this scene
@@ -788,7 +792,7 @@ function sceneThreeMenus() {
 function sceneFourMenus() {
   // dark forest - collect the posion peach, the orange dancing bouncing head characters,
   //user choose their search location in that scene
-  dropMenus();
+  // dropMenus();
   // buttonMaker();
   labyrinthProfile.currentScene++;
   //assign locations specific to this scene
@@ -801,8 +805,8 @@ function sceneFourMenus() {
 function sceneFiveMenus() {
   //final labyrinth -
   //user choose their search location in that scene
-  dropMenus();
-  // buttonMaker();
+  // dropMenus();//doesnt WORK HERE
+  // buttonMaker();//doesnt WORK HERE
   labyrinthProfile.currentScene++;
   //assign locations specific to this scene
   searchLocation.one = `climb up stairs`; //fall in love with Jareth game over
