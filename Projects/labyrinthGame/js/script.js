@@ -260,6 +260,7 @@ function draw() {
     // sceneOne();
   } else if (state === `enter_scene_Two`) {
     enterTwo();
+    // buttonRemover();
   } else if (state === `scene_Two`) {
     mainProfilePage();
 
@@ -578,7 +579,7 @@ function enterOne() {
 function enterTwo() {
   introStoryBoxes();
   // introAdvanceButton();
-
+  buttonRemover();
   push();
   imageMode(CENTER);
   image(enterTwoInfo, width / 2 + 7, height / 4 + 15);
@@ -590,7 +591,7 @@ function enterTwo() {
 function enterThree() {
   introStoryBoxes();
   // introAdvanceButton();
-
+  buttonRemover();
   push();
   imageMode(CENTER);
   image(enterThreeInfo, width / 2 + 7, height / 4 + 15);
@@ -599,7 +600,7 @@ function enterThree() {
 }
 function enterFour() {
   introStoryBoxes();
-
+  buttonRemover();
   push();
   imageMode(CENTER);
   image(enterFourInfo, width / 2 + 7, height / 4 + 15);
@@ -608,7 +609,7 @@ function enterFour() {
 }
 function enterFive() {
   introStoryBoxes();
-
+  buttonRemover();
   push();
   imageMode(CENTER);
   image(enterFiveInfo, width / 2 + 7, height / 4 + 15);
