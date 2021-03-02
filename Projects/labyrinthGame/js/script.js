@@ -378,7 +378,7 @@ function sendSelection() {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[0][`under bed`][0];
     labyrinthProfile.charactersCollected++;
-    console.log(gameData.location_finds[0][`under bed`][0]); ///firs [0] refers to the scene, [location in the scene], [0] - character, [1]
+    console.log(gameData.location_finds[0][`under bed`][0]); ///firs [0] refers to the scene, [location in the scene], [0] - character, [1] - item
     // eventually, it will send back a storyline explaining that goblins were found under the bed
   } else if (
     labyrinthProfile.selection === `item` &&
