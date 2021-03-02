@@ -22,15 +22,21 @@
       "scene": "one"
     },
     {
-      "under rock": ["sceneTwo_underRock_character", "sceneTwo_underRock_item"],
-      "behind tree": [
-        "sceneTwo_behindTree_character",
-        "sceneTwo_behindTree_item"
+      "under rock": [
+        "Ouch! A gaggle of faeries bit you.",
+        "There is nothing here! Try again."
       ],
-      "check wall": ["sceneTwo_checkWall_character", "sceneTwo_checkWall_item"],
+      "behind tree": [
+        "You found grumpy old Hoggle! \n      But thankfully he says he will help you.",
+        "There is nothing here! Try again."
+      ],
+      "check wall": [
+        "'Hello!' Says the friendly caterpillar! \n      Come in for a cup of tea!'",
+        "There is nothing to be found. Try again."
+      ],
       "check ground": [
-        "sceneTwo_checkGround_character",
-        "sceneTwo_checkGround_item"
+        "There is no one here. Try again!",
+        "Oh you found a bracelet to trade with \n     Hoggle!"
       ],
 
       "scene": "two"

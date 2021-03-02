@@ -434,6 +434,63 @@ function sendSelection() {
       gameData.location_finds[0][`in closet`][1];
     labyrinthProfile.itemsCollected++;
   }
+  ///sceneTwo
+  else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `under rock`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[1][`under rock`][0];
+    labyrinthProfile.charactersCollected++;
+    console.log(gameData.location_finds[0][`under rock`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
+    //
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `under rock`
+  ) {
+    //
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[1][`under rock`][1];
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `behind tree`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[1][`behind tree`][0];
+    labyrinthProfile.charactersCollected++;
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `behind tree`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[1][`behind tree`][1];
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `check wall`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[1][`check wall`][0];
+    labyrinthProfile.charactersCollected++;
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `check wall`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[1][`check wall`][1];
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `check ground`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[1][`check ground`][0];
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `check ground`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[1][`check ground`][1];
+    labyrinthProfile.itemsCollected++;
+  }
 }
 
 function sendMapButton() {
