@@ -492,6 +492,62 @@ function sendSelection() {
     labyrinthProfile.itemsCollected++;
   }
   ///sceneThree
+  else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `check left corridor`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[2][`check left corridor`][0];
+    labyrinthProfile.charactersCollected++;
+    console.log(gameData.location_finds[0][`check left corridor`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
+    //
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `check left corridor`
+  ) {
+    //
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[2][`check left corridor`][1];
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `check door one`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[2][`check door one`][0];
+    // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `check door one`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[2][`check door one`][1];
+    // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `check right corridor`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[2][`check right corridor`][0];
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `check right corridor`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[2][`check right corridor`][1];
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `check door two`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[2][`check door two`][0];
+    labyrinthProfile.itemsCollected++;
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `check door two`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[2][`check door two`][1];
+  }
 }
 
 function sendMapButton() {
@@ -870,10 +926,10 @@ function sceneThreeMenus() {
   // buttonMaker();
   labyrinthProfile.currentScene++;
   //assign locations specific to this scene
-  searchLocation.one = `check door one`;
-  searchLocation.two = `check door two`; // locked in the obliette, game over
-  searchLocation.three = `check left corridor`;
-  searchLocation.four = `check right corridor`;
+  searchLocation.one = `check left corridor`; //you catch small characters pop up from the tiles in the ground!
+  searchLocation.two = `check door one`; // Certain death! Game over.
+  searchLocation.three = `check right corridor`; //nothing.
+  searchLocation.four = `check door two`; // you fall down a dark hole, but luckily the helping hands guide you into the obliette and Hoggle helps you escape!
 }
 
 function sceneFourMenus() {

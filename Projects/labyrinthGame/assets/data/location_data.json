@@ -43,21 +43,21 @@
     },
 
     {
-      "check door one": [
-        "sceneThree_doorOne_character",
-        "sceneThree_doorOne_item"
-      ],
-      "check door two": [
-        "sceneThree_doorTwo_character",
-        "sceneThree_doorTwo_item"
-      ],
       "check left corridor": [
-        "sceneThree_leftCorridor_character",
-        "sceneThree_leftCorridor_item"
+        "You catch miniature men pop up from \n     the tiles in the ground!",
+        "There is nothing here. Keep looking."
+      ],
+      "check door one": [
+        "Certain death! Game OVER!",
+        "Certain death! Game OVER!"
       ],
       "check right corridor": [
-        "sceneThree_rightCorridor_character",
-        "sceneThree_rightCorridor_item"
+        "There is no one here. Keep looking.",
+        "Nothing here! Keep searching."
+      ],
+      "check door two": [
+        "You fall down a dark hole! Luckily, \n     the helping hands catch you \n     and guide you down to the obliette \n     where Hoggle helps you \n     escape!",
+        "No items here...there may be a character \n      though...hint hint."
       ],
 
       "scene": "three"
