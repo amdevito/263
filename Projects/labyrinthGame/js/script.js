@@ -367,11 +367,15 @@ My Geolocation:
   ///if state 'find' show button - 'click to collect' - else - 'go to next scene'
 }
 
+///FETCHING JSON INFO
+
 function sendSelection() {
   console.log(gameData);
   console.log(labyrinthProfile.searchLocation);
   labyrinthProfile.selection = userInputSelection.value().toLowerCase();
   console.log(labyrinthProfile.selection);
+
+  ///logic to fetchJSON
   if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `under bed`
@@ -379,19 +383,57 @@ function sendSelection() {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[0][`under bed`][0];
     labyrinthProfile.charactersCollected++;
-    console.log(gameData.location_finds[0][`under bed`][0]); ///firs [0] refers to the scene, [location in the scene], [0] - character, [1] - item
-    // eventually, it will send back a storyline explaining that goblins were found under the bed
+    console.log(gameData.location_finds[0][`under bed`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
+    //
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `under bed`
   ) {
-    labyrinthProfile.hiddenThingFound = `There's nothing there. Try again.`;
-  }
+    //
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[0][`under bed`][1];
 
-  // searchLocation.one = `under bed`; //find goblins
-  // searchLocation.two = `behind curtain`; //goblin king
-  // searchLocation.three = `in bookshelf`; //snake
-  // searchLocation.four = `in closet`; //clock
+    /////
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `behind curtain`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[0][`behind curtain`][0];
+    labyrinthProfile.charactersCollected++;
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `behind curtain`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[0][`behind curtain`][1];
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `in bookshelf`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[0][`in bookshelf`][0];
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `in bookshelf`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[0][`in bookshelf`][1];
+    labyrinthProfile.itemsCollected++;
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `in closet`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[0][`in closet`][0];
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `in closet`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[0][`in closet`][1];
+    labyrinthProfile.itemsCollected++;
+  }
 }
 
 function sendMapButton() {
@@ -886,23 +928,4 @@ function mousePressed() {
     state = `enter_scene_One`;
     introAdvanceButton();
   }
-  // else if (state === `enter_scene_One`) {
-  //   state = `scene_One`;
-  //   sceneOneMenus();
-  // }
-
-  //these will be triggered with the geolocation movement
-  // } else if (state === `scene_One`) {
-  //   state = `scene_Two`;
-  //   sceneTwoMenus();
-  // } else if (state === `scene_Two`) {
-  //   state = `scene_Three`;
-  //   sceneThreeMenus();
-  // } else if (state === `scene_Three`) {
-  //   `scene_Four`;
-  //   sceneFourMenus();
-  // } else if (state === `scene_Four`) {
-  //   `scene_Five`;
-  //   sceneFiveMenus();
-  // }
 }

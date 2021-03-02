@@ -4,17 +4,20 @@
     {
       "under bed": [
         "You've found the goblins! \n     Maybe you shouldn't have wished for \n      them to take your \n      baby brother...",
-        "item_sceneOne_underBed_item"
+        "There's nothing there. Try again."
       ],
       "behind curtain": [
-        "character_sceneOne_behindCurtain - You've found the Goblin King, Jareth!",
-        "item_sceneOne_behindCurtain - You've been suprised by a snake!"
+        "You've found the Goblin King, Jareth!",
+        "There's nothing there. Try again."
       ],
       "in bookshelf": [
-        "character_sceneOne_in bookshelf",
-        "item_sceneOne_in bookshelf"
+        "There's nothing there. Try again.",
+        "You've found the book, 'The Labyrinth' \n     and take note of a very important \n    passage: 'You have no power over me.' \n    Remember this for later..."
       ],
-      "in closet": ["character_sceneOne_in closet", "item_sceneOne_in closet"],
+      "in closet": [
+        "There's nothing there. Try again.",
+        "You've been suprised by a snake!"
+      ],
 
       "scene": "one"
     },
