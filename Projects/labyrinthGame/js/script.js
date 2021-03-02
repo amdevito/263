@@ -392,27 +392,6 @@ function sendSelection() {
   // searchLocation.two = `behind curtain`; //goblin king
   // searchLocation.three = `in bookshelf`; //snake
   // searchLocation.four = `in closet`; //clock
-
-  //   /// if else matching the different selection and location matches possible and what to get from JSON.
-
-  // for (let i = 0; i < gameData.location_finds.length; i++) {
-  //   //go through the JSON data set with the for loop and find the user's  selection for their scene location
-  //   if (gameData.location_finds[i].scene === labyrinthProfile.searchLocation) {
-  //     gameData.location_finds[i][labyrinthProfile.selection];
-  //     labyrinthProfile.hiddenThingFound = random(
-  //       gameData.location_finds[i][
-  //         labyrinthProfile.selection.toLowerCase() //set to lower case so that the if statement will match
-  //       ]
-  //     );
-  //   }
-  // }
-  // labyrinthProfile.charactersCollected++; //add one when you find chanracter
-  // labyrinthProfile.itemsCollected++; // add one when you find item
-
-  // localStorage.setItem(
-  //   `labyrinth-profile-data`,
-  //   JSON.stringify(labyrinthProfile)
-  // ); //store the number of items and characters the user collects.
 }
 
 function sendMapButton() {
@@ -465,26 +444,29 @@ function returnAdvanceButton() {
   if (state === `enter_scene_One`) {
     state = `scene_One`;
     // mainProfilePage();
-
+    ///clear item found
     sceneOneMenus();
     dropMenus();
     buttonMaker();
   } else if (state === `enter_scene_Two`) {
     state = `scene_Two`;
     // mainProfilePage();
-
+    sceneTwoMenus();
     dropMenus();
     buttonMaker();
   } else if (state === `enter_scene_Three`) {
     state = `scene_Three`;
+    sceneThreeMenus();
     dropMenus();
     buttonMaker();
   } else if (state === `enter_scene_Four`) {
     state = `scene_Four`;
+    sceneFourMenus();
     dropMenus();
     buttonMaker();
   } else if (state === `enter_scene_Five`) {
     state = `scene_Five`;
+    sceneFiveMenus();
     dropMenus();
     buttonMaker();
   }
@@ -694,16 +676,20 @@ function goToNextScene() {
   if (state === `scene_One`) {
     state = `enter_scene_Two`;
     introAdvanceButton();
+    labyrinthProfile.hiddenThingFound = ``; //clear item found part
     // buttonRemover();// DOESNT WORK HERE
   } else if (state === `scene_Two`) {
     state = `enter_scene_Three`;
     introAdvanceButton();
+    labyrinthProfile.hiddenThingFound = ``; //clear item found part
   } else if (state === `scene_Three`) {
     state = `enter_scene_Four`;
     introAdvanceButton();
+    labyrinthProfile.hiddenThingFound = ``; //clear item found part
   } else if (state === `scene_Four`) {
     state = `enter_scene_Five`;
     introAdvanceButton();
+    labyrinthProfile.hiddenThingFound = ``; //clear item found part
   }
 }
 
