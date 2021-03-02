@@ -417,28 +417,30 @@ function sendSelection() {
 function sendMapButton() {
   if (state === `scene_One`) {
     state = `map1`;
-    trickMap();
+    // trickMap();
   } else if (state === `scene_Two`) {
     state = `map2`;
-    trickMap();
+    // trickMap();
   } else if (state === `scene_Three`) {
     state = `map3`;
-    trickMap();
+    // trickMap();
   } else if (state === `scene_Four`) {
     state = `map4`;
-    trickMap();
+    // trickMap();
   } else if (state === `scene_Five`) {
     state = `map5`;
-    trickMap();
+    // trickMap();
   }
 
   buttonRemover();
+  trickMap();
   // userInputLocation.remove();
   // userInputSelection.remove();
   // nextSceneButton.remove();
 }
 
 function buttonRemover() {
+  console.log(`button remover`);
   userInputLocation.remove();
   userInputSelection.remove();
   nextSceneButton.remove();
@@ -446,6 +448,7 @@ function buttonRemover() {
 }
 
 function buttonMaker() {
+  console.log(`button maker`);
   nextSceneButton = createButton("Done Searching, Go to Next Scene");
   seeMapButton = createButton("See the Labyrinth"); ///make a function for the button creation
 }
@@ -497,18 +500,22 @@ function returnMapButton() {
     state = `scene_Two`;
     dropMenus();
     buttonMaker();
+    nothingIsAsItSeemsButton.remove();
   } else if (state === `map3`) {
     state = `scene_Three`;
     dropMenus();
     buttonMaker();
+    nothingIsAsItSeemsButton.remove();
   } else if (state === `map4`) {
     state = ` scene_Four`;
     dropMenus();
     buttonMaker();
+    nothingIsAsItSeemsButton.remove();
   } else if (state === `map5`) {
     state = `scene_Five`;
     dropMenus();
     buttonMaker();
+    nothingIsAsItSeemsButton.remove();
   }
 }
 
@@ -526,7 +533,7 @@ function trickMap() {
   nothingIsAsItSeemsButton.position(250, 120); //located at upper right corner
   nothingIsAsItSeemsButton.mousePressed(returnMapButton); //call a function when mouse is pressed
   nothingIsAsItSeemsButton.size(105, 50);
-
+  // buttonRemover();
   // dropMenuLocation.x = dropMenuLocation.x + 20;
   // dropMenuSelection.x += 20;
   // console.log(dropMenuLocation.x, dropMenuSelection.x);
@@ -561,7 +568,7 @@ function enterIntro() {
 }
 function enterOne() {
   introStoryBoxes();
-  introAdvanceButton();
+  // introAdvanceButton();
   push();
   imageMode(CENTER);
   image(enterOneInfo, width / 2 + 7, height / 4);
@@ -571,6 +578,7 @@ function enterOne() {
 function enterTwo() {
   introStoryBoxes();
   introAdvanceButton();
+
   push();
   imageMode(CENTER);
   image(enterTwoInfo, width / 2 + 7, height / 4 + 15);
@@ -581,6 +589,7 @@ function enterTwo() {
 }
 function enterThree() {
   introStoryBoxes();
+  introAdvanceButton();
 
   push();
   imageMode(CENTER);
@@ -613,6 +622,8 @@ function mainProfilePage() {
   seeMapButton.position(250, 120); //located at upper right corner
   seeMapButton.mousePressed(sendMapButton); //call a function when mouse is pressed
   seeMapButton.size(105, 50);
+
+  advanceToScene.remove();
 
   inputBoxes();
 
@@ -681,7 +692,7 @@ My Geolocation:
 function goToNextScene() {
   if (state === `scene_One`) {
     state = `enter_scene_Two`;
-    buttonRemover();
+    // buttonRemover();
   } else if (state === `scene_Two`) {
     state = `enter_scene_Three`;
   } else if (state === `scene_Three`) {
@@ -742,7 +753,7 @@ function sceneOneMenus() {
   searchLocation.three = `in bookshelf`; //snake
   searchLocation.four = `in closet`; //clock
   dropMenus();
-  buttonMaker();
+  // buttonMaker();
 
   // nextSceneButton = createButton("Done Searching, Go to Next Scene");
   // seeMapButton = createButton("See the Labyrinth"); ///make a function for the button creation
@@ -752,7 +763,7 @@ function sceneTwoMenus() {
   //at the entrance of labyrinth - find hoggle [behind tree], faeries[under rock], bracelet [on ground], 'hello' caterpillar[at wall]
   //user choose their search location in that scene
   dropMenus();
-  buttonMaker();
+  // buttonMaker();
   labyrinthProfile.currentScene++;
   //assign locations specific to this scene
   searchLocation.one = `check wall`;
@@ -765,7 +776,7 @@ function sceneThreeMenus() {
   ///2 characters guarding doors that lie. 'certain death!'  - collect the doom stones (the faces that say, 'turnback!!'), a lamp and the helping hands
   //user choose their search location in that scene
   dropMenus();
-  buttonMaker();
+  // buttonMaker();
   labyrinthProfile.currentScene++;
   //assign locations specific to this scene
   searchLocation.one = `check door one`;
@@ -778,7 +789,7 @@ function sceneFourMenus() {
   // dark forest - collect the posion peach, the orange dancing bouncing head characters,
   //user choose their search location in that scene
   dropMenus();
-  buttonMaker();
+  // buttonMaker();
   labyrinthProfile.currentScene++;
   //assign locations specific to this scene
   searchLocation.one = `look around tree`; //ludo
@@ -791,7 +802,7 @@ function sceneFiveMenus() {
   //final labyrinth -
   //user choose their search location in that scene
   dropMenus();
-  buttonMaker();
+  // buttonMaker();
   labyrinthProfile.currentScene++;
   //assign locations specific to this scene
   searchLocation.one = `climb up stairs`; //fall in love with Jareth game over
@@ -882,6 +893,7 @@ function mousePressed() {
   ///just to test and then change mousePressed to something else (a new function) and trigger on a movement event via the geolocation distance?
   if (state === `enter`) {
     state = `enter_scene_One`;
+    introAdvanceButton();
   }
   // else if (state === `enter_scene_One`) {
   //   state = `scene_One`;
