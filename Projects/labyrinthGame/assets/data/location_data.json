@@ -77,7 +77,7 @@
       ],
       "climb tree": [
         "Not a soul in sight. Keep looking.",
-        "You take a bite from a poison\n      peach and fall into a fever dream\n     where you dance at a ball\n     with the Goblin King.\n     Go back one level."
+        "You take a bite from a poison\n     peach and fall into a fever dream\n     where you dance at a ball\n     with the Goblin King.\n     Go back one level."
       ],
 
       "scene": "four"
@@ -85,20 +85,20 @@
 
     {
       "climb up stairs": [
-        "sceneFive_climbUpStairs_character",
-        "sceneFive_climbUpStairs_item"
+        "You fall in love with Jareth, the\n      the Goblin King. GAME OVER.",
+        "There's nothing here."
       ],
       "go down stairs": [
-        "sceneFive_goDownStairs_character",
-        "sceneFive_goDownStairs_item"
+        "Empty. Keep searching. Hurry!",
+        "You run out of time. Game OVER."
       ],
       "go through doorway": [
-        "sceneFive_goThroughDoorway_character",
-        "sceneFive_goThroughDoorway_item"
+        "You catch Jareth. He tries to \n     convince you to leave your brother\n      with him. You need to say a phrase\n     to beat him. Click the button\n       and say it to win.",
+        "You're close! Keep looking."
       ],
       "jump off ledge": [
-        "sceneFive_jumpOffLedge_character",
-        "sceneFive_jumpOffLedge_item"
+        "You find Toby! Jareth tries to\n     take him back, but if you say a special\n     phrase and beat him. Press the button\n     and say it.",
+        "You fall to your death. GAME OVER."
       ],
 
       "scene": "five"

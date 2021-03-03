@@ -160,13 +160,13 @@ function preload() {
   enterTwoInfo = loadImage(`assets/images/enterTwoInfo.gif`); //load the optical illusion labyrinth trick map
   enterThreeInfo = loadImage(`assets/images/sceneThreeInfo.gif`); //load the optical illusion labyrinth trick map
   enterFourInfo = loadImage(`assets/images/enterFourInfo.gif`); //load the optical illusion labyrinth trick map
-  enterFiveInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
+  enterFiveInfo = loadImage(`assets/images/enterFiveInfo.gif`); //load the optical illusion labyrinth trick map
 
   sceneOneIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneTwoIntroImage = loadImage(`assets/images/sceneTwoIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneThreeIntroImage = loadImage(`assets/images/sceneThreeIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneFourIntroImage = loadImage(`assets/images/sceneFourIntroImage.jpg`); //load the optical illusion labyrinth trick map
-  sceneFiveIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
+  sceneFiveIntroImage = loadImage(`assets/images/sceneFiveIntroImage.jpg`); //load the optical illusion labyrinth trick map
   winImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
   loseImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
 
@@ -376,6 +376,7 @@ function sendSelection() {
   console.log(labyrinthProfile.selection);
 
   ///logic to fetchJSON
+  //LEVEL ONE
   if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `under bed`
@@ -606,6 +607,64 @@ function sendSelection() {
       gameData.location_finds[3][`climb tree`][1];
     //make button to send you back one level
   }
+  ///sceneFive
+  else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `climb up stairs`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[4][`climb up stairs`][0];
+    labyrinthProfile.charactersCollected++;
+    console.log(gameData.location_finds[0][`climb up stairs`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
+    //
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `climb up stairs`
+  ) {
+    //
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[4][`climb up stairs`][1];
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `go down stairs`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[4][`go down stairs`][0];
+    labyrinthProfile.charactersCollected++;
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `go down stairs`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[4][`go down stairs`][1];
+    // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `go through doorway`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[4][`go through doorway`][0];
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `go through doorway`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[4][`go through doorway`][1];
+    //game over button - restart game
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `jump off ledge`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[4][`jump off ledge`][0];
+  } else if (
+    labyrinthProfile.selection === `item` &&
+    labyrinthProfile.searchLocation === `jump off ledge`
+  ) {
+    labyrinthProfile.hiddenThingFound =
+      gameData.location_finds[4][`jump off ledge`][1];
+    //make button to send you back one level
+  }
 }
 
 function sendMapButton() {
@@ -809,7 +868,7 @@ function enterFive() {
   push();
   imageMode(CENTER);
   image(enterFiveInfo, width / 2 + 7, height / 4 + 15);
-  image(sceneFiveIntroImage, width / 2 + 7, height / 4 + 250);
+  image(sceneFiveIntroImage, width / 2 + 7, height / 4 + 220);
   pop();
 }
 
