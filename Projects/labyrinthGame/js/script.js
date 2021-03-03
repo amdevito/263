@@ -148,6 +148,7 @@ let seeMapButton = undefined; //click to show the labyrinth (just a trick! an op
 let nextSceneButton = undefined;
 let nothingIsAsItSeemsButton = undefined;
 let advanceToScene = undefined;
+let loseRestartButton = undefined;
 
 function preload() {
   labyrinthBanner = loadImage(`assets/images/labyrinthBanner.png`); //load the banner image into the labyrinthBanner variable
@@ -515,14 +516,18 @@ function sendSelection() {
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[2][`check door one`][0];
-    // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
+    youLoseButton(); // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
+
+    // advanceToScene.remove();
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `check door one`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[2][`check door one`][1];
-    // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
+    youLoseButton(); // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
+
+    // advanceToScene.remove();
   } else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `check right corridor`
@@ -593,6 +598,9 @@ function sendSelection() {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[3][`look in dark tunnel`][1];
     //game over button - restart game
+    youLoseButton();
+
+    // advanceToScene.remove();
   } else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `climb tree`
@@ -605,6 +613,7 @@ function sendSelection() {
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[3][`climb tree`][1];
+    youLoseButton();
     //make button to send you back one level
   }
   ///sceneFive
@@ -614,7 +623,9 @@ function sendSelection() {
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`climb up stairs`][0];
-    labyrinthProfile.charactersCollected++;
+    youLoseButton();
+
+    // advanceToScene.remove();
     console.log(gameData.location_finds[0][`climb up stairs`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
     //
   } else if (
@@ -630,13 +641,15 @@ function sendSelection() {
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`go down stairs`][0];
-    labyrinthProfile.charactersCollected++;
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `go down stairs`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`go down stairs`][1];
+    youLoseButton();
+
+    // advanceToScene.remove();
     // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
   } else if (
     labyrinthProfile.selection === `character` &&
@@ -644,26 +657,29 @@ function sendSelection() {
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`go through doorway`][0];
+    //add && labyrinthProfile.charactersCollected + labyrinthProfile.itemsCollected === 14 - screen change to winscreen: Jareth and 'Say the special phrase to win'
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `go through doorway`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`go through doorway`][1];
-    //game over button - restart game
   } else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `jump off ledge`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`jump off ledge`][0];
+    //add && labyrinthProfile.charactersCollected + labyrinthProfile.itemsCollected === 14 - screen change to winscreen: Jareth and 'Say the special phrase to win'
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `jump off ledge`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`jump off ledge`][1];
-    //make button to send you back one level
+    youLoseButton();
+
+    // advanceToScene.remove();
   }
 }
 
@@ -704,6 +720,25 @@ function buttonMaker() {
   console.log(`button maker`);
   nextSceneButton = createButton("Done Searching, Go to Next Scene");
   seeMapButton = createButton("See the Labyrinth"); ///make a function for the button creation
+  loseRestartButton = createButton("You lose. Try again?");
+}
+
+function youLoseButton() {
+  nextSceneButton.remove();
+
+  loseRestartButton.position(30, 580); //located at bottom center
+  loseRestartButton.mousePressed(returnToStart); //call a function when mouse is pressed
+  loseRestartButton.size(315, 40);
+}
+
+function returnToStart() {
+  state = `enter_scene_One`;
+  loseRestartButton.remove();
+  buttonRemover();
+  introAdvanceButton();
+  labyrinthProfile.hiddenThingFound = ``; //clear item found part
+  labyrinthProfile.itemsCollected = 0;
+  labyrinthProfile.charactersCollected = 0;
 }
 
 function introAdvanceButton() {
