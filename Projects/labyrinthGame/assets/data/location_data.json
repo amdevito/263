@@ -56,7 +56,7 @@
         "Nothing here! Keep searching."
       ],
       "check door two": [
-        "You fall down a dark hole! Luckily, \n     the helping hands catch you \n     and guide you down to the obliette \n     where Hoggle helps you \n     escape!",
+        "You fall down a dark hole! Luckily, \n     the helping hands catch you \n     and guide you down to the oubliette \n     where Hoggle helps you \n     escape!",
         "No items here...there may be a character \n      though...hint hint."
       ],
 
@@ -64,20 +64,20 @@
     },
     {
       "look around tree": [
-        "sceneFour_lookAroundTree_character",
-        "sceneFour_lookAroundTree_item"
+        "You rescue Ludo from a gang of \n      soldiers. This lovable giant doesn't\n     know where the castle is,\n      but will be helpful in \n     your quest.",
+        "There's nothing here, but keep looking."
       ],
       "look in bush": [
-        "sceneFour_lookInBush_character",
-        "sceneFour_lookInBush_item"
+        "You're suprised by the Fireys!\n     A gang of orange, singing, jiggly\n     dancing characters that toss their\n      heads around!!!!",
+        "Nada. Keep searching."
       ],
       "look in dark tunnel": [
-        "sceneFour_lookInDarkTunnel_character",
-        "sceneFour_lookInDarkTunnel_item"
+        "No one is here. Keep looking.",
+        "You fall into a hole and tumble into\n     the BOG OF ETERNAL STENCH!!!\n     GAME OVER!!"
       ],
       "climb tree": [
-        "sceneFour_climbTree_character",
-        "sceneFour_climbTree_item"
+        "Not a soul in sight. Keep looking.",
+        "You take a bite from a poison\n      peach and fall into a fever dream\n     where you dance at a ball\n     with the Goblin King.\n     Go back one level."
       ],
 
       "scene": "four"

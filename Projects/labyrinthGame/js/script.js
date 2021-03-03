@@ -159,13 +159,13 @@ function preload() {
   enterOneInfo = loadImage(`assets/images/enterOneInfo.gif`); //load the optical illusion labyrinth trick map
   enterTwoInfo = loadImage(`assets/images/enterTwoInfo.gif`); //load the optical illusion labyrinth trick map
   enterThreeInfo = loadImage(`assets/images/sceneThreeInfo.gif`); //load the optical illusion labyrinth trick map
-  enterFourInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
+  enterFourInfo = loadImage(`assets/images/enterFourInfo.gif`); //load the optical illusion labyrinth trick map
   enterFiveInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
 
   sceneOneIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneTwoIntroImage = loadImage(`assets/images/sceneTwoIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneThreeIntroImage = loadImage(`assets/images/sceneThreeIntroImage.jpg`); //load the optical illusion labyrinth trick map
-  sceneFourIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
+  sceneFourIntroImage = loadImage(`assets/images/sceneFourIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneFiveIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
   winImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
   loseImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
@@ -571,7 +571,7 @@ function sendSelection() {
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[3][`look in bush`][0];
-    // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
+    labyrinthProfile.charactersCollected++;
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `look in bush`
@@ -591,19 +591,20 @@ function sendSelection() {
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[3][`look in dark tunnel`][1];
+    //game over button - restart game
   } else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `climb tree`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[3][`climb tree`][0];
-    labyrinthProfile.itemsCollected++;
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `climb tree`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[3][`climb tree`][1];
+    //make button to send you back one level
   }
 }
 
@@ -999,7 +1000,7 @@ function sceneFourMenus() {
   searchLocation.one = `look around tree`; //ludo
   searchLocation.two = `look in bush`; ///dancing characters
   searchLocation.three = `look in dark tunnel`; /// get thrown into the bog of eternal stench and game over
-  searchLocation.four = `climb tree`; //posion peach
+  searchLocation.four = `climb tree`; //posion peach _ go back one level - create button for this.
 }
 
 function sceneFiveMenus() {
