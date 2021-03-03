@@ -280,11 +280,10 @@ function draw() {
     enterFive();
   } else if (state === `scene_Five`) {
     mainProfilePage();
+    nextSceneButton.remove();
     // sceneFive();
   } else if (state === `win`) {
     win();
-  } else if (state === `lose`) {
-    lose();
   } else if (
     state === `map` ||
     state === `map1` ||
@@ -725,6 +724,7 @@ function buttonMaker() {
 
 function youLoseButton() {
   nextSceneButton.remove();
+  buttonRemover();
 
   loseRestartButton.position(30, 580); //located at bottom center
   loseRestartButton.mousePressed(returnToStart); //call a function when mouse is pressed
@@ -1102,6 +1102,7 @@ function sceneFiveMenus() {
   //user choose their search location in that scene
   // dropMenus();//doesnt WORK HERE
   // buttonMaker();//doesnt WORK HERE
+
   labyrinthProfile.currentScene++;
   //assign locations specific to this scene
   searchLocation.one = `climb up stairs`; //fall in love with Jareth game over
