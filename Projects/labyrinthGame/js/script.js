@@ -937,6 +937,9 @@ function winEnd() {
   push();
   imageMode(CENTER);
   image(winEndInfo, width / 2 + 7, height / 4 + 15); ///final screen
+  image(winEndInfo, width / 2 + 7, height / 4 + 35); ///final screen
+  image(winEndInfo, width / 2 + 7, height / 4 + 55); ///final screen
+  image(winEndInfo, width / 2 + 7, height / 4 + 75); ///final screen
   image(winEndImage, width / 2 + 7, height / 4 + 220); ///you win!
   pop();
 }
