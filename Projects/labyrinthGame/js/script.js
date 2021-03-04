@@ -153,6 +153,10 @@ let nothingIsAsItSeemsButton = undefined;
 let advanceToScene = undefined;
 let loseRestartButton = undefined;
 let figthJarethButton = undefined;
+
+let winEndInfo = undefined;
+let winEndImage = undefined;
+
 function preload() {
   labyrinthBanner = loadImage(`assets/images/labyrinthBanner.png`); //load the banner image into the labyrinthBanner variable
   labyrinthTrickMap = loadImage(`assets/images/labyrinthBackground.jpg`); //load the optical illusion labyrinth trick map
@@ -174,6 +178,9 @@ function preload() {
   sceneFiveIntroImage = loadImage(`assets/images/sceneFiveIntroImage.jpg`); //load the optical illusion labyrinth trick map
   loseImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
   winImage = loadImage(`assets/images/winImage.jpg`); //load the optical illusion labyrinth trick map
+
+  winEndInfo = loadImage(`assets/images/winEndInfo.gif`);
+  winEndImage = loadImage(`assets/images/winEndImage.jpg`);
 
   gameData = loadJSON(`assets/data/location_data.json`); //load the JSON file containing the neighbourhood audioGem titles, sorted by types and neighbourhood.
 
@@ -974,12 +981,13 @@ function win() {
   //win function gets called only if...(see fetch JSON win to see)
 }
 function winEnd() {
+  //when the user says the right line 'you have no power over me' - this gets called.
   introStoryBoxes();
   buttonRemover();
   push();
   imageMode(CENTER);
-  image(winInfo, width / 2 + 7, height / 4 + 15);
-  image(winImage, width / 2 + 7, height / 4 + 220);
+  image(winEndInfo, width / 2 + 7, height / 4 + 15);
+  image(winEndImage, width / 2 + 7, height / 4 + 220);
   pop();
 }
 
