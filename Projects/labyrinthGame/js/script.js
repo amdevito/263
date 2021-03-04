@@ -21,7 +21,7 @@ You find out your baby brother, Toby has disappeared and need to search the laby
 
 - Annyang voice recognition employed for the closing scene where the user has to face off against Jareth. User beats Jareth by saying the phrase 'you have no power over me' which they would have learned in the first scene search when they picked up the book, Labyrinth and read that line.
 
-- your geolocation is visible, telling you where you are in the labyrinth (actually in real-life)! - I decided that having someone walk around their space may be impractical right now, but I still wanted to try and utilize a geolocation library so I have kept that in the application for visual UI purposes mainly.
+- your geolocation is visible, telling you where you are in the labyrinth (actually in real-life) - I decided that having someone walk around their space may be impractical right now, but I still wanted to try and utilize a geolocation library so I have kept that in the application for visual UI purposes mainly.
 
 ******************/
 //set beginning state for the game
