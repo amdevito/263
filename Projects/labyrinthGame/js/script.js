@@ -392,16 +392,16 @@ My Geolocation:
 ///say line, check if right line:
 function guessLine(who) {
   currentAnswer = who;
-  if (currentAnswer.toLowerCase() === `you have no power over me`) {
+  if (currentAnswer.toLowerCase() === `me`) {
     winEnd();
   }
 }
 ///FETCHING JSON INFO
 
 function sendSelection() {
-  // labyrinthProfile.charactersCollected = 5; //take away after testing done
-  // labyrinthProfile.itemsCollected = 5; //take away after testing done
-  //
+  labyrinthProfile.charactersCollected = 5; //take away after testing done
+  labyrinthProfile.itemsCollected = 5; //take away after testing done
+
   console.log(labyrinthProfile.charactersCollected, `characters`);
   console.log(labyrinthProfile.itemsCollected, `items`);
   console.log(gameData);
@@ -478,7 +478,7 @@ function sendSelection() {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[1][`under rock`][0];
     labyrinthProfile.charactersCollected++;
-    console.log(gameData.location_finds[0][`under rock`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
+    console.log(gameData.location_finds[1][`under rock`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
     //
   } else if (
     labyrinthProfile.selection === `item` &&
@@ -535,7 +535,7 @@ function sendSelection() {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[2][`check left corridor`][0];
     labyrinthProfile.charactersCollected++;
-    console.log(gameData.location_finds[0][`check left corridor`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
+    console.log(gameData.location_finds[2][`check left corridor`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
     //
   } else if (
     labyrinthProfile.selection === `item` &&
@@ -596,7 +596,7 @@ function sendSelection() {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[3][`look around tree`][0];
     labyrinthProfile.charactersCollected++;
-    console.log(gameData.location_finds[0][`look around tree`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
+    console.log(gameData.location_finds[3][`look around tree`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
     //
   } else if (
     labyrinthProfile.selection === `item` &&
@@ -660,7 +660,7 @@ function sendSelection() {
     youLoseButton();
 
     // advanceToScene.remove();
-    console.log(gameData.location_finds[0][`climb up stairs`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
+    console.log(gameData.location_finds[4][`climb up stairs`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
     //
   } else if (
     labyrinthProfile.selection === `item` &&
