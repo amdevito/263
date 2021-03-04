@@ -7,51 +7,51 @@ By: Alana DeVito
 You are the main character from the movie the Labyrinth.
 You find out your brother, Toby has disappeared and need to search the labyrinth for characters and items in order to find the Goblin King, Jareth and get your baby brother, Toby back!
 
-- states to follow the different levels
+- enter your name and password, which is then saved locally to be recalled later.
+- Search the different scenes using the drop down menus for items and characters to help you on your way.
+- you need to find 5 characters and 5 items by the end of the game or else you can't face off against Jareth and are forced to start again.
 
-- must collect the correct items with out finding a game over item (remembering patterns?)
+- Becareful where you look because there are traps that will force you to start over!
+- hit the advance scene button when you are ready to look in a different location.
 
-
-- a story line and image pops at each state change to give directions
-- you choose what to look for in the dropdown (different at each level)
-- you must walk around your space until the item pops up on your screen
-      -  or must move around before the next scene starts
-- after catching a specific number of chanracters and items you meet the Goblin king and rescue Toby!
+- your geolocation is visable, telling you where you are in the labyrinth! - I decided that having someone walk around their space may be impractical right now, but I still wanted to try and utilize a geolocation library so I have kept that in the application for visual UI purposes mainly.
 
 ******************/
-//set state
+//set beginning state for the game
 let state = "enter";
 
+// declare the latitude and longitude variables to set the geolocation of the user.
 let lat;
 let long;
 
+//create scene variable that will then have one added at every scene advance
 let scene = ``;
 
+//create variable to store the user's voice declaration of the secret line for the final scene.
 let currentAnswer = ``;
 
-// The game profile data while the program is running
+// Store the game profile data and all corresponding ifo for game.
 let labyrinthProfile = {
   name: ``,
-  searchLocation: `----------`, //search a place in that scene
-  charactersCollected: 0, //change back to zero once testing is done
-  itemsCollected: 0,
-  // currentLocationLat: ``, ///geolocation - fetch lat and long -
-  // currentLocationLong: ``, ///geolocation - fetch lat and long -
-  currentScene: 0,
-  selection: `----------`, ///current type of search - item or character
+  searchLocation: `----------`, //search a specific place in that scene
+  charactersCollected: 0, //start with no characters collected
+  itemsCollected: 0, //start with no items collected
+  currentScene: 0, //no scene until entering scene 1
+  selection: `----------`, ///what is the user searching for - item or character?
   password: ``, // save the user's password entered in prompt.
-  hiddenThingFound: ``, // name of thing hidden in that scene name is like 'sceneThree_checkGround_character'
+  hiddenThingFound: ``, // name of thing hidden in that scene, in that location. Fetches thing and story line element from the location_data.json file.
 };
-// Variables to store JSON data for generating the profile
 
+// Variable to store JSON data for generating the scene's found items and storyline
 let gameData = undefined;
 
-//button variables
+//button variables - size and location
 let buttonXPosition = 250;
 let buttonYPosition = 120;
 let buttonXSize = 105;
 let buttonYSize = 50;
 
+//variables to store the gif with the storyline for the start of each scene
 let enterIntroInfo = undefined;
 let enterOneInfo = undefined;
 let enterTwoInfo = undefined;
@@ -59,34 +59,43 @@ let enterThreeInfo = undefined;
 let enterFourInfo = undefined;
 let enterFiveInfo = undefined;
 
+//variables to store the image at the top of each scene (accompanied by the info above)
 let sceneOneIntroImage = undefined;
 let sceneTwoIntroImage = undefined;
 let sceneThreeIntroImage = undefined;
 let sceneFourIntroImage = undefined;
 let sceneFiveIntroImage = undefined;
 
-let loseImage = undefined;
-
+let loseImage = undefined; //don't need this?
+//same as above but for final scene
 let winInfo = undefined;
 let winImage = undefined;
 
+//end game win scene variables
+let winEndInfo = undefined; //you beat jareth!
+let winEndImage = undefined;
+
+//reset variables for collected items
 let charactersCollectedData = 0;
 let itemsCollectedData = 0;
 
-let realLocationData = undefined; //actual lat and long of user [ in real world]
+//actual lat and long of user [ in real world ]
+let realLocationData = undefined;
 
+//set search location elements for the different menus in each scene. Empty because they are assigned at each unique scene.
 let searchLocation = {
   one: ``,
   two: ``,
   three: ``,
   four: ``,
 };
-
+//character and item menu items stay consistant across the game.
 let whatType = {
   one: `Character`,
   two: `Item`,
 };
 
+//design elements for the search pages - white boxes for all searching info/text
 let inputBox = {
   name: {
     r: 255,
@@ -115,6 +124,7 @@ let inputBox = {
   },
 };
 
+//white outlines on boxes
 let inputBoxStroke = {
   name: 255,
   collected: 255,
@@ -122,14 +132,14 @@ let inputBoxStroke = {
   current: 255,
   hunting: 255,
 };
-
+//set dropmenus on the left of the pages
 let dropMenuLocation = {
   x: 22,
   y: 210,
   xv: 1,
   yv: 1,
 };
-
+//set dropmenus on the left of the pages
 let dropMenuSelection = {
   x: 22,
   y: 430,
@@ -137,61 +147,62 @@ let dropMenuSelection = {
   yv: 1,
 };
 
-// let hiddenThingFoundData = undefined; /// ??? the name of the the hidden thing you find - shown as just the title of the item or character
-
 let searchItemFound = undefined; ///title of the item/character found from the JSON file
 
 let labyrinthBanner = undefined; // set app banner image variable
 
-let labyrinthTrickMap = undefined; ///in the labyrinth, nothing is what it seems!
+let labyrinthTrickMap = undefined; ///in the labyrinth, nothing is what it seems! - take to a map that is just an optical illusion, playing  on the movie theme that nothing is what it seems... and the labyrinth is NOT FAIR!
 ///variables for user inputs
 
 let userInputLocation = undefined; //user enters where they want to search in the scene
 let userInputSelection = undefined; //is user looking for an item or character?
+
 // buttons variables
 let seeMapButton = undefined; //click to show the labyrinth (just a trick! an optical illusion! - it should say- 'IN THE LABYRINTH, NOTHING IS WHAT IT SEEMS!')
-let nextSceneButton = undefined;
-let nothingIsAsItSeemsButton = undefined;
-let advanceToScene = undefined;
-let loseRestartButton = undefined;
-let figthJarethButton = undefined;
 
-let winEndInfo = undefined;
-let winEndImage = undefined;
+let nextSceneButton = undefined; //button to leave current search scene and move to next intro scene
+let nothingIsAsItSeemsButton = undefined; //leave the trick map scene and return to the search interface/scene
+let advanceToScene = undefined; //leave the scene entrance/storyline element and begin the search
+let loseRestartButton = undefined; //pops up when user loses and needs to restart the game
+let figthJarethButton = undefined; //when user is in position to win (has the right number of characters and items and finds Jareth or Toby and must face Jareth)
 
 function preload() {
-  labyrinthBanner = loadImage(`assets/images/labyrinthBanner.png`); //load the banner image into the labyrinthBanner variable
+  //set up variables with their respective physical elements
+
+  labyrinthBanner = loadImage(`assets/images/labyrinthBanner.png`); //load the banner image into the labyrinthBanner variable - 8bit Labyrinth game logo
   labyrinthTrickMap = loadImage(`assets/images/labyrinthBackground.jpg`); //load the optical illusion labyrinth trick map
 
   ///typing gifs with each scene's storyline typing out : from http://wigflip.com/minifesto/
 
   enterIntroInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
-  enterOneInfo = loadImage(`assets/images/enterOneInfo.gif`); //load the optical illusion labyrinth trick map
-  enterTwoInfo = loadImage(`assets/images/enterTwoInfo.gif`); //load the optical illusion labyrinth trick map
-  enterThreeInfo = loadImage(`assets/images/sceneThreeInfo.gif`); //load the optical illusion labyrinth trick map
-  enterFourInfo = loadImage(`assets/images/enterFourInfo.gif`); //load the optical illusion labyrinth trick map
-  enterFiveInfo = loadImage(`assets/images/enterFiveInfo.gif`); //load the optical illusion labyrinth trick map
-  winInfo = loadImage(`assets/images/winInfo.gif`); //load the optical illusion labyrinth trick map
+  enterOneInfo = loadImage(`assets/images/enterOneInfo.gif`); //load the storyline gif for scene one - 'oh no! you've come to your baby brother's room...''
+  enterTwoInfo = loadImage(`assets/images/enterTwoInfo.gif`); //load the storyline gif for scene two - 'Jareth, the goblin King tells you...'
+  enterThreeInfo = loadImage(`assets/images/sceneThreeInfo.gif`); //load the storyline gif for scene three - 'you find a set of doors guarded by a set of dog-like creatures... '
+  enterFourInfo = loadImage(`assets/images/enterFourInfo.gif`); //load the storyline gif for scene four - 'after escaping out of the oubliette, you encounter the Wiseman...'
+  enterFiveInfo = loadImage(`assets/images/enterFiveInfo.gif`); //load the storyline gif for scene five - "you make it to the Castle at the center of the Goblin City..."
+  winInfo = loadImage(`assets/images/winInfo.gif`); ////load the storyline gif for when user faces off against Jareth 'say the line!'
 
-  sceneOneIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
-  sceneTwoIntroImage = loadImage(`assets/images/sceneTwoIntroImage.jpg`); //load the optical illusion labyrinth trick map
-  sceneThreeIntroImage = loadImage(`assets/images/sceneThreeIntroImage.jpg`); //load the optical illusion labyrinth trick map
-  sceneFourIntroImage = loadImage(`assets/images/sceneFourIntroImage.jpg`); //load the optical illusion labyrinth trick map
-  sceneFiveIntroImage = loadImage(`assets/images/sceneFiveIntroImage.jpg`); //load the optical illusion labyrinth trick map
-  loseImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
-  winImage = loadImage(`assets/images/winImage.jpg`); //load the optical illusion labyrinth trick map
+  //images for the storylines - 8bit images from the movie
+  sceneOneIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //Toby's room with empty cirb
+  sceneTwoIntroImage = loadImage(`assets/images/sceneTwoIntroImage.jpg`); //scenery view/opening view of the Labyrinth
+  sceneThreeIntroImage = loadImage(`assets/images/sceneThreeIntroImage.jpg`); //dog characters with blue and red shield guarding doors
+  sceneFourIntroImage = loadImage(`assets/images/sceneFourIntroImage.jpg`); //wiseman with bird on head
+  sceneFiveIntroImage = loadImage(`assets/images/sceneFiveIntroImage.jpg`); //house of stairs image with a hidden Toby
 
-  winEndInfo = loadImage(`assets/images/winEndInfo.gif`);
-  winEndImage = loadImage(`assets/images/winEndImage.jpg`);
+  winImage = loadImage(`assets/images/winImage.jpg`); //Jareth reaching out - face Jareth to win. (not win yet!)
 
-  gameData = loadJSON(`assets/data/location_data.json`); //load the JSON file containing the neighbourhood audioGem titles, sorted by types and neighbourhood.
+  winEndInfo = loadImage(`assets/images/winEndInfo.gif`); /// abstract image with the cystal sphere in air and a hand. you win!
+  winEndImage = loadImage(`assets/images/winEndImage.jpg`); // gif with winning info - YOU BEAT JARETH!
 
+  gameData = loadJSON(`assets/data/location_data.json`); //load the JSON file containing the specific found items and characters. Some story elements are included in these text elements.
+
+  //fetch the IRL position of the user via geolocation.js library and set to variable
   realLocationData = getCurrentPosition();
 }
 
 function setup() {
   // Create the canvas
-  createCanvas(375, 667); //size of iphone 6/7/8 - mobile first then make responsive to other shapes and sizes.
+  createCanvas(375, 667); //size of iphone 6/7/8 -meant to be a moile app.
 
   //check if geolocation is available
   if (geoCheck() == true) {
@@ -200,29 +211,30 @@ function setup() {
     //error getting geolocation
   }
 
-  //voice recognition for line to beat Jareth. **START HERE***
+  //voice recognition for line to beat Jareth in winScene.
+  //activate the annyang voice recognition library
   if (annyang) {
     let commands = {
-      "You have no power over *who": guessLine,
+      //assign the user's guess to the command variable and call the guess line function. //listen to all of the user's speech
+      "*userSpeech": guessLine,
     };
     annyang.addCommands(commands);
     annyang.start();
   }
 
-  // sceneOne(); //only temporary - put back after - call function scene one gets called
-
+  //geolocation function to report a new location if the user changes location from the original position.
   watchPosition(positionChanged);
 
-  console.log(realLocationData.latitude);
-  console.log(realLocationData.longitude);
-  console.log(realLocationData.accuracy);
-  console.log(realLocationData.altitude);
-  console.log(realLocationData.altitudeAccuracy);
-  console.log(realLocationData.heading);
-  console.log(realLocationData.speed);
+  //Below is to help track geolocation elements through testing.
+  // console.log(realLocationData.latitude);
+  // console.log(realLocationData.longitude);
+  // console.log(realLocationData.accuracy);
+  // console.log(realLocationData.altitude);
+  // console.log(realLocationData.altitudeAccuracy);
+  // console.log(realLocationData.heading);
+  // console.log(realLocationData.speed);
 
-  ///When above information is submitted the data fills the white boxes in the app.
-
+  ///Game profile saving and setting to the labyrinthProfile variable.
   // Check of there is a saved profile and try to load the data
   let data = JSON.parse(localStorage.getItem(`labyrinth-profile-data`));
   if (data !== null) {
@@ -237,7 +249,6 @@ function setup() {
         labyrinthProfile.charactersCollected = data.charactersCollected;
         labyrinthProfile.currentScene = data.currentScene;
         labyrinthProfile.itemsCollected = data.itemsCollected;
-        // labyrinthProfile.huntMethod = data.huntMethod;
         labyrinthProfile.selection = data.selection;
       } else if (
         (password !== data.password && name !== data.name) ||
@@ -253,14 +264,14 @@ function setup() {
   }
 }
 
-/**
-Assigns across the profile properties from the data to the current profile
-*/
+// Assigns across the profile properties from the data to the current profile
+
 function generateLabyrinthProfile() {
-  labyrinthProfile.name = prompt(`What is your name?`); //prompt answer saved into the variable
-  labyrinthProfile.password = prompt(`Please create a password.`); //prompt answer saved into the variable
+  labyrinthProfile.name = prompt(`What is your name?`); //prompt answer saved into the variable labyrinthProfile.name
+  labyrinthProfile.password = prompt(`Please create a password.`); //prompt answer saved into the variable labyrinthProfile.password
 
   localStorage.setItem(
+    //store info in localStorage
     `labyrinth-profile-data`,
     JSON.stringify(labyrinthProfile)
   );
@@ -274,36 +285,30 @@ function draw() {
   background(0);
 
   //different states for the different scenes/levels and win or lose screens
+  //enter_scene_# - are the states/scenes that tell you the story about that scene/ part of the story
   if (state === `enter`) {
-    enterIntro();
+    enterIntro(); //welcome and how to play the game
   } else if (state === `enter_scene_One`) {
     enterOne();
   } else if (state === `scene_One`) {
     mainProfilePage();
-    // sceneOne();
   } else if (state === `enter_scene_Two`) {
     enterTwo();
-    // buttonRemover();
   } else if (state === `scene_Two`) {
     mainProfilePage();
-
-    // sceneTwo();
   } else if (state === `enter_scene_Three`) {
     enterThree();
   } else if (state === `scene_Three`) {
     mainProfilePage();
-    // sceneThree();
   } else if (state === `enter_scene_Four`) {
     enterFour();
   } else if (state === `scene_Four`) {
     mainProfilePage();
-    // sceneFour();
   } else if (state === `enter_scene_Five`) {
     enterFive();
   } else if (state === `scene_Five`) {
     mainProfilePage();
     nextSceneButton.remove();
-    // sceneFive();
   } else if (state === `win`) {
     win();
   } else if (
@@ -316,101 +321,42 @@ function draw() {
   ) {
     trickMapImage();
   }
-
-  console.log(state);
 }
 
-//save in local storage and reset the dropdown menu to Choose...
+//when the user selects where to search in that scene, set it to the variable labyrinthProfile.searchLocation
 function sendSearchLocation() {
   labyrinthProfile.searchLocation = userInputLocation.value();
-
-  console.log(labyrinthProfile.searchLocation);
 }
 
-function profileMainPage() {
-  advanceToScene.remove();
-  inputBoxes();
-
-  //profle text with changing data in the template literals
-  let profile = `
-  Name:
-    ${labyrinthProfile.name}
-
-  Where would you like to search?
-
-
-  Characters Collected:
-    ${labyrinthProfile.charactersCollected}
-  Items Collected:
-    ${labyrinthProfile.itemsCollected}
-
-
-
-
-  What are you looking for?
-
-
-
-    Current Scene: ${labyrinthProfile.currentScene}
-
-    Item Found:
-    ${labyrinthProfile.hiddenThingFound}
-
-
-
-`;
-
-  //display the text along with the design banner at the top
-  push();
-  image(labyrinthBanner, 0, 0);
-  textFont(`American Typewriter`);
-  textSize(16);
-  textAlign(LEFT, TOP);
-  fill(0, 139, 140);
-  text(profile, 10, 100);
-
-  pop();
-
-  let geolocationProfile = `
-My Geolocation:
- Lat: ${labyrinthProfile.currentLocationLat}
- Long: ${labyrinthProfile.currentLocationLong}
-    `;
-  push();
-
-  textFont(`American Typewriter`);
-  textSize(16);
-  textAlign(LEFT, TOP);
-  fill(0, 139, 140);
-  text(geolocationProfile, 22, 300);
-
-  pop();
-
-  ///if state 'find' show button - 'click to collect' - else - 'go to next scene'
-}
-
-///say line, check if right line:
-function guessLine(who) {
-  currentAnswer = who;
-  if (currentAnswer.toLowerCase() === `me`) {
+///in winScene, when up against Jareth at final scene in game - say line, check if right line:
+function guessLine(line) {
+  if (line.toLowerCase() === `you have no power over me`) {
     winEnd();
+  } else {
+    alert(
+      `That is incorrect. Try again or refresh to start the game over to find the line somewhere in the game.`
+    );
   }
 }
-///FETCHING JSON INFO
+
+///FETCHING JSON INFO - after sendSelection is called when the user uses the dropMenu to select whether they are choosing to search for an item or a character.
 
 function sendSelection() {
+  //force items colelcted to test the final scenes
   labyrinthProfile.charactersCollected = 5; //take away after testing done
   labyrinthProfile.itemsCollected = 5; //take away after testing done
 
-  console.log(labyrinthProfile.charactersCollected, `characters`);
-  console.log(labyrinthProfile.itemsCollected, `items`);
-  console.log(gameData);
-  console.log(labyrinthProfile.searchLocation);
-  console.log(labyrinthProfile.selection);
+  // testing console.logs to track exacly what info is being found throughout the code.
+  // console.log(labyrinthProfile.charactersCollected, `characters`);
+  // console.log(labyrinthProfile.itemsCollected, `items`);
+  // console.log(gameData);
+  // console.log(labyrinthProfile.searchLocation);
+  // console.log(labyrinthProfile.selection);
 
   labyrinthProfile.selection = userInputSelection.value().toLowerCase();
 
-  ///logic to fetchJSON
+  ///logic / if else statements to fetch specific JSON data from location_data.json file.
+  ///from the JSON variables - ex.gameData.location_finds[0][`under bed`][1]: first [0] refers to the scene, ['location in the scene'], [0] - character, [1] - item
   //LEVEL ONE
   if (
     labyrinthProfile.selection === `character` &&
@@ -418,57 +364,55 @@ function sendSelection() {
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[0][`under bed`][0];
-    labyrinthProfile.charactersCollected++;
-    console.log(gameData.location_finds[0][`under bed`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
-    //
+    labyrinthProfile.charactersCollected++; //character found, add a character point
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `under bed`
   ) {
-    //
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[0][`under bed`][1];
-
-    /////
+      gameData.location_finds[0][`under bed`][1]; ///nothing is there, so no point added
+    ///// diff location in that same scene
   } else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `behind curtain`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[0][`behind curtain`][0];
-    labyrinthProfile.charactersCollected++;
+    labyrinthProfile.charactersCollected++; //character found add point
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `behind curtain`
   ) {
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[0][`behind curtain`][1];
+      gameData.location_finds[0][`behind curtain`][1]; //nothing there, no point added
+    ///// diff location in that same scene
   } else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `in bookshelf`
   ) {
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[0][`in bookshelf`][0];
+      gameData.location_finds[0][`in bookshelf`][0]; //nothing there, no point added
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `in bookshelf`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[0][`in bookshelf`][1];
-    labyrinthProfile.itemsCollected++;
+    labyrinthProfile.itemsCollected++; //item found, add point
+    ///// diff location in that same scene
   } else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `in closet`
   ) {
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[0][`in closet`][0];
+      gameData.location_finds[0][`in closet`][0]; //nothing, no point
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `in closet`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[0][`in closet`][1];
-    labyrinthProfile.itemsCollected++;
+    labyrinthProfile.itemsCollected++; //found item add point
   }
   ///sceneTwo
   else if (
@@ -477,8 +421,7 @@ function sendSelection() {
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[1][`under rock`][0];
-    labyrinthProfile.charactersCollected++;
-    console.log(gameData.location_finds[1][`under rock`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
+    labyrinthProfile.charactersCollected++; //characters found and add point
     //
   } else if (
     labyrinthProfile.selection === `item` &&
@@ -486,46 +429,49 @@ function sendSelection() {
   ) {
     //
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[1][`under rock`][1];
+      gameData.location_finds[1][`under rock`][1]; //nothing there, no point
+    /// different search location in the scene
   } else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `behind tree`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[1][`behind tree`][0];
-    labyrinthProfile.charactersCollected++;
+    labyrinthProfile.charactersCollected++; //character found, add point.
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `behind tree`
   ) {
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[1][`behind tree`][1];
+      gameData.location_finds[1][`behind tree`][1]; //no item there, no point.
+    //different search location in the scene.
   } else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `check wall`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[1][`check wall`][0];
-    labyrinthProfile.charactersCollected++;
+    labyrinthProfile.charactersCollected++; //found character in that place, add point.
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `check wall`
   ) {
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[1][`check wall`][1];
+      gameData.location_finds[1][`check wall`][1]; // no item there, no point
+    ///different search location in that scene
   } else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `check ground`
   ) {
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[1][`check ground`][0];
+      gameData.location_finds[1][`check ground`][0]; //no character there, no point
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `check ground`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[1][`check ground`][1];
-    labyrinthProfile.itemsCollected++;
+    labyrinthProfile.itemsCollected++; //item found on ground, add point.
   }
   ///sceneThree
   else if (
@@ -534,59 +480,56 @@ function sendSelection() {
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[2][`check left corridor`][0];
-    labyrinthProfile.charactersCollected++;
-    console.log(gameData.location_finds[2][`check left corridor`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
+    labyrinthProfile.charactersCollected++; //character found on the ground, add point.
     //
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `check left corridor`
   ) {
-    //
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[2][`check left corridor`][1];
-  } else if (
+      gameData.location_finds[2][`check left corridor`][1]; //item is not found there, no point.
+  } ///new location in that scene
+  else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `check door one`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[2][`check door one`][0];
-    youLoseButton(); // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
-
-    // advanceToScene.remove();
+    youLoseButton(); // door one is certain death! - call the you lose button -first GAME OVER trap - RESTART and try again!
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `check door one`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[2][`check door one`][1];
-    youLoseButton(); // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
-
-    // advanceToScene.remove();
-  } else if (
+    youLoseButton(); // door one is certain death! - call the you lose button -first GAME OVER trap - RESTART and try again!
+  } ///new location in that scene
+  else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `check right corridor`
   ) {
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[2][`check right corridor`][0];
+      gameData.location_finds[2][`check right corridor`][0]; /// nothing is there, no point
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `check right corridor`
   ) {
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[2][`check right corridor`][1];
-  } else if (
+      gameData.location_finds[2][`check right corridor`][1]; //no item is there, no point.
+  } ///new location in that scene
+  else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `check door two`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[2][`check door two`][0];
-    labyrinthProfile.itemsCollected++;
+    labyrinthProfile.itemsCollected++; /// character found, add point.
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `check door two`
   ) {
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[2][`check door two`][1];
+      gameData.location_finds[2][`check door two`][1]; ///no item there, no point found.
   }
   ///sceneFour
   else if (
@@ -595,8 +538,7 @@ function sendSelection() {
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[3][`look around tree`][0];
-    labyrinthProfile.charactersCollected++;
-    console.log(gameData.location_finds[3][`look around tree`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
+    labyrinthProfile.charactersCollected++; //character found, add point.
     //
   } else if (
     labyrinthProfile.selection === `item` &&
@@ -605,42 +547,43 @@ function sendSelection() {
     //
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[3][`look around tree`][1];
-  } else if (
+  } /// new location in scene
+  else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `look in bush`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[3][`look in bush`][0];
-    labyrinthProfile.charactersCollected++;
+    labyrinthProfile.charactersCollected++; ///character is found and point is added.
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `look in bush`
   ) {
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[3][`look in bush`][1];
-    // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
-  } else if (
+      gameData.location_finds[3][`look in bush`][1]; ///no item is found there, no point added.
+  } ///new location in scene
+  else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `look in dark tunnel`
   ) {
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[3][`look in dark tunnel`][0];
+      gameData.location_finds[3][`look in dark tunnel`][0]; //no character is found, no point
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `look in dark tunnel`
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[3][`look in dark tunnel`][1];
-    //game over button - restart game
+    //fall into the bog of eternal stench! Game over button - restart game
     youLoseButton();
-
-    // advanceToScene.remove();
-  } else if (
+  }
+  //new location in scene
+  else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `climb tree`
   ) {
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[3][`climb tree`][0];
+      gameData.location_finds[3][`climb tree`][0]; //character not found, no points
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `climb tree`
@@ -648,7 +591,7 @@ function sendSelection() {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[3][`climb tree`][1];
     youLoseButton();
-    //make button to send you back one level
+    //poison peach sends you back to the start of the game.
   }
   ///sceneFive
   else if (
@@ -658,23 +601,21 @@ function sendSelection() {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`climb up stairs`][0];
     youLoseButton();
-
-    // advanceToScene.remove();
-    console.log(gameData.location_finds[4][`climb up stairs`][0]); ///first [0] refers to the scene, [location in the scene], [0] - character, [1] - item
-    //
+    /// fall in love with Jareth (let's not kid ourselves here, it is DAVID BOWIE after allllllll <3) - game over and restart.
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `climb up stairs`
   ) {
-    //
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[4][`climb up stairs`][1];
-  } else if (
+      gameData.location_finds[4][`climb up stairs`][1]; //nothing found there, keep searching.
+  }
+  ///new search location in scene
+  else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `go down stairs`
   ) {
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[4][`go down stairs`][0];
+      gameData.location_finds[4][`go down stairs`][0]; //no charater there, keep searching.
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `go down stairs`
@@ -682,48 +623,48 @@ function sendSelection() {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`go down stairs`][1];
     youLoseButton();
-
-    // advanceToScene.remove();
-    // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
-  } else if (
+    //run out of time, game over.
+  }
+  ///search new location in scene
+  else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `go through doorway` &&
-    labyrinthProfile.charactersCollected >= 5 &&
+    labyrinthProfile.charactersCollected >= 5 && //if user has 5 or more characters collected, and 5 or more items collected, then they can face Jareth to win the game.
     labyrinthProfile.itemsCollected >= 5
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`go through doorway`][0];
-    faceJarethButton();
-
-    //add && labyrinthProfile.charactersCollected + labyrinthProfile.itemsCollected === 14 - screen change to winscreen: Jareth and 'Say the special phrase to win'
+    faceJarethButton(); ///go to the winScene where user has to say the line, 'you have no power over me' to win the game, or they must restart if they can't remember that line.
   } else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `go through doorway` &&
-    labyrinthProfile.charactersCollected < 5 &&
+    labyrinthProfile.charactersCollected < 5 && ///if user doesn't collect enough items and characters, user must restart the game and try again.
     labyrinthProfile.itemsCollected < 5
   ) {
-    youLoseButton();
+    youLoseButton(); ///game over, try again
     labyrinthProfile.hiddenThingFound = `You didn't collect enough characters\n     or items. Start over and try again.`;
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `go through doorway`
   ) {
     labyrinthProfile.hiddenThingFound =
-      gameData.location_finds[4][`go through doorway`][1];
-  } else if (
+      gameData.location_finds[4][`go through doorway`][1]; //nothing there, keep searching
+  }
+  //search different location in scene.
+  else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `jump off ledge` &&
-    labyrinthProfile.charactersCollected >= 5 &&
+    labyrinthProfile.charactersCollected >= 5 && ///if user has collected 5 or more items and characters, face Jareth in the winScene.
     labyrinthProfile.itemsCollected >= 5
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`jump off ledge`][0];
     faceJarethButton();
-    //add && labyrinthProfile.charactersCollected + labyrinthProfile.itemsCollected === 14 - screen change to winscreen: Jareth and 'Say the special phrase to win'
+    //chance to win by facing Jareth
   } else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `jump off ledge` &&
-    labyrinthProfile.charactersCollected < 5 &&
+    labyrinthProfile.charactersCollected < 5 && //if user has collected less than 5 items and characters, lose
     labyrinthProfile.itemsCollected < 5
   ) {
     youLoseButton();
@@ -736,136 +677,139 @@ function sendSelection() {
       gameData.location_finds[4][`jump off ledge`][1];
     youLoseButton();
 
-    // advanceToScene.remove();
+    // fall to death, lose.
   }
 }
 
+//sendMapButton function keeps track of what scene user is in so they return to the right scene after viewing the labyrinth map, as well as displaying the 'trickMap' and removing all the search buttons and menus from the regular search scene UI
 function sendMapButton() {
   if (state === `scene_One`) {
     state = `map1`;
-    // trickMap();
   } else if (state === `scene_Two`) {
     state = `map2`;
-    // trickMap();
   } else if (state === `scene_Three`) {
     state = `map3`;
-    // trickMap();
   } else if (state === `scene_Four`) {
     state = `map4`;
-    // trickMap();
   } else if (state === `scene_Five`) {
     state = `map5`;
-    // trickMap();
   }
 
   buttonRemover();
   trickMap();
-  // userInputLocation.remove();
-  // userInputSelection.remove();
-  // nextSceneButton.remove();
 }
 
+//take away the buttons and menus from canvas
 function buttonRemover() {
-  console.log(`button remover`);
   userInputLocation.remove();
   userInputSelection.remove();
   nextSceneButton.remove();
   seeMapButton.remove();
 }
 
+//set and create the buttons used throughout the game
 function buttonMaker() {
-  console.log(`button maker`);
   nextSceneButton = createButton("Done Searching, Go to Next Scene");
-  seeMapButton = createButton("See the Labyrinth"); ///make a function for the button creation
+  seeMapButton = createButton("See the Labyrinth");
   loseRestartButton = createButton("You lose. Try again?");
   figthJarethButton = createButton("FACE JARETH TO WIN");
 }
 
+///remove all buttons and menus used for searching and place button that restarts the game.
 function youLoseButton() {
   nextSceneButton.remove();
   buttonRemover();
 
   loseRestartButton.position(30, 580); //located at bottom center
-  loseRestartButton.mousePressed(returnToStart); //call a function when mouse is pressed
-  loseRestartButton.size(315, 40);
+  loseRestartButton.mousePressed(returnToStart); //call the function (returnToStart) to activate the return to start action, when the youLoseButton is pressed
+  loseRestartButton.size(315, 40); // fill the white input box, width-wise
 }
 
 function returnToStart() {
-  state = `enter_scene_One`;
+  state = `enter_scene_One`; //change state back to enter_scene_one
   loseRestartButton.remove();
-  buttonRemover();
+  buttonRemover(); //take out all search menus and buttons
   introAdvanceButton();
-  labyrinthProfile.hiddenThingFound = ``; //clear item found part
-  labyrinthProfile.itemsCollected = 0;
-  labyrinthProfile.charactersCollected = 0;
+  labyrinthProfile.hiddenThingFound = ``; //clear item or characters found in last part
+  labyrinthProfile.itemsCollected = 0; //reset items collected to zero to restart game
+  labyrinthProfile.charactersCollected = 0; //reset characters collected to zero to restart game
 }
 
-//for the win
+//create button to pop up when user has found jareth or toby and they have the right number of characters and items
 function faceJarethButton() {
-  // nextSceneButton.remove();
   buttonRemover();
 
   figthJarethButton.position(30, 580); //located at bottom center
-  figthJarethButton.mousePressed(returnFaceJareth); //call a function when mouse is pressed
+  figthJarethButton.mousePressed(returnFaceJareth); //call a function to create the scene where the user can face off against Jareth to win game.
   figthJarethButton.size(315, 40);
 }
 
+//this function doesnt create the scene itself, but it changes the state, which then calls the winScene, where the user faces Jareth
 function returnFaceJareth() {
   state = `win`;
-  // figthJarethButton.remove();
-  // buttonRemover();
-  // // introAdvanceButton();///activate the voice recognition
-  // labyrinthProfile.hiddenThingFound = ``; //clear item found part
-  // // labyrinthProfile.itemsCollected = 0;
-  // // labyrinthProfile.charactersCollected = 0;
 }
 
+/// button to move past the intro storyline scene
 function introAdvanceButton() {
   advanceToScene = createButton("Start your search");
   advanceToScene.position(150, 550); //located at bottom center
-  advanceToScene.mousePressed(returnAdvanceButton); //call a function when mouse is pressed
+  advanceToScene.mousePressed(returnAdvanceButton); //call a function to change state and the scene/canvas
   advanceToScene.size(105, 50);
 }
 
+//change scene from 'enter_scene_#' to 'scene_#'
 function returnAdvanceButton() {
   if (state === `enter_scene_One`) {
     state = `scene_One`;
-    // mainProfilePage();
-    ///clear item found
-    sceneOneMenus();
-    dropMenus();
-    buttonMaker();
+    sceneOneMenus(); //assign the unique search locations in scene one to the empty drop menus
+    dropMenus(); //make the empty dropMenus
+    buttonMaker(); //make the buttons
   } else if (state === `enter_scene_Two`) {
     state = `scene_Two`;
-    // mainProfilePage();
-    sceneTwoMenus();
-    dropMenus();
-    buttonMaker();
+    sceneTwoMenus(); //assign the unique search locations in scene two to the empty drop menus
+    dropMenus(); //make the empty dropMenus
+    buttonMaker(); //make the buttons
   } else if (state === `enter_scene_Three`) {
     state = `scene_Three`;
-    sceneThreeMenus();
-    dropMenus();
-    buttonMaker();
+    sceneThreeMenus(); //assign the unique search locations in scene three to the empty drop menus
+    dropMenus(); //make the empty dropMenus
+    buttonMaker(); //make the buttons
   } else if (state === `enter_scene_Four`) {
     state = `scene_Four`;
-    sceneFourMenus();
-    dropMenus();
-    buttonMaker();
+    sceneFourMenus(); //assign the unique search locations in scene four to the empty drop menus
+    dropMenus(); //make the empty dropMenus
+    buttonMaker(); //make the buttons
   } else if (state === `enter_scene_Five`) {
     state = `scene_Five`;
-    sceneFiveMenus();
-    dropMenus();
-    buttonMaker();
+    sceneFiveMenus(); //assign the unique search locations in scene five to the empty drop menus
+    dropMenus(); //make the empty dropMenus
+    buttonMaker(); //make the buttons
   }
 }
 
+//set the labyrinth optical illusion map, and display
+function trickMapImage() {
+  push();
+  imageMode(CENTER); //draw and position from the center of image
+  image(labyrinthTrickMap, width / 2 + 7, height / 2 + 35);
+  pop();
+}
+
+///create the button to return to the main profile search UI page.
+function trickMap() {
+  nothingIsAsItSeemsButton = createButton("Nothing is as it seems");
+  nothingIsAsItSeemsButton.position(250, 120); //located at upper right corner
+  nothingIsAsItSeemsButton.mousePressed(returnMapButton); //call the function when button is pressed
+  nothingIsAsItSeemsButton.size(105, 50);
+}
+
+//go back to the search scenes after being in the trickMAP (optical illusion labyrinth map)
 function returnMapButton() {
   if (state === `map1`) {
     state = `scene_One`;
     dropMenus();
     buttonMaker();
     nothingIsAsItSeemsButton.remove();
-    // nextSceneButton = createButton("Done Searching, Go to Next Scene");
   } else if (state === `map2`) {
     state = `scene_Two`;
     dropMenus();
@@ -888,27 +832,7 @@ function returnMapButton() {
     nothingIsAsItSeemsButton.remove();
   }
 }
-
-function trickMapImage() {
-  push();
-  imageMode(CENTER);
-  image(labyrinthTrickMap, width / 2 + 7, height / 2 + 35);
-  pop();
-}
-
-function trickMap() {
-  //create selects (menus) go off screen -
-  //seeMapButton
-  nothingIsAsItSeemsButton = createButton("Nothing is as it seems");
-  nothingIsAsItSeemsButton.position(250, 120); //located at upper right corner
-  nothingIsAsItSeemsButton.mousePressed(returnMapButton); //call a function when mouse is pressed
-  nothingIsAsItSeemsButton.size(105, 50);
-  // buttonRemover();
-  // dropMenuLocation.x = dropMenuLocation.x + 20;
-  // dropMenuSelection.x += 20;
-  // console.log(dropMenuLocation.x, dropMenuSelection.x);
-}
-//boxes and box dropshadows for each story scene
+//boxes and box dropshadows for each story entrance scene
 function introStoryBoxes() {
   push();
   fill(200, 100, 0, 75);
@@ -928,6 +852,7 @@ function introStoryBoxes() {
   pop();
 }
 
+//the first opening welcome scene when you launch the application
 function enterIntro() {
   introStoryBoxes();
 
@@ -936,30 +861,31 @@ function enterIntro() {
   image(enterIntroInfo, width / 2 + 7, height / 2 + 35);
   pop();
 }
+
+///entrance scene with image from movie and a storyline talking about the situation surround the current enviroment that the user will be searching in.
 function enterOne() {
   introStoryBoxes();
-  // introAdvanceButton();
+
   push();
   imageMode(CENTER);
   image(enterOneInfo, width / 2 + 7, height / 4);
   image(sceneOneIntroImage, width / 2 + 7, height / 4 + 250);
   pop();
 }
+///entrance scene with image from movie and a storyline talking about the situation surround the current enviroment that the user will be searching in.
 function enterTwo() {
   introStoryBoxes();
-  // introAdvanceButton();
   buttonRemover();
   push();
   imageMode(CENTER);
   image(enterTwoInfo, width / 2 + 7, height / 4 + 15);
   image(sceneTwoIntroImage, width / 2 + 7, height / 4 + 250);
   pop();
-
-  //createButton to move to sceneTwo -- begin your search Button -- if statements advancing to the main scenes if they are on the enter intrroa
 }
+
+///entrance scene with image from movie and a storyline talking about the situation surround the current enviroment that the user will be searching in.
 function enterThree() {
   introStoryBoxes();
-  // introAdvanceButton();
   buttonRemover();
   push();
   imageMode(CENTER);
@@ -967,6 +893,8 @@ function enterThree() {
   image(sceneThreeIntroImage, width / 2 + 7, height / 4 + 225);
   pop();
 }
+
+///entrance scene with image from movie and a storyline talking about the situation surround the current enviroment that the user will be searching in.
 function enterFour() {
   introStoryBoxes();
   buttonRemover();
@@ -976,6 +904,8 @@ function enterFour() {
   image(sceneFourIntroImage, width / 2 + 7, height / 4 + 250);
   pop();
 }
+
+///entrance scene with image from movie and a storyline talking about the situation surround the current enviroment that the user will be searching in.
 function enterFive() {
   introStoryBoxes();
   buttonRemover();
@@ -986,41 +916,45 @@ function enterFive() {
   pop();
 }
 
+//win function gets called only if the user has 5 items and 5 characters collected...(see fetch JSON win to see specifics)
 function win() {
   figthJarethButton.remove();
   introStoryBoxes();
   buttonRemover();
   push();
   imageMode(CENTER);
-  image(winInfo, width / 2 + 7, height / 4 + 15);
-  image(winImage, width / 2 + 7, height / 4 + 220);
+  image(winInfo, width / 2 + 7, height / 4 + 15); //'say the line!''
+  image(winImage, width / 2 + 7, height / 4 + 220); ///Jareth in the final scene reaching out
   pop();
-  //activate voice recognition
-  //win function gets called only if...(see fetch JSON win to see)
 }
+
+//when the user says the right line 'you have no power over me' - this gets called.
 function winEnd() {
-  //when the user says the right line 'you have no power over me' - this gets called.
   introStoryBoxes();
   buttonRemover();
   push();
   imageMode(CENTER);
-  image(winEndInfo, width / 2 + 7, height / 4 + 15);
-  image(winEndImage, width / 2 + 7, height / 4 + 220);
+  image(winEndInfo, width / 2 + 7, height / 4 + 15); ///final screen
+  image(winEndImage, width / 2 + 7, height / 4 + 220); ///you win!
   pop();
 }
 
-function mainProfilePage() {
-  //create button
+//function with the main design and updating info elements for the search pages in each scene.
 
+function mainProfilePage() {
+  //set button on canvas and direct the button press to a function
   seeMapButton.position(250, 120); //located at upper right corner
-  seeMapButton.mousePressed(sendMapButton); //call a function when mouse is pressed
+  seeMapButton.mousePressed(sendMapButton); //call a function when button is pressed
   seeMapButton.size(105, 50);
 
   advanceToScene.remove();
 
-  inputBoxes();
+  inputBoxes(); //place the white boxes on canvas to hold the data
 
   //profle text with changing data in the template literals
+  //user's name, the number of characters and items collected over the span of the game
+  //what scene the user is in and what specific item or character was found (activated after the drop menu with character or item is switched)
+
   let profile = `
   Name:
     ${labyrinthProfile.name}
@@ -1048,7 +982,7 @@ function mainProfilePage() {
 
 `;
 
-  //display the text along with the design banner at the top
+  //display the text (using the variable above and template literates) along with the design, 8bit Labyrinth Go game banner at the top
   push();
   image(labyrinthBanner, 0, 0);
   textFont(`American Typewriter`);
@@ -1058,165 +992,112 @@ function mainProfilePage() {
   text(profile, 10, 100);
 
   pop();
-
+  //display the user's location in the real-world
   let geolocationProfile = `
 My Geolocation:
  Lat: ${labyrinthProfile.currentLocationLat}
  Long: ${labyrinthProfile.currentLocationLong}
     `;
-  push();
 
+  push();
   textFont(`American Typewriter`);
   textSize(16);
   textAlign(LEFT, TOP);
   fill(0, 139, 140);
   text(geolocationProfile, 22, 300);
-
   pop();
 
-  ///if state 'find' show button - 'click to collect' - else - 'go to next scene'
   push();
   nextSceneButton.position(width - 135, height - 90); //located at upper right corner
-  nextSceneButton.mousePressed(goToNextScene); //call a function when mouse is pressed
+  nextSceneButton.mousePressed(goToNextScene); //call the function when mouse is pressed
   nextSceneButton.size(105, 50);
   pop();
 }
 
+//call this function to change to the next scene's intro and storyline info
 function goToNextScene() {
   if (state === `scene_One`) {
     state = `enter_scene_Two`;
     introAdvanceButton();
-    labyrinthProfile.hiddenThingFound = ``; //clear item found part
-    // buttonRemover();// DOESNT WORK HERE
+    labyrinthProfile.hiddenThingFound = ``; //clear item or character found in the previous section
   } else if (state === `scene_Two`) {
     state = `enter_scene_Three`;
     introAdvanceButton();
-    labyrinthProfile.hiddenThingFound = ``; //clear item found part
+    labyrinthProfile.hiddenThingFound = ``; //clear item or character found in the previous section
   } else if (state === `scene_Three`) {
     state = `enter_scene_Four`;
     introAdvanceButton();
-    labyrinthProfile.hiddenThingFound = ``; //clear item found part
+    labyrinthProfile.hiddenThingFound = ``; //clear item or character found in the previous section
   } else if (state === `scene_Four`) {
     state = `enter_scene_Five`;
     introAdvanceButton();
-    labyrinthProfile.hiddenThingFound = ``; //clear item found part
+    labyrinthProfile.hiddenThingFound = ``; //clear item or character found in the previous section
   }
 }
 
-function sceneOne() {
-  mainProfilePage();
-  // sceneOneMenus(); called on click after story told and user wants to search.
-}
-
-function sceneTwo() {
-  mainProfilePage();
-  // sceneTwoMenus();
-}
-
-function sceneThree() {
-  mainProfilePage();
-  // sceneThreeMenus();
-}
-
-function sceneFour() {
-  mainProfilePage();
-  // sceneFourMenus();
-}
-
-function sceneFive() {
-  mainProfilePage();
-  // sceneFiveMenus();
-}
-//
-// function win() {
-//   push();
-//   fill(0);
-//   rect(0, 0, 375, 667);
-//   tint(255, 126);
-//   pop();
-// }
-// function lose() {
-//   push();
-//   fill(255);
-//   rect(0, 0, 375, 667);
-//   tint(255, 126);
-//   pop();
-// }
-
 function sceneOneMenus() {
   /// user's bedroom - find goblins, snake, goblin king, clock
-  //user choose their search location in that scene
+  //user chooses their search location in that scene
 
-  labyrinthProfile.currentScene = 1;
+  labyrinthProfile.currentScene = 1; //set the scene to one
   //assign locations specific to this scene
   searchLocation.one = `under bed`; //find goblins
   searchLocation.two = `behind curtain`; //goblin king
   searchLocation.three = `in bookshelf`; //snake
   searchLocation.four = `in closet`; //clock
-  // dropMenus();
-  // buttonMaker();
-
-  // nextSceneButton = createButton("Done Searching, Go to Next Scene");
-  // seeMapButton = createButton("See the Labyrinth"); ///make a function for the button creation
 }
 
 function sceneTwoMenus() {
   //at the entrance of labyrinth - find hoggle [behind tree], faeries[under rock], bracelet [on ground], 'hello' caterpillar[at wall]
-  //user choose their search location in that scene
-  // dropMenus();
-  // buttonMaker();
-  labyrinthProfile.currentScene++;
+  //user chooses their search location in that scene
+  labyrinthProfile.currentScene++; //add one to the scene #
   //assign locations specific to this scene
-  searchLocation.one = `check wall`;
-  searchLocation.two = `check ground`;
-  searchLocation.three = `behind tree`;
-  searchLocation.four = `under rock`;
+  searchLocation.one = `check wall`; //caterpillar
+  searchLocation.two = `check ground`; //bracelet
+  searchLocation.three = `behind tree`; //hoggle
+  searchLocation.four = `under rock`; //faeriers
 }
 
 function sceneThreeMenus() {
-  ///2 characters guarding doors that lie. 'certain death!'  - collect the doom stones (the faces that say, 'turnback!!'), a lamp and the helping hands
-  //user choose their search location in that scene
-  // dropMenus();
-  // buttonMaker();
-  labyrinthProfile.currentScene++;
+  ///2 characters guarding doors that lie. 'certain death!'  - collect small characters from the tiles, and the helping hands -- 2 death options hidden in door one.
+  //user chooses their search location in that scene
+
+  labyrinthProfile.currentScene++; //add one to the scene #
   //assign locations specific to this scene
   searchLocation.one = `check left corridor`; //you catch small characters pop up from the tiles in the ground!
   searchLocation.two = `check door one`; // Certain death! Game over.
   searchLocation.three = `check right corridor`; //nothing.
-  searchLocation.four = `check door two`; // you fall down a dark hole, but luckily the helping hands guide you into the obliette and Hoggle helps you escape!
+  searchLocation.four = `check door two`; // you fall down a dark hole, but luckily the helping hands guide you into the oubliette and Hoggle helps you escape!
 }
 
 function sceneFourMenus() {
-  // dark forest - collect the posion peach, the orange dancing bouncing head characters,
-  //user choose their search location in that scene
-  // dropMenus();
-  // buttonMaker();
-  labyrinthProfile.currentScene++;
+  // dark forest - collect the orange dancing bouncing head characters,ludo and try not to fall into the bog of eternal stench, and avoid the posion peach which sends you back to the start.
+  //user chooses their search location in that scene
+
+  labyrinthProfile.currentScene++; //add one to the scene #
   //assign locations specific to this scene
   searchLocation.one = `look around tree`; //ludo
   searchLocation.two = `look in bush`; ///dancing characters
   searchLocation.three = `look in dark tunnel`; /// get thrown into the bog of eternal stench and game over
-  searchLocation.four = `climb tree`; //posion peach _ go back one level - create button for this.
+  searchLocation.four = `climb tree`; //posion peach game over.
 }
 
 function sceneFiveMenus() {
-  //final labyrinth -
-  //user choose their search location in that scene
-  // dropMenus();//doesnt WORK HERE
-  // buttonMaker();//doesnt WORK HERE
+  //final labyrinth, house of stairs.
+  //user chooses their search location in that scene
 
-  labyrinthProfile.currentScene++;
+  labyrinthProfile.currentScene++; //add one to the scene #
   //assign locations specific to this scene
   searchLocation.one = `climb up stairs`; //fall in love with Jareth game over
   searchLocation.two = `go down stairs`; //run out of time game over
-  searchLocation.three = `go through doorway`; //meet Jareth and beat him [you win] (must enterIntro the correct passage from the book 'you have no power over me')
-  searchLocation.four = `jump off ledge`; //get Toby [you win]
+  searchLocation.three = `go through doorway`; //meet Jareth and try to beat him (must say out loud the correct passage from the Labyrinth book (found in scene One)'you have no power over me') possible:  [you win]
+  searchLocation.four = `jump off ledge`; //get Toby and try to beat Jareth (must say out loud the correct passage from the Labyrinth book (found in scene One)'you have no power over me') possible:  [you win]
 }
 
 function dropMenus() {
   //drop down menus
-  //user choose their search location
-  userInputLocation = createSelect(); //create dropdown menu with p5.js function
+  //user choose their specific search location in that scene
+  userInputLocation = createSelect(); //create dropdown menu with specific p5.js function
   userInputLocation.position(dropMenuLocation.x, dropMenuLocation.y); ///where on app
   userInputLocation.option("Location in Scene.");
   userInputLocation.option(searchLocation.one);
@@ -1283,16 +1164,14 @@ function inputBoxes() {
   pop();
 }
 
+//set the geolocation data from the library to the correct UI element in the profile.
 function positionChanged(position) {
-  console.log("lat: " + position.latitude);
-  console.log("long: " + position.longitude);
-
   labyrinthProfile.currentLocationLat = position.latitude;
   labyrinthProfile.currentLocationLong = position.longitude;
 }
 
+///mouse Press advances user from the open welcome and intro scene.
 function mousePressed() {
-  ///just to test and then change mousePressed to something else (a new function) and trigger on a movement event via the geolocation distance?
   if (state === `enter`) {
     state = `enter_scene_One`;
     introAdvanceButton();
