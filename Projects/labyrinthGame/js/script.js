@@ -62,8 +62,11 @@ let sceneTwoIntroImage = undefined;
 let sceneThreeIntroImage = undefined;
 let sceneFourIntroImage = undefined;
 let sceneFiveIntroImage = undefined;
-let winImage = undefined;
+
 let loseImage = undefined;
+
+let winInfo = undefined;
+let winImage = undefined;
 
 let charactersCollectedData = 0;
 let itemsCollectedData = 0;
@@ -149,7 +152,7 @@ let nextSceneButton = undefined;
 let nothingIsAsItSeemsButton = undefined;
 let advanceToScene = undefined;
 let loseRestartButton = undefined;
-
+let figthJarethButton = undefined;
 function preload() {
   labyrinthBanner = loadImage(`assets/images/labyrinthBanner.png`); //load the banner image into the labyrinthBanner variable
   labyrinthTrickMap = loadImage(`assets/images/labyrinthBackground.jpg`); //load the optical illusion labyrinth trick map
@@ -162,14 +165,15 @@ function preload() {
   enterThreeInfo = loadImage(`assets/images/sceneThreeInfo.gif`); //load the optical illusion labyrinth trick map
   enterFourInfo = loadImage(`assets/images/enterFourInfo.gif`); //load the optical illusion labyrinth trick map
   enterFiveInfo = loadImage(`assets/images/enterFiveInfo.gif`); //load the optical illusion labyrinth trick map
+  winInfo = loadImage(`assets/images/enterFiveInfo.gif`); //load the optical illusion labyrinth trick map
 
   sceneOneIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneTwoIntroImage = loadImage(`assets/images/sceneTwoIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneThreeIntroImage = loadImage(`assets/images/sceneThreeIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneFourIntroImage = loadImage(`assets/images/sceneFourIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneFiveIntroImage = loadImage(`assets/images/sceneFiveIntroImage.jpg`); //load the optical illusion labyrinth trick map
-  winImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
   loseImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
+  winImage = loadImage(`assets/images/winImage.jpg`); //load the optical illusion labyrinth trick map
 
   gameData = loadJSON(`assets/data/location_data.json`); //load the JSON file containing the neighbourhood audioGem titles, sorted by types and neighbourhood.
 
@@ -656,6 +660,8 @@ function sendSelection() {
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`go through doorway`][0];
+    faceJarethButton();
+
     //add && labyrinthProfile.charactersCollected + labyrinthProfile.itemsCollected === 14 - screen change to winscreen: Jareth and 'Say the special phrase to win'
   } else if (
     labyrinthProfile.selection === `item` &&
@@ -720,6 +726,7 @@ function buttonMaker() {
   nextSceneButton = createButton("Done Searching, Go to Next Scene");
   seeMapButton = createButton("See the Labyrinth"); ///make a function for the button creation
   loseRestartButton = createButton("You lose. Try again?");
+  figthJarethButton = createButton("FACE JARETH TO WIN");
 }
 
 function youLoseButton() {
@@ -739,6 +746,26 @@ function returnToStart() {
   labyrinthProfile.hiddenThingFound = ``; //clear item found part
   labyrinthProfile.itemsCollected = 0;
   labyrinthProfile.charactersCollected = 0;
+}
+
+//for the win
+function faceJarethButton() {
+  // nextSceneButton.remove();
+  buttonRemover();
+
+  figthJarethButton.position(30, 580); //located at bottom center
+  figthJarethButton.mousePressed(returnFaceJareth); //call a function when mouse is pressed
+  figthJarethButton.size(315, 40);
+}
+
+function returnFaceJareth() {
+  state = `win`;
+  // figthJarethButton.remove();
+  // buttonRemover();
+  // // introAdvanceButton();///activate the voice recognition
+  // labyrinthProfile.hiddenThingFound = ``; //clear item found part
+  // // labyrinthProfile.itemsCollected = 0;
+  // // labyrinthProfile.charactersCollected = 0;
 }
 
 function introAdvanceButton() {
@@ -907,6 +934,19 @@ function enterFive() {
   pop();
 }
 
+function win() {
+  figthJarethButton.remove();
+  introStoryBoxes();
+  buttonRemover();
+  push();
+  imageMode(CENTER);
+  image(winInfo, width / 2 + 7, height / 4 + 15);
+  image(winImage, width / 2 + 7, height / 4 + 220);
+  pop();
+  //activate voice recognition
+  //win function gets called only if...(see fetch JSON win to see)
+}
+
 function mainProfilePage() {
   //create button
 
@@ -1025,21 +1065,21 @@ function sceneFive() {
   mainProfilePage();
   // sceneFiveMenus();
 }
-
-function win() {
-  push();
-  fill(0);
-  rect(0, 0, 375, 667);
-  tint(255, 126);
-  pop();
-}
-function lose() {
-  push();
-  fill(255);
-  rect(0, 0, 375, 667);
-  tint(255, 126);
-  pop();
-}
+//
+// function win() {
+//   push();
+//   fill(0);
+//   rect(0, 0, 375, 667);
+//   tint(255, 126);
+//   pop();
+// }
+// function lose() {
+//   push();
+//   fill(255);
+//   rect(0, 0, 375, 667);
+//   tint(255, 126);
+//   pop();
+// }
 
 function sceneOneMenus() {
   /// user's bedroom - find goblins, snake, goblin king, clock
