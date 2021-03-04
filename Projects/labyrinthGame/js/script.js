@@ -27,6 +27,8 @@ let long;
 
 let scene = ``;
 
+let currentAnswer = ``;
+
 // The game profile data while the program is running
 let labyrinthProfile = {
   name: ``,
@@ -196,6 +198,14 @@ function setup() {
     //geolocation is available -
   } else {
     //error getting geolocation
+  }
+
+  if (annyang) {
+    let commands = {
+      "You have no power over *who": guessLine,
+    };
+    annyang.addCommands(commands);
+    annyang.start();
   }
 
   // sceneOne(); //only temporary - put back after - call function scene one gets called
@@ -378,6 +388,13 @@ My Geolocation:
   ///if state 'find' show button - 'click to collect' - else - 'go to next scene'
 }
 
+///say line, check if right line:
+function guessLine(who) {
+  currentAnswer = who;
+  if (currentAnswer.toLowerCase() === `you have no power over me`) {
+    winEnd();
+  }
+}
 ///FETCHING JSON INFO
 
 function sendSelection() {
