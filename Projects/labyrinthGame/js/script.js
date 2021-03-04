@@ -10,7 +10,7 @@ You find out your brother, Toby has disappeared and need to search the labyrinth
 
 - enter your name and password, which is then saved locally to be recalled later.
 - Search the different scenes using the drop down menus for items and characters to help you on your way.
-- you need to find 7 characters and 7 items by the end of the game or else you can't face off against Jareth and are forced to start again.
+- you need to find 7 characters and 4 items by the end of the game or else you can't face off against Jareth and are forced to start again.
 
 - Becareful where you look because there are traps that will force you to start over!
 - hit the advance scene button when you are ready to look in a different location.
@@ -351,9 +351,9 @@ function guessLine(line) {
 ///FETCHING JSON INFO - after sendSelection is called when the user uses the dropMenu to select whether they are choosing to search for an item or a character.
 
 function sendSelection() {
-  //force items colelcted to test the final scenes
-  // labyrinthProfile.charactersCollected = 7; //take away after testing done
-  // labyrinthProfile.itemsCollected = 7; //take away after testing done
+  //force items and characters collcted to test the final scenes
+  labyrinthProfile.charactersCollected = 7; //take away after testing done
+  labyrinthProfile.itemsCollected = 4; //take away after testing done
 
   // testing console.logs to track exacly what info is being found throughout the code.
   // console.log(labyrinthProfile.charactersCollected, `characters`);
@@ -638,8 +638,8 @@ function sendSelection() {
   else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `go through doorway` &&
-    labyrinthProfile.charactersCollected >= 7 && //if user has 7 or more characters collected, and 7 or more items collected, then they can face Jareth to win the game.
-    labyrinthProfile.itemsCollected >= 7
+    labyrinthProfile.charactersCollected >= 7 && //if user has 7 or more characters collected, and 4 or more items collected, then they can face Jareth to win the game.
+    labyrinthProfile.itemsCollected >= 4
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`go through doorway`][0];
@@ -648,7 +648,7 @@ function sendSelection() {
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `go through doorway` &&
     labyrinthProfile.charactersCollected < 7 && ///if user doesn't collect enough items and characters, user must restart the game and try again.
-    labyrinthProfile.itemsCollected < 7
+    labyrinthProfile.itemsCollected < 4
   ) {
     youLoseButton(); ///game over, try again
     labyrinthProfile.hiddenThingFound = `You didn't collect enough characters\n     or items. Start over and try again.`;
@@ -664,7 +664,7 @@ function sendSelection() {
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `jump off ledge` &&
     labyrinthProfile.charactersCollected >= 7 && ///if user has collected 7 or more items and characters, face Jareth in the winScene.
-    labyrinthProfile.itemsCollected >= 7
+    labyrinthProfile.itemsCollected >= 4
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`jump off ledge`][0];
@@ -674,7 +674,7 @@ function sendSelection() {
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `jump off ledge` &&
     labyrinthProfile.charactersCollected < 7 && //if user has collected less than 5 items and characters, lose
-    labyrinthProfile.itemsCollected < 7
+    labyrinthProfile.itemsCollected < 4
   ) {
     youLoseButton();
     labyrinthProfile.hiddenThingFound = `You didn't collect enough characters\n     or items. Start over and try again.`;
@@ -923,7 +923,7 @@ function enterFive() {
   pop();
 }
 
-//win function gets called only if the user has 7 items and 7 characters collected...(see fetch JSON win to see specifics)
+//win function gets called only if the user has 4 items and 7 characters collected...(see fetch JSON win to see specifics)
 function win() {
   figthJarethButton.remove();
   introStoryBoxes();
