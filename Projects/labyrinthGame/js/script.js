@@ -173,12 +173,17 @@ let advanceToScene = undefined; //leave the scene entrance/storyline element and
 let loseRestartButton = undefined; //pops up when user loses and needs to restart the game
 let figthJarethButton = undefined; //when user is in position to win (has the right number of characters and items and finds Jareth or Toby and must face Jareth)
 
+//set end of game celebration music
+let gameEndMusic = undefined;
+
 function preload() {
   //set up variables with their respective physical elements
 
   labyrinthBanner = loadImage(`assets/images/labyrinthBanner.png`); //load the banner image into the labyrinthBanner variable - 8bit Labyrinth game logo
   labyrinthTrickMap = loadImage(`assets/images/labyrinthBackground.jpg`); //load the optical illusion labyrinth trick map
 
+  //set gameEndMusic variable to the sound file
+  gameEndMusic = loadSound(`assets/sounds/endSong.wav`);
   ///typing gifs with each scene's storyline typing out : from http://wigflip.com/minifesto/
 
   enterIntroInfo = loadImage(`assets/images/enterIntroInfo.gif`); //load the optical illusion labyrinth trick map
@@ -948,7 +953,7 @@ function winEnd() {
   image(winEndInfo, width / 2 + 7, height / 4 + 55); ///final screen 'You WIN, You Beat the Goblin king' text repeated.
   image(winEndInfo, width / 2 + 7, height / 4 + 75); ///final screen 'You WIN, You Beat the Goblin king' text repeated.
   image(winEndImage, width / 2 + 7, height / 4 + 220); ///you win Celebration image of all the characters from the Labyrinth.
-
+  gameEndMusic.play();
   pop();
 }
 
