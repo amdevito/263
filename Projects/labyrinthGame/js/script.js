@@ -351,9 +351,9 @@ function guessLine(line) {
 ///FETCHING JSON INFO - after sendSelection is called when the user uses the dropMenu to select whether they are choosing to search for an item or a character.
 
 function sendSelection() {
-  //force items and characters collcted to test the final scenes
-  labyrinthProfile.charactersCollected = 7; //take away after testing done
-  labyrinthProfile.itemsCollected = 4; //take away after testing done
+  //force items and characters collcted to test the final scenes:
+  // labyrinthProfile.charactersCollected = 7; //take away after testing done
+  // labyrinthProfile.itemsCollected = 4; //take away after testing done
 
   // testing console.logs to track exacly what info is being found throughout the code.
   // console.log(labyrinthProfile.charactersCollected, `characters`);
