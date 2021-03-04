@@ -200,6 +200,7 @@ function setup() {
     //error getting geolocation
   }
 
+  //voice recognition for line to beat Jareth. **START HERE***
   if (annyang) {
     let commands = {
       "You have no power over *who": guessLine,
