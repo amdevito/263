@@ -711,15 +711,13 @@ function buttonRemover() {
 function buttonMaker() {
   nextSceneButton = createButton("Done Searching, Go to Next Scene");
   seeMapButton = createButton("See the Labyrinth");
-  loseRestartButton = createButton("You lose. Try again?");
-  figthJarethButton = createButton("FACE JARETH TO WIN");
 }
 
 ///remove all buttons and menus used for searching and place button that restarts the game.
 function youLoseButton() {
   nextSceneButton.remove();
   buttonRemover();
-
+  loseRestartButton = createButton("You lose. Try again?");
   loseRestartButton.position(30, 580); //located at bottom center
   loseRestartButton.mousePressed(returnToStart); //call the function (returnToStart) to activate the return to start action, when the youLoseButton is pressed
   loseRestartButton.size(315, 40); // fill the white input box, width-wise
@@ -738,7 +736,7 @@ function returnToStart() {
 //create button to pop up when user has found jareth or toby and they have the right number of characters and items
 function faceJarethButton() {
   buttonRemover();
-
+  figthJarethButton = createButton("FACE JARETH TO WIN");
   figthJarethButton.position(30, 580); //located at bottom center
   figthJarethButton.mousePressed(returnFaceJareth); //call a function to create the scene where the user can face off against Jareth to win game.
   figthJarethButton.size(315, 40);
