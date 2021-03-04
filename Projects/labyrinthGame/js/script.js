@@ -312,6 +312,8 @@ function draw() {
     nextSceneButton.remove();
   } else if (state === `win`) {
     win();
+  } else if (state === `win end`) {
+    winEnd();
   } else if (
     state === `map` ||
     state === `map1` ||
@@ -333,7 +335,7 @@ function sendSearchLocation() {
 function guessLine(line) {
   console.log(line);
   if (line.toLowerCase() === `you have no power over me`) {
-    winEnd();
+    state = `win end`;
   } else {
     alert(
       `That is incorrect. Try again or refresh to start the game over to find the line somewhere in the game.`
