@@ -4,15 +4,20 @@
 Project One: Labyrinth GO (the game)
 By: Alana DeVito
 
-You are the main character from the movie the Labyrinth.
+You are the main character from the 1984 movie, Labyrinth.
+
 You find out your brother, Toby has disappeared and need to search the labyrinth for characters and items in order to find the Goblin King, Jareth and get your baby brother, Toby back!
 
 - enter your name and password, which is then saved locally to be recalled later.
 - Search the different scenes using the drop down menus for items and characters to help you on your way.
-- you need to find 5 characters and 5 items by the end of the game or else you can't face off against Jareth and are forced to start again.
+- you need to find 7 characters and 7 items by the end of the game or else you can't face off against Jareth and are forced to start again.
 
 - Becareful where you look because there are traps that will force you to start over!
 - hit the advance scene button when you are ready to look in a different location.
+
+- press a button to see the map of the labyrinth, but you only see an optical illusion.
+
+- annyang voice recognition employed for the closing scene where the user has to face off against Jareth. User beats Jareth by saying the phrase 'you have no power over me' which they would have learned in the first scene search when they picked up the book, Labyrinth and read that line.
 
 - your geolocation is visable, telling you where you are in the labyrinth! - I decided that having someone walk around their space may be impractical right now, but I still wanted to try and utilize a geolocation library so I have kept that in the application for visual UI purposes mainly.
 
@@ -347,8 +352,8 @@ function guessLine(line) {
 
 function sendSelection() {
   //force items colelcted to test the final scenes
-  labyrinthProfile.charactersCollected = 5; //take away after testing done
-  labyrinthProfile.itemsCollected = 5; //take away after testing done
+  // labyrinthProfile.charactersCollected = 7; //take away after testing done
+  // labyrinthProfile.itemsCollected = 7; //take away after testing done
 
   // testing console.logs to track exacly what info is being found throughout the code.
   // console.log(labyrinthProfile.charactersCollected, `characters`);
@@ -633,8 +638,8 @@ function sendSelection() {
   else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `go through doorway` &&
-    labyrinthProfile.charactersCollected >= 5 && //if user has 5 or more characters collected, and 5 or more items collected, then they can face Jareth to win the game.
-    labyrinthProfile.itemsCollected >= 5
+    labyrinthProfile.charactersCollected >= 7 && //if user has 7 or more characters collected, and 7 or more items collected, then they can face Jareth to win the game.
+    labyrinthProfile.itemsCollected >= 7
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`go through doorway`][0];
@@ -642,8 +647,8 @@ function sendSelection() {
   } else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `go through doorway` &&
-    labyrinthProfile.charactersCollected < 5 && ///if user doesn't collect enough items and characters, user must restart the game and try again.
-    labyrinthProfile.itemsCollected < 5
+    labyrinthProfile.charactersCollected < 7 && ///if user doesn't collect enough items and characters, user must restart the game and try again.
+    labyrinthProfile.itemsCollected < 7
   ) {
     youLoseButton(); ///game over, try again
     labyrinthProfile.hiddenThingFound = `You didn't collect enough characters\n     or items. Start over and try again.`;
@@ -658,8 +663,8 @@ function sendSelection() {
   else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `jump off ledge` &&
-    labyrinthProfile.charactersCollected >= 5 && ///if user has collected 5 or more items and characters, face Jareth in the winScene.
-    labyrinthProfile.itemsCollected >= 5
+    labyrinthProfile.charactersCollected >= 7 && ///if user has collected 7 or more items and characters, face Jareth in the winScene.
+    labyrinthProfile.itemsCollected >= 7
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`jump off ledge`][0];
@@ -668,8 +673,8 @@ function sendSelection() {
   } else if (
     labyrinthProfile.selection === `character` &&
     labyrinthProfile.searchLocation === `jump off ledge` &&
-    labyrinthProfile.charactersCollected < 5 && //if user has collected less than 5 items and characters, lose
-    labyrinthProfile.itemsCollected < 5
+    labyrinthProfile.charactersCollected < 7 && //if user has collected less than 5 items and characters, lose
+    labyrinthProfile.itemsCollected < 7
   ) {
     youLoseButton();
     labyrinthProfile.hiddenThingFound = `You didn't collect enough characters\n     or items. Start over and try again.`;
@@ -918,7 +923,7 @@ function enterFive() {
   pop();
 }
 
-//win function gets called only if the user has 5 items and 5 characters collected...(see fetch JSON win to see specifics)
+//win function gets called only if the user has 7 items and 7 characters collected...(see fetch JSON win to see specifics)
 function win() {
   figthJarethButton.remove();
   introStoryBoxes();
@@ -936,11 +941,12 @@ function winEnd() {
   buttonRemover();
   push();
   imageMode(CENTER);
-  image(winEndInfo, width / 2 + 7, height / 4 + 15); ///final screen
-  image(winEndInfo, width / 2 + 7, height / 4 + 35); ///final screen
-  image(winEndInfo, width / 2 + 7, height / 4 + 55); ///final screen
-  image(winEndInfo, width / 2 + 7, height / 4 + 75); ///final screen
-  image(winEndImage, width / 2 + 7, height / 4 + 220); ///you win!
+  image(winEndInfo, width / 2 + 7, height / 4 + 15); ///final screen 'You WIN, You Beat the Goblin king' text repeated.
+  image(winEndInfo, width / 2 + 7, height / 4 + 35); ///final screen 'You WIN, You Beat the Goblin king' text repeated.
+  image(winEndInfo, width / 2 + 7, height / 4 + 55); ///final screen 'You WIN, You Beat the Goblin king' text repeated.
+  image(winEndInfo, width / 2 + 7, height / 4 + 75); ///final screen 'You WIN, You Beat the Goblin king' text repeated.
+  image(winEndImage, width / 2 + 7, height / 4 + 220); ///you win Celebration image of all the characters from the Labyrinth.
+
   pop();
 }
 
