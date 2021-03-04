@@ -165,7 +165,7 @@ function preload() {
   enterThreeInfo = loadImage(`assets/images/sceneThreeInfo.gif`); //load the optical illusion labyrinth trick map
   enterFourInfo = loadImage(`assets/images/enterFourInfo.gif`); //load the optical illusion labyrinth trick map
   enterFiveInfo = loadImage(`assets/images/enterFiveInfo.gif`); //load the optical illusion labyrinth trick map
-  winInfo = loadImage(`assets/images/enterFiveInfo.gif`); //load the optical illusion labyrinth trick map
+  winInfo = loadImage(`assets/images/winInfo.gif`); //load the optical illusion labyrinth trick map
 
   sceneOneIntroImage = loadImage(`assets/images/sceneOneIntroImage.jpg`); //load the optical illusion labyrinth trick map
   sceneTwoIntroImage = loadImage(`assets/images/sceneTwoIntroImage.jpg`); //load the optical illusion labyrinth trick map
@@ -675,6 +675,7 @@ function sendSelection() {
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`jump off ledge`][0];
+    faceJarethButton();
     //add && labyrinthProfile.charactersCollected + labyrinthProfile.itemsCollected === 14 - screen change to winscreen: Jareth and 'Say the special phrase to win'
   } else if (
     labyrinthProfile.selection === `item` &&
@@ -945,6 +946,15 @@ function win() {
   pop();
   //activate voice recognition
   //win function gets called only if...(see fetch JSON win to see)
+}
+function winEnd() {
+  introStoryBoxes();
+  buttonRemover();
+  push();
+  imageMode(CENTER);
+  image(winInfo, width / 2 + 7, height / 4 + 15);
+  image(winImage, width / 2 + 7, height / 4 + 220);
+  pop();
 }
 
 function mainProfilePage() {
