@@ -218,6 +218,7 @@ function setup() {
       //assign the user's guess to the command variable and call the guess line function. //listen to all of the user's speech
       "*userSpeech": guessLine,
     };
+
     annyang.addCommands(commands);
     annyang.start();
   }
@@ -330,6 +331,7 @@ function sendSearchLocation() {
 
 ///in winScene, when up against Jareth at final scene in game - say line, check if right line:
 function guessLine(line) {
+  console.log(line);
   if (line.toLowerCase() === `you have no power over me`) {
     winEnd();
   } else {
