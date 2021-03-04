@@ -31,7 +31,7 @@ let scene = ``;
 let labyrinthProfile = {
   name: ``,
   searchLocation: `----------`, //search a place in that scene
-  charactersCollected: 0, //number of audio gems Collected
+  charactersCollected: 0, //change back to zero once testing is done
   itemsCollected: 0,
   // currentLocationLat: ``, ///geolocation - fetch lat and long -
   // currentLocationLong: ``, ///geolocation - fetch lat and long -
@@ -374,10 +374,16 @@ My Geolocation:
 ///FETCHING JSON INFO
 
 function sendSelection() {
+  // labyrinthProfile.charactersCollected = 5; //take away after testing done
+  // labyrinthProfile.itemsCollected = 5; //take away after testing done
+  //
+  console.log(labyrinthProfile.charactersCollected, `characters`);
+  console.log(labyrinthProfile.itemsCollected, `items`);
   console.log(gameData);
   console.log(labyrinthProfile.searchLocation);
-  labyrinthProfile.selection = userInputSelection.value().toLowerCase();
   console.log(labyrinthProfile.selection);
+
+  labyrinthProfile.selection = userInputSelection.value().toLowerCase();
 
   ///logic to fetchJSON
   //LEVEL ONE
@@ -656,13 +662,23 @@ function sendSelection() {
     // state = `lose`;//lose buttons FILL this section and say GAME OVER - RESTART and try again!
   } else if (
     labyrinthProfile.selection === `character` &&
-    labyrinthProfile.searchLocation === `go through doorway`
+    labyrinthProfile.searchLocation === `go through doorway` &&
+    labyrinthProfile.charactersCollected >= 5 &&
+    labyrinthProfile.itemsCollected >= 5
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`go through doorway`][0];
     faceJarethButton();
 
     //add && labyrinthProfile.charactersCollected + labyrinthProfile.itemsCollected === 14 - screen change to winscreen: Jareth and 'Say the special phrase to win'
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `go through doorway` &&
+    labyrinthProfile.charactersCollected < 5 &&
+    labyrinthProfile.itemsCollected < 5
+  ) {
+    youLoseButton();
+    labyrinthProfile.hiddenThingFound = `You didn't collect enough characters\n     or items. Start over and try again.`;
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `go through doorway`
@@ -671,12 +687,22 @@ function sendSelection() {
       gameData.location_finds[4][`go through doorway`][1];
   } else if (
     labyrinthProfile.selection === `character` &&
-    labyrinthProfile.searchLocation === `jump off ledge`
+    labyrinthProfile.searchLocation === `jump off ledge` &&
+    labyrinthProfile.charactersCollected >= 5 &&
+    labyrinthProfile.itemsCollected >= 5
   ) {
     labyrinthProfile.hiddenThingFound =
       gameData.location_finds[4][`jump off ledge`][0];
     faceJarethButton();
     //add && labyrinthProfile.charactersCollected + labyrinthProfile.itemsCollected === 14 - screen change to winscreen: Jareth and 'Say the special phrase to win'
+  } else if (
+    labyrinthProfile.selection === `character` &&
+    labyrinthProfile.searchLocation === `jump off ledge` &&
+    labyrinthProfile.charactersCollected < 5 &&
+    labyrinthProfile.itemsCollected < 5
+  ) {
+    youLoseButton();
+    labyrinthProfile.hiddenThingFound = `You didn't collect enough characters\n     or items. Start over and try again.`;
   } else if (
     labyrinthProfile.selection === `item` &&
     labyrinthProfile.searchLocation === `jump off ledge`
