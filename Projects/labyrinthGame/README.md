@@ -2,22 +2,7 @@
 
 Project One: Labyrinth GO (the game)
 By: Alana DeVito
+Artist Statement:
 
-You are the main character from the 1984 movie, Labyrinth.
-
-You find out your baby brother, Toby has disappeared and need to search the labyrinth for characters and items in order to find the Goblin King, Jareth and get your baby brother, Toby back!
-
-- enter your name and password, which is then saved locally to be recalled later.
-- Search the different scenes using the drop down menus for items and characters to help you on your way.
-- you need to find 7 characters and 4 items by the end of the game or else you can't face off against Jareth and are forced to start again.
-
-- at the top of each scene/level, a picture from that part of the movie is shown and you are given the storyline of that scene. Press the start your search button to advance to the searching aspect of that level.
-
-- Be careful where you look because there are traps that will force you to start over!
-- hit the advance to next scene button when you are ready to look in a different location.
-
-- press a button to see the map of the labyrinth, but you only see an optical illusion.
-
-- Annyang voice recognition employed for the closing scene where the user has to face off against Jareth. User beats Jareth by saying the phrase 'you have no power over me' which they would have learned in the first scene search when they picked up the book, Labyrinth and read that line.
-
-- your geolocation is visible, telling you where you are in the labyrinth (actually in real-life) - I decided that having someone walk around their space may be impractical right now, but I still wanted to try and utilize a geolocation library so I have kept that in the application for visual UI purposes mainly.
+This game, Labyrinth Go is inspired both by the 1984 movie starring Jennifer Connelly and David Bowie, as well as the app, Pokemon Go. You navigate the story line of the movie and search in different scenes for items and characters from the movie before you get to the castle at the center of the goblin city. The user utilizes the drop-down menus to search specific locations in each scene for at least 4 items and 7 characters before reaching the castle. If they have not found all of the characters and items, the user will not be able to face-off against Jareth to win the game. They are then forced to restart the game. Along the way, there are traps that will end the game and force the user to restart. Two examples of these traps are: being thrown into the Bog of Eternal Stench and biting into a poison peach!
+A JSON data file stores all the different found items and the storyline elements that are introduced to the user when they find the item or character. The 8-bit style is meant to recall the era that the movie was made. A geolocation library is utilized as a fun UI element to the game play, as if you are keeping track of your location in the Labyrinth. The Anyang voice recognition library is employed in the final ‘face-off’ against Jareth, the Goblin King. Exactly like the movie, the user needs to say, “You have no power over me!” out loud to beat Jareth and rescue your baby brother!
