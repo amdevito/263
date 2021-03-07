@@ -40,7 +40,19 @@ line2P.addEventListener(`click`, lineClicked);
 line3P.addEventListener(`click`, lineClicked);
 
 function lineClicked(event) {
-  setNewLine(event.target);
+  fadeOut(event.target, 1);
+}
+
+function fadeOut(element, opacity) {
+  opacity -= 0.01;
+  element.style[`opacity`] = opacity;
+  if (opacity > 0) {
+    requestAnimationFrame(function () {
+      fadeOut(element, opacity);
+    });
+  } else {
+    ///something to do when it's faded out...
+  }
 }
 
 function setNewLine(element) {
