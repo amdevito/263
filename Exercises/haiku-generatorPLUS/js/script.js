@@ -1,7 +1,15 @@
 /**
-Haiku generator
+E5: Haiku Generator ++
+
+Haiku generator PLUS
 Alana
-Generates a random haiku
+
+Brief:
+
+- improve design and animation of the presentation
+- add another DOM event into the user interaction that changes the poem somehow (key presses or mouseovers)
+- Use cSS animations  to spice things up
+
 
 */
 
