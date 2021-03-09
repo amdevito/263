@@ -1,8 +1,66 @@
 body {
-  background-color: #acab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 #haiku {
-  font-family: Helvetica, sans-serif;
+  font-family: Courier, sans-serif;
   font-size: 2rem;
-  font-weight: bold;
+  text-align: center;
+  padding-top: 2em;
+}
+
+.element {
+  width: 50%;
+  height: 50%;
+  animation: pulse 5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #acab;
+    transform: scale(0.3);
+  }
+  50% {
+    transform: scale(1.5);
+    background-color: #f9b5ff;
+    border-radius: 100%;
+  }
+  100% {
+    transform: scale(0.3);
+    background-color: #b5cdff;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.container {
+  height: 20px;
+  width: 100%;
+}
+.child {
+  align-items: center;
+  animation-duration: 3s;
+  animation-iteration-count: 1;
+  transform-origin: bottom;
+}
+.bounce:hover {
+  animation-name: bounce;
+  animation-timing-function: ease;
+  animation-delay: 1s;
+}
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-50px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
