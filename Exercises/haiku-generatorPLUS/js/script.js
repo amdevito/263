@@ -6,8 +6,10 @@ Alana
 
 Brief
 
-- improve design and animation of the presentation
+- improve design and animation of the presentation x
+- used hover in CSS to make the text slowly bounce x
 - add another DOM event into the user interaction that changes the poem somehow (key presses or mouseovers)
+--- key press changes font to white
 - Use cSS animations  to spice things up x
 
 
@@ -46,6 +48,26 @@ line3P.innerText = line3;
 line1P.addEventListener(`click`, lineClicked);
 line2P.addEventListener(`click`, lineClicked);
 line3P.addEventListener(`click`, lineClicked);
+
+line1P.addEventListener(`mouseenter`, function (event) {
+  event.target.style[`color`] = `#3fd76a`;
+});
+line2P.addEventListener(`mouseenter`, function (event) {
+  event.target.style[`color`] = `#fe0078`;
+});
+line3P.addEventListener(`mouseenter`, function (event) {
+  event.target.style[`color`] = `#3fd76a`;
+});
+
+line1P.addEventListener(`mouseleave`, function (event) {
+  event.target.style[`color`] = `#fe0078`;
+});
+line2P.addEventListener(`mouseleave`, function (event) {
+  event.target.style[`color`] = `#3fd76a`;
+});
+line3P.addEventListener(`mouseleave`, function (event) {
+  event.target.style[`color`] = `#fe0078`;
+});
 
 function lineClicked(event) {
   fadeOut(event.target, 1);

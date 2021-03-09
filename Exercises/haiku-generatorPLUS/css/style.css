@@ -19,7 +19,7 @@ body {
 
 @keyframes pulse {
   0% {
-    background-color: #acab;
+    background-color: #b5cdff;
     transform: scale(0.3);
   }
   50% {
