@@ -1,5 +1,5 @@
 /**
-E6: Haiku Generator ++
+E5: Haiku Generator ++
 
 Haiku generator PLUS
 Alana
