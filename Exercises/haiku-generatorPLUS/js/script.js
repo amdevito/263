@@ -9,7 +9,7 @@ Brief
 - improve design and animation of the presentation x
 - used hover in CSS to make the text slowly bounce x
 - add another DOM event into the user interaction that changes the poem somehow (key presses or mouseovers)
---- key press changes font to white
+--- added mouseenter and mouse leave DOM event to the text so that the lines change color at those events. x
 - Use cSS animations  to spice things up x
 
 
