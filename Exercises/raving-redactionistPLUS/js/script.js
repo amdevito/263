@@ -1,5 +1,6 @@
 // Exercise 6: Raving Redactionist++
 //Brief:
+//change the text, and redacted different text x
 //text types out first, then the revealing happens - need timer to wait before revelation is first called
 // Improve visual presentaiton by working with CSS and HTML - do the typing effect
 //Click and drag to reveal rather than clicking
