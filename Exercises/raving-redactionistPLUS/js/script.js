@@ -3,7 +3,7 @@
 
 //Brief:
 //[X] 'Find a different text to be redacted' Change the text, and redacted different text
-//[X] 'Improve visual presentation by working with CSS and HTML' -  text types out ''** TOP SECRET! DO NOT EXPOSE! **' first, then the revealing happens - revelation is called after the text type animation is complete.
+//[X] 'Improve visual presentation by working with CSS and HTML' -  text types out ''** TOP SECRET! DO NOT EXPOSE! **' first, then the revealing happens - revelation is called after the text type animation is complete. Also changed the secret text to red with a line-through instead of line under.
 
 //[X] "Add audio to the experience" - audio of marker squeaking across page when user clicks on the revealed text.
 
