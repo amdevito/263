@@ -8,7 +8,7 @@
 
 "use strict";
 
-let markerCrossOut = undefined;
+let markerCrossOut = document.getElementById("myAudio");
 
 let element = document.getElementById("line-1");
 
@@ -20,10 +20,14 @@ function startInterval() {
   setInterval(revelation, 1000);
 }
 
+function playAudio() {
+  markerCrossOut.play();
+}
+
 function redact(event) {
   $(this).removeClass(`revealed`);
   $(this).addClass(`redacted`);
-  markerCrossOut.play();
+  playAudio();
 }
 
 function revelation() {
