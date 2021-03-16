@@ -1,8 +1,8 @@
 // Exercise 6: Raving Redactionist++
 //Brief:
-//change the text, and redacted different text x
-//text types out first, then the revealing happens - need timer to wait before revelation is first called
-// Improve visual presentaiton by working with CSS and HTML - do the typing effect
+//X change the text, and redacted different text
+//X Improve visual presentaiton by working with CSS and HTML - do the typing effect text types out** TOP SECRET DO NOT EXPOSE **first, then the revealing happens - need interval to wait before revelation is first called
+//
 //Click and drag to reveal rather than clicking
 //audio of marker squeeking across page when user clicks and drags
 
@@ -10,17 +10,20 @@
 
 let markerCrossOut = undefined;
 
-function preload() {
-  markerCrossOut = loadSound(`assets/sounds/marker.wav`);
-}
+let element = document.getElementById("line-1");
+
+element.addEventListener("animationend", startInterval, false);
 
 $(`.top-secret`).on(`click`, redact);
-setInterval(revelation, 1000);
+
+function startInterval() {
+  setInterval(revelation, 1000);
+}
 
 function redact(event) {
   $(this).removeClass(`revealed`);
   $(this).addClass(`redacted`);
-  markerCrossOut.play(); //
+  markerCrossOut.play();
 }
 
 function revelation() {
