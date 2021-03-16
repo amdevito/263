@@ -5,21 +5,24 @@
   margin: auto;
 }
 
+/* redacted style is the black blocks covering the text */
 .redacted {
   background-color: black;
   user-select: none;
 }
 
+/* revealed text is red with a line through the text - another layer of 'security' */
 .revealed {
   color: red;
-  text-decoration: underline;
+  text-decoration: line-through;
 }
-
-.line-1 {
+/* "**TOP SECRET! DO NOT EXPOSE**" text style at top of page, will be animated by anim-typewriter  */
+.title-typed {
   position: relative;
   top: 50%;
   width: 0;
   margin: 0;
+  /* the cursor revealing the text */
   border-right: 10px solid rgba(255, 255, 255, 0.75);
   font-size: 180%;
   text-align: left;
@@ -29,12 +32,13 @@
   transform: translateY(-50%);
 }
 
-/* Animation */
+/* animation of title-typed above - in 4 seconds move through 44 steps of the text */
 .anim-typewriter {
   animation: typewriter 4s steps(44) 1s 1 normal both,
     blinkTextCursor 500ms steps(44) infinite normal;
 }
 
+/* change width from 0 to 24 em to reveal the text in a typed animation style */
 @keyframes typewriter {
   from {
     width: 0;
@@ -44,6 +48,7 @@
   }
 }
 
+/* flash the thin block from red to clear to give the illusion of a cursor moving across the page as the text is revealed */
 @keyframes blinkTextCursor {
   from {
     border-right-color: rgba(255, 0, 0, 0.75);
