@@ -1,3 +1,4 @@
+///view is the constructor and take an arguement the 'canvas' object that the view is managing
 function View(canvas) {
   this.canvas = canvas;
   this.clicks = [];
@@ -18,12 +19,14 @@ View.prototype.handleClick = function (event) {
   }, view.loopRate);
 };
 
+//prototypes in JavaScript - All JavaScript objects inherit properties and methods from a prototype, The JavaScript prototype property allows you to add new properties to object constructors. The JavaScript prototype property also allows you to add new methods to objects constructors.
 View.prototype.updateDisplay = function () {
   let view = this;
-  let context = view.canvas.getContext("2d");
+
+  let context = view.canvas.getContext("2d"); //tell the browser how you want to draw in the canvas - '2D', and save in the variable = context
   context.clearRect(0, 0, view.canvas.width, view.canvas.height);
-  context.fillStyle = "black";
-  context.fillRect(0, 0, view.canvas.width, view.canvas.height);
+  context.fillStyle = "black"; //what colour you are filling the above rectangle
+  context.fillRect(0, 0, view.canvas.width, view.canvas.height); //draw the rectangle starting at point 0, 0 and fill the entire canvas's width and height
 
   for (let i = 0; i < view.clicks.length; i++) {
     let circle = view.clicks[i];

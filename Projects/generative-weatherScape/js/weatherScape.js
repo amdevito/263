@@ -2,16 +2,16 @@ window.onload = function () {
   let bufferLoader = new BufferLoader(
     Audio.audioContext,
     [
-      "A4.mp3",
-      "A5.mp3",
-      "C4.mp3",
-      "C5.mp3",
-      "D4.mp3",
-      "D5.mp3",
-      "E4.mp3",
-      "E5.mp3",
-      "G4.mp3",
-      "G5.mp3",
+      "sounds/Cmajor4_5/A4.mp3",
+      "sounds/Cmajor4_5/A5.mp3",
+      "sounds/Cmajor4_5/C4.mp3",
+      "sounds/Cmajor4_5/C5.mp3",
+      "sounds/Cmajor4_5/D4.mp3",
+      "sounds/Cmajor4_5/D5.mp3",
+      "sounds/Cmajor4_5/E4.mp3",
+      "sounds/Cmajor4_5/E5.mp3",
+      "sounds/Cmajor4_5/G4.mp3",
+      "sounds/Cmajor4_5/G5.mp3",
     ],
     finishedLoading
   );
@@ -21,6 +21,7 @@ window.onload = function () {
     Audio.init(bufferList);
 
     let canvas = document.getElementById("canvas");
+    //get a new view from the View.js file (the constructor that manages the canvas object)
     let view = new View(canvas);
 
     canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
