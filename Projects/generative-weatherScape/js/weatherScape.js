@@ -1,3 +1,24 @@
+// Generative soundscape based on the weather in your location  - choose same as or opposite to (i.e. sometimes you want sunny music on a rainy day!)
+//
+// Reference sources:
+//
+// Generative music box project at Udemy
+//
+// And
+//
+// https://www.devbridge.com/articles/tonejs-coding-music-production-guide/
+//
+//
+// https://medium.com/dev-red/tutorial-lets-make-music-with-javascript-and-tone-js-f6ac39d95b8c
+//
+// Ideas to do:
+// - Replace the packages of mp3 sounds with the tone.js synthesizer
+// - Visualization is ripples like in water, when the ripples overlap, the colours blend to make new colours
+// - Need to get a google weather API
+// - Then decide which elements from that API control which musical part. - frequency of notes, key, octave, distribution of note length, number of types of sounds used (1-3), bpm (always fairly slow but fluctuating between 60-90?.
+// - Background colour should very slowly change/cycle
+// -
+
 window.onload = function () {
   let bufferLoader = new BufferLoader(
     Audio.audioContext,
@@ -27,6 +48,7 @@ window.onload = function () {
     ///bind connects the update display via handleClick to view and not canvas
     canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
 
+    ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
 };
