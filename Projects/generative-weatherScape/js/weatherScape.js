@@ -24,7 +24,9 @@ window.onload = function () {
     //get a new view from the View.js file (the constructor that manages the canvas object)
     let view = new View(canvas);
 
+    ///bind connects the update display via handleClick to view and not canvas
     canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
+
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
 };

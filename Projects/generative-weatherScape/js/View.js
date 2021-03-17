@@ -1,16 +1,21 @@
 ///view is the constructor and take an arguement the 'canvas' object that the view is managing
 function View(canvas) {
   this.canvas = canvas;
+  //set click array to collect the click location information
   this.clicks = [];
   this.frameRate = 1000 / 30;
   this.loopRate = 4000;
   this.maxRadius = 80;
 }
 
+//handle the click location on the canvas and pass to an array
 View.prototype.handleClick = function (event) {
   let view = this;
+  //coordinates of the mouse when clicking
   let x = event.offsetX;
   let y = event.offsetY;
+
+  //push the mouse coordinate click location into an array - (event.offsetX, event.offsetY, radius (which is currently set at 0, because it will grow))
   let pos = view.clicks.push({ x: x, y: y, radius: 0 });
   Audio.play(x % 10);
   setInterval(function () {
@@ -42,8 +47,11 @@ View.prototype.updateDisplay = function () {
 };
 
 View.prototype.drawCircle = function (context, x, y, radius, alpha) {
-  context.beginPath();
+  context.beginPath(); //context = what you want to do , 'begin to draw ' or 'begin path'
+  //draw the circle - x, y = location, radius, starting angle ('0' RADIANS - fraction of constant pi), specify 360 as radians, so 2xPI (math function Math.PI)
   context.arc(x, y, radius, 0, 2 * Math.PI);
+  //choosing color based on it's x, y coordinate - alpha will change based on the size of the circle
+  //IDEA? instead of filled circles - make it the ouline and have them grow and disappear and fade rather than shrink - stroke? strokeStyle and then stroke weight needs to be defined? can a sparkle also happen?
   context.fillStyle =
     "rgba(" +
     (x % 256) +
