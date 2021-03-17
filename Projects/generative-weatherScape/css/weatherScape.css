@@ -1,5 +1,5 @@
 #canvas {
   border: 1px solid black;
   /* have the background colour slowly change over time */
-  background-color: lightslategrey;
+  background-color: black;
 }

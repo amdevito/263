@@ -18,6 +18,8 @@
 // - Then decide which elements from that API control which musical part. - frequency of notes, key, octave, distribution of note length, number of types of sounds used (1-3), bpm (always fairly slow but fluctuating between 60-90?.
 // - Background colour should very slowly change/cycle
 // - might be nice to make this 3 d ? the circles change to spheres?
+///
+///LOOK INTO THIS-maybe have the circles shrink at a setInterval? so that it has a sort of breathing pulsing effect
 
 window.onload = function () {
   let bufferLoader = new BufferLoader(

@@ -43,14 +43,19 @@ View.prototype.updateDisplay = function () {
   //for loop interating through the clicks array (collecting the number of clicks)
   for (let i = 0; i < view.clicks.length; i++) {
     let circle = view.clicks[i];
+    let circleMaxRadius = view.maxRadius * Math.random(); //i dont know if this is working the way i want it to
 
-    if (circle.radius > view.maxRadius) continue;
-    //math.radom here creates ripples
+    //if the circle's radius is bigger than the max, stop drawing that circle and create a new one
+    if (circle.radius > circleMaxRadius) continue;
+    //grow radius of circle by a random number at each frame math.radom here creates ripples
     circle.radius += Math.random() * 12;
+    console.log(circleMaxRadius); //why isnt this working?
 
-    let alpha = 0.1;
-    if (circle.radius > view.maxRadius - 15) {
-      alpha = (view.maxRadius - circle.radius) / 50;
+    ///maybe have the circles shrink at a setInterval?
+
+    let alpha = 0.05;
+    if (circle.radius > circleMaxRadius - 15) {
+      alpha = (circleMaxRadius - circle.radius) / 70;
     }
     view.drawCircle(context, circle.x, circle.y, circle.radius, alpha);
   }
