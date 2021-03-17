@@ -22,6 +22,7 @@
 ///LOOK INTO THIS-maybe have the circles shrink at a setInterval? so that it has a sort of breathing pulsing effect
 
 window.onload = function () {
+  //what gets passed to the loadBuffer method is the URL of the file containing the sound and the index of that sound in the list.
   let bufferLoader = new BufferLoader(
     Audio.audioContext,
     [
