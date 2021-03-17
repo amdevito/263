@@ -76,5 +76,6 @@ View.prototype.drawCircle = function (context, x, y, radius, alpha) {
     " ," +
     alpha +
     ")";
-  context.fill();
+  //removing the bottom line creates a really beautiful pattern with the circles becoming more like ripples and overlapping
+  // context.fill();
 };
