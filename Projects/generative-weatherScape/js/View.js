@@ -20,13 +20,16 @@ View.prototype.handleClick = function (event) {
   //push the mouse coordinate click location into an array - (event.offsetX, event.offsetY, radius (which is currently set at 0, because it will grow))
   //pos is the variable storing the length of the array
   let pos = view.clicks.push({ x: x, y: y, radius: 0 });
-  Audio.play(x % 10);
+  Audio.play(x % 10); //play the audio file when the circle begins to animate (when the circle radius is 0)( this is the initial CLICK )
   //timer to reset the radius to a random number to create more variance in the ripples (rather than just to 0)
+
   setInterval(function () {
+    //anonymous function
     view.clicks[pos - 1].radius = Math.random() * 20;
-    x += 1; // addind this makes the sounds that play back vary at each repeat
-    Audio.play(x % 10);
-  }, view.loopRate);
+    x += 1; // addind this makes the sounds that play back (the repeated trigger) vary at each repeat
+    Audio.play(x % 10); //get a number between 0 and 9, based on the x location of the circle - x % (modulus) 10: divide x by 10 and take the remainder - the width of the canvas is 1000, returning an number divisible by 10.
+    //the location of the x value determines which sounds is played CHANGE THIS TO SOMETHING MORE RESPONSIVE? X AND Y?  THE CHANGING WEATHER? SOMETHING IN THE WEATHER THAT CHANGES REGULARLY?
+  }, view.loopRate); //called every 10 sec.
 };
 
 //prototypes in JavaScript - All JavaScript objects inherit properties and methods from a prototype, The JavaScript prototype property allows you to add new properties to object constructors. The JavaScript prototype property also allows you to add new methods to objects constructors.
