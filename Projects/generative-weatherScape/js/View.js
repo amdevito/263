@@ -5,22 +5,26 @@ function View(canvas) {
   this.clicks = [];
   ///representing the frames per second - 3o frames per second.
   this.frameRate = 1000 / 30;
-  this.loopRate = 4000;
+
+  this.loopRate = 10000; ///amount of time before the circle is redrawn - 10sec. nice and slow
   this.maxRadius = 100; //make this random? or controlled by a weather or sound element. it should change at each frame rate
 }
 
 //handle the click location on the canvas and pass to an array
 View.prototype.handleClick = function (event) {
   let view = this;
-  //coordinates of the mouse when clicking
+  //coordinates of the mouse when clicking - make these coorinates determined by something else
   let x = event.offsetX;
   let y = event.offsetY;
 
   //push the mouse coordinate click location into an array - (event.offsetX, event.offsetY, radius (which is currently set at 0, because it will grow))
+  //pos is the variable storing the length of the array
   let pos = view.clicks.push({ x: x, y: y, radius: 0 });
   Audio.play(x % 10);
+  //timer to reset the radius to a random number to create more variance in the ripples (rather than just to 0)
   setInterval(function () {
-    view.clicks[pos - 1].radius = 0;
+    view.clicks[pos - 1].radius = Math.random() * 20;
+    x += 1; // addind this makes the sounds that play back vary at each repeat
     Audio.play(x % 10);
   }, view.loopRate);
 };
@@ -47,22 +51,23 @@ View.prototype.updateDisplay = function () {
 
     //if the circle's radius is bigger than the max, stop drawing that circle and create a new one
     if (circle.radius > circleMaxRadius) continue;
-    //grow radius of circle by a random number at each frame math.radom here creates ripples
+    //grow radius of circle by a random number at each frame math.radom here creates diff size ripples
     circle.radius += Math.random() * 12;
-    console.log(circleMaxRadius); //why isnt this working?
 
-    ///maybe have the circles shrink at a setInterval?
-
+    ///maybe have the circles shrink at a setInterval? or when they get to a certain alpha value?
+    // console.log(circleMaxRadius);
     let alpha = 0.05;
     if (circle.radius > circleMaxRadius - 15) {
       alpha = (circleMaxRadius - circle.radius) / 70;
     }
     view.drawCircle(context, circle.x, circle.y, circle.radius, alpha);
+    circle.x += 0.008; /// add by fractals?
+    circle.y += -0.009; // circles move slightly giveing a blurred movement effect - change this to switch between x and y? or negative and positive?
   }
 };
 
 View.prototype.drawCircle = function (context, x, y, radius, alpha) {
-  context.lineWidth = 5;
+  context.lineWidth = 4;
 
   context.beginPath(); //context = what you want to do , 'begin to draw ' or 'begin path'
   //draw the circle - x, y = location, radius, starting angle ('0' RADIANS - fraction of constant pi), specify 360 as radians, so 2xPI (math function Math.PI)

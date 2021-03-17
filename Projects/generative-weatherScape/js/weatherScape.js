@@ -18,7 +18,7 @@
 // - Then decide which elements from that API control which musical part. - frequency of notes, key, octave, distribution of note length, number of types of sounds used (1-3), bpm (always fairly slow but fluctuating between 60-90?.
 // - Background colour should very slowly change/cycle
 // - might be nice to make this 3 d ? the circles change to spheres?
-///
+///- when person launches the app - a tone is generated depending on their long and lat location in the world - that will be the base key? then the next note is determined by the temp? or the mode? something deterimes the progression at every 4 bars?
 ///LOOK INTO THIS-maybe have the circles shrink at a setInterval? so that it has a sort of breathing pulsing effect
 
 window.onload = function () {
