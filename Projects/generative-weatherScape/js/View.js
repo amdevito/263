@@ -6,7 +6,7 @@ function View(canvas) {
   ///representing the frames per second - 3o frames per second.
   this.frameRate = 1000 / 30;
   this.loopRate = 4000;
-  this.maxRadius = 80;
+  this.maxRadius = 100; //make this random? or controlled by a weather or sound element. it should change at each frame rate
 }
 
 //handle the click location on the canvas and pass to an array
@@ -45,11 +45,12 @@ View.prototype.updateDisplay = function () {
     let circle = view.clicks[i];
 
     if (circle.radius > view.maxRadius) continue;
-    circle.radius += 1;
+    //math.radom here creates ripples
+    circle.radius += Math.random() * 12;
 
-    let alpha = 0.7;
+    let alpha = 0.1;
     if (circle.radius > view.maxRadius - 15) {
-      alpha = (view.maxRadius - circle.radius) / 10;
+      alpha = (view.maxRadius - circle.radius) / 50;
     }
     view.drawCircle(context, circle.x, circle.y, circle.radius, alpha);
   }
