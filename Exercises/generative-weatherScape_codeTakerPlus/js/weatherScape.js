@@ -3,7 +3,7 @@
 // Brief:
 // 1. add modal instructions dialogue when the page loads. Explains to the user what the app is, what it does and how it interacts. (see prisoner activity elements.)
 //2. drag and drop circles to change keys and modes of the soundscape
-//3. background color slowly modulates when you open a hidden modal with radio clickable instructions and choose modulate background colours via current wind speed? oscillates.
+//3. background color slowly modulates when you open a hidden modal with radio clickable instructions and choose modulate background colours via current wind speed? oscillates color values slllllooowlly.
 
 window.onload = function () {
   //what gets passed to the loadBuffer method is the URL of the file containing the sound and the index of that sound in the list.
