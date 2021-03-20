@@ -1,11 +1,21 @@
 // Generative soundscape prototype using JQUERY elements
 //
 // Brief:
-// 1. add modal instructions dialogue when the page loads. Explains to the user what the app is, what it does and how it interacts. (see prisoner activity elements.)
+// 1. X add modal instructions dialogue when the page loads. Explains to the user what the app is, what it does and how it interacts. (see prisoner activity elements.)
 //2. drag and drop circles to change keys and modes of the soundscape
 //3. background color slowly modulates when you open a hidden modal with radio clickable instructions and choose modulate background colours via current wind speed? oscillates color values slllllooowlly.
 $(`#introduction-dialog`).dialog({
   modal: true,
+  buttons: {
+    "Modulate background by wind speed": function () {
+      $(this).dialog("close");
+      ///also need the ability to open this dialog box again by clicking on upper right corner of the screen.
+      ///need to add back ground modulating by oscillator value that is received and scaled from the user's location and weather information.
+    },
+    "Keep background dark": function () {
+      $(this).dialog("close");
+    },
+  },
 });
 
 window.onload = function () {
