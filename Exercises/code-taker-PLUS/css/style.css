@@ -1,0 +1,14 @@
+#message {
+  font-size: 1.5rem;
+}
+
+#answer {
+  font-size: 2rem;
+  margin-top: 2rem;
+  height: 2rem;
+  border: 1px solid black;
+}
+
+.found {
+  color: red;
+}
