@@ -1,8 +1,3 @@
-#canvas {
-  border: 1px solid black;
-  /*have the background colour slowly change over time */
-  background-color: black;
-}
 body {
   margin: 0;
   padding: 0;
@@ -11,16 +6,16 @@ body {
 .container {
   position: absolute;
   top: 50%;
-  left: 80%;
-  transform: translate(-50%, -50%) rotateX(70deg);
+  left: 50%;
+  /* transform: translate(-50%,-50%) rotateX(70deg); */
 }
 .ripple {
   position: fixed;
   top: 0;
-  transform: translateX(-50%);
+  /* transform: translateX(-50%); */
 
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   animation: ripple 4s linear infinite;
 }
@@ -48,8 +43,8 @@ body {
   to {
     border: 0px solid #8e44ad;
     background: #9b59b670;
-    width: 200px;
-    height: 200px;
+    width: 400px;
+    height: 400px;
     top: 20px;
     opacity: 0;
   }
