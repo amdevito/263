@@ -55,3 +55,8 @@ window.onload = function () {
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
 };
+
+$(`#ripple-one`).draggable();
+$(`#ripple-two`).draggable();
+$(`#ripple-three`).draggable();
+$(`#ripple-four`).draggable();
