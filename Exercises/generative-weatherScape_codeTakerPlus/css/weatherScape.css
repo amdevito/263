@@ -10,14 +10,33 @@ body {
 }
 .container {
   position: absolute;
+
+  top: 10%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+}
+.container2 {
+  position: absolute;
+  top: 30%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+}
+.container3 {
+  position: absolute;
   top: 50%;
   left: 80%;
-  transform: translate(-50%, -50%) rotateX(70deg);
+  transform: translate(-50%, -50%);
+}
+.container4 {
+  position: absolute;
+  top: 70%;
+  left: 80%;
+  transform: translate(-50%, -50%);
 }
 .ripple {
   position: fixed;
   top: 0;
-  transform: translateX(-50%);
+  transform: translateY(-50%);
 
   width: 10px;
   height: 10px;
@@ -48,8 +67,8 @@ body {
   to {
     border: 0px solid #8e44ad;
     background: #9b59b670;
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     top: 20px;
     opacity: 0;
   }
