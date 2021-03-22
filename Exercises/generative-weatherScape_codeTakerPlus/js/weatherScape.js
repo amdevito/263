@@ -11,7 +11,6 @@ $(`#introduction-dialog`).dialog({
   buttons: {
     "Modulate background by wind speed": function () {
       $(this).dialog("close");
-      ///also need the ability to open this dialog box again by clicking on upper right corner of the screen.
       ///need to add back ground modulating by oscillator value that is received and scaled from the user's location and weather information.
     },
     "Keep background dark": function () {
