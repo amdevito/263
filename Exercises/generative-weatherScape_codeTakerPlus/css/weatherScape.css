@@ -1,5 +1,5 @@
 #canvas {
-  border: 4px solid navajowhite;
+  border: 4px solid #8e44ad;
   /*have the background colour slowly change over time */
   background-color: black;
 }
@@ -72,13 +72,13 @@ body {
 
 @keyframes ripple {
   from {
-    border: 2px solid #8e44ad;
-    background: #9b59b670;
-    opacity: 0.5;
+    border: 4px solid #8e44ad;
+    /* background: #9b59b670; */
+    opacity: 1;
   }
   to {
-    border: 0px solid #8e44ad;
-    background: #b5ffe4;
+    border: 0px solid #fcffb5;
+    /* background: #b5ffe4; */
     width: 150px;
     height: 150px;
     top: 10px;
@@ -89,12 +89,12 @@ body {
 @keyframes ripple2 {
   from {
     border: 2px solid #8e44ad;
-    background: #9b59b670;
-    opacity: 0.5;
+    /* background: #9b59b670; */
+    opacity: 1;
   }
   to {
-    border: 0px solid #8e44ad;
-    background: #b5ffe4;
+    border: 0px solid #fcffb5;
+    /* background: #b5ffe4; */
     width: 150px;
     height: 150px;
     top: 10px;
