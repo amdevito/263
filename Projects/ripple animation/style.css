@@ -49,3 +49,17 @@ body {
     opacity: 0;
   }
 }
+@keyframes ripple2 {
+  from {
+    border: 4px solid #8e44ad;
+    background: #9b59b670;
+  }
+  to {
+    border: 0px solid #8e44ad;
+    background: #9b59b670;
+    width: 400px;
+    height: 400px;
+    top: 20px;
+    opacity: 0;
+  }
+}
