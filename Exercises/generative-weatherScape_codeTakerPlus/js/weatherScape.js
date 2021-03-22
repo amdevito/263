@@ -2,7 +2,7 @@
 //
 // Brief:
 // 1. X add modal instructions dialogue when the page loads. Explains to the user what the app is, what it does and how it interacts. (see prisoner activity elements.)
-//2. drag and drop circles to change keys and modes of the soundscape
+//2. drag and drop modularing ripples on to the tone ripples  to efffects to that element.
 //3. background color slowly modulates when you open a hidden modal with radio clickable instructions and choose modulate background colours via current wind speed? oscillates color values slllllooowlly.
 $(`#introduction-dialog`).dialog({
   modal: true,
@@ -16,6 +16,28 @@ $(`#introduction-dialog`).dialog({
       $(this).dialog("close");
     },
   },
+});
+
+$(function () {
+  $("#dialog").dialog({
+    autoOpen: false,
+    show: {
+      effect: "blind",
+      duration: 1000,
+    },
+    hide: {
+      effect: "explode",
+      duration: 1000,
+    },
+  });
+
+  $("#opener").on("click", function () {
+    $("#dialog").dialog("open");
+  });
+});
+
+$(function () {
+  $("input").checkboxradio();
 });
 
 window.onload = function () {

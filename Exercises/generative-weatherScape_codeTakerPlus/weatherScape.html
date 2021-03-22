@@ -35,13 +35,59 @@
     <div id="introduction-dialog" title="Your Generative WeatherScape">
       <p>
         Click on the canvas to activate a tone that will then regeneratively
-        continue playing. Click and drag the circles left and right to change
-        the interval of that generative note (1-6 steps). Drag and move the
-        circles up and down to add an octave of that note when playing. Choose
-        to slowly modulate the background colour via wind speed by pressing the
-        buttons below.
+        continue playing. Click and drag the ripples onto the tone circles to
+        add effecs to that sound. Customize further by clicking the ¯\_(ツ)_/¯
+        button. Choose to slowly modulate the background colour via wind speed
+        by pressing the buttons below.
       </p>
     </div>
+
+    <div id="dialog" title="Customize Your Scape">
+      <p>
+        Choose a different key or mode below. This window can be moved, resized
+        and closed with the &apos;x&apos; icon.
+      </p>
+      <div class="widget">
+        <h2>Sound</h2>
+        <fieldset>
+          <legend>Change Key:</legend>
+          <label for="radio-1">A</label>
+          <input type="radio" name="radio-1" id="radio-1" />
+          <label for="radio-2">B</label>
+          <input type="radio" name="radio-1" id="radio-2" />
+          <label for="radio-3">C</label>
+          <input type="radio" name="radio-1" id="radio-3" />
+          <label for="radio-4">D</label>
+          <input type="radio" name="radio-1" id="radio-4" />
+          <label for="radio-5">E</label>
+          <input type="radio" name="radio-1" id="radio-5" />
+          <label for="radio-6">F</label>
+          <input type="radio" name="radio-1" id="radio-6" />
+          <label for="radio-7">G</label>
+          <input type="radio" name="radio-1" id="radio-7" />
+        </fieldset>
+
+        <fieldset>
+          <legend>Change Mode:</legend>
+          <label for="checkbox-1">Ionian</label>
+          <input type="checkbox" name="checkbox-1" id="checkbox-1" />
+          <label for="checkbox-2">Dorian</label>
+          <input type="checkbox" name="checkbox-1" checkbox id="checkbox-2" />
+          <label for="checkbox-3">Phyrygian</label>
+          <input type="checkbox" name="checkbox-1" id="checkbox-3" />
+          <label for="checkbox-4">Lydian</label>
+          <input type="checkbox" name="checkbox-1" id="checkbox-4" />
+          <label for="checkbox-5">Mixolydian</label>
+          <input type="checkbox" name="checkbox-1" id="checkbox-5" />
+          <label for="checkbox-6">Aeolian</label>
+          <input type="checkbox" name="checkbox-1" id="checkbox-6" />
+          <label for="checkbox-7">Locrian</label>
+          <input type="checkbox" name="checkbox-1" id="checkbox-7" />
+        </fieldset>
+      </div>
+    </div>
+
+    <button id="opener">¯\_(ツ)_/¯</button>
 
     <div class="container" id="ripple-one">
       <span class="ripple r1"></span>
