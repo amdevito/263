@@ -3,8 +3,9 @@
 // Brief:
 // 1. X add modal instructions dialogue when the page loads. Explains to the user what the app is, what it does and how it interacts.
 // --- background color slowly modulates when you open a hidden modal with radio clickable instructions and choose modulate background colours via current wind speed? oscillates color values slllllooowlly.
-//2. X drag and drop modularing ripples on to the tone ripples  to add efffects to that element.
+//2. X drag and drop modulating ripples on to the tone ripples  to add effects to that element.
 //3. X Hidden dialog box with options to change the scape's tonality - key or mode.
+
 $(`#introduction-dialog`).dialog({
   modal: true,
   buttons: {
