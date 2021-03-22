@@ -8,7 +8,7 @@
 // --For this exercise - *DONE* modulo at start changes background colour to white or keeps it dark.
 //                     - change the size of the ripples
 //                     - change the timing of the replay of the notes
-//                     - the moveable ripples silences that tone that you place them on.
+//                     - (NEXT - after this exercise) the moveable ripples silences that tone that you place them on.
 
 $(`#introduction-dialog`).dialog({
   modal: true,
