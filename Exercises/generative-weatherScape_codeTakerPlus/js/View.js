@@ -6,8 +6,8 @@ function View(canvas) {
   ///representing the frames per second - 3o frames per second.
   this.frameRate = 1000 / 30;
 
-  this.loopRate = 10000; ///amount of time before the circle is redrawn - 10sec. nice and slow
-  this.maxRadius = 100; //make this random? or controlled by a weather or sound element. it should change at each frame rate
+  this.loopRate = 10000; ///amount of time before the circle is redrawn - 10sec. nice and slow. **MAP THE HIDDEN DIALOG CHOICES FOR REPLAY RATE HERE.
+  this.maxRadius = 100; //*** IF BIGGER IS CHOSEN ADD 20 FOR BIGGER, MINUS 20 FOR SMALLER.
 }
 
 //handle the click location on the canvas and pass to an array

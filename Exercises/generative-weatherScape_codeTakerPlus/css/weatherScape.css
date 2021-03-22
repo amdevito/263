@@ -1,6 +1,6 @@
 #canvas {
   border: 4px solid #8e44ad;
-  /*have the background colour slowly change over time */
+  /*call and replace this when the button in the modulo is chosen for dark or light background */
   background-color: black;
 }
 body {

@@ -5,11 +5,16 @@
 // --- background color slowly modulates when you open a hidden modal with radio clickable instructions and choose modulate background colours via current wind speed? oscillates color values slllllooowlly.
 //2. X drag and drop modulating ripples on to the tone ripples  to add effects to that element.
 //3. X Hidden dialog box with options to change the scape's tonality - key or mode.
+// --For this exercise - modulo at start changes background colour changing in slow oscillation
+//                     - change the size of the ripples
+//                     - change the timing of the replay of the notes
+//                     - the moveable ripples silences that tone.
 
 $(`#introduction-dialog`).dialog({
   modal: true,
   buttons: {
-    "Modulate background by wind speed": function () {
+    "Make background white": function () {
+      //for P2: change to - Modulate background by wind speed
       $(this).dialog("close");
       ///need to add back ground modulating by oscillator value that is received and scaled from the user's location and weather information.
     },
