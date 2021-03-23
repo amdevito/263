@@ -6,9 +6,9 @@
 //2. X drag and drop modulating ripples on to the tone ripples  to add effects to that element.
 //3. X Hidden dialog box with options to change the scape's tonality - key or mode.
 // --For this exercise - *DONE* modulo at start changes background colour to white or keeps it dark.
-//                     - change the size of the ripples
+//                     - *DONE*change the size of the ripples
 //                     - change the timing of the replay of the notes
-//                     - (NEXT - after this exercise) the moveable ripples silences that tone that you place them on.
+//                     - (NEXT - after this exercise) the moveable ripples effects that tone that you place them on - for this exercise the movable ripples are just to customize the visual effect.
 
 $(`#introduction-dialog`).dialog({
   modal: true,

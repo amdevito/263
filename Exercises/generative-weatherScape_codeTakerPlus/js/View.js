@@ -8,6 +8,32 @@ function View(canvas) {
 
   this.loopRate = 10000; ///amount of time before the circle is redrawn - 10sec. nice and slow. **MAP THE HIDDEN DIALOG CHOICES FOR REPLAY RATE HERE.
   this.maxRadius = 100; //*** IF BIGGER IS CHOSEN ADD 20 FOR BIGGER, MINUS 20 FOR SMALLER.
+
+  ///when clicking the first group of radio buttons, change the size of the ripples - bigger to 300, smaller to 50 and normal, back to 100
+  //event listener on the clicking action of the radio buttons.
+  $(`#radio-1`).on(`click`, () => {
+    this.maxRadius = 300;
+  });
+  $(`#radio-2`).on(`click`, () => {
+    this.maxRadius = 50;
+  });
+  $(`#radio-3`).on(`click`, () => {
+    this.maxRadius = 100;
+  });
+
+  //when clicking the next round of radio buttons, change the replay delay time on the ripple and tone play back
+  $(`#radio-4`).on(`click`, () => {
+    this.loopRate = 3000; /// 3 seconds
+  });
+  $(`#radio-5`).on(`click`, () => {
+    this.loopRate = 6000; ///6 seconds
+  });
+  $(`#radio-6`).on(`click`, () => {
+    this.loopRate = 9000; /// 9 seconds
+  });
+  $(`#radio-7`).on(`click`, () => {
+    this.loopRate = 12000; /// 12 seconds
+  });
 }
 
 //handle the click location on the canvas and pass to an array
