@@ -9,4 +9,4 @@
 //
 // - (NEXT - after this exercise) the moveable ripples effects that tone that you place them on - for this exercise the movable ripples are just to customize the visual effect.
 //
-// \*\*CITATION: This project was inspired by https://www.udemy.com/course/generative-music-box/ & http://www.wickedlysmart.com/projects/
+// \*\*CITATION: This project was inspired by https://www.udemy.com/course/generative-music-box/
