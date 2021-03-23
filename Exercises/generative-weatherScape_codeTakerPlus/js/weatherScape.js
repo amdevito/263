@@ -1,6 +1,7 @@
 // E6: Code-Taker Plus
 ///Generative soundscape prototype using JQUERY UI elements
 // --- completing this exercise by developing some UI for my in progress project
+///**IMPORTANT NOTE ONLY the basic JQUERY UI elements are submission for this weekly exercise, the larger project is in development for the prototype. The JQUERY elements will change for the final.
 // Brief:
 // 1. X add modal instructions dialogue box when the page loads. Explains to the user what the app is, what it does and how to interact with it.
 // --- here, also choose between dark canvas or white canvas.
