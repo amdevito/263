@@ -12,13 +12,13 @@ function View(canvas) {
   ///when clicking the first group of radio buttons, change the size of the ripples - bigger to 300, smaller to 50 and normal, back to 100
   //event listener on the clicking action of the radio buttons.
   $(`#radio-1`).on(`click`, () => {
-    this.maxRadius = 300;
+    this.maxRadius = 300; //big
   });
   $(`#radio-2`).on(`click`, () => {
-    this.maxRadius = 50;
+    this.maxRadius = 50; //small
   });
   $(`#radio-3`).on(`click`, () => {
-    this.maxRadius = 100;
+    this.maxRadius = 100; //back to normal
   });
 
   //when clicking the next round of radio buttons, change the replay delay time on the ripple and tone play back

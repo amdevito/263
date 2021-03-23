@@ -1,41 +1,45 @@
-// Generative soundscape prototype using JQUERY elements
-//
+// E6: Code-Taker Plus
+///Generative soundscape prototype using JQUERY UI elements
+// --- completing this exercise by developing some UI for my in progress project
 // Brief:
-// 1. X add modal instructions dialogue when the page loads. Explains to the user what the app is, what it does and how it interacts.
-// --- background color slowly modulates when you open a hidden modal with radio clickable instructions and choose modulate background colours via current wind speed? oscillates color values slllllooowlly.
-//2. X drag and drop modulating ripples on to the tone ripples  to add effects to that element.
-//3. X Hidden dialog box with options to change the scape's tonality - key or mode.
-// --For this exercise - *DONE* modulo at start changes background colour to white or keeps it dark.
-//                     - *DONE*change the size of the ripples
-//                     - change the timing of the replay of the notes
-//                     - (NEXT - after this exercise) the moveable ripples effects that tone that you place them on - for this exercise the movable ripples are just to customize the visual effect.
+// 1. X add modal instructions dialogue box when the page loads. Explains to the user what the app is, what it does and how to interact with it.
+// --- here, also choose between dark canvas or white canvas.
+//2. X drag and drop modulating ripples on to the tone ripple canvas to add additional visual dynamics.
+//3. X Hidden dialog box with options to change the scape's tone replay delay - 3 sec, 6, sec, 9 , or 12. and the option to change the size of the ripples in the canvas - smaller, bigger or back to normal.
+//
+// - (NEXT - after this exercise) the moveable ripples effects that tone that you place them on - for this exercise the movable ripples are just to customize the visual effect.
+//
+// \*\*CITATION: This project was inspired by https://www.udemy.com/course/generative-music-box/ & http://www.wickedlysmart.com/projects/
 
+//
+//first dialog box on entry to application
 $(`#introduction-dialog`).dialog({
   modal: true,
   buttons: {
     "Make background white": function () {
       //for P2: change to - Modulate background by wind speed
       // $(`body`).css({ background: "white" });
-      $(`canvas`).css({ "background-color": "white" });
+      $(`canvas`).css({ "background-color": "white" }); //change the css color element to white
       $(this).dialog("close");
       ///need to add back ground modulating by oscillator value that is received and scaled from the user's location and weather information.
     },
     "Keep background dark": function () {
-      $(this).dialog("close");
+      $(this).dialog("close"); //don't do anything but close the dialog box
     },
   },
 });
 
+//'hidden' dialog box - click button with '¯\_(ツ)_/¯'
 $(function () {
   $("#dialog").dialog({
     autoOpen: false,
     show: {
       effect: "blind",
-      duration: 1000,
+      duration: 1000, //how long to complete this effect
     },
     hide: {
       effect: "explode",
-      duration: 1000,
+      duration: 1000, //how long to complete this effect
     },
   });
 
@@ -86,6 +90,7 @@ window.onload = function () {
   }
 };
 
+//make the animated ripples at the top of the page DRAGGABLE
 $(`#ripple-one`).draggable();
 $(`#ripple-two`).draggable();
 $(`#ripple-three`).draggable();
