@@ -41,6 +41,12 @@ class Play extends Phaser.Scene {
       this //telling it to use this scene when getSad is called
     );
 
+    ///add collison physics between the avatar and the thumbs up sprite
+    this.physics.add.collider(this.avatar, this.happiness);
+
+    //add physics collider on the group
+    this.physics.add.collider(this.happiness, this.happiness);
+
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
