@@ -1,23 +1,23 @@
 /**************************************************
-Template p5 project
-Pippin Barr
-
-Here is a description of this template p5 project.
+P2: Workshopping Tutorial for Generative Synthesis
 **************************************************/
 let ready = false;
+let osc;
 //
 // Description of setup() goes here.
 function setup() {
   createCanvas(windowWidth, windowHeight);
+
+  osc = new Tone.Oscillator(); /// default freq. 440 ---> A4
+
+  osc.connect(Tone.Master); //'speaker' / output
 }
 
+///on window resize , update the canvas size
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-// draw()
-//
-// Description of draw() goes here.
 function draw() {
   background(0);
 
@@ -32,7 +32,8 @@ function draw() {
 
 function mousePressed() {
   if (!ready) {
-    //start out audio objects
+    //start  audio objects
+    osc.start();
     ready = true;
   }
 }
