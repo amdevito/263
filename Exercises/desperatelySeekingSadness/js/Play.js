@@ -12,22 +12,39 @@ class Play extends Phaser.Scene {
     this.avatar.setCollideWorldBounds(true);
 
     ///place thrumbs-down sprite at a random location on the screen
-    let x = Math.random() * this.sys.canvas.width;
-    let y = Math.random() * this.sys.canvas.height;
+    let x = Math.random() * this.sys.canvas.width; //access width
+    let y = Math.random() * this.sys.canvas.height; //access height
 
+    //place the thumbs down at those random x and y location
     this.sadness = this.physics.add.sprite(x, y, `thumbs-down`);
 
+    ///place multiple thumbs up on screen with physics attributes attached
+    this.happiness = this.physics.add.group({
+      key: `thumbs-up`,
+      quantity: 80,
+      bounceX: 0.5,
+      bounceY: 0.5,
+      CollideWorldBounds: true,
+      dragX: 50,
+      dragY: 50,
+    });
+    Phaser.Actions.RandomRectangle(
+      this.happiness.getChildren(),
+      this.physics.world.bounds
+    );
+    //check for the overlap of avatar and sprite
     this.physics.add.overlap(
-      this.avatar,
-      this.sadness,
-      this.getSad,
-      null,
-      this
+      this.avatar, //check overlap with avatar
+      this.sadness, ///check overlap with thumbs-down (sadness)
+      this.getSad, //when overlap happens call getSad function, which resets the sprite
+      null, ///no other method needed once the function is called
+      this //telling it to use this scene when getSad is called
     );
 
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
+  //when the overlap happens between avatar and sadness, reset the sprite
   getSad(avatar, sadness) {
     let x = Math.random() * this.sys.canvas.width;
     let y = Math.random() * this.sys.canvas.height;
