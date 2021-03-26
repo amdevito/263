@@ -1,4 +1,5 @@
 /**************************************************
+<<<<<<< HEAD
 P2: Workshopping Tutorial for Generative Synthesis
 **************************************************/
 let ready = false;
@@ -37,3 +38,24 @@ function mousePressed() {
     ready = true;
   }
 }
+=======
+Template p5 project
+Pippin Barr
+
+Here is a description of this template p5 project.
+**************************************************/
+
+// setup()
+//
+// Description of setup() goes here.
+function setup() {
+
+}
+
+// draw()
+//
+// Description of draw() goes here.
+function draw() {
+
+}
+>>>>>>> f0549b248d967fd0a81d4c4e1841e1654f310598
