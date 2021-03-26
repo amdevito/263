@@ -8,10 +8,32 @@ class Play extends Phaser.Scene {
   create() {
     //create the avatar
     this.avatar = this.physics.add.sprite(400, 300, `avatar`);
+    //stop avatar from exiting screen
     this.avatar.setCollideWorldBounds(true);
+
+    ///place thrumbs-down sprite at a random location on the screen
+    let x = Math.random() * this.sys.canvas.width;
+    let y = Math.random() * this.sys.canvas.height;
+
+    this.sadness = this.physics.add.sprite(x, y, `thumbs-down`);
+
+    this.physics.add.overlap(
+      this.avatar,
+      this.sadness,
+      this.getSad,
+      null,
+      this
+    );
 
     this.cursors = this.input.keyboard.createCursorKeys();
   }
+
+  getSad(avatar, sadness) {
+    let x = Math.random() * this.sys.canvas.width;
+    let y = Math.random() * this.sys.canvas.height;
+    this.sadness.setPosition(x, y);
+  }
+
   update() {
     this.handleInput();
   }
