@@ -6,6 +6,15 @@ let ready = false;
 
 //creating a synth object
 let synth;
+let loop;
+
+//below is not using Tonal.js to generate the scale - manualldoing C major
+// let scale = ["C4", "D4", "E4", "F4", "G4", "A4", "B4"];
+
+let scale;
+
+let prevNote;
+
 //
 // let osc;
 // let osc2;
@@ -20,10 +29,34 @@ let wave2;
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  synth = new Tone.Synth();
+  scale = Tonal.Scale.get("A#3 minor").notes;
+}
+
+//create and set up audio after mouse pressed
+function initializeAudio() {
+  //*NEXT -  create another voice with a slightly different noise value controlling the notes that are played in the same scale.
+  synth = new Tone.FMSynth(); //check on the FMSynth specific parameters to feed this
+  synth.oscillator.type = `sine`;
   synth.toDestination(); //same as synth.connect(Tone.Master);
 
-  loop = new Tone.Loop(loopStep, "1n");
+  loop = new Tone.Loop((time) => {
+    //anonymous function - declaring the loop function as part of the function
+    // let note = random(110, 880);//call random notes between the frq 110 to 880
+    // let note = `c4`; //can name notes in this format as well
+    // let note = random(scale);
+
+    ///using noise to control the more linear movement through the scale, rather than random - there must be a way to control which notes in the harmony are played (i.e quartal harmony )
+    let n = noise(frameCount * 0.1);
+    let i = floor(map(n, 0, 1, 0, scale.length)); //floor rounds down
+    let note = scale[i];
+
+    if (prevNote != note) {
+      //(freq, noteDuration, time)< last value is how much time before the note plays 'pause' default = now
+      //default BPM 120 - 1n = 1 beat, 4n = quarter note
+      synth.triggerAttackRelease(note, "16n", time); //attack, duration
+    }
+    prevNote = note;
+  }, "4n");
   loop.start();
   // //4 different types of osc - sin (default), square, tri, saw
   // osc = new Tone.Oscillator({
@@ -63,20 +96,30 @@ function setup() {
   // Tone.Master.volume.value = -30;
 
   // Tone.Master.volume.rampTo(-20, 2); //ramp from the current volume to the first value at the 2nd value's time.
+  Tone.Transport.start();
 }
-
 ///on window resize , update the canvas size
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
-
-function loopStep(time) {
-  let note = random(110, 880);
-
-  //(freq, noteDuration, time)< last value is how much time before the note plays 'pause' default = now
-  //default BPM 120 - 1n = 1 beat, 4n = quarter note
-  synth.triggerAttackRelease(note, "16n", time); //attack, duration
-}
+//
+// function loopStep(time) {
+//   // let note = random(110, 880);//call random notes between the frq 110 to 880
+//   // let note = `c4`; //can name notes in this format as well
+//   // let note = random(scale);
+//
+//   ///using noise to control the more linear movement through the scale, rather than random - there must be a way to control which notes in the harmony are played (i.e quartal harmony )
+//   let n = noise(frameCount * 0.1);
+//   let i = floor(map(n, 0, 1, 0, scale.length)); //floor rounds down
+//   let note = scale[i];
+//
+//   if (prevNote != note) {
+//     //(freq, noteDuration, time)< last value is how much time before the note plays 'pause' default = now
+//     //default BPM 120 - 1n = 1 beat, 4n = quarter note
+//     synth.triggerAttackRelease(note, "16n", time); //attack, duration
+//   }
+//   prevNote = note;
+// }
 
 function draw() {
   background(0);
@@ -119,6 +162,6 @@ function mousePressed() {
 
     ready = true;
     //create rhythmic sequences
-    Tone.Transport.start();
+    initializeAudio();
   }
 }
