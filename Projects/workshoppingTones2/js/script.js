@@ -8,6 +8,8 @@ let ready = false;
 let synth;
 let loop;
 
+let mixer;
+
 //below is not using Tonal.js to generate the scale - manualldoing C major
 // let scale = ["C4", "D4", "E4", "F4", "G4", "A4", "B4"];
 
@@ -29,7 +31,19 @@ let wave2;
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  scale = Tonal.Scale.get("A#3 minor").notes;
+  mixer = new Tone.Gain(); //connect sound nodes
+  // mixer.toDestination();
+
+  //add effect on to the mixer item.
+  let reverb = new Tone.Reverb({
+    wet: 0.8, //mostly wet 80% with 20% dry(1 is fully windowHeight),
+    decay: 20,
+  });
+  mixer.connect(reverb);
+
+  reverb.toDestination();
+
+  scale = Tonal.Scale.get("A#3 locrian").notes;
 }
 
 //create and set up audio after mouse pressed
@@ -37,7 +51,7 @@ function initializeAudio() {
   //*NEXT -  create another voice with a slightly different noise value controlling the notes that are played in the same scale.
   synth = new Tone.FMSynth(); //check on the FMSynth specific parameters to feed this
   synth.oscillator.type = `sine`;
-  synth.toDestination(); //same as synth.connect(Tone.Master);
+  synth.connect(mixer); //same as synth.connect(Tone.Master);
 
   loop = new Tone.Loop((time) => {
     //anonymous function - declaring the loop function as part of the function
@@ -53,7 +67,7 @@ function initializeAudio() {
     if (prevNote != note) {
       //(freq, noteDuration, time)< last value is how much time before the note plays 'pause' default = now
       //default BPM 120 - 1n = 1 beat, 4n = quarter note
-      synth.triggerAttackRelease(note, "16n", time); //attack, duration
+      synth.triggerAttackRelease(note, "8n", time); //attack, duration
     }
     prevNote = note;
   }, "4n");
