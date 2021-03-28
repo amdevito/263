@@ -43,7 +43,7 @@ function setup() {
 
   reverb.toDestination();
 
-  scale = Tonal.Scale.get("c4 ionian").notes;
+  scale = Tonal.Scale.get("c3 major").notes;
 }
 
 //create and set up audio after mouse pressed
@@ -67,7 +67,7 @@ function initializeAudio() {
     if (prevNote != note) {
       //(freq, noteDuration, time)< last value is how much time before the note plays 'pause' default = now
       //default BPM 120 - 1n = 1 beat, 4n = quarter note
-      synth.triggerAttackRelease(note, "4n", time); //attack, duration
+      synth.triggerAttackRelease(note, "1n", time); //attack, duration
     }
     prevNote = note;
   }, "2n");
@@ -161,7 +161,7 @@ function drawWaveform(wave, w = width, h = height) {
   ) {
     let x = map(i, 0, buffer.length, 0, w);
     let y = map(buffer[i], -1, 1, 0, h);
-    // fill(200, 30, 2); ///why isn't this working?
+
     point(x, y);
   }
 }
