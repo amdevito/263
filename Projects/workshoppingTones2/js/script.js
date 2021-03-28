@@ -37,13 +37,13 @@ function setup() {
   //add effect on to the mixer item.
   let reverb = new Tone.Reverb({
     wet: 0.8, //mostly wet 80% with 20% dry(1 is fully windowHeight),
-    decay: 20,
+    decay: 40,
   });
   mixer.connect(reverb);
 
   reverb.toDestination();
 
-  scale = Tonal.Scale.get("A#3 locrian").notes;
+  scale = Tonal.Scale.get("c4 ionian").notes;
 }
 
 //create and set up audio after mouse pressed
@@ -67,10 +67,10 @@ function initializeAudio() {
     if (prevNote != note) {
       //(freq, noteDuration, time)< last value is how much time before the note plays 'pause' default = now
       //default BPM 120 - 1n = 1 beat, 4n = quarter note
-      synth.triggerAttackRelease(note, "8n", time); //attack, duration
+      synth.triggerAttackRelease(note, "4n", time); //attack, duration
     }
     prevNote = note;
-  }, "4n");
+  }, "2n");
   loop.start();
   // //4 different types of osc - sin (default), square, tri, saw
   // osc = new Tone.Oscillator({
