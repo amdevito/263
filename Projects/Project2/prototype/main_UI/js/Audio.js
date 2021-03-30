@@ -1,3 +1,5 @@
+//Setting up and storing audio samples in buffer. This will handle the synth construction in the final project.
+
 let Audio = {
   gainNode: undefined,
   bufferList: undefined,

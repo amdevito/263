@@ -1,4 +1,4 @@
-///view is the constructor and take an arguement the 'canvas' object that the view is managing
+///view is the constructor and takes an arguement - the 'canvas' object - that the view is managing
 function View(canvas) {
   this.canvas = canvas;
   //set click array to collect the click location information

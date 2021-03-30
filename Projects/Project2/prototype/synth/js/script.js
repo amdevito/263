@@ -1,54 +1,57 @@
 /**************************************************
-P2: Workshopping Tutorial for Generative Synthesis 2
+P2: Final project prototype for the Synth engine of the Any Day Music Machine (Part 2 of Prototype)
+inspired by: the tutorials, “Generative Processes: Week 6, Part 1 - TONE.JS, DRONES” and “Generative Processes: Week 6, Part 2” (https://www.youtube.com/watch?v=ddVrGY1dveY&ab_channel=DavidBouchard and https://www.youtube.com/watch?v=CkjM8et49lI&ab_channel=DavidBouchard)
+
+  Tone.js Documentation: https://tonejs.github.io/docs/14.7.77/
 **************************************************/
 let masterVolume = -9; ///in decibel
+//need to click page to activate the sound
 let ready = false;
 
 //creating a synth object
 let synth;
+
+//variable to house the looping sound
 let loop;
 
+//connect to effects using this mixer variable
 let mixer;
 
-//below is not using Tonal.js to generate the scale - manualldoing C major
-// let scale = ["C4", "D4", "E4", "F4", "G4", "A4", "B4"];
-
+//store the scale being used for the composition
 let scale;
 
+//check what the previous note is, to determine what the next note will be
 let prevNote;
 
-//
-// let osc;
-// let osc2;
-//
-// let lfo;
-
+//variables for the different waveforms used in FMsynthesis
 let wave;
 let wave2;
 
-//
-// Description of setup() goes here.
+//Set up canvas of the UI and the standard Audio elements that will be used throughout the project
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
+  //assign the mixer variable to a new gain object (like creating a fader channel)
   mixer = new Tone.Gain(); //connect sound nodes
-  // mixer.toDestination();
 
-  //add effect on to the mixer item.
   let reverb = new Tone.Reverb({
     wet: 0.8, //mostly wet 80% with 20% dry(1 is fully windowHeight),
-    decay: 40,
+    decay: 40, //length of the reverb tail
   });
+
+  //add effect on to that mixer 'channel'
   mixer.connect(reverb);
 
-  reverb.toDestination();
+  //the effected channel is patched to the output
+  reverb.toDestination(); // same as / short hand of "connect(Tone.Master)" - so like patching to the Master out fader channel.
 
+  //fetch the scale from Tonal and set to the scale variable
   scale = Tonal.Scale.get("c3 major").notes;
 }
 
 //create and set up audio after mouse pressed
 function initializeAudio() {
-  //*NEXT -  create another voice with a slightly different noise value controlling the notes that are played in the same scale.
+  //*NEXT -  create another voice with a slightly different noise values (random CV) controlling the notes that are played in the same scale.
   synth = new Tone.FMSynth(); //check on the FMSynth specific parameters to feed this
   synth.oscillator.type = `sine`;
   synth.connect(mixer); //same as synth.connect(Tone.Master);
@@ -65,7 +68,7 @@ function initializeAudio() {
     let note = scale[i];
 
     if (prevNote != note) {
-      //(freq, noteDuration, time)< last value is how much time before the note plays 'pause' default = now
+      //(freq, noteDuration, time)< last value is how much time before the note plays 'pause'. The default = now
       //default BPM 120 - 1n = 1 beat, 4n = quarter note
       synth.triggerAttackRelease(note, "1n", time); //attack, duration
     }
@@ -99,6 +102,7 @@ function initializeAudio() {
   // lfo = new Tone.LFO("0.2hz", 210, 230);
   // lfo.connect(osc.frequency);
 
+  //drawing the waveform
   wave = new Tone.Waveform();
   Tone.Master.connect(wave); ///take the osc and connected it to the waveform to see the waveform of that oscillator.
   Tone.Master.volume.value = masterVolume;
@@ -110,11 +114,11 @@ function initializeAudio() {
   // Tone.Master.volume.value = -30;
 
   // Tone.Master.volume.rampTo(-20, 2); //ramp from the current volume to the first value at the 2nd value's time.
-  Tone.Transport.start();
+  Tone.Transport.start(); /// timing for musical events
 }
 ///on window resize , update the canvas size
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(windowWidth, windowHeight); //responsive webpage
 }
 //
 // function loopStep(time) {
@@ -135,6 +139,7 @@ function windowResized() {
 //   prevNote = note;
 // }
 
+//draw loops through code continuously
 function draw() {
   background(0);
 
@@ -142,12 +147,14 @@ function draw() {
     //do audio
     drawWaveform(wave);
   } else {
+    //entry page, to click and activate sound
     fill(255, 0, 255);
     textAlign(CENTER, CENTER);
     text("CLICK TO START", width / 2, height / 2);
   }
 }
 
+//create the modulating wave form
 function drawWaveform(wave, w = width, h = height) {
   // osc.frequency.value = map(mouseX, 0, width, 110, 880); //connect the mouseX position to the frequency of the oscillator to change the freq.
   // osc2.frequency.value = map(mouseX, 0, width, 110, 880);

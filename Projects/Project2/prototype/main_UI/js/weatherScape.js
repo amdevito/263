@@ -1,15 +1,6 @@
-// E6: Code-Taker Plus
-///Generative soundscape prototype using JQUERY UI elements
-// --- completing this exercise by developing some UI for my in progress project
-///**IMPORTANT NOTE ONLY the basic JQUERY UI elements are submission for this weekly exercise, the larger project is in development for the prototype. The JQUERY elements will change for the final.
-// Brief:
-// 1. X add modal instructions dialogue box when the page loads. Explains to the user what the app is, what it does and how to interact with it.
-// --- here, also choose between dark canvas or white canvas.
-//2. X drag and drop modulating ripples on to the tone ripple canvas to add additional visual dynamics.
-//3. X Hidden dialog box with options to change the scape's tone replay delay - 3 sec, 6, sec, 9 , or 12. and the option to change the size of the ripples in the canvas - smaller, bigger or back to normal.
-//
-// - (NEXT - after this exercise) the moveable ripples effects that tone that you place them on - for this exercise the movable ripples are just to customize the visual effect.
-//
+//P2: Proposal and Prototype
+// Draft of potential elements and design of the Any Day Music Machnie (Weather Generating Soundscape Application)
+// SEE folder titled 'proposal' detailed description of this 2 part prototype and the future implimentations for the final project.
 // \*\*CITATION: This project was inspired by https://www.udemy.com/course/generative-music-box/ & http://www.wickedlysmart.com/projects/
 
 //
@@ -57,6 +48,7 @@ $(function () {
 window.onload = function () {
   //what gets passed to the loadBuffer method is the URL of the file containing the sound and the index of that sound in the list.
   //create new bufferLoader object via the BufferLoader Class - send 3 arguements -  audio context, which is the property of the Audio object /class , and array of the soundfiles, and callBack funtion to call once the sounds have been successfully loaded.
+  //for final, the buffer loader will be sent the synth object containing the parameters of the FM synth and the notes that will make up the melody lines of the composition.
   let bufferLoader = new BufferLoader(
     Audio.audioContext,
     [
@@ -92,7 +84,7 @@ window.onload = function () {
   }
 };
 
-//make the animated ripples at the top of the page DRAGGABLE
+//make the animated ripples at the top of the page DRAGGABLE// will add 'droppable' for the activation of the delay effect to the tone ripples for the final project.
 $(`#ripple-one`).draggable();
 $(`#ripple-two`).draggable();
 $(`#ripple-three`).draggable();
