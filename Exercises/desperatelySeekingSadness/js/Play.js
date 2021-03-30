@@ -7,7 +7,7 @@ class Play extends Phaser.Scene {
 
   create() {
     //create the avatar
-    this.avatar = this.physics.add.sprite(400, 300, `avatar`);
+    this.avatar = this.physics.add.sprite(400, 300, `plant`);
     //stop avatar from exiting screen
     this.avatar.setCollideWorldBounds(true);
 
@@ -16,17 +16,17 @@ class Play extends Phaser.Scene {
     let y = Math.random() * this.sys.canvas.height; //access height
 
     //place the thumbs down at those random x and y location
-    this.sadness = this.physics.add.sprite(x, y, `thumbs-down`);
+    this.sadness = this.physics.add.sprite(x, y, `water`);
 
     ///place multiple thumbs up on screen with physics attributes attached
     this.happiness = this.physics.add.group({
-      key: `thumbs-up`,
+      key: `sun`,
       quantity: 80,
-      bounceX: 0.5,
-      bounceY: 0.5,
+      bounceX: 2, //increased sun bouncing
+      bounceY: 2, //increased sun bouncing
       CollideWorldBounds: true,
-      dragX: 50,
-      dragY: 50,
+      dragX: 400, //increase drag
+      dragY: 400, // increase drag, make more difficult for plant to get to water
     });
     Phaser.Actions.RandomRectangle(
       this.happiness.getChildren(),
