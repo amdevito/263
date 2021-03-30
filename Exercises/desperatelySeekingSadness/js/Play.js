@@ -18,9 +18,10 @@ class Play extends Phaser.Scene {
     //place the thumbs down at those random x and y location
     this.water = this.physics.add.sprite(x, y, `water`);
 
-    ///place multiple thumbs up on screen with physics attributes attached
+    ///place multiple suna on screen with physics attributes attached
     this.sun = this.physics.add.group({
       key: `sun`,
+      ///play with physics options to improve the 'game feel'
       quantity: 30,
       bounceX: 2, //increased sun bouncing
       bounceY: 2, //increased sun bouncing
