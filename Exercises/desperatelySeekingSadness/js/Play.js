@@ -16,12 +16,12 @@ class Play extends Phaser.Scene {
     let y = Math.random() * this.sys.canvas.height; //access height
 
     //place the thumbs down at those random x and y location
-    this.sadness = this.physics.add.sprite(x, y, `water`);
+    this.water = this.physics.add.sprite(x, y, `water`);
 
     ///place multiple thumbs up on screen with physics attributes attached
-    this.happiness = this.physics.add.group({
+    this.sun = this.physics.add.group({
       key: `sun`,
-      quantity: 80,
+      quantity: 30,
       bounceX: 2, //increased sun bouncing
       bounceY: 2, //increased sun bouncing
       CollideWorldBounds: true,
@@ -29,33 +29,37 @@ class Play extends Phaser.Scene {
       dragY: 400, // increase drag, make more difficult for plant to get to water
     });
     Phaser.Actions.RandomRectangle(
-      this.happiness.getChildren(),
+      this.sun.getChildren(),
       this.physics.world.bounds
     );
     //check for the overlap of avatar and sprite
     this.physics.add.overlap(
       this.avatar, //check overlap with avatar
-      this.sadness, ///check overlap with thumbs-down (sadness)
-      this.getSad, //when overlap happens call getSad function, which resets the sprite
+      this.water, ///check overlap with water droplet
+      this.getWater, //when overlap happens call getWater function, which resets the sprite
       null, ///no other method needed once the function is called
-      this //telling it to use this scene when getSad is called
+      this //telling it to use this scene when getWater is called
     );
 
-    ///add collison physics between the avatar and the thumbs up sprite
-    this.physics.add.collider(this.avatar, this.happiness);
+    ///add collison physics between the avatar and the sun sprite
+    this.physics.add.collider(this.avatar, this.sun, this.getSun); //call getSun function to play the sizzle sound on collision between plant and sun
 
     //add physics collider on the group
-    this.physics.add.collider(this.happiness, this.happiness);
+    this.physics.add.collider(this.sun, this.sun);
 
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
-  //when the overlap happens between avatar and sadness, reset the sprite
-  getSad(avatar, sadness) {
+  getSun(avatar, happiness) {
+    playAudioSiz();
+  }
+
+  //when the overlap happens between avatar and water droplet, reset the sprite
+  getWater(avatar, water) {
     let x = Math.random() * this.sys.canvas.width;
     let y = Math.random() * this.sys.canvas.height;
-    this.sadness.setPosition(x, y);
-    playAudio();
+    this.water.setPosition(x, y);
+    playAudioDrop();
   }
 
   update() {

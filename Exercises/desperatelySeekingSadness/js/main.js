@@ -18,6 +18,8 @@ Brief:
 //fetch audio source set in HTML doc labeled 'droplet'
 let droplet = document.getElementById("droplet");
 
+let sizzle = document.getElementById("sizzle");
+
 let config = {
   type: Phaser.AUTO,
   width: 800,
@@ -31,6 +33,9 @@ let config = {
 let game = new Phaser.Game(config);
 
 //function to begin playing the water droplet audio sound effect
-function playAudio() {
+function playAudioDrop() {
   droplet.play();
+}
+function playAudioSiz() {
+  sizzle.play();
 }
