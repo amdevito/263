@@ -15,6 +15,9 @@ Brief:
 
 "use strict";
 
+//fetch audio source set in HTML doc labeled 'droplet'
+let droplet = document.getElementById("droplet");
+
 let config = {
   type: Phaser.AUTO,
   width: 800,
@@ -26,3 +29,8 @@ let config = {
 };
 
 let game = new Phaser.Game(config);
+
+//function to begin playing the water droplet audio sound effect
+function playAudio() {
+  droplet.play();
+}

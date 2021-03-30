@@ -55,6 +55,7 @@ class Play extends Phaser.Scene {
     let x = Math.random() * this.sys.canvas.width;
     let y = Math.random() * this.sys.canvas.height;
     this.sadness.setPosition(x, y);
+    playAudio();
   }
 
   update() {
