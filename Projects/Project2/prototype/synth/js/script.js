@@ -36,7 +36,7 @@ function setup() {
 
   let reverb = new Tone.Reverb({
     wet: 0.8, //mostly wet 80% with 20% dry(1 is fully windowHeight),
-    decay: 40, //length of the reverb tail
+    decay: 60, //length of the reverb tail
   });
 
   //add effect on to that mixer 'channel'
@@ -46,7 +46,7 @@ function setup() {
   reverb.toDestination(); // same as / short hand of "connect(Tone.Master)" - so like patching to the Master out fader channel.
 
   //fetch the scale from Tonal and set to the scale variable
-  scale = Tonal.Scale.get("c3 major").notes;
+  scale = Tonal.Scale.get("c3 minor").notes;
 }
 
 //create and set up audio after mouse pressed
@@ -70,7 +70,7 @@ function initializeAudio() {
     if (prevNote != note) {
       //(freq, noteDuration, time)< last value is how much time before the note plays 'pause'. The default = now
       //default BPM 120 - 1n = 1 beat, 4n = quarter note
-      synth.triggerAttackRelease(note, "1n", time); //attack, duration
+      synth.triggerAttackRelease(note, "0n", time); //attack, duration
     }
     prevNote = note;
   }, "2n");
