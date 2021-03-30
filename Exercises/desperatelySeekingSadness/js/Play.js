@@ -22,7 +22,7 @@ class Play extends Phaser.Scene {
     this.sun = this.physics.add.group({
       key: `sun`,
       ///play with physics options to improve the 'game feel'
-      quantity: 30,
+      quantity: 90,
       bounceX: 2, //increased sun bouncing
       bounceY: 2, //increased sun bouncing
       CollideWorldBounds: true,
@@ -51,6 +51,7 @@ class Play extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
+  ///when overlap happens between sun and avatar, play the audio sizzle
   getSun(avatar, happiness) {
     playAudioSiz();
   }
@@ -85,7 +86,7 @@ class Play extends Phaser.Scene {
     if (this.cursors.up.isDown) {
       this.physics.velocityFromRotation(
         this.avatar.rotation,
-        200,
+        250,
         this.avatar.body.acceleration
       );
     }
