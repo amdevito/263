@@ -12,6 +12,18 @@ body {
 
 .input {
   text-align: center;
+  margin: 10px 0;
+}
+
+input[type="text"] {
+  height: 30px;
+  width: 200px;
+  background: aqua;
+  font-family: "Nunito" sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  /* border: none; */
+  border-radius: 8px;
 }
 
 /* containers for the animating ripples that are draggable */
@@ -37,7 +49,7 @@ body {
   transform: translate(-50%, -50%);
 }
 .container4 {
-  position: fixed;
+  position: absolute;
   top: 10%;
   /* starting location for ripples */
   left: 77%;

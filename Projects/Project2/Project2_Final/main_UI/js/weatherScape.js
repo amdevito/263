@@ -1,9 +1,6 @@
-//P2: Proposal and Prototype
-// Draft of potential elements and design of the Any Day Music Machnie (Weather Generating Soundscape Application)
-// SEE folder titled 'proposal' detailed description of this 2 part prototype and the future implimentations for the final project.
-// \*\*CITATION: This project was inspired by https://www.udemy.com/course/generative-music-box/ & http://www.wickedlysmart.com/projects/
+//P2: Any Day Music Machine (weather driven generative soundscape)
 
-//
+// let button = document.querySlector("");
 
 //first dialog box on entry to application
 $(`#introduction-dialog`).dialog({
