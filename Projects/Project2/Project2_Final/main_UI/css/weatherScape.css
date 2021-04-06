@@ -13,6 +13,7 @@ body {
 .input {
   text-align: center;
   margin: 10px 0;
+  font-family: "American Typewriter";
 }
 
 input[type="text"] {
@@ -20,7 +21,7 @@ input[type="text"] {
   width: 200px;
   text-align: center;
   background: lightgrey;
-  font-family: "Times" sans-serif;
+  font-family: "American Typewriter";
   /* font-weight: bold; */
   font-size: 20px;
   /* border: none; */
@@ -40,6 +41,43 @@ input[type="text"] {
 
 .display {
   text-align: center;
+  font-size: 12px;
+}
+.name {
+  font-size: 20px;
+  font-weight: lighter;
+  font-family: "American Typewriter";
+}
+.description {
+  font-size: 20px;
+  font-weight: bold;
+  color: darkblue;
+  font-family: "American Typewriter";
+}
+.temperature {
+  font-size: 18px;
+  font-weight: normal;
+  color: purple;
+  font-family: "American Typewriter";
+}
+.wind_speed {
+  font-size: 18px;
+  font-weight: normal;
+  color: purple;
+  font-family: "American Typewriter";
+}
+.humidity {
+  font-size: 18px;
+  font-weight: normal;
+  color: purple;
+  font-family: "American Typewriter";
+}
+
+.clouds {
+  font-size: 18px;
+  font-weight: normal;
+  color: purple;
+  font-family: "American Typewriter";
 }
 
 /* containers for the animating ripples that are draggable */

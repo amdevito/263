@@ -6,6 +6,12 @@ let name = document.querySelector(".name");
 let description = document.querySelector(".description");
 let temperature = document.querySelector(".temperature");
 
+let windSpeed = document.querySelector(".wind_speed");
+
+let humidity = document.querySelector(".humidity");
+
+let clouds = document.querySelector(".clouds");
+
 // fetch(
 //   "http://api.openweathermap.org/data/2.5/forecast?q=" +
 //     inputValue.value +
@@ -19,7 +25,7 @@ button.addEventListener("click", function () {
   fetch(
     "http://api.openweathermap.org/data/2.5/weather?q=" +
       inputValue.value +
-      "&appid=332933c03ee033d1701669b418461a0f"
+      "&units=metric&appid=332933c03ee033d1701669b418461a0f"
   )
     .then((response) => response.json())
     // .then((data) => console.log(data))
@@ -29,9 +35,17 @@ button.addEventListener("click", function () {
       let temperatureValue = data["main"]["temp"];
       let descriptionValue = data["weather"][0]["description"];
 
+      let windSpeedValue = data["wind"]["speed"];
+      let humidityValue = data["main"]["humidity"];
+
+      let cloudDensityValue = data["clouds"]["all"];
+
       name.innerHTML = nameValue;
       temperature.innerHTML = temperatureValue;
       description.innerHTML = descriptionValue;
+      windSpeed.innerHTML = windSpeedValue;
+      humidity.innerHTML = humidityValue;
+      clouds.innerHTML = cloudDensityValue;
     });
   // .catch((err) => alert("Wrong city name!"));
 });
