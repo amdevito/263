@@ -1,6 +1,40 @@
 //P2: Any Day Music Machine (weather driven generative soundscape)
 
-// let button = document.querySlector("");
+let button = document.querySelector(".button");
+let inputValue = document.querySelector(".inputValue");
+let name = document.querySelector(".name");
+let description = document.querySelector(".description");
+let temperature = document.querySelector(".temperature");
+
+// fetch(
+//   "http://api.openweathermap.org/data/2.5/forecast?q=" +
+//     inputValue.value +
+//     "&appid=332933c03ee033d1701669b418461a0f"
+// )
+// .then(response => response.json())
+// .then(data => console.log(data))
+// .catch(err +. alter("Wrong city name!"))
+
+button.addEventListener("click", function () {
+  fetch(
+    "http://api.openweathermap.org/data/2.5/weather?q=" +
+      inputValue.value +
+      "&appid=332933c03ee033d1701669b418461a0f"
+  )
+    .then((response) => response.json())
+    // .then((data) => console.log(data))
+    .then((data) => {
+      console.log(data);
+      let nameValue = data["name"];
+      let temperatureValue = data["main"]["temp"];
+      let descriptionValue = data["weather"][0]["description"];
+
+      name.innerHTML = nameValue;
+      temperature.innerHTML = temperatureValue;
+      description.innerHTML = descriptionValue;
+    });
+  // .catch((err) => alert("Wrong city name!"));
+});
 
 //first dialog box on entry to application
 $(`#introduction-dialog`).dialog({
@@ -39,7 +73,7 @@ $(function () {
 });
 
 $(function () {
-  $("input").checkboxradio();
+  $("input1").checkboxradio();
 });
 
 window.onload = function () {

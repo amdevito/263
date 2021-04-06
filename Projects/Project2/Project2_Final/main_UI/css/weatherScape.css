@@ -18,12 +18,28 @@ body {
 input[type="text"] {
   height: 30px;
   width: 200px;
+  text-align: center;
+  background: lightgrey;
+  font-family: "Times" sans-serif;
+  /* font-weight: bold; */
+  font-size: 20px;
+  /* border: none; */
+  border-radius: 2px;
+  margin: 10px 0;
+}
+/* input[type="submit"] {
+  height: 30px;
+  width: 200px;
   background: aqua;
   font-family: "Nunito" sans-serif;
   font-weight: bold;
   font-size: 20px;
   /* border: none; */
-  border-radius: 8px;
+/* border-radius: 8px;
+} */
+
+.display {
+  text-align: center;
 }
 
 /* containers for the animating ripples that are draggable */
