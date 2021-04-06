@@ -10,6 +10,10 @@ body {
   background: black;
 }
 
+.input {
+  text-align: center;
+}
+
 /* containers for the animating ripples that are draggable */
 .container {
   position: absolute;
