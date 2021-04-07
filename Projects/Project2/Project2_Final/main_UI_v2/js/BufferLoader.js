@@ -2,15 +2,17 @@
 //constructor function that takes the audioContext as it's first arguement, an array of file names as the second and a callback as the third
 //load sounds when the app starts
 //used to create a new bufferloader object in weatherScape.js
-function BufferLoader(context, urlList, callback) {
-  this.context = context;
-  this.urlList = urlList;
-  this.onload = callback;
-  this.bufferList = new Array();
-  this.loadCount = 0;
+class BufferLoader {
+  constructor(context, urlList, callback) {
+    this.context = context;
+    this.urlList = urlList;
+    this.onload = callback;
+    this.bufferList = new Array();
+    this.loadCount = 0;
+  }
 }
 
-BufferLoader.prototype.loadBuffer = function (url, index) {
+this.loadBuffer = function (url, index) {
   // Load buffer asynchronously
   //using XMLHttpRequest to get the data from the file.- make object>set a callback (in the onload property)> and then call send() to kick off the request
   //
@@ -50,7 +52,7 @@ BufferLoader.prototype.loadBuffer = function (url, index) {
   request.send();
 };
 
-BufferLoader.prototype.load = function () {
+this.load = function () {
   for (let i = 0; i < this.urlList.length; ++i) {
     this.loadBuffer(this.urlList[i], i);
   }
