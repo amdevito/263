@@ -10,50 +10,50 @@ class BufferLoader {
     this.bufferList = new Array();
     this.loadCount = 0;
   }
-}
 
-BufferLoader.prototype.loadBuffer = function (url, index) {
-  // Load buffer asynchronously
-  //using XMLHttpRequest to get the data from the file.- make object>set a callback (in the onload property)> and then call send() to kick off the request
-  //
-  let request = new XMLHttpRequest(); ///IS THIS NOT NEEED? ASK WHAT THIS IS EXACTLY?***
-  request.open("GET", url, true);
-  request.responseType = "arraybuffer";
+  loadBuffer(url, index) {
+    // Load buffer asynchronously
+    //using XMLHttpRequest to get the data from the file.- make object>set a callback (in the onload property)> and then call send() to kick off the request
+    //
+    let request = new XMLHttpRequest(); ///IS THIS NOT NEEED? ASK WHAT THIS IS EXACTLY?***
+    request.open("GET", url, true);
+    request.responseType = "arraybuffer";
 
-  let loader = this;
+    let loader = this;
 
-  request.onload = function () {
-    // Asynchronously decode the audio file data in request.response
-    loader.context.decodeAudioData(
-      //decodes the binary data in the file into a sound the audioContext can use.
-      request.response,
-      function (buffer) {
-        if (!buffer) {
-          alert("error decoding file data: " + url);
-          return;
+    request.onload = function () {
+      // Asynchronously decode the audio file data in request.response
+      loader.context.decodeAudioData(
+        //decodes the binary data in the file into a sound the audioContext can use.
+        request.response,
+        function (buffer) {
+          if (!buffer) {
+            alert("error decoding file data: " + url);
+            return;
+          }
+          //passing the index along with the sound file so that we can use this to organize the sound files in the correct order
+          loader.bufferList[index] = buffer;
+          //keeping track of how many sounds are loaded with loadCount.
+          /// once this count is the same length of the original array of the sounds that we passed in, we know we've loaded all the sounds, and we can then call the callback function we stored in the onload property of the bufferloader object and passin the sully loaded array of sounds, Buffer List
+          if (++loader.loadCount == loader.urlList.length)
+            loader.onload(loader.bufferList); //called when finished laoding
+        },
+        function (error) {
+          console.error("decodeAudioData error", error);
         }
-        //passing the index along with the sound file so that we can use this to organize the sound files in the correct order
-        loader.bufferList[index] = buffer;
-        //keeping track of how many sounds are loaded with loadCount.
-        /// once this count is the same length of the original array of the sounds that we passed in, we know we've loaded all the sounds, and we can then call the callback function we stored in the onload property of the bufferloader object and passin the sully loaded array of sounds, Buffer List
-        if (++loader.loadCount == loader.urlList.length)
-          loader.onload(loader.bufferList); //called when finished laoding
-      },
-      function (error) {
-        console.error("decodeAudioData error", error);
-      }
-    );
-  };
+      );
+    };
 
-  request.onerror = function () {
-    alert("BufferLoader: XHR error");
-  };
+    request.onerror = function () {
+      alert("BufferLoader: XHR error");
+    };
 
-  request.send();
-};
-
-BufferLoader.prototype.load = function () {
-  for (let i = 0; i < this.urlList.length; ++i) {
-    this.loadBuffer(this.urlList[i], i);
+    request.send();
   }
-};
+
+  load() {
+    for (let i = 0; i < this.urlList.length; ++i) {
+      this.loadBuffer(this.urlList[i], i);
+    }
+  }
+}
