@@ -12,7 +12,7 @@ class BufferLoader {
   }
 }
 
-this.loadBuffer = function (url, index) {
+BufferLoader.prototype.loadBuffer = function (url, index) {
   // Load buffer asynchronously
   //using XMLHttpRequest to get the data from the file.- make object>set a callback (in the onload property)> and then call send() to kick off the request
   //
@@ -52,7 +52,7 @@ this.loadBuffer = function (url, index) {
   request.send();
 };
 
-this.load = function () {
+BufferLoader.prototype.load = function () {
   for (let i = 0; i < this.urlList.length; ++i) {
     this.loadBuffer(this.urlList[i], i);
   }
