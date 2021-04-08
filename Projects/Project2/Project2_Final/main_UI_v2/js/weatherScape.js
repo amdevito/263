@@ -12,6 +12,8 @@ let humidity = document.querySelector(".humidity");
 
 let clouds = document.querySelector(".clouds");
 
+let rain = document.querySelector(".rain");
+
 // fetch(
 //   "http://api.openweathermap.org/data/2.5/forecast?q=" +
 //     inputValue.value +
@@ -40,12 +42,15 @@ button.addEventListener("click", function () {
 
       let cloudDensityValue = data["clouds"]["all"];
 
+      let rainAmount = data["rain"]["3h"];
+
       name.innerHTML = nameValue;
       temperature.innerHTML = temperatureValue;
       description.innerHTML = descriptionValue;
       windSpeed.innerHTML = windSpeedValue;
       humidity.innerHTML = humidityValue;
       clouds.innerHTML = cloudDensityValue;
+      rain.innerHTML = rainAmount;
     });
   // .catch((err) => alert("Wrong city name!"));
 });
