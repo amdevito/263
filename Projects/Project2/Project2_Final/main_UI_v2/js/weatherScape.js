@@ -42,7 +42,14 @@ button.addEventListener("click", function () {
 
       let cloudDensityValue = data["clouds"]["all"];
 
-      let rainAmount = data["rain"]["3h"];
+      let rainAmount = 0;
+      if (data.rain) {
+        if (data["rain"]["3h"]) {
+          rainAmount = data["rain"]["3h"];
+        } else if (data["rain"]["1h"]) {
+          rainAmount = data["rain"]["1h"];
+        }
+      }
 
       name.innerHTML = nameValue;
       temperature.innerHTML = temperatureValue;

@@ -80,6 +80,13 @@ input[type="text"] {
   font-family: "American Typewriter";
 }
 
+.rain {
+  font-size: 18px;
+  font-weight: normal;
+  color: purple;
+  font-family: "American Typewriter";
+}
+
 /* containers for the animating ripples that are draggable */
 .container {
   position: absolute;
