@@ -1,8 +1,8 @@
 //P2: Any Day Music Machine (weather driven generative soundscape)
 
-let button = document.querySelector(".button");
+let $button = $(".button");
 let inputValue = document.querySelector(".inputValue");
-let name = document.querySelector(".name");
+let $name = $(".name");
 let description = document.querySelector(".description");
 let temperature = document.querySelector(".temperature");
 
@@ -23,7 +23,7 @@ let rain = document.querySelector(".rain");
 // .then(data => console.log(data))
 // .catch(err +. alter("Wrong city name!"))
 
-button.addEventListener("click", function () {
+$button.on("click", function () {
   fetch(
     "http://api.openweathermap.org/data/2.5/weather?q=" +
       inputValue.value +
