@@ -1,18 +1,27 @@
 //P2: Any Day Music Machine (weather driven generative soundscape)
 
 let $button = $(".button");
-let inputValue = document.querySelector(".inputValue");
+
+let $inputValue = $(".inputValue");
+// let inputValue = document.querySelector(".inputValue");
+let $description = $(".description");
+let $temperature = $(".temperature");
+let $windSpeed = $(".windSpeed");
+let $humidity = $(".humidity");
+let $clouds = $(".clouds");
+let $rain = $(".rain");
 let $name = $(".name");
-let description = document.querySelector(".description");
-let temperature = document.querySelector(".temperature");
 
-let windSpeed = document.querySelector(".wind_speed");
+// let description = document.querySelector(".description");
+// let temperature = document.querySelector(".temperature");
 
-let humidity = document.querySelector(".humidity");
+// let windSpeed = document.querySelector(".wind_speed");
 
-let clouds = document.querySelector(".clouds");
+// let humidity = document.querySelector(".humidity");
 
-let rain = document.querySelector(".rain");
+// let clouds = document.querySelector(".clouds");
+
+// let rain = document.querySelector(".rain");
 
 // fetch(
 //   "http://api.openweathermap.org/data/2.5/forecast?q=" +
@@ -69,12 +78,19 @@ function displayData(data) {
   console.log(data);
 
   $name.text(nameValue);
-  temperature.innerHTML = temperatureValue;
-  description.innerHTML = descriptionValue;
-  windSpeed.innerHTML = windSpeedValue;
-  humidity.innerHTML = humidityValue;
-  clouds.innerHTML = cloudDensityValue;
-  rain.innerHTML = rainAmount;
+  $temperature.text(temperatureValue);
+  $description.text(descriptionValue);
+  $windSpeed.text(windSpeedValue);
+  $humidity.text(humidityValue);
+  $clouds.text(cloudDensityValue);
+  $rain.text(rainAmount);
+  //
+  // temperature.innerHTML = temperatureValue;
+  // description.innerHTML = descriptionValue;
+  // windSpeed.innerHTML = windSpeedValue;
+  // humidity.innerHTML = humidityValue;
+  // clouds.innerHTML = cloudDensityValue;
+  // rain.innerHTML = rainAmount;
 }
 
 //first dialog box on entry to application
