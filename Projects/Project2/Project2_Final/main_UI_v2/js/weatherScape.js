@@ -51,7 +51,9 @@ $button.on("click", function () {
         }
       }
 
-      name.innerHTML = nameValue;
+      console.log("Hi");
+
+      $name.text(nameValue);
       temperature.innerHTML = temperatureValue;
       description.innerHTML = descriptionValue;
       windSpeed.innerHTML = windSpeedValue;
@@ -69,7 +71,9 @@ $(`#introduction-dialog`).dialog({
     "Make background white": function () {
       //for P2: change to - Modulate background by wind speed
       // $(`body`).css({ background: "white" });
-      $(`canvas`).css({ "background-color": "white" }); //change the css color element to white
+      $(`canvas`).css({
+        "background-color": "white",
+      }); //change the css color element to white
       $(this).dialog("close");
       ///need to add back ground modulating by oscillator value that is received and scaled from the user's location and weather information.
     },
