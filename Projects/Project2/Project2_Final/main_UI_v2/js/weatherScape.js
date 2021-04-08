@@ -23,46 +23,59 @@ let rain = document.querySelector(".rain");
 // .then(data => console.log(data))
 // .catch(err +. alter("Wrong city name!"))
 
-$button.on("click", function () {
+$(`#first-button`).on("click", function () {
   fetch(
     "http://api.openweathermap.org/data/2.5/weather?q=" +
-      inputValue.value +
+      $(`#first-input`).val() +
       "&units=metric&appid=332933c03ee033d1701669b418461a0f"
   )
     .then((response) => response.json())
     // .then((data) => console.log(data))
-    .then((data) => {
-      console.log(data);
-      let nameValue = data["name"];
-      let temperatureValue = data["main"]["temp"];
-      let descriptionValue = data["weather"][0]["description"];
-
-      let windSpeedValue = data["wind"]["speed"];
-      let humidityValue = data["main"]["humidity"];
-
-      let cloudDensityValue = data["clouds"]["all"];
-
-      let rainAmount = 0;
-      if (data.rain) {
-        if (data["rain"]["3h"]) {
-          rainAmount = data["rain"]["3h"];
-        } else if (data["rain"]["1h"]) {
-          rainAmount = data["rain"]["1h"];
-        }
-      }
-
-      console.log("Hi");
-
-      $name.text(nameValue);
-      temperature.innerHTML = temperatureValue;
-      description.innerHTML = descriptionValue;
-      windSpeed.innerHTML = windSpeedValue;
-      humidity.innerHTML = humidityValue;
-      clouds.innerHTML = cloudDensityValue;
-      rain.innerHTML = rainAmount;
-    });
+    .then(displayData);
   // .catch((err) => alert("Wrong city name!"));
 });
+
+$(`#second-button`).on("click", function () {
+  fetch(
+    "http://api.openweathermap.org/data/2.5/weather?q=" +
+      $(`#second-input`).val() +
+      "&units=metric&appid=332933c03ee033d1701669b418461a0f"
+  )
+    .then((response) => response.json())
+    // .then((data) => console.log(data))
+    .then(displayData);
+  // .catch((err) => alert("Wrong city name!"));
+});
+
+function displayData(data) {
+  let nameValue = data["name"];
+  let temperatureValue = data["main"]["temp"];
+  let descriptionValue = data["weather"][0]["description"];
+
+  let windSpeedValue = data["wind"]["speed"];
+  let humidityValue = data["main"]["humidity"];
+
+  let cloudDensityValue = data["clouds"]["all"];
+
+  let rainAmount = 0;
+  if (data.rain) {
+    if (data["rain"]["3h"]) {
+      rainAmount = data["rain"]["3h"];
+    } else if (data["rain"]["1h"]) {
+      rainAmount = data["rain"]["1h"];
+    }
+  }
+
+  console.log(data);
+
+  $name.text(nameValue);
+  temperature.innerHTML = temperatureValue;
+  description.innerHTML = descriptionValue;
+  windSpeed.innerHTML = windSpeedValue;
+  humidity.innerHTML = humidityValue;
+  clouds.innerHTML = cloudDensityValue;
+  rain.innerHTML = rainAmount;
+}
 
 //first dialog box on entry to application
 $(`#introduction-dialog`).dialog({
