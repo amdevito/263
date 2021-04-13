@@ -155,7 +155,54 @@ window.onload = function () {
     ],
     finishedLoading //the callback function
   );
-  bufferLoader.load(); //iterates through all the file names in the array, passes the file name w the index number of the name in the list, to the loadBuffer method which is responsible for loading the sounds as binary data, using XMLHTTpRequest
+  bufferLoader.load();
+  ///***1st: turn all synth notes waves into mp3s
+  ///*** 2nd: create audio buffers for each note
+  //*** then create arrays for each mode in the key of b flat (I am choosing the key of B flat to start, more can be added later):
+  // Ie for B flat Dorian: let dorianBB  = [bufferLoaderBb, bufferLoaderC, bufferLoaderDb, bufferLoaderEb, bufferLoaderF, bufferLoaderG, bufferLoaderAb];
+  //^bufferLoaders for each note will contain 2 octaves and 4 different synth sounds.
+  // *** 3rd: Create the arrays for each type of progression -
+  // ie: let progressionA = [1, 4, 5, 1];
+  // ie: let progressionB = [1, 5, 6, 4, 1];
+  // ie: let progressionC = [1, 5, 6, 3, 4, 1, 4, 5, 1]
+  // ie: let progressionD = [1, 6, 2, 5, 1]
+  // ***4th: assign one of the above progressions to the variable - chosenProgression
+  // ie.: let chosenProgression =  progressionA
+  //***5th:  ???
+  // let bufferLoader = new BufferLoader(
+  //   Audio.audioContext,
+  //   [
+  //     "sounds/Cmajor4_5/A4.mp3",
+  //     "sounds/Cmajor4_5/A5.mp3",
+  //     "sounds/Cmajor4_5/C4.mp3",
+  //     "sounds/Cmajor4_5/C5.mp3",
+  //     "sounds/Cmajor4_5/D4.mp3",
+  //     "sounds/Cmajor4_5/D5.mp3",
+  //     "sounds/Cmajor4_5/E4.mp3",
+  //     "sounds/Cmajor4_5/E5.mp3",
+  //     "sounds/Cmajor4_5/G4.mp3",
+  //     "sounds/Cmajor4_5/G5.mp3",
+  //   ],
+  //   finishedLoading //the callback function
+  // );
+  // bufferLoader.load();
+  // let bufferLoader = new BufferLoader(
+  //   Audio.audioContext,
+  //   [
+  //     "sounds/Cmajor4_5/A4.mp3",
+  //     "sounds/Cmajor4_5/A5.mp3",
+  //     "sounds/Cmajor4_5/C4.mp3",
+  //     "sounds/Cmajor4_5/C5.mp3",
+  //     "sounds/Cmajor4_5/D4.mp3",
+  //     "sounds/Cmajor4_5/D5.mp3",
+  //     "sounds/Cmajor4_5/E4.mp3",
+  //     "sounds/Cmajor4_5/E5.mp3",
+  //     "sounds/Cmajor4_5/G4.mp3",
+  //     "sounds/Cmajor4_5/G5.mp3",
+  //   ],
+  //   finishedLoading //the callback function
+  // );
+  // bufferLoader.load(); //iterates through all the file names in the array, passes the file name w the index number of the name in the list, to the loadBuffer method which is responsible for loading the sounds as binary data, using XMLHTTpRequest
 
   //once loadBuffer has successfully loaded the sounds, the callback function, 'finishedLoading' is called.
   ///set up the view, clickhandler for the canvas and start to the calls to updatedisplay to kick off the animation
