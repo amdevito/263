@@ -204,10 +204,12 @@ window.onload = function () {
   // );
   // bufferLoader.load(); //iterates through all the file names in the array, passes the file name w the index number of the name in the list, to the loadBuffer method which is responsible for loading the sounds as binary data, using XMLHTTpRequest
 
-  //once loadBuffer has successfully loaded the sounds, the callback function, 'finishedLoading' is called.
+  //once loadBuffer has successfully loaded the sounds, the callback function, 'finishedLoading' is called. -
   ///set up the view, clickhandler for the canvas and start to the calls to updatedisplay to kick off the animation
   function finishedLoading(bufferList) {
     Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
+    //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
+    /// create variables for each note
 
     let canvas = document.getElementById("canvas");
     //get a new view from the View.js file (the constructor that manages the canvas object)
