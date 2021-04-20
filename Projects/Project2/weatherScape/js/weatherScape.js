@@ -13,9 +13,6 @@ let $clouds = $(".clouds");
 let $rain = $(".rain");
 let $name = $(".name");
 
-//get general weather description (from main, as opposed to 'description' which is more detailed) to then connect with a mode
-let generalWeather = data["weather"][0]["main"];
-
 //the loader for each note - make note - ab - 'b' is 'flat, - cs - 's' is 'sharp' because # doesnt work.
 let aBufferList = undefined;
 let bbBufferList = undefined;
@@ -37,8 +34,12 @@ let numNotesToLoad = 12;
 ///time between each note -
 let intervalTiming = 1000;
 
-//made sure to land on these notes most often during the random playing notes stage
-let primaryNotes = [];
+//get general weather description (from main, as opposed to 'description' which is more detailed) to then connect with a mode
+let generalWeather = undefined;
+
+let bufferList = undefined;
+
+let note = undefined;
 //sequencer
 //load the modes
 let bbIonian = [
@@ -143,6 +144,7 @@ $(`#second-button`).on("click", function () {
     .then((response) => response.json())
     // .then((data) => console.log(data))
     .then(displayData);
+
   // .catch((err) => alert("Wrong city name!"));
 });
 
@@ -151,7 +153,7 @@ function displayData(data) {
   let temperatureValue = data["main"]["temp"];
   let descriptionValue = data["weather"][0]["description"];
 
-  // let generalWeather = data["weather"][0]["main"];
+  let generalWeather = data["weather"][0]["main"];
 
   let windSpeedValue = data["wind"]["speed"];
   let humidityValue = data["main"]["humidity"];
@@ -382,7 +384,7 @@ window.onload = function () {
   }
   loadedNote();
   //load c notes
-  let aBufferLoader = new BufferLoader(
+  let cBufferLoader = new BufferLoader(
     Audio.audioContext,
     [
       "sounds/synth/c/c.1-frozenPiano.mp3",
@@ -686,18 +688,20 @@ function loadedNote() {
     // Show the interface
   }
 }
+
 ///when you're ready to play
 // playNotes();
 
-function playRandomNoteFrom(bufferList) {
-  let note = Audio.context.createBufferSource();
-  note.buffer =
-    bufferList[Math.floor(bufferList.length * Math.random() * totalWeight)];
-  note.connect(Audio.context.destination);
-  note.start(0);
-}
+// function playRandomNoteFrom(bufferList) {
+//   let note = Audio.context.createBufferSource();
+//   note.buffer =
+//     bufferList[Math.floor(bufferList.length * Math.random() * totalWeight)];
+//   note.connect(Audio.context.destination);
+//   note.start(0);
+// }
 
 function playNotes() {
+  console.log("general weather: " + generalWeather);
   if (generalWeather === "clear sky") {
     let bufferList = bbLydian; //7 degrees, and those with key notes - 1, 4, 5
     let bbLydianWeight = [6, 1, 2, 7, 5, 3, 4]; //weight of each element above
@@ -708,7 +712,7 @@ function playNotes() {
     while (currentNote < bbLydian.length) {
       //step through each bbDorian[] element
       for (i = 0; i < bbLydianWeight[currentNote]; i++)
-        bbLydianWeighed[bbLydianWeighted.length] = bbLydian[currentNote];
+        bbLydianWeighed[bbLydianWeighed.length] = bbLydian[currentNote];
       currentNote++;
     }
   } else if (generalWeather === "few clouds") {
@@ -721,7 +725,7 @@ function playNotes() {
     while (currentNote < bbIonian.length) {
       //step through each bbDorian[] element
       for (i = 0; i < bbIonianWeight[currentNote]; i++)
-        bbIonianWeighed[bbIonianWeighted.length] = bbIonian[currentNote];
+        bbIonianWeighed[bbIonianWeighed.length] = bbIonian[currentNote];
       currentNote++;
     }
   } else if (generalWeather === "scattered clouds" || "broken clouds") {
@@ -734,7 +738,7 @@ function playNotes() {
     while (currentNote < bbMixolydian.length) {
       //step through each bbDorian[] element
       for (i = 0; i < bbMixolydianWeight[currentNote]; i++)
-        bbMixolydianWeighed[bbMixolydianWeighted.length] =
+        bbMixolydianWeighed[bbMixolydianWeighed.length] =
           bbMixolydian[currentNote];
       currentNote++;
     }
@@ -748,7 +752,7 @@ function playNotes() {
     while (currentNote < bbDorian.length) {
       //step through each bbDorian[] element
       for (i = 0; i < bbDorianWeight[currentNote]; i++)
-        bbDorianWeighed[bbDorianWeighted.length] = bbDorian[currentNote];
+        bbDorianWeighed[bbDorianWeighed.length] = bbDorian[currentNote];
       currentNote++;
     }
   } else if (generalWeather === "rain") {
@@ -761,7 +765,7 @@ function playNotes() {
     while (currentNote < bbAolian.length) {
       //step through each bbAolian[] element
       for (i = 0; i < bbAolianWeight[currentNote]; i++)
-        bbAolianWeighed[bbAolianWeighted.length] = bbAolian[currentNote];
+        bbAolianWeighed[bbAolianWeighed.length] = bbAolian[currentNote];
       currentNote++;
     }
   } else if (generalWeather === "rain") {
@@ -774,7 +778,7 @@ function playNotes() {
     while (currentNote < bbPhrygian.length) {
       //step through each bbPhrygian[] element
       for (i = 0; i < bbPhrygianWeight[currentNote]; i++)
-        bbPhrygianWeighed[bbPhrygianWeighted.length] = bbPhrygian[currentNote];
+        bbPhrygianWeighed[bbPhrygianWeighed.length] = bbPhrygian[currentNote];
       currentNote++;
     }
   } else if (generalWeather === "thunderstorm") {
@@ -787,11 +791,14 @@ function playNotes() {
     while (currentNote < bbLocrian.length) {
       //step through each bbLocrian[] element
       for (i = 0; i < bbLocrianWeight[currentNote]; i++)
-        bbLocrianWeighed[bbLocrianWeighted.length] = bbLocrian[currentNote];
+        bbLocrianWeighed[bbLocrianWeighed.length] = bbLocrian[currentNote];
       currentNote++;
     }
   }
 
+  // playRandomNoteFrom(bufferList);
+
+  setTimeout(playNotes, intervalTiming); //<timeing between each note
   //!!!then play notes from new weighed array by random selection
   // let randomNote = Math.floor(Math.random() * totalWeight);
 
@@ -846,17 +853,6 @@ function playNotes() {
   //
   //canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
   //
-
-  playRandomNoteFrom(bufferList);
-
-  setTimeout(playNotes, intervalTiming); //<timeing between each note
-}
-
-function playRandomNote(bufferList) {
-  let note = Audio.audioContext.createBufferSource();
-  note.buffer = bufferList[Math.floor(bufferList.length * Math.random())];
-  note.connect(Audio.context.destination);
-  note.start(0);
 }
 
 ///DONE***1st: turn all synth notes waves into mp3s
