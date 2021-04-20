@@ -36,7 +36,12 @@ class View {
       this.loopRate = 12000; /// 12 seconds
     });
   }
-
+  ///>>>>
+  ///>>>!!! THIS NEED TO BE TRIGGERED WHEN playNotes function at weatherScape.js plays a note, rather than on the click
+  ///>>>rather than take the position of the x click on canvas to pick the note, have the index of the note played from the array determine the position of the rings appearing on the canvas
+  ///
+  ///
+  ////
   //handle the click location on the canvas and pass to an array
   handleClick(event) {
     let view = this;
@@ -49,7 +54,7 @@ class View {
     let pos = view.clicks.push({ x: x, y: y, radius: 0 });
     Audio.play(x % 10); //play the audio file when the circle begins to animate (when the circle radius is 0)( this is the initial CLICK )
     //timer to reset the radius to a random number to create more variance in the ripples (rather than just to 0)
-
+    //!!>>could also vary the interval here by math random, but * a variable in the weather data.
     setInterval(function () {
       //anonymous function
       view.clicks[pos - 1].radius = Math.random() * 20;
