@@ -133,6 +133,7 @@ $(`#first-button`).on("click", function () {
     // .then((data) => console.log(data))
     .then(displayData);
   // .catch((err) => alert("Wrong city name!"));
+  console.log("hello");
 });
 
 $(`#second-button`).on("click", function () {
@@ -144,7 +145,6 @@ $(`#second-button`).on("click", function () {
     .then((response) => response.json())
     // .then((data) => console.log(data))
     .then(displayData);
-
   // .catch((err) => alert("Wrong city name!"));
 });
 
@@ -153,7 +153,7 @@ function displayData(data) {
   let temperatureValue = data["main"]["temp"];
   let descriptionValue = data["weather"][0]["description"];
 
-  let generalWeather = data["weather"][0]["main"];
+  generalWeather = data["weather"][0]["main"];
 
   let windSpeedValue = data["wind"]["speed"];
   let humidityValue = data["main"]["humidity"];
@@ -728,12 +728,17 @@ function playNotes() {
         bbIonianWeighed[bbIonianWeighed.length] = bbIonian[currentNote];
       currentNote++;
     }
-  } else if (generalWeather === "scattered clouds" || "broken clouds") {
+  } else if (
+    generalWeather === "scattered clouds" ||
+    "broken clouds" ||
+    "Clouds"
+  ) {
     let bufferList = bbMixolydian; //7 degrees, and those with key notes -  7, 1, 5, 3,
     let bbMixolydianWeight = [6, 1, 2, 4, 5, 3, 7]; //weight of each element above
     let totalWeight = eval(bbMixolydianWeight.join("+")); //get total weight (in this case, 10)
     let bbMixolydianWeighed = new Array(); //new array to hold "weighted" notes
     let currentNote = 0;
+    console.log(bufferList);
 
     while (currentNote < bbMixolydian.length) {
       //step through each bbDorian[] element
@@ -742,6 +747,7 @@ function playNotes() {
           bbMixolydian[currentNote];
       currentNote++;
     }
+    console.log(bbMixolydianWeighed);
   } else if (generalWeather === "shower rain" || "snow") {
     let bufferList = bbDorian; //7 degrees, and those with key notes - 1, 3, 7
     let bbDorianWeight = [7, 1, 6, 2, 4, 3, 5]; //weight of each element above
@@ -768,7 +774,7 @@ function playNotes() {
         bbAolianWeighed[bbAolianWeighed.length] = bbAolian[currentNote];
       currentNote++;
     }
-  } else if (generalWeather === "rain") {
+  } else if (generalWeather === "mist") {
     let bufferList = bbPhrygian; //7 degrees, and those with key notes -  1, 2, 3, 6, 7
     let bbPhrygianWeight = [7, 6, 5, 1, 2, 4, 3]; //weight of each element above
     let totalWeight = eval(bbPhrygianWeight.join("+")); //get total weight (in this case, 10)
