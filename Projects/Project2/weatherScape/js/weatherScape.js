@@ -5,12 +5,16 @@ let $button = $(".button");
 let $inputValue = $(".inputValue");
 // let inputValue = document.querySelector(".inputValue");
 let $description = $(".description");
+let $generalWeather = $(".main");
 let $temperature = $(".temperature");
 let $windSpeed = $(".windSpeed");
 let $humidity = $(".humidity");
 let $clouds = $(".clouds");
 let $rain = $(".rain");
 let $name = $(".name");
+
+//get general weather description (from main, as opposed to 'description' which is more detailed) to then connect with a mode
+let generalWeather = data["weather"][0]["main"];
 
 //the loader for each note - make note - ab - 'b' is 'flat, - cs - 's' is 'sharp' because # doesnt work.
 let aBufferList = undefined;
@@ -147,6 +151,8 @@ function displayData(data) {
   let temperatureValue = data["main"]["temp"];
   let descriptionValue = data["weather"][0]["description"];
 
+  // let generalWeather = data["weather"][0]["main"];
+
   let windSpeedValue = data["wind"]["speed"];
   let humidityValue = data["main"]["humidity"];
 
@@ -184,11 +190,13 @@ $(`#introduction-dialog`).dialog({
         "background-color": "white",
       }); //change the css color element to white
       $(this).dialog("close");
+      playNotes();
       ///need to add back ground modulating by oscillator value that is received and scaled from the user's location and weather information.
     },
     "Keep background dark": function () {
       $(this).dialog("close"); //don't do anything but close the dialog box
       //!!!call function to start playing composition here
+      playNotes();
     },
   },
 });
@@ -211,6 +219,7 @@ $(function () {
     $("#dialog").dialog("open");
   });
   ///add restart composition with new weather here?
+  playNotes();
 });
 
 $(function () {
@@ -678,46 +687,168 @@ function loadedNote() {
   }
 }
 ///when you're ready to play
-playNotes();
+// playNotes();
+
+function playRandomNoteFrom(bufferList) {
+  let note = Audio.context.createBufferSource();
+  note.buffer =
+    bufferList[Math.floor(bufferList.length * Math.random() * totalWeight)];
+  note.connect(Audio.context.destination);
+  note.start(0);
+}
 
 function playNotes() {
-  let modeIndex = progression[primaryNotes]; ///play key notes most often- primaryNotes array assigned when creating modes below
+  // let modeIndex = progression[primaryNotes]; ///play key notes most often- primaryNotes array assigned when creating modes below
+  //// notes are picked randomly but must land on these most often
+  //Bflat Ionian - bb c d eb f g a
+  //if ionion, key notes - I, VI, V, I
+  //bflat Dorian - bb c db eb f g ab
+  //key notes - i, iii, vii
+  //bflat Phyrgian - bb b db eb f gb ab
+  //key notes -  1, 2, 3, 6, 7
+  //b flat Lydian - bb c d e f g a
+  //key notes - i, iv, v
+  //b flat Mixolydian - bb c d eb f g ab
+  // key notes -  1, 5, 3, 7
+  // b flat Aeolian - bb c db eb f gb ab
+  // key notes - 1, 3, 6, 7, 5,
+  // b flat locrian - bb b db eb e gb ab
+  // key notes - 1, 5, 2, 3, 6, 7, 4
+  //
 
-  if (weatherDescription === scatteredClouds) {
-    let bufferList = bbDorian[primaryNotes];
-    let primaryNotes = [modeIndex, modeIndex, modeIndex, modeIndex];
+  if (generalWeather === "clear sky") {
+    let bufferList = bbLydian; //7 degrees, and those with key notes - 1, 4, 5
+    let bbLydianWeight = [6, 1, 2, 7, 5, 3, 4]; //weight of each element above
+    let totalWeight = eval(bbLydianWeight.join("+")); //get total weight (in this case, 10)
+    let bbLydianWeighed = new Array(); //new array to hold "weighted" notes
+    let currentNote = 0;
 
-    //THIS IS DONE FOR EACH NOTE PLAY back
-    //weightedNotes logic : {increasing the odds of certain notes in the playback}
-    let bbDorian = [
-      bbBufferList,
-      cBufferList,
-      dbBufferList,
-      ebBufferList,
-      fBufferList,
-      gBufferList,
-      abBufferList,
-    ];
-    let bbDorianWeight = [2, 3, 1, 4]; //weight of each element above
-    let totalweight = eval(bbDorianweight.join("+")); //get total weight (in this case, 10)
-    let weighedBbDorian = new Array(); //new array to hold "weighted" notes
+    while (currentNote < bbLydian.length) {
+      //step through each bbDorian[] element
+      for (i = 0; i < bbLydianWeight[currentNote]; i++)
+        bbLydianWeighed[bbLydianWeighted.length] = bbLydian[currentNote];
+      currentNote++;
+    }
+  } else if (generalWeather === "few clouds") {
+    let bufferList = bbIonian; //7 degrees, and those with key notes - major key so 1, 3, 5
+    let bbIonianWeight = [7, 1, 6, 2, 5, 3, 4]; //weight of each element above
+    let totalWeight = eval(bbIonianWeight.join("+")); //get total weight (in this case, 10)
+    let bbIonianWeighed = new Array(); //new array to hold "weighted" notes
+    let currentNote = 0;
+
+    while (currentNote < bbIonian.length) {
+      //step through each bbDorian[] element
+      for (i = 0; i < bbIonianWeight[currentNote]; i++)
+        bbIonianWeighed[bbIonianWeighted.length] = bbIonian[currentNote];
+      currentNote++;
+    }
+  } else if (generalWeather === "scattered clouds" || "broken clouds") {
+    let bufferList = bbMixolydian; //7 degrees, and those with key notes -  7, 1, 5, 3,
+    let bbMixolydianWeight = [6, 1, 2, 4, 5, 3, 7]; //weight of each element above
+    let totalWeight = eval(bbMixolydianWeight.join("+")); //get total weight (in this case, 10)
+    let bbMixolydianWeighed = new Array(); //new array to hold "weighted" notes
+    let currentNote = 0;
+
+    while (currentNote < bbMixolydian.length) {
+      //step through each bbDorian[] element
+      for (i = 0; i < bbMixolydianWeight[currentNote]; i++)
+        bbMixolydianWeighed[bbMixolydianWeighted.length] =
+          bbMixolydian[currentNote];
+      currentNote++;
+    }
+  } else if (generalWeather === "shower rain" || "snow") {
+    let bufferList = bbDorian; //7 degrees, and those with key notes - 1, 3, 7
+    let bbDorianWeight = [7, 1, 6, 2, 4, 3, 5]; //weight of each element above
+    let totalWeight = eval(bbDorianWeight.join("+")); //get total weight (in this case, 10)
+    let bbDorianWeighed = new Array(); //new array to hold "weighted" notes
     let currentNote = 0;
 
     while (currentNote < bbDorian.length) {
       //step through each bbDorian[] element
       for (i = 0; i < bbDorianWeight[currentNote]; i++)
-        weighedBbDorian[weighedBbDorian.length] = bbDorian[currentNote];
+        bbDorianWeighed[bbDorianWeighted.length] = bbDorian[currentNote];
+      currentNote++;
+    }
+  } else if (generalWeather === "rain") {
+    let bufferList = bbAolian; //7 degrees, and those with key notes - 3, 1, 6, 7, 5
+    let bbAolianWeight = [6, 1, 7, 2, 3, 5, 4]; //weight of each element above
+    let totalWeight = eval(bbAolianWeight.join("+")); //get total weight (in this case, 10)
+    let bbAolianWeighed = new Array(); //new array to hold "weighted" notes
+    let currentNote = 0;
+
+    while (currentNote < bbAolian.length) {
+      //step through each bbAolian[] element
+      for (i = 0; i < bbAolianWeight[currentNote]; i++)
+        bbAolianWeighed[bbAolianWeighted.length] = bbAolian[currentNote];
+      currentNote++;
+    }
+  } else if (generalWeather === "rain") {
+    let bufferList = bbPhrygian; //7 degrees, and those with key notes -  1, 2, 3, 6, 7
+    let bbPhrygianWeight = [7, 6, 5, 1, 2, 4, 3]; //weight of each element above
+    let totalWeight = eval(bbPhrygianWeight.join("+")); //get total weight (in this case, 10)
+    let bbPhrygianWeighed = new Array(); //new array to hold "weighted" notes
+    let currentNote = 0;
+
+    while (currentNote < bbPhrygian.length) {
+      //step through each bbPhrygian[] element
+      for (i = 0; i < bbPhrygianWeight[currentNote]; i++)
+        bbPhrygianWeighed[bbPhrygianWeighted.length] = bbPhrygian[currentNote];
+      currentNote++;
+    }
+  } else if (generalWeather === "thunderstorm") {
+    let bufferList = bbLocrian; //7 degrees, and those with key notes - 1, 5, 2, 3, 6, 7, 4
+    let bbLocrianWeight = [7, 5, 4, 1, 6, 3, 2]; //weight of each element above
+    let totalWeight = eval(bbLocrianWeight.join("+")); //get total weight (in this case, 10)
+    let bbLocrianWeighed = new Array(); //new array to hold "weighted" notes
+    let currentNote = 0;
+
+    while (currentNote < bbLocrian.length) {
+      //step through each bbLocrian[] element
+      for (i = 0; i < bbLocrianWeight[currentNote]; i++)
+        bbLocrianWeighed[bbLocrianWeighted.length] = bbLocrian[currentNote];
       currentNote++;
     }
   }
 
+  //!!!then play notes from new weighed array by random selection
+  // let randomNote = Math.floor(Math.random() * totalWeight);
+
+  // let primaryNotes = [modeIndex, modeIndex, modeIndex, modeIndex]; //going to be scale degree minus one
+
+  //THIS IS DONE FOR EACH NOTE PLAY back
+  //MODES and feelings -
+  // lydian - clear sky
+  //ionian - few clouds
+  // mixolydian - scattered clouds, broken clouds
+  // dorian - shower rain and snow
+  // aolian - rain
+  // phrygian - mist
+  // locrian - thunderstorm
+
+  ///POSSIBLE WEATHER DESCRIPTIONS - these might only be the 'main'
+  //set to variable: generalWeather
+  // clear sky
+  // few clouds
+  // scattered clouds
+  // broken clouds
+  // shower rain
+  // rain
+  // mist
+  //snow
+  // thunderstorm
+
+  ////
+
+  //weightedNotes logic : {increasing the odds of certain notes in the playback}
+
+  // http://www.javascriptkit.com/javatutors/weighrandom2.shtml
   /// once this has been done start playing the notes once the modal (the intro dialog box or the hidden one is closed)
   // DO THIS BUT IN RELATION TO WHAT IS CURRENTLY GOING ON///bind connects the update display via handleClick to view and not canvas
   //
   //canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
   //
 
-  playRandomNote(bufferList);
+  playRandomNoteFrom(bufferList);
 
   setTimeout(playNotes, intervalTiming); //<timeing between each note
 }
