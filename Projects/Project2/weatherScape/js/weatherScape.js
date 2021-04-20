@@ -101,7 +101,7 @@ let bbLocrian = [
   abBufferList,
 ];
 
-//// notes are pick randomly but must land on these most often
+//// notes are picked randomly but must land on these most often
 //Bflat Ionian - bb c d eb f g a
 //if ionion, key notes - I, VI, V, I
 //bflat Dorian - bb c db eb f g ab
@@ -117,14 +117,6 @@ let bbLocrian = [
 // b flat locrian - bb b db eb e gb ab
 // progression - idim, V, iv, ii, i
 //
-// fetch(
-//   "http://api.openweathermap.org/data/2.5/forecast?q=" +
-//     inputValue.value +
-//     "&appid=332933c03ee033d1701669b418461a0f"
-// )
-// .then(response => response.json())
-// .then(data => console.log(data))
-// .catch(err +. alter("Wrong city name!"))
 
 $(`#first-button`).on("click", function () {
   fetch(
@@ -179,12 +171,6 @@ function displayData(data) {
   $clouds.text(cloudDensityValue);
   $rain.text(rainAmount);
   //
-  // temperature.innerHTML = temperatureValue;
-  // description.innerHTML = descriptionValue;
-  // windSpeed.innerHTML = windSpeedValue;
-  // humidity.innerHTML = humidityValue;
-  // clouds.innerHTML = cloudDensityValue;
-  // rain.innerHTML = rainAmount;
 }
 
 //first dialog box on entry to application
@@ -202,6 +188,7 @@ $(`#introduction-dialog`).dialog({
     },
     "Keep background dark": function () {
       $(this).dialog("close"); //don't do anything but close the dialog box
+      //!!!call function to start playing composition here
     },
   },
 });
@@ -223,6 +210,7 @@ $(function () {
   $("#opener").on("click", function () {
     $("#dialog").dialog("open");
   });
+  ///add restart composition with new weather here?
 });
 
 $(function () {
@@ -624,7 +612,7 @@ window.onload = function () {
     gBufferLoaded //the callback function
   );
 
-  gBufferLoader.load();
+  gBufferLoader.load(); //iterates through all the file names in the array, passes the file name w the index number of the name in the list, to the loadBuffer method which is responsible for loading the sounds as binary data, using XMLHTTpRequest
 
   function gBufferLoaded(bufferList) {
     gBufferList = bufferList;
@@ -693,38 +681,35 @@ function loadedNote() {
 playNotes();
 
 function playNotes() {
-  // let modeIndex = progression[primaryNotes]; ///play key notes - primaryNotes array assigned when creating modes
-  //
-  // let bufferList = dorianA[modeIndex];
+  let modeIndex = progression[primaryNotes]; ///play key notes most often- primaryNotes array assigned when creating modes below
 
-  //!!!***start here: if (weatherDescription === scatteredClouds){
-  ///let bufferList = bbDorian[primaryNotes];
-  //let primaryNotes = [modeIndex, modeIndex, modeIndex, modeIndex]
-  //
-  //
-  //
-  //THIS IS DONE FOR EACH NOTE PLAY back
-  //weightedNotes logic : {increasing the odds of certain notes in the playback}
-  //let bbDorian=[
-  //   bbBufferList,
-  //   cBufferList,
-  //   dbBufferList,
-  //   ebBufferList,
-  //   fBufferList,
-  //   gBufferList,
-  //   abBufferList,
-  // ]
-  // let bbDorianWeight=[2, 3, 1, 4] //weight of each element above
-  // let totalweight=eval(bbDorianweight.join("+")) //get total weight (in this case, 10)
-  // let weighedBbDorian=new Array() //new array to hold "weighted" notes
-  // let currentNote=0
-  //
-  // while (currentNote<bbDorian.length){ //step through each bbDorian[] element
-  //     for (i=0; i<bbDorianWeight[currentNote]; i++)
-  //         weighedBbDorian[weighedBbDorian.length]=bbDorian[currentNote]
-  //     currentNote++
-  // }
-  // }
+  if (weatherDescription === scatteredClouds) {
+    let bufferList = bbDorian[primaryNotes];
+    let primaryNotes = [modeIndex, modeIndex, modeIndex, modeIndex];
+
+    //THIS IS DONE FOR EACH NOTE PLAY back
+    //weightedNotes logic : {increasing the odds of certain notes in the playback}
+    let bbDorian = [
+      bbBufferList,
+      cBufferList,
+      dbBufferList,
+      ebBufferList,
+      fBufferList,
+      gBufferList,
+      abBufferList,
+    ];
+    let bbDorianWeight = [2, 3, 1, 4]; //weight of each element above
+    let totalweight = eval(bbDorianweight.join("+")); //get total weight (in this case, 10)
+    let weighedBbDorian = new Array(); //new array to hold "weighted" notes
+    let currentNote = 0;
+
+    while (currentNote < bbDorian.length) {
+      //step through each bbDorian[] element
+      for (i = 0; i < bbDorianWeight[currentNote]; i++)
+        weighedBbDorian[weighedBbDorian.length] = bbDorian[currentNote];
+      currentNote++;
+    }
+  }
 
   /// once this has been done start playing the notes once the modal (the intro dialog box or the hidden one is closed)
   // DO THIS BUT IN RELATION TO WHAT IS CURRENTLY GOING ON///bind connects the update display via handleClick to view and not canvas
@@ -733,7 +718,7 @@ function playNotes() {
   //
 
   playRandomNote(bufferList);
-  // progressionIndex++;
+
   setTimeout(playNotes, intervalTiming); //<timeing between each note
 }
 
@@ -752,40 +737,6 @@ function playRandomNote(bufferList) {
 // *** 3rd: Create the arrays for the key notes to be hit in each MODE
 // ***4th:create function to choose notes and feed the primaryNotes array to hit on most often
 ///
-// let bufferLoader = new BufferLoader(
-//   Audio.audioContext,
-//   [
-//     "sounds/Cmajor4_5/A4.mp3",
-//     "sounds/Cmajor4_5/A5.mp3",
-//     "sounds/Cmajor4_5/C4.mp3",
-//     "sounds/Cmajor4_5/C5.mp3",
-//     "sounds/Cmajor4_5/D4.mp3",
-//     "sounds/Cmajor4_5/D5.mp3",
-//     "sounds/Cmajor4_5/E4.mp3",
-//     "sounds/Cmajor4_5/E5.mp3",
-//     "sounds/Cmajor4_5/G4.mp3",
-//     "sounds/Cmajor4_5/G5.mp3",
-//   ],
-//   finishedLoading //the callback function
-// );
-// bufferLoader.load();
-// let bufferLoader = new BufferLoader(
-//   Audio.audioContext,
-//   [
-//     "sounds/Cmajor4_5/A4.mp3",
-//     "sounds/Cmajor4_5/A5.mp3",
-//     "sounds/Cmajor4_5/C4.mp3",
-//     "sounds/Cmajor4_5/C5.mp3",
-//     "sounds/Cmajor4_5/D4.mp3",
-//     "sounds/Cmajor4_5/D5.mp3",
-//     "sounds/Cmajor4_5/E4.mp3",
-//     "sounds/Cmajor4_5/E5.mp3",
-//     "sounds/Cmajor4_5/G4.mp3",
-//     "sounds/Cmajor4_5/G5.mp3",
-//   ],
-//   finishedLoading //the callback function
-// );
-// bufferLoader.load(); //iterates through all the file names in the array, passes the file name w the index number of the name in the list, to the loadBuffer method which is responsible for loading the sounds as binary data, using XMLHTTpRequest
 
 //once loadBuffer has successfully loaded the sounds, the callback function, 'finishedLoading' is called. -
 ///set up the view, clickhandler for the canvas and start to the calls to updatedisplay to kick off the animation
