@@ -31,6 +31,7 @@ class BufferLoader {
             alert("error decoding file data: " + url);
             return;
           }
+          // console.log(buffer);
           //passing the index along with the sound file so that we can use this to organize the sound files in the correct order
           loader.bufferList[index] = buffer;
           //keeping track of how many sounds are loaded with loadCount.
@@ -55,5 +56,6 @@ class BufferLoader {
     for (let i = 0; i < this.urlList.length; ++i) {
       this.loadBuffer(this.urlList[i], i);
     }
+    console.log(this.bufferList);
   }
 }

@@ -42,69 +42,6 @@ let bufferList = undefined;
 let note = undefined;
 //sequencer
 //load the modes
-let bbIonian = [
-  bbBufferList,
-  cBufferList,
-  dBufferList,
-  ebBufferList,
-  fBufferList,
-  gBufferList,
-  aBufferList,
-];
-let bbDorian = [
-  bbBufferList,
-  cBufferList,
-  dbBufferList,
-  ebBufferList,
-  fBufferList,
-  gBufferList,
-  abBufferList,
-];
-let bbPhyrgian = [
-  bbBufferList,
-  bBufferList,
-  dbBufferList,
-  ebBufferList,
-  fBufferList,
-  gbBufferList,
-  abBufferList,
-];
-let bbLydian = [
-  bbBufferList,
-  cBufferList,
-  dBufferList,
-  eBufferList,
-  fBufferList,
-  gBufferList,
-  aBufferList,
-];
-let bbMixolydian = [
-  bbBufferList,
-  cBufferList,
-  dBufferList,
-  ebBufferList,
-  fBufferList,
-  gBufferList,
-  abBufferList,
-];
-let bbAeolian = [
-  bbBufferList,
-  cBufferList,
-  dbBufferList,
-  ebBufferList,
-  fBufferList,
-  gbBufferList,
-  abBufferList,
-];
-let bbLocrian = [
-  bbBufferList,
-  bBufferList,
-  dbBufferList,
-  ebBufferList,
-  eBufferList,
-  gbBufferList,
-  abBufferList,
-];
 
 //// notes are picked randomly but must land on these most often
 //Bflat Ionian - bb c d eb f g a
@@ -131,9 +68,9 @@ $(`#first-button`).on("click", function () {
   )
     .then((response) => response.json())
     // .then((data) => console.log(data))
-    .then(displayData);
+    .then(displayData)
+    .then(gatherNotes);
   // .catch((err) => alert("Wrong city name!"));
-  console.log("hello");
 });
 
 $(`#second-button`).on("click", function () {
@@ -192,13 +129,13 @@ $(`#introduction-dialog`).dialog({
         "background-color": "white",
       }); //change the css color element to white
       $(this).dialog("close");
-      playNotes();
+      // gatherNotes();
       ///need to add back ground modulating by oscillator value that is received and scaled from the user's location and weather information.
     },
     "Keep background dark": function () {
       $(this).dialog("close"); //don't do anything but close the dialog box
       //!!!call function to start playing composition here
-      playNotes();
+      // gatherNotes();
     },
   },
 });
@@ -221,7 +158,7 @@ $(function () {
     $("#dialog").dialog("open");
   });
   ///add restart composition with new weather here?
-  playNotes();
+  // gatherNotes();
 });
 
 $(function () {
@@ -234,7 +171,7 @@ window.onload = function () {
   //for final, the buffer loader will be sent the synth object containing the parameters of the FM synth and the notes that will make up the melody lines of the composition.
   //
   //load the A notes :
-  let aBufferLoader = new BufferLoader(
+  aBufferLoader = new BufferLoader(
     Audio.audioContext,
     [
       "sounds/synth/a/a.1-frozenPiano.mp3",
@@ -272,7 +209,7 @@ window.onload = function () {
   loadedNote();
 
   //load ab notes
-  let abBufferLoader = new BufferLoader(
+  abBufferLoader = new BufferLoader(
     Audio.audioContext,
     [
       "sounds/synth/ab/ab.1-frozenPiano.mp3",
@@ -296,7 +233,7 @@ window.onload = function () {
     Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
     //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
     /// create variables for each note
-
+    console.log(abBufferList);
     let canvas = document.getElementById("canvas");
     //get a new view from the View.js file (the constructor that manages the canvas object)
     let view = new View(canvas);
@@ -310,7 +247,7 @@ window.onload = function () {
   loadedNote();
 
   //load b notes
-  let bBufferLoader = new BufferLoader(
+  bBufferLoader = new BufferLoader(
     Audio.audioContext,
     [
       "sounds/synth/b/b.1-frozenPiano.mp3",
@@ -329,8 +266,8 @@ window.onload = function () {
 
   bBufferLoader.load();
 
-  function bBufferLoaded(bufferList) {
-    bBufferList = bufferList;
+  function bbBufferLoaded(bufferList) {
+    bbBufferList = bufferList;
     Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
     //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
     /// create variables for each note
@@ -347,7 +284,7 @@ window.onload = function () {
   }
   loadedNote();
   //load bb notes
-  let bbBufferLoader = new BufferLoader(
+  bbBufferLoader = new BufferLoader(
     Audio.audioContext,
     [
       "sounds/synth/bb/bb.1-frozenPiano.mp3",
@@ -361,7 +298,7 @@ window.onload = function () {
       "sounds/synth/bb/bb2.4-synclav.mp3",
       "sounds/synth/bb/bb2.mp3",
     ],
-    aBufferLoaded //the callback function
+    bbBufferLoaded //the callback function
   );
 
   bbBufferLoader.load();
@@ -384,7 +321,7 @@ window.onload = function () {
   }
   loadedNote();
   //load c notes
-  let cBufferLoader = new BufferLoader(
+  cBufferLoader = new BufferLoader(
     Audio.audioContext,
     [
       "sounds/synth/c/c.1-frozenPiano.mp3",
@@ -421,7 +358,7 @@ window.onload = function () {
   }
   loadedNote();
   //load d notes
-  let dBufferLoader = new BufferLoader(
+  dBufferLoader = new BufferLoader(
     Audio.audioContext,
     [
       "sounds/synth/d/d.1-frozenPiano.mp3",
@@ -437,11 +374,12 @@ window.onload = function () {
     ],
     dBufferLoaded //the callback function
   );
-
+  console.log(dBufferLoader);
   dBufferLoader.load();
 
   function dBufferLoaded(bufferList) {
     dBufferList = bufferList;
+
     Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
     //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
     /// create variables for each note
@@ -458,7 +396,7 @@ window.onload = function () {
   }
   loadedNote();
   //load db notes
-  let dbBufferLoader = new BufferLoader(
+  dbBufferLoader = new BufferLoader(
     Audio.audioContext,
     [
       "sounds/synth/db/db.1-frozenPiano.mp3",
@@ -495,7 +433,7 @@ window.onload = function () {
   }
   loadedNote();
   //load e notes
-  let eBufferLoader = new BufferLoader(
+  eBufferLoader = new BufferLoader(
     Audio.audioContext,
     [
       "sounds/synth/e/e.1-frozenPiano.mp3",
@@ -532,7 +470,7 @@ window.onload = function () {
   }
   loadedNote();
   //load eb notes
-  let ebBufferLoader = new BufferLoader(
+  ebBufferLoader = new BufferLoader(
     Audio.audioContext,
     [
       "sounds/synth/eb/eb.1-frozenPiano.mp3",
@@ -569,7 +507,7 @@ window.onload = function () {
   }
   loadedNote();
   //load f notes
-  let fBufferLoader = new BufferLoader(
+  fBufferLoader = new BufferLoader(
     Audio.audioContext,
     [
       "sounds/synth/f/f.1-frozenPiano.mp3",
@@ -606,7 +544,7 @@ window.onload = function () {
   }
   loadedNote();
   //load g notes
-  let gBufferLoader = new BufferLoader(
+  gBufferLoader = new BufferLoader(
     Audio.audioContext,
     [
       "sounds/synth/g/g.1-frozenPiano.mp3",
@@ -643,7 +581,7 @@ window.onload = function () {
   }
   loadedNote();
   //load gb notes
-  let gbBufferLoader = new BufferLoader(
+  gbBufferLoader = new BufferLoader(
     Audio.audioContext,
     [
       "sounds/synth/gb/gb.1-frozenPiano.mp3",
@@ -661,6 +599,7 @@ window.onload = function () {
   );
 
   gbBufferLoader.load();
+  console.log(gbBufferLoader);
 
   function gbBufferLoaded(bufferList) {
     gbBufferList = bufferList;
@@ -690,7 +629,7 @@ function loadedNote() {
 }
 
 ///when you're ready to play
-// playNotes();
+// gatherNotes();
 
 // function playRandomNoteFrom(bufferList) {
 //   let note = Audio.context.createBufferSource();
@@ -700,9 +639,18 @@ function loadedNote() {
 //   note.start(0);
 // }
 
-function playNotes() {
+function gatherNotes() {
   console.log("general weather: " + generalWeather);
-  if (generalWeather === "clear sky") {
+  if (generalWeather === "Clear") {
+    let bbLydian = [
+      bbBufferList,
+      cBufferList,
+      dBufferList,
+      eBufferList,
+      fBufferList,
+      gBufferList,
+      aBufferList,
+    ];
     let bufferList = bbLydian; //7 degrees, and those with key notes - 1, 4, 5
     let bbLydianWeight = [6, 1, 2, 7, 5, 3, 4]; //weight of each element above
     let totalWeight = eval(bbLydianWeight.join("+")); //get total weight (in this case, 10)
@@ -716,6 +664,15 @@ function playNotes() {
       currentNote++;
     }
   } else if (generalWeather === "few clouds") {
+    let bbIonian = [
+      bbBufferList,
+      cBufferList,
+      dBufferList,
+      ebBufferList,
+      fBufferList,
+      gBufferList,
+      aBufferList,
+    ];
     let bufferList = bbIonian; //7 degrees, and those with key notes - major key so 1, 3, 5
     let bbIonianWeight = [7, 1, 6, 2, 5, 3, 4]; //weight of each element above
     let totalWeight = eval(bbIonianWeight.join("+")); //get total weight (in this case, 10)
@@ -733,6 +690,15 @@ function playNotes() {
     "broken clouds" ||
     "Clouds"
   ) {
+    let bbMixolydian = [
+      bbBufferList,
+      cBufferList,
+      dBufferList,
+      ebBufferList,
+      fBufferList,
+      gBufferList,
+      abBufferList,
+    ];
     let bufferList = bbMixolydian; //7 degrees, and those with key notes -  7, 1, 5, 3,
     let bbMixolydianWeight = [6, 1, 2, 4, 5, 3, 7]; //weight of each element above
     let totalWeight = eval(bbMixolydianWeight.join("+")); //get total weight (in this case, 10)
@@ -749,6 +715,15 @@ function playNotes() {
     }
     console.log(bbMixolydianWeighed);
   } else if (generalWeather === "shower rain" || "snow") {
+    let bbDorian = [
+      bbBufferList,
+      cBufferList,
+      dbBufferList,
+      ebBufferList,
+      fBufferList,
+      gBufferList,
+      abBufferList,
+    ];
     let bufferList = bbDorian; //7 degrees, and those with key notes - 1, 3, 7
     let bbDorianWeight = [7, 1, 6, 2, 4, 3, 5]; //weight of each element above
     let totalWeight = eval(bbDorianWeight.join("+")); //get total weight (in this case, 10)
@@ -762,6 +737,15 @@ function playNotes() {
       currentNote++;
     }
   } else if (generalWeather === "rain") {
+    let bbAeolian = [
+      bbBufferList,
+      cBufferList,
+      dbBufferList,
+      ebBufferList,
+      fBufferList,
+      gbBufferList,
+      abBufferList,
+    ];
     let bufferList = bbAolian; //7 degrees, and those with key notes - 3, 1, 6, 7, 5
     let bbAolianWeight = [6, 1, 7, 2, 3, 5, 4]; //weight of each element above
     let totalWeight = eval(bbAolianWeight.join("+")); //get total weight (in this case, 10)
@@ -775,6 +759,15 @@ function playNotes() {
       currentNote++;
     }
   } else if (generalWeather === "mist") {
+    let bbPhyrgian = [
+      bbBufferList,
+      bBufferList,
+      dbBufferList,
+      ebBufferList,
+      fBufferList,
+      gbBufferList,
+      abBufferList,
+    ];
     let bufferList = bbPhrygian; //7 degrees, and those with key notes -  1, 2, 3, 6, 7
     let bbPhrygianWeight = [7, 6, 5, 1, 2, 4, 3]; //weight of each element above
     let totalWeight = eval(bbPhrygianWeight.join("+")); //get total weight (in this case, 10)
@@ -788,6 +781,15 @@ function playNotes() {
       currentNote++;
     }
   } else if (generalWeather === "thunderstorm") {
+    let bbLocrian = [
+      bbBufferList,
+      bBufferList,
+      dbBufferList,
+      ebBufferList,
+      eBufferList,
+      gbBufferList,
+      abBufferList,
+    ];
     let bufferList = bbLocrian; //7 degrees, and those with key notes - 1, 5, 2, 3, 6, 7, 4
     let bbLocrianWeight = [7, 5, 4, 1, 6, 3, 2]; //weight of each element above
     let totalWeight = eval(bbLocrianWeight.join("+")); //get total weight (in this case, 10)
@@ -804,7 +806,7 @@ function playNotes() {
 
   // playRandomNoteFrom(bufferList);
 
-  setTimeout(playNotes, intervalTiming); //<timeing between each note
+  setTimeout(gatherNotes, intervalTiming); //<timeing between each note
   //!!!then play notes from new weighed array by random selection
   // let randomNote = Math.floor(Math.random() * totalWeight);
 
