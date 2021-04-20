@@ -698,24 +698,6 @@ function playRandomNoteFrom(bufferList) {
 }
 
 function playNotes() {
-  // let modeIndex = progression[primaryNotes]; ///play key notes most often- primaryNotes array assigned when creating modes below
-  //// notes are picked randomly but must land on these most often
-  //Bflat Ionian - bb c d eb f g a
-  //if ionion, key notes - I, VI, V, I
-  //bflat Dorian - bb c db eb f g ab
-  //key notes - i, iii, vii
-  //bflat Phyrgian - bb b db eb f gb ab
-  //key notes -  1, 2, 3, 6, 7
-  //b flat Lydian - bb c d e f g a
-  //key notes - i, iv, v
-  //b flat Mixolydian - bb c d eb f g ab
-  // key notes -  1, 5, 3, 7
-  // b flat Aeolian - bb c db eb f gb ab
-  // key notes - 1, 3, 6, 7, 5,
-  // b flat locrian - bb b db eb e gb ab
-  // key notes - 1, 5, 2, 3, 6, 7, 4
-  //
-
   if (generalWeather === "clear sky") {
     let bufferList = bbLydian; //7 degrees, and those with key notes - 1, 4, 5
     let bbLydianWeight = [6, 1, 2, 7, 5, 3, 4]; //weight of each element above
@@ -838,6 +820,23 @@ function playNotes() {
   // thunderstorm
 
   ////
+  // let modeIndex = progression[primaryNotes]; ///play key notes most often- primaryNotes array assigned when creating modes below
+  //// notes are picked randomly but must land on these most often
+  //Bflat Ionian - bb c d eb f g a
+  //if ionion, key notes - I, VI, V, I
+  //bflat Dorian - bb c db eb f g ab
+  //key notes - i, iii, vii
+  //bflat Phyrgian - bb b db eb f gb ab
+  //key notes -  1, 2, 3, 6, 7
+  //b flat Lydian - bb c d e f g a
+  //key notes - i, iv, v
+  //b flat Mixolydian - bb c d eb f g ab
+  // key notes -  1, 5, 3, 7
+  // b flat Aeolian - bb c db eb f gb ab
+  // key notes - 1, 3, 6, 7, 5,
+  // b flat locrian - bb b db eb e gb ab
+  // key notes - 1, 5, 2, 3, 6, 7, 4
+  //
 
   //weightedNotes logic : {increasing the odds of certain notes in the playback}
 
