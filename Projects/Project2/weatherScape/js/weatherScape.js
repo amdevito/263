@@ -32,7 +32,7 @@ let abBufferList = undefined;
 let numNotesToLoad = 12;
 
 ///time between each note -
-let intervalTiming = 1000;
+let intervalTiming = 3000;
 
 //get general weather description (from main, as opposed to 'description' which is more detailed) to then connect with a mode
 let generalWeather = undefined;
@@ -638,7 +638,7 @@ function gatherNotes() {
       gBufferList,
       aBufferList,
     ];
-    let bufferList = bbLydian; //7 degrees, and those with key notes - 1, 4, 5
+    bufferList = bbLydian; //7 degrees, and those with key notes - 1, 4, 5
     let bbLydianWeight = [6, 1, 2, 7, 5, 3, 4]; //weight of each element above
     totalWeight = eval(bbLydianWeight.join("+")); //get total weight (in this case, 10)
     let bbLydianWeighed = new Array(); //new array to hold "weighted" notes
@@ -662,7 +662,7 @@ function gatherNotes() {
       gBufferList,
       aBufferList,
     ];
-    let bufferList = bbIonian; //7 degrees, and those with key notes - major key so 1, 3, 5
+    bufferList = bbIonian; //7 degrees, and those with key notes - major key so 1, 3, 5
     let bbIonianWeight = [7, 1, 6, 2, 5, 3, 4]; //weight of each element above
     totalWeight = eval(bbIonianWeight.join("+")); //get total weight (in this case, 10)
     let bbIonianWeighed = new Array(); //new array to hold "weighted" notes
@@ -686,7 +686,7 @@ function gatherNotes() {
       gBufferList,
       abBufferList,
     ];
-    let bufferList = bbMixolydian; //7 degrees, and those with key notes -  7, 1, 5, 3,
+    bufferList = bbMixolydian; //7 degrees, and those with key notes -  7, 1, 5, 3,
     let bbMixolydianWeight = [6, 1, 2, 4, 5, 3, 7]; //weight of each element above
     totalWeight = eval(bbMixolydianWeight.join("+")); //get total weight (in this case, 10)
     let bbMixolydianWeighed = new Array(); //new array to hold "weighted" notes
@@ -713,7 +713,7 @@ function gatherNotes() {
       gBufferList,
       abBufferList,
     ];
-    let bufferList = bbDorian; //7 degrees, and those with key notes - 1, 3, 7
+    bufferList = bbDorian; //7 degrees, and those with key notes - 1, 3, 7
     let bbDorianWeight = [7, 1, 6, 2, 4, 3, 5]; //weight of each element above
     totalWeight = eval(bbDorianWeight.join("+")); //get total weight (in this case, 10)
     let bbDorianWeighed = new Array(); //new array to hold "weighted" notes
@@ -740,7 +740,7 @@ function gatherNotes() {
       gbBufferList,
       abBufferList,
     ];
-    let bufferList = bbAolian; //7 degrees, and those with key notes - 3, 1, 6, 7, 5
+    bufferList = bbAolian; //7 degrees, and those with key notes - 3, 1, 6, 7, 5
     let bbAolianWeight = [6, 1, 7, 2, 3, 5, 4]; //weight of each element above
     totalWeight = eval(bbAolianWeight.join("+")); //get total weight (in this case, 10)
     let bbAolianWeighed = new Array(); //new array to hold "weighted" notes
@@ -766,7 +766,7 @@ function gatherNotes() {
       gbBufferList,
       abBufferList,
     ];
-    let bufferList = bbPhrygian; //7 degrees, and those with key notes -  1, 2, 3, 6, 7
+    bufferList = bbPhrygian; //7 degrees, and those with key notes -  1, 2, 3, 6, 7
     let bbPhrygianWeight = [7, 6, 5, 1, 2, 4, 3]; //weight of each element above
     totalWeight = eval(bbPhrygianWeight.join("+")); //get total weight (in this case, 10)
     let bbPhrygianWeighed = new Array(); //new array to hold "weighted" notes
@@ -801,7 +801,7 @@ function gatherNotes() {
       gbBufferList,
       abBufferList,
     ];
-    let bufferList = bbLocrian; //7 degrees, and those with key notes - 1, 5, 2, 3, 6, 7, 4
+    bufferList = bbLocrian; //7 degrees, and those with key notes - 1, 5, 2, 3, 6, 7, 4
     let bbLocrianWeight = [7, 5, 4, 1, 6, 3, 2]; //weight of each element above
     totalWeight = eval(bbLocrianWeight.join("+")); //get total weight (in this case, 10)
     let bbLocrianWeighed = new Array(); //new array to hold "weighted" notes
@@ -877,11 +877,7 @@ function gatherNotes() {
 }
 
 function playNotes(weighedScale) {
-  setInterval(singleNote, intervalTiming);
-  singleNote = Math.floor(Math.random() * totalWeight);
-
-  //play the indexed number (singleNote) of the weighedScale passed to this function
-  Audio.play(weighedScale[singleNote]);
+  playRandomNote(weighedScale);
 }
 ///DONE***1st: turn all synth notes waves into mp3s
 ///Done*** 2nd: create audio buffers for each note
@@ -891,7 +887,20 @@ function playNotes(weighedScale) {
 // *** 3rd: Create the arrays for the key notes to be hit in each MODE
 // ***4th:create function to choose notes and feed the primaryNotes array to hit on most often
 ///
-
+function playRandomNote(weighedScale) {
+  console.log("play random note");
+  let bufferList =
+    weighedScale[Math.floor(Math.random() * weighedScale.length)];
+  let note = Math.floor(Math.random() * bufferList.length);
+  Audio.init(bufferList);
+  //play the indexed number (singleNote) of the weighedScale passed to this function
+  Audio.play(note);
+  //intervaltimeing = random number to vary interval time
+  //vary volume
+  setTimeout(function () {
+    playRandomNote(weighedScale);
+  }, intervalTiming);
+}
 //once loadBuffer has successfully loaded the sounds, the callback function, 'finishedLoading' is called. -
 ///set up the view, clickhandler for the canvas and start to the calls to updatedisplay to kick off the animation
 // function finishedLoading(bufferList) {}
