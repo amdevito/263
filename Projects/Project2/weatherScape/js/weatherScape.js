@@ -652,7 +652,10 @@ function gatherNotes() {
     }
     //sent to playNotes, but there is renamed to weighedScale
     playNotes(bbLydianWeighed);
-  } else if (specificWeather === "light snow" || "Snow" || "few clouds") {
+  } else if (
+    specificWeather === "light snow" ||
+    specificWeather === "few clouds"
+  ) {
     let bbIonian = [
       bbBufferList,
       cBufferList,
@@ -676,7 +679,10 @@ function gatherNotes() {
     }
     //sent to playNotes, but there is renamed to weighedScale
     playNotes(bbIonianWeighed);
-  } else if (specificWeather === "scattered clouds" || "broken clouds") {
+  } else if (
+    specificWeather === "scattered clouds" ||
+    specificWeather === "broken clouds"
+  ) {
     let bbMixolydian = [
       bbBufferList,
       cBufferList,
@@ -703,7 +709,7 @@ function gatherNotes() {
     //sent to playNotes, but there is renamed to weighedScale
     playNotes(bbMixolydianWeighed);
     console.log(bbMixolydianWeighed);
-  } else if (generalWeather === "Drizzle") {
+  } else if (generalWeather === "Drizzle" || specificWeather === "Snow") {
     let bbDorian = [
       bbBufferList,
       cBufferList,
@@ -782,15 +788,15 @@ function gatherNotes() {
     playNotes(bbPhrygianWeighed);
   } else if (
     generalWeather === "Mist" ||
-    "Smoke" ||
-    "Haze" ||
-    "Dust" ||
-    "Fog" ||
-    "Sand" ||
-    "Dust" ||
-    "Ash" ||
-    "Squall" ||
-    "Tornado"
+    generalWeather === "Smoke" ||
+    generalWeather === "Haze" ||
+    generalWeather === "Dust" ||
+    generalWeather === "Fog" ||
+    generalWeather === "Sand" ||
+    generalWeather === "Dust" ||
+    generalWeather === "Ash" ||
+    generalWeather === "Squall" ||
+    generalWeather === "Tornado"
   ) {
     let bbLocrian = [
       bbBufferList,
@@ -895,8 +901,11 @@ function playRandomNote(weighedScale) {
   Audio.init(bufferList);
   //play the indexed number (singleNote) of the weighedScale passed to this function
   Audio.play(note);
-  //intervaltimeing = random number to vary interval time
-  //vary volume
+
+  intervalTiming = Math.floor(Math.random() * 5000); //vary the interval timing between 500 - 5000 millis
+
+  Audio.gainNode.gain.value = 0.3 + Math.random() * 0.7; //vary volume - set between 0.3 and 1
+
   setTimeout(function () {
     playRandomNote(weighedScale);
   }, intervalTiming);
