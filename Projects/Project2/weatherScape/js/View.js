@@ -11,30 +11,30 @@ class View {
     this.maxRadius = 100; //*** IF BIGGER IS CHOSEN ADD 20 FOR BIGGER, MINUS 20 FOR SMALLER.
 
     ///when clicking the first group of radio buttons, change the size of the ripples - bigger to 300, smaller to 50 and normal, back to 100
-    //event listener on the clicking action of the radio buttons.
-    $(`#radio-1`).on(`click`, () => {
-      this.maxRadius = 300; //big
-    });
-    $(`#radio-2`).on(`click`, () => {
-      this.maxRadius = 50; //small
-    });
-    $(`#radio-3`).on(`click`, () => {
-      this.maxRadius = 100; //back to normal
-    });
-
-    //when clicking the next round of radio buttons, change the replay delay time on the ripple and tone play back
-    $(`#radio-4`).on(`click`, () => {
-      this.loopRate = 3000; /// 3 seconds
-    });
-    $(`#radio-5`).on(`click`, () => {
-      this.loopRate = 6000; ///6 seconds
-    });
-    $(`#radio-6`).on(`click`, () => {
-      this.loopRate = 9000; /// 9 seconds
-    });
-    $(`#radio-7`).on(`click`, () => {
-      this.loopRate = 12000; /// 12 seconds
-    });
+    // //event listener on the clicking action of the radio buttons.
+    // $(`#radio-1`).on(`click`, () => {
+    //   this.maxRadius = 300; //big
+    // });
+    // $(`#radio-2`).on(`click`, () => {
+    //   this.maxRadius = 50; //small
+    // });
+    // $(`#radio-3`).on(`click`, () => {
+    //   this.maxRadius = 100; //back to normal
+    // });
+    //
+    // //when clicking the next round of radio buttons, change the replay delay time on the ripple and tone play back
+    // $(`#radio-4`).on(`click`, () => {
+    //   this.loopRate = 3000; /// 3 seconds
+    // });
+    // $(`#radio-5`).on(`click`, () => {
+    //   this.loopRate = 6000; ///6 seconds
+    // });
+    // $(`#radio-6`).on(`click`, () => {
+    //   this.loopRate = 9000; /// 9 seconds
+    // });
+    // $(`#radio-7`).on(`click`, () => {
+    //   this.loopRate = 12000; /// 12 seconds
+    // });
   }
   ///>>>>
   ///>>>!!! THIS NEED TO BE TRIGGERED WHEN playNotes function at weatherScape.js plays a note, rather than on the click
@@ -43,26 +43,35 @@ class View {
   ///
   ////
   //handle the click location on the canvas and pass to an array
-  handleClick(event) {
-    let view = this;
-    //coordinates of the mouse when clicking - make these coorinates determined by something else
-    let x = event.offsetX;
-    let y = event.offsetY;
+  // handleClick(event) {
+  //   let view = this;
+  //   //coordinates of the mouse when clicking - make these coorinates determined by something else
+  //   let x = event.offsetX;
+  //   let y = event.offsetY;
+  //
+  //   //push the mouse coordinate click location into an array - (event.offsetX, event.offsetY, radius (which is currently set at 0, because it will grow))
+  //   //pos is the variable storing the length of the array
+  //   let pos = view.clicks.push({ x: x, y: y, radius: 0 });
+  //   Audio.play(x % 10); //play the audio file when the circle begins to animate (when the circle radius is 0)( this is the initial CLICK )
+  //   //timer to reset the radius to a random number to create more variance in the ripples (rather than just to 0)
+  //   //!!>>could also vary the interval here by math random, but * a variable in the weather data.
+  //   setInterval(function () {
+  //     //anonymous function
+  //     view.clicks[pos - 1].radius = Math.random() * 20;
+  //     x += 1; // addind this makes the sounds that play back (the repeated trigger) vary at each repeat
+  //     Audio.play(x % 10); //get a number between 0 and 9, based on the x location of the circle - x % (modulus) 10: divide x by 10 and take the remainder - the width of the canvas is 1000, returning an number divisible by 10.
+  //     //the location of the x value determines which sounds is played CHANGE THIS TO SOMETHING MORE RESPONSIVE? X AND Y?  THE CHANGING WEATHER? SOMETHING IN THE WEATHER THAT CHANGES REGULARLY?
+  //   }, view.loopRate); //called every 10 sec.
+  // }
 
-    //push the mouse coordinate click location into an array - (event.offsetX, event.offsetY, radius (which is currently set at 0, because it will grow))
-    //pos is the variable storing the length of the array
-    let pos = view.clicks.push({ x: x, y: y, radius: 0 });
-    Audio.play(x % 10); //play the audio file when the circle begins to animate (when the circle radius is 0)( this is the initial CLICK )
-    //timer to reset the radius to a random number to create more variance in the ripples (rather than just to 0)
-    //!!>>could also vary the interval here by math random, but * a variable in the weather data.
-    setInterval(function () {
-      //anonymous function
-      view.clicks[pos - 1].radius = Math.random() * 20;
-      x += 1; // addind this makes the sounds that play back (the repeated trigger) vary at each repeat
-      Audio.play(x % 10); //get a number between 0 and 9, based on the x location of the circle - x % (modulus) 10: divide x by 10 and take the remainder - the width of the canvas is 1000, returning an number divisible by 10.
-      //the location of the x value determines which sounds is played CHANGE THIS TO SOMETHING MORE RESPONSIVE? X AND Y?  THE CHANGING WEATHER? SOMETHING IN THE WEATHER THAT CHANGES REGULARLY?
-    }, view.loopRate); //called every 10 sec.
+  addCircle(x, y, maxRadius) {
+    view.clicks.push({ x: x, y: y, radius: 0, maxRadius: maxRadius });
+    // setInterval(function () {
+    //   //anonymous function
+    //   view.clicks[pos - 1].radius = Math.random() * 20;
+    // }, view.loopRate); //called every 10 sec.
   }
+
   updateDisplay() {
     //setting to the view object
     let view = this;
@@ -80,7 +89,7 @@ class View {
     //for loop interating through the clicks array (collecting the number of clicks)
     for (let i = 0; i < view.clicks.length; i++) {
       let circle = view.clicks[i];
-      let circleMaxRadius = view.maxRadius * Math.random(); //i dont know if this is working the way i want it to
+      let circleMaxRadius = circle.maxRadius;
 
       //if the circle's radius is bigger than the max, stop drawing that circle and create a new one
       if (circle.radius > circleMaxRadius) continue;

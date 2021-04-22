@@ -7,7 +7,7 @@ let $inputValue = $(".inputValue");
 let $description = $(".description");
 let $generalWeather = $(".main");
 let $temperature = $(".temperature");
-let $windSpeed = $(".windSpeed");
+// let $windSpeed = $(".windSpeed");
 let $humidity = $(".humidity");
 let $clouds = $(".clouds");
 let $rain = $(".rain");
@@ -26,6 +26,8 @@ let fBufferList = undefined;
 let gbBufferList = undefined;
 let gBufferList = undefined;
 let abBufferList = undefined;
+
+let view = undefined; // Created when notes are loaded
 
 //track when all notes have been loaded
 //start at 12 and take one away at each note loaded function
@@ -66,7 +68,8 @@ $(`#second-button`).on("click", function () {
   )
     .then((response) => response.json())
     // .then((data) => console.log(data))
-    .then(displayData);
+    .then(displayData)
+    .then(gatherNotes);
   // .catch((err) => alert("Wrong city name!"));
 });
 
@@ -78,7 +81,7 @@ function displayData(data) {
   generalWeather = data["weather"][0]["main"];
   specificWeather = data["weather"][0]["description"];
 
-  let windSpeedValue = data["wind"]["speed"];
+  // let windSpeedValue = data["wind"]["speed"];
   let humidityValue = data["main"]["humidity"];
 
   let cloudDensityValue = data["clouds"]["all"];
@@ -97,7 +100,7 @@ function displayData(data) {
   $name.text(nameValue);
   $temperature.text(temperatureValue);
   $description.text(descriptionValue);
-  $windSpeed.text(windSpeedValue);
+  // $windSpeed.text(windSpeedValue);
   $humidity.text(humidityValue);
   $clouds.text(cloudDensityValue);
   $rain.text(rainAmount);
@@ -184,7 +187,7 @@ window.onload = function () {
 
     let canvas = document.getElementById("canvas");
     //get a new view from the View.js file (the constructor that manages the canvas object)
-    let view = new View(canvas);
+    view = new View(canvas);
 
     ///bind connects the update display via handleClick to view and not canvas
     // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
@@ -222,7 +225,7 @@ window.onload = function () {
     console.log(abBufferList);
     let canvas = document.getElementById("canvas");
     //get a new view from the View.js file (the constructor that manages the canvas object)
-    let view = new View(canvas);
+    view = new View(canvas);
 
     ///bind connects the update display via handleClick to view and not canvas
     // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
@@ -260,7 +263,7 @@ window.onload = function () {
 
     let canvas = document.getElementById("canvas");
     //get a new view from the View.js file (the constructor that manages the canvas object)
-    let view = new View(canvas);
+    view = new View(canvas);
 
     ///bind connects the update display via handleClick to view and not canvas
     // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
@@ -297,7 +300,7 @@ window.onload = function () {
 
     let canvas = document.getElementById("canvas");
     //get a new view from the View.js file (the constructor that manages the canvas object)
-    let view = new View(canvas);
+    view = new View(canvas);
 
     ///bind connects the update display via handleClick to view and not canvas
     // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
@@ -334,7 +337,7 @@ window.onload = function () {
 
     let canvas = document.getElementById("canvas");
     //get a new view from the View.js file (the constructor that manages the canvas object)
-    let view = new View(canvas);
+    view = new View(canvas);
 
     ///bind connects the update display via handleClick to view and not canvas
     // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
@@ -372,7 +375,7 @@ window.onload = function () {
 
     let canvas = document.getElementById("canvas");
     //get a new view from the View.js file (the constructor that manages the canvas object)
-    let view = new View(canvas);
+    view = new View(canvas);
 
     ///bind connects the update display via handleClick to view and not canvas
     // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
@@ -409,7 +412,7 @@ window.onload = function () {
 
     let canvas = document.getElementById("canvas");
     //get a new view from the View.js file (the constructor that manages the canvas object)
-    let view = new View(canvas);
+    view = new View(canvas);
 
     ///bind connects the update display via handleClick to view and not canvas
     // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
@@ -446,7 +449,7 @@ window.onload = function () {
 
     let canvas = document.getElementById("canvas");
     //get a new view from the View.js file (the constructor that manages the canvas object)
-    let view = new View(canvas);
+    view = new View(canvas);
 
     ///bind connects the update display via handleClick to view and not canvas
     // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
@@ -483,7 +486,7 @@ window.onload = function () {
 
     let canvas = document.getElementById("canvas");
     //get a new view from the View.js file (the constructor that manages the canvas object)
-    let view = new View(canvas);
+    view = new View(canvas);
 
     ///bind connects the update display via handleClick to view and not canvas
     // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
@@ -520,7 +523,7 @@ window.onload = function () {
 
     let canvas = document.getElementById("canvas");
     //get a new view from the View.js file (the constructor that manages the canvas object)
-    let view = new View(canvas);
+    view = new View(canvas);
 
     ///bind connects the update display via handleClick to view and not canvas
     // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
@@ -557,7 +560,7 @@ window.onload = function () {
 
     let canvas = document.getElementById("canvas");
     //get a new view from the View.js file (the constructor that manages the canvas object)
-    let view = new View(canvas);
+    view = new View(canvas);
 
     ///bind connects the update display via handleClick to view and not canvas
     // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
@@ -595,7 +598,7 @@ window.onload = function () {
 
     let canvas = document.getElementById("canvas");
     //get a new view from the View.js file (the constructor that manages the canvas object)
-    let view = new View(canvas);
+    view = new View(canvas);
 
     ///bind connects the update display via handleClick to view and not canvas
     // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
@@ -625,7 +628,31 @@ function loadedNote() {
 //   note.start(0);
 // }
 
+// let bbIonian = {
+//   notes: [
+//     bbBufferList,
+//     cBufferList,
+//     dBufferList,
+//     ebBufferList,
+//     fBufferList,
+//     gBufferList,
+//     aBufferList,
+//   ],
+//   weightings: [8, 3, 6, 0, 5, 1, 4]
+// };
+//
+// let weatherModes = {
+//   Clear: bbIonian,
+//   Drizzle: bbIonian
+// };
+
 function gatherNotes() {
+  // let mode = weatherModes[specificWeather];
+  // if (mode === undefined) {
+  //   mode = bbIonian;
+  // }
+  // playNotes(mode.notes, mode.weightings);
+
   console.log("general weather: " + generalWeather);
   console.log("specific weather: " + specificWeather);
   if (generalWeather === "Clear") {
@@ -638,21 +665,21 @@ function gatherNotes() {
       gBufferList,
       aBufferList,
     ];
-    bufferList = bbIonian; //7 degrees, and those with key notes - major key so 1, 3, 5
-    let bbIonianWeight = [8, 3, 6, 0, 5, 1, 4]; //weight of each element above
-    totalWeight = eval(bbIonianWeight.join("+")); //get total weight (in this case, 10)
-    let bbIonianWeighed = new Array(); //new array to hold "weighted" notes
-    let currentNote = 0;
-    console.log("ionian");
-    console.log(bufferList);
-    while (currentNote < bbIonian.length) {
-      //step through each bbDorian[] element
-      for (i = 0; i < bbIonianWeight[currentNote]; i++)
-        bbIonianWeighed[bbIonianWeighed.length] = bbIonian[currentNote];
-      currentNote++;
-    }
+    // bufferList = bbIonian; //7 degrees, and those with key notes - major key so 1, 3, 5
+    let bbIonianWeight = [8, 3, 7, 0, 6, 1, 1]; //weight of each element above
+    // totalWeight = eval(bbIonianWeight.join("+")); //get total weight (in this case, 10)
+    // let bbIonianWeighed = new Array(); //new array to hold "weighted" notes
+    // let currentNote = 0;
+    // console.log("ionian");
+    // console.log(bufferList);
+    // while (currentNote < bbIonian.length) {
+    //   //step through each bbDorian[] element
+    //   for (i = 0; i < bbIonianWeight[currentNote]; i++)
+    //     bbIonianWeighed[bbIonianWeighed.length] = bbIonian[currentNote];
+    //   currentNote++;
+    // }
     //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbIonianWeighed);
+    playNotes(bbIonian, bbIonianWeight);
   } else if (
     specificWeather === "scattered clouds" ||
     specificWeather === "broken clouds"
@@ -666,21 +693,21 @@ function gatherNotes() {
       gBufferList,
       aBufferList,
     ];
-    bufferList = bbLydian; //7 degrees, and those with key notes - 1, 4, 5
+    // bufferList = bbLydian; //7 degrees, and those with key notes - 1, 4, 5
     let bbLydianWeight = [7, 5, 6, 6, 5, 3, 0]; //weight of each element above
-    totalWeight = eval(bbLydianWeight.join("+")); //get total weight (in this case, 10)
-    let bbLydianWeighed = new Array(); //new array to hold "weighted" notes
-    let currentNote = 0;
-    console.log("lydian");
-    console.log(bufferList);
-    while (currentNote < bbLydian.length) {
-      //step through each bbDorian[] element
-      for (i = 0; i < bbLydianWeight[currentNote]; i++)
-        bbLydianWeighed[bbLydianWeighed.length] = bbLydian[currentNote];
-      currentNote++;
-    }
+    // totalWeight = eval(bbLydianWeight.join("+")); //get total weight (in this case, 10)
+    // let bbLydianWeighed = new Array(); //new array to hold "weighted" notes
+    // let currentNote = 0;
+    // console.log("lydian");
+    // console.log(bufferList);
+    // while (currentNote < bbLydian.length) {
+    //   //step through each bbDorian[] element
+    //   for (i = 0; i < bbLydianWeight[currentNote]; i++)
+    //     bbLydianWeighed[bbLydianWeighed.length] = bbLydian[currentNote];
+    //   currentNote++;
+    // }
     //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbLydianWeighed);
+    playNotes(bbLydian, bbLydianWeight);
   } else if (
     specificWeather === "light snow" ||
     specificWeather === "few clouds"
@@ -694,24 +721,23 @@ function gatherNotes() {
       gBufferList,
       abBufferList,
     ];
-    bufferList = bbMixolydian; //7 degrees, and those with key notes -  7, 1, 5, 3,
+    // bufferList = bbMixolydian; //7 degrees, and those with key notes -  7, 1, 5, 3,
     let bbMixolydianWeight = [7, 1, 2, 4, 5, 3, 6]; //weight of each element above
-    totalWeight = eval(bbMixolydianWeight.join("+")); //get total weight (in this case, 10)
-    let bbMixolydianWeighed = new Array(); //new array to hold "weighted" notes
-    let currentNote = 0;
-    console.log(bufferList);
-    console.log("mixolydian");
-
-    while (currentNote < bbMixolydian.length) {
-      //step through each bbDorian[] element
-      for (i = 0; i < bbMixolydianWeight[currentNote]; i++)
-        bbMixolydianWeighed[bbMixolydianWeighed.length] =
-          bbMixolydian[currentNote];
-      currentNote++;
-    }
+    // totalWeight = eval(bbMixolydianWeight.join("+")); //get total weight (in this case, 10)
+    // let bbMixolydianWeighed = new Array(); //new array to hold "weighted" notes
+    // let currentNote = 0;
+    // console.log(bufferList);
+    // console.log("mixolydian");
+    //
+    // while (currentNote < bbMixolydian.length) {
+    //   //step through each bbDorian[] element
+    //   for (i = 0; i < bbMixolydianWeight[currentNote]; i++)
+    //     bbMixolydianWeighed[bbMixolydianWeighed.length] =
+    //       bbMixolydian[currentNote];
+    //   currentNote++;
+    // }
     //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbMixolydianWeighed);
-    console.log(bbMixolydianWeighed);
+    playNotes(bbMixolydian, bbMixolydianWeight);
   } else if (generalWeather === "Drizzle" || specificWeather === "Snow") {
     let bbDorian = [
       bbBufferList,
@@ -722,21 +748,21 @@ function gatherNotes() {
       gBufferList,
       abBufferList,
     ];
-    bufferList = bbDorian; //7 degrees, and those with key notes - 1, 3, 7
+    // bufferList = bbDorian; //7 degrees, and those with key notes - 1, 3, 7
     let bbDorianWeight = [7, 1, 6, 0, 4, 3, 5]; //weight of each element above
-    totalWeight = eval(bbDorianWeight.join("+")); //get total weight (in this case, 10)
-    let bbDorianWeighed = new Array(); //new array to hold "weighted" notes
-    let currentNote = 0;
-    console.log(bufferList);
-    console.log("dorian");
-    while (currentNote < bbDorian.length) {
-      //step through each bbDorian[] element
-      for (i = 0; i < bbDorianWeight[currentNote]; i++)
-        bbDorianWeighed[bbDorianWeighed.length] = bbDorian[currentNote];
-      currentNote++;
-    }
+    // totalWeight = eval(bbDorianWeight.join("+")); //get total weight (in this case, 10)
+    // let bbDorianWeighed = new Array(); //new array to hold "weighted" notes
+    // let currentNote = 0;
+    // console.log(bufferList);
+    // console.log("dorian");
+    // while (currentNote < bbDorian.length) {
+    //   //step through each bbDorian[] element
+    //   for (i = 0; i < bbDorianWeight[currentNote]; i++)
+    //     bbDorianWeighed[bbDorianWeighed.length] = bbDorian[currentNote];
+    //   currentNote++;
+    // }
     //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbDorianWeighed);
+    playNotes(bbDorian, bbDorianWeight);
   } else if (
     generalWeather === "Rain" ||
     specificWeather === "overcast clouds"
@@ -750,22 +776,22 @@ function gatherNotes() {
       gbBufferList,
       abBufferList,
     ];
-    bufferList = bbAeolian; //7 degrees, and those with key notes - 3, 1, 6, 7, 5
+    // bufferList = bbAeolian; //7 degrees, and those with key notes - 3, 1, 6, 7, 5
     let bbAeolianWeight = [7, 1, 6, 2, 5, 0, 3]; //weight of each element above
-    totalWeight = eval(bbAeolianWeight.join("+")); //get total weight (in this case, 10)
-    let bbAeolianWeighed = new Array(); //new array to hold "weighted" notes
-    let currentNote = 0;
-    console.log(bufferList);
-    console.log(bbAeolianWeighed);
-    console.log("aeolian");
-    while (currentNote < bbAeolian.length) {
-      //step through each bbAolian[] element
-      for (i = 0; i < bbAeolianWeight[currentNote]; i++)
-        bbAeolianWeighed[bbAeolianWeighed.length] = bbAeolian[currentNote];
-      currentNote++;
-    }
+    // totalWeight = eval(bbAeolianWeight.join("+")); //get total weight (in this case, 10)
+    // let bbAeolianWeighed = new Array(); //new array to hold "weighted" notes
+    // let currentNote = 0;
+    // console.log(bufferList);
+    // console.log(bbAeolianWeighed);
+    // console.log("aeolian");
+    // while (currentNote < bbAeolian.length) {
+    //   //step through each bbAolian[] element
+    //   for (i = 0; i < bbAeolianWeight[currentNote]; i++)
+    //     bbAeolianWeighed[bbAeolianWeighed.length] = bbAeolian[currentNote];
+    //   currentNote++;
+    // }
     //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbAeolianWeighed);
+    playNotes(bbAeolian, bbAeolianWeight);
   } else if (
     generalWeather === "Mist" ||
     generalWeather === "Smoke" ||
@@ -787,21 +813,21 @@ function gatherNotes() {
       gbBufferList,
       abBufferList,
     ];
-    bufferList = bbPhrygian; //7 degrees, and those with key notes -  1, 2, 3, 6, 7
+    // bufferList = bbPhrygian; //7 degrees, and those with key notes -  1, 2, 3, 6, 7
     let bbPhrygianWeight = [7, 6, 5, 1, 3, 0, 5]; //weight of each element above
-    totalWeight = eval(bbPhrygianWeight.join("+")); //get total weight (in this case, 10)
-    let bbPhrygianWeighed = new Array(); //new array to hold "weighted" notes
-    let currentNote = 0;
-    console.log(bufferList);
-    console.log("phrygian");
-    while (currentNote < bbPhrygian.length) {
-      //step through each bbPhrygian[] element
-      for (i = 0; i < bbPhrygianWeight[currentNote]; i++)
-        bbPhrygianWeighed[bbPhrygianWeighed.length] = bbPhrygian[currentNote];
-      currentNote++;
-    }
+    // totalWeight = eval(bbPhrygianWeight.join("+")); //get total weight (in this case, 10)
+    // let bbPhrygianWeighed = new Array(); //new array to hold "weighted" notes
+    // let currentNote = 0;
+    // console.log(bufferList);
+    // console.log("phrygian");
+    // while (currentNote < bbPhrygian.length) {
+    //   //step through each bbPhrygian[] element
+    //   for (i = 0; i < bbPhrygianWeight[currentNote]; i++)
+    //     bbPhrygianWeighed[bbPhrygianWeighed.length] = bbPhrygian[currentNote];
+    //   currentNote++;
+    // }
     //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbPhrygianWeighed);
+    playNotes(bbPhrygian, bbPhrygianWeight);
   } else if (generalWeather === "Thunderstorm") {
     let bbLocrian = [
       bbBufferList,
@@ -812,21 +838,21 @@ function gatherNotes() {
       gbBufferList,
       abBufferList,
     ];
-    bufferList = bbLocrian; //7 degrees, and those with key notes - 1, 5, 2, 3, 6, 7, 4
+    // bufferLists = bbLocrian; //7 degrees, and those with key notes - 1, 5, 2, 3, 6, 7, 4
     let bbLocrianWeight = [7, 0, 5, 2, 6, 0, 3]; //weight of each element above
-    totalWeight = eval(bbLocrianWeight.join("+")); //get total weight (in this case, 10)
-    let bbLocrianWeighed = new Array(); //new array to hold "weighted" notes
-    let currentNote = 0;
-    console.log("locrian");
-    console.log(bufferList);
-    while (currentNote < bbLocrian.length) {
-      //step through each bbLocrian[] element
-      for (i = 0; i < bbLocrianWeight[currentNote]; i++)
-        bbLocrianWeighed[bbLocrianWeighed.length] = bbLocrian[currentNote];
-      currentNote++;
-    }
+    // totalWeight = eval(bbLocrianWeight.join("+")); //get total weight (in this case, 10)
+    // let bbLocrianWeighed = new Array(); //new array to hold "weighted" notes
+    // let currentNote = 0;
+    // console.log("locrian");
+    // console.log(bufferList);
+    // while (currentNote < bbLocrian.length) {
+    //   //step through each bbLocrian[] element
+    //   for (i = 0; i < bbLocrianWeight[currentNote]; i++)
+    //     bbLocrianWeighed[bbLocrianWeighed.length] = bbLocrian[currentNote];
+    //   currentNote++;
+    // }
     //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbLocrianWeighed);
+    playNotes(bbLocrian, bbLocrianWeight);
   }
 
   // playRandomNoteFrom(bufferList);
@@ -888,8 +914,8 @@ function gatherNotes() {
   //
 }
 
-function playNotes(weighedScale) {
-  playRandomNote(weighedScale);
+function playNotes(mode, weightings) {
+  playRandomNote(mode, weightings);
 }
 ///DONE***1st: turn all synth notes waves into mp3s
 ///Done*** 2nd: create audio buffers for each note
@@ -899,10 +925,16 @@ function playNotes(weighedScale) {
 // *** 3rd: Create the arrays for the key notes to be hit in each MODE
 // ***4th:create function to choose notes and feed the primaryNotes array to hit on most often
 ///
-function playRandomNote(weighedScale) {
-  console.log("play random note");
-  let bufferList =
-    weighedScale[Math.floor(Math.random() * weighedScale.length)];
+function playRandomNote(mode, weightings) {
+  let weightedIndexes = [];
+  for (let i = 0; i < weightings.length; i++) {
+    for (let j = 0; j < weightings[i]; j++) {
+      weightedIndexes.push(i);
+    }
+  }
+  let randomIndex =
+    weightedIndexes[Math.floor(Math.random() * weightedIndexes.length)];
+  let bufferList = mode[randomIndex];
   let note = Math.floor(Math.random() * bufferList.length);
   Audio.init(bufferList);
   //play the indexed number (singleNote) of the weighedScale passed to this function
@@ -910,11 +942,23 @@ function playRandomNote(weighedScale) {
 
   intervalTiming = Math.floor(Math.random() * 6000); //vary the interval timing between 400 - 4000 millis
 
-  Audio.gainNode.gain.value = 0.2 + Math.random() * 0.5; //vary volume - set between 0.2 and 0.6
+  Audio.gainNode.gain.value = 0.1 + Math.random() * 0.5; //vary volume - set between 0.2 and 0.6
+
+  let y = map(randomIndex, 0, 7, 100, view.canvas.height);
+  let x = Math.random() * view.canvas.width;
+  let maxRadius = map(Audio.gainNode.gain.value, 0, 1, 5, 300);
+
+  view.addCircle(x, y, maxRadius);
 
   setTimeout(function () {
-    playRandomNote(weighedScale);
+    playRandomNote(mode, weightings);
   }, intervalTiming);
+}
+
+function map(value, fromMin, fromMax, toMin, toMax) {
+  let result =
+    ((value - fromMin) / (fromMax - fromMin)) * (toMax - toMin) + toMin;
+  return result;
 }
 //once loadBuffer has successfully loaded the sounds, the callback function, 'finishedLoading' is called. -
 ///set up the view, clickhandler for the canvas and start to the calls to updatedisplay to kick off the animation

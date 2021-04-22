@@ -40,10 +40,20 @@
   <body>
     <div id="introduction-dialog" title="Your Generative WeatherScape">
       <p>
-        Click on the canvas to activate a tone that will then regeneratively
-        continue playing. Click and drag the ripples onto the tone circles to
-        silence that sound. Customize further by clicking the ¯\_(ツ)_/¯ button.
-        Change the background colour below.
+        Choose a city anywhere in the world and press 'SUBMIT'. The AnyDay Music
+        Machine will compose a generative synth composition based on the current
+        weather in that location. The sound piece will vary in tonality,
+        matching the weather to the tonal colour - light and happy (clear skies
+        or some clouds) to sad (rain), to dark (heavy overcast, thunderstorm)
+        and evil (fog, mist), using
+        <a
+          href="http://blog.dubspot.com/music-theory-modes/#:~:text=A%20Mode%20is%20a%20type,be%20in%20the%20Ionian%20Mode."
+          target="_blank"
+          >MODES</a
+        >. Explore the weather and thus different soundscapes in different
+        cities around the world. Close this dialog using the [x] and access this
+        menu again by clicking the ¯\_(ツ)_/¯ button. The animated rippling
+        title is movable for your convenience.
       </p>
 
       <div class="input">
@@ -62,8 +72,8 @@
         <p class="description"></p>
         <p>Temperature (in Celcuis):</p>
         <p class="temperature"></p>
-        <p>Wind Speed (metres/sec):</p>
-        <p class="wind_speed"></p>
+        <!-- <p>Wind Speed (metres/sec):</p>
+        <p class="wind_speed"></p> -->
         <p>Humidity %:</p>
         <p class="humidity"></p>
         <p>Cloudiness %:</p>
@@ -78,14 +88,25 @@
     <!-- hidden dialog box to change the customization during the soundscape playback -->
     <div id="dialog" title="Customize Your Scape">
       <p>
-        Customize further. Change the size of the tone ripples and change the
-        timing of the note replay to longer or shorter. This window can be
-        moved, resized and closed with the &apos;x&apos; icon.
+        Choose a city anywhere in the world and press 'SUBMIT'. The AnyDay Music
+        Machine will compose a generative synth composition based on the current
+        weather in that location. The sound piece will vary in tonality,
+        matching the weather to the tonal colour - light and happy (clear skies
+        or some clouds) to sad (rain), to dark (heavy overcast, thunderstorm)
+        and evil (fog, mist), using
+        <a
+          href="http://blog.dubspot.com/music-theory-modes/#:~:text=A%20Mode%20is%20a%20type,be%20in%20the%20Ionian%20Mode."
+          target="_blank"
+          >MODES</a
+        >. Explore the weather and thus different soundscapes in different
+        cities around the world. Access this menu again by clicking the
+        ¯\_(ツ)_/¯ button. The animated rippling title is movable for your
+        convenience.
       </p>
 
       <!-- selectable radio items -->
       <div class="widget">
-        <h2>Customize Visuals:</h2>
+        <!-- <h2>Customize Visuals:</h2>
         <fieldset>
           <legend>Ripple Size:</legend>
           <label for="radio-1">Bigger</label>
@@ -106,7 +127,7 @@
           <input type="radio" name="radio-2" id="radio-6" />
           <label for="radio-7">12 seconds</label>
           <input type="radio" name="radio-2" id="radio-7" />
-        </fieldset>
+        </fieldset> -->
       </div>
       <!-- not working for some reason (below) -->
       <div class="input">
@@ -125,8 +146,8 @@
         <p class="description"></p>
         <p>Temperature (in Celcius):</p>
         <p class="temperature"></p>
-        <p>Wind Speed:</p>
-        <p class="wind_speed"></p>
+        <!-- <p>Wind Speed:</p>
+        <p class="wind_speed"></p> -->
         <p>Humidity %:</p>
         <p class="humidity"></p>
         <p>Cloudiness %:</p>
@@ -142,37 +163,14 @@
 
     <!-- the movable animated ripples - each circle contained in their seperate containers, delayed in css to create this ripple effect -->
     <div class="container" id="ripple-one">
-      <span class="ripple r1"></span>
-      <span class="ripple r2"></span>
-      <span class="ripple r3"></span>
-      <span class="ripple r4"></span>
-      <span class="ripple r5"></span>
-      <span class="ripple r6"></span>
+      <span class="ripple r1">AnyDay Music Machine</span>
+      <span class="ripple r2">AnyDay Music Machine</span>
+      <span class="ripple r3">AnyDay Music Machine</span>
+      <span class="ripple r4">AnyDay Music Machine</span>
+      <span class="ripple r5">AnyDay Music Machine</span>
+      <span class="ripple r6">AnyDay Music Machine</span>
     </div>
-    <div class="container2" id="ripple-two">
-      <span class="ripple2 r1"></span>
-      <span class="ripple2 r2"></span>
-      <span class="ripple2 r3"></span>
-      <span class="ripple2 r4"></span>
-      <span class="ripple2 r5"></span>
-      <span class="ripple2 r6"></span>
-    </div>
-    <div class="container3" id="ripple-three">
-      <span class="ripple2 r1"></span>
-      <span class="ripple2 r2"></span>
-      <span class="ripple2 r3"></span>
-      <span class="ripple2 r4"></span>
-      <span class="ripple2 r5"></span>
-      <span class="ripple2 r6"></span>
-    </div>
-    <div class="container4" id="ripple-four">
-      <span class="ripple r1"></span>
-      <span class="ripple r2"></span>
-      <span class="ripple r3"></span>
-      <span class="ripple r4"></span>
-      <span class="ripple r5"></span>
-      <span class="ripple r6"></span>
-    </div>
+
     <!-- project scripts -->
     <canvas id="canvas" width="1000" height="600"></canvas>
     <script src="js/BufferLoader.js"></script>
