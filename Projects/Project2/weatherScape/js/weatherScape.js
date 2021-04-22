@@ -746,22 +746,22 @@ function gatherNotes() {
       gbBufferList,
       abBufferList,
     ];
-    bufferList = bbAolian; //7 degrees, and those with key notes - 3, 1, 6, 7, 5
-    let bbAolianWeight = [6, 1, 7, 2, 3, 5, 4]; //weight of each element above
-    totalWeight = eval(bbAolianWeight.join("+")); //get total weight (in this case, 10)
-    let bbAolianWeighed = new Array(); //new array to hold "weighted" notes
+    bufferList = bbAeolian; //7 degrees, and those with key notes - 3, 1, 6, 7, 5
+    let bbAeolianWeight = [6, 1, 7, 2, 3, 5, 4]; //weight of each element above
+    totalWeight = eval(bbAeolianWeight.join("+")); //get total weight (in this case, 10)
+    let bbAeolianWeighed = new Array(); //new array to hold "weighted" notes
     let currentNote = 0;
     console.log(bufferList);
-    console.log(bbAolianWeighed);
+    console.log(bbAeolianWeighed);
     console.log("aeolian");
-    while (currentNote < bbAolian.length) {
+    while (currentNote < bbAeolian.length) {
       //step through each bbAolian[] element
-      for (i = 0; i < bbAolianWeight[currentNote]; i++)
-        bbAolianWeighed[bbAolianWeighed.length] = bbAolian[currentNote];
+      for (i = 0; i < bbAeolianWeight[currentNote]; i++)
+        bbAeolianWeighed[bbAeolianWeighed.length] = bbAeolian[currentNote];
       currentNote++;
     }
     //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbAolianWeighed);
+    playNotes(bbAeolianWeighed);
   } else if (generalWeather === "Thunderstorm") {
     let bbPhyrgian = [
       bbBufferList,
