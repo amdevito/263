@@ -163,12 +163,12 @@ window.onload = function () {
       "sounds/synth/a/a.1-frozenPiano.mp3",
       "sounds/synth/a/a.2-mellow.mp3",
       "sounds/synth/a/a.3-synthi.mp3",
-      "sounds/synth/a/a.4-synclav.mp3",
+      // "sounds/synth/a/a.4-synclav.mp3",
       "sounds/synth/a/a.mp3",
       "sounds/synth/a/a2.1-frozenPiano.mp3",
       "sounds/synth/a/a2.2-mellow.mp3",
       "sounds/synth/a/a2.3-synthi.mp3",
-      "sounds/synth/a/a2.4-synclav.mp3",
+      // "sounds/synth/a/a2.4-synclav.mp3",
       "sounds/synth/a/a2.mp3",
     ],
     aBufferLoaded //the callback function
@@ -201,12 +201,12 @@ window.onload = function () {
       "sounds/synth/ab/ab.1-frozenPiano.mp3",
       "sounds/synth/ab/ab.2-mellow.mp3",
       "sounds/synth/ab/ab.3-synthi.mp3",
-      "sounds/synth/ab/ab.4-synclav.mp3",
+      // "sounds/synth/ab/ab.4-synclav.mp3",
       "sounds/synth/ab/ab.mp3",
       "sounds/synth/ab/ab2.1-frozenPiano.mp3",
       "sounds/synth/ab/ab2.2-mellow.mp3",
       "sounds/synth/ab/ab2.3-synthi.mp3",
-      "sounds/synth/ab/ab2.4-synclav.mp3",
+      // "sounds/synth/ab/ab2.4-synclav.mp3",
       "sounds/synth/ab/ab2.mp3",
     ],
     abBufferLoaded //the callback function
@@ -239,21 +239,21 @@ window.onload = function () {
       "sounds/synth/b/b.1-frozenPiano.mp3",
       "sounds/synth/b/b.2-mellow.mp3",
       "sounds/synth/b/b.3-synthi.mp3",
-      "sounds/synth/b/b.4-synclav.mp3",
+      // "sounds/synth/b/b.4-synclav.mp3",
       "sounds/synth/b/b.mp3",
       "sounds/synth/b/b2.1-frozenPiano.mp3",
       "sounds/synth/b/b2.2-mellow.mp3",
       "sounds/synth/b/b2.3-synthi.mp3",
-      "sounds/synth/b/b2.4-synclav.mp3",
+      // "sounds/synth/b/b2.4-synclav.mp3",
       "sounds/synth/b/b2.mp3",
     ],
-    aBufferLoaded //the callback function
+    bBufferLoaded //the callback function
   );
 
   bBufferLoader.load();
 
-  function bbBufferLoaded(bufferList) {
-    bbBufferList = bufferList;
+  function bBufferLoaded(bufferList) {
+    bBufferList = bufferList;
     Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
     //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
     /// create variables for each note
@@ -276,12 +276,12 @@ window.onload = function () {
       "sounds/synth/bb/bb.1-frozenPiano.mp3",
       "sounds/synth/bb/bb.2-mellow.mp3",
       "sounds/synth/bb/bb.3-synthi.mp3",
-      "sounds/synth/bb/bb.4-synclav.mp3",
+      // "sounds/synth/bb/bb.4-synclav.mp3",
       "sounds/synth/bb/bb.mp3",
       "sounds/synth/bb/bb2.1-frozenPiano.mp3",
       "sounds/synth/bb/bb2.2-mellow.mp3",
       "sounds/synth/bb/bb2.3-synthi.mp3",
-      "sounds/synth/bb/bb2.4-synclav.mp3",
+      // "sounds/synth/bb/bb2.4-synclav.mp3",
       "sounds/synth/bb/bb2.mp3",
     ],
     bbBufferLoaded //the callback function
@@ -313,12 +313,12 @@ window.onload = function () {
       "sounds/synth/c/c.1-frozenPiano.mp3",
       "sounds/synth/c/c.2-mellow.mp3",
       "sounds/synth/c/c.3-synthi.mp3",
-      "sounds/synth/c/c.4-synclav.mp3",
+      // "sounds/synth/c/c.4-synclav.mp3",
       "sounds/synth/c/c.mp3",
       "sounds/synth/c/c2.1-frozenPiano.mp3",
       "sounds/synth/c/c2.2-mellow.mp3",
       "sounds/synth/c/c2.3-synthi.mp3",
-      "sounds/synth/c/c2.4-synclav.mp3",
+      // "sounds/synth/c/c2.4-synclav.mp3",
       "sounds/synth/c/c2.mp3",
     ],
     cBufferLoaded //the callback function
@@ -350,12 +350,12 @@ window.onload = function () {
       "sounds/synth/d/d.1-frozenPiano.mp3",
       "sounds/synth/d/d.2-mellow.mp3",
       "sounds/synth/d/d.3-synthi.mp3",
-      "sounds/synth/d/d.4-synclav.mp3",
+      // "sounds/synth/d/d.4-synclav.mp3",
       "sounds/synth/d/d.mp3",
       "sounds/synth/d/d2.1-frozenPiano.mp3",
       "sounds/synth/d/d2.2-mellow.mp3",
       "sounds/synth/d/d2.3-synthi.mp3",
-      "sounds/synth/d/d2.4-synclav.mp3",
+      // "sounds/synth/d/d2.4-synclav.mp3",
       "sounds/synth/d/d2.mp3",
     ],
     dBufferLoaded //the callback function
@@ -388,12 +388,12 @@ window.onload = function () {
       "sounds/synth/db/db.1-frozenPiano.mp3",
       "sounds/synth/db/db.2-mellow.mp3",
       "sounds/synth/db/db.3-synthi.mp3",
-      "sounds/synth/db/db.4-synclav.mp3",
+      // "sounds/synth/db/db.4-synclav.mp3",
       "sounds/synth/db/db.mp3",
       "sounds/synth/db/db2.1-frozenPiano.mp3",
       "sounds/synth/db/db2.2-mellow.mp3",
       "sounds/synth/db/db2.3-synthi.mp3",
-      "sounds/synth/db/db2.4-synclav.mp3",
+      // "sounds/synth/db/db2.4-synclav.mp3",
       "sounds/synth/db/db2.mp3",
     ],
     dbBufferLoaded //the callback function
@@ -425,12 +425,12 @@ window.onload = function () {
       "sounds/synth/e/e.1-frozenPiano.mp3",
       "sounds/synth/e/e.2-mellow.mp3",
       "sounds/synth/e/e.3-synthi.mp3",
-      "sounds/synth/e/e.4-synclav.mp3",
+      // "sounds/synth/e/e.4-synclav.mp3",
       "sounds/synth/e/e.mp3",
       "sounds/synth/e/e2.1-frozenPiano.mp3",
       "sounds/synth/e/e2.2-mellow.mp3",
       "sounds/synth/e/e2.3-synthi.mp3",
-      "sounds/synth/e/e2.4-synclav.mp3",
+      // "sounds/synth/e/e2.4-synclav.mp3",
       "sounds/synth/e/e2.mp3",
     ],
     eBufferLoaded //the callback function
@@ -462,12 +462,12 @@ window.onload = function () {
       "sounds/synth/eb/eb.1-frozenPiano.mp3",
       "sounds/synth/eb/eb.2-mellow.mp3",
       "sounds/synth/eb/eb.3-synthi.mp3",
-      "sounds/synth/eb/eb.4-synclav.mp3",
+      // "sounds/synth/eb/eb.4-synclav.mp3",
       "sounds/synth/eb/eb.mp3",
       "sounds/synth/eb/eb2.1-frozenPiano.mp3",
       "sounds/synth/eb/eb2.2-mellow.mp3",
       "sounds/synth/eb/eb2.3-synthi.mp3",
-      "sounds/synth/eb/eb2.4-synclav.mp3",
+      // "sounds/synth/eb/eb2.4-synclav.mp3",
       "sounds/synth/eb/eb2.mp3",
     ],
     ebBufferLoaded //the callback function
@@ -499,12 +499,12 @@ window.onload = function () {
       "sounds/synth/f/f.1-frozenPiano.mp3",
       "sounds/synth/f/f.2-mellow.mp3",
       "sounds/synth/f/f.3-synthi.mp3",
-      "sounds/synth/f/f.4-synclav.mp3",
+      // "sounds/synth/f/f.4-synclav.mp3",
       "sounds/synth/f/f.mp3",
       "sounds/synth/f/f2.1-frozenPiano.mp3",
       "sounds/synth/f/f2.2-mellow.mp3",
       "sounds/synth/f/f2.3-synthi.mp3",
-      "sounds/synth/f/f2.4-synclav.mp3",
+      // "sounds/synth/f/f2.4-synclav.mp3",
       "sounds/synth/f/f2.mp3",
     ],
     fBufferLoaded //the callback function
@@ -536,12 +536,12 @@ window.onload = function () {
       "sounds/synth/g/g.1-frozenPiano.mp3",
       "sounds/synth/g/g.2-mellow.mp3",
       "sounds/synth/g/g.3-synthi.mp3",
-      "sounds/synth/g/g.4-synclav.mp3",
+      // "sounds/synth/g/g.4-synclav.mp3",
       "sounds/synth/g/g.mp3",
       "sounds/synth/g/g2.1-frozenPiano.mp3",
       "sounds/synth/g/g2.2-mellow.mp3",
       "sounds/synth/g/g2.3-synthi.mp3",
-      "sounds/synth/g/g2.4-synclav.mp3",
+      // "sounds/synth/g/g2.4-synclav.mp3",
       "sounds/synth/g/g2.mp3",
     ],
     gBufferLoaded //the callback function
@@ -573,12 +573,12 @@ window.onload = function () {
       "sounds/synth/gb/gb.1-frozenPiano.mp3",
       "sounds/synth/gb/gb.2-mellow.mp3",
       "sounds/synth/gb/gb.3-synthi.mp3",
-      "sounds/synth/gb/gb.4-synclav.mp3",
+      // "sounds/synth/gb/gb.4-synclav.mp3",
       "sounds/synth/gb/gb.mp3",
       "sounds/synth/gb/gb2.1-frozenPiano.mp3",
       "sounds/synth/gb/gb2.2-mellow.mp3",
       "sounds/synth/gb/gb2.3-synthi.mp3",
-      "sounds/synth/gb/gb2.4-synclav.mp3",
+      // "sounds/synth/gb/gb2.4-synclav.mp3",
       "sounds/synth/gb/gb2.mp3",
     ],
     gbBufferLoaded //the callback function
@@ -629,33 +629,6 @@ function gatherNotes() {
   console.log("general weather: " + generalWeather);
   console.log("specific weather: " + specificWeather);
   if (generalWeather === "Clear") {
-    let bbLydian = [
-      bbBufferList,
-      cBufferList,
-      dBufferList,
-      eBufferList,
-      fBufferList,
-      gBufferList,
-      aBufferList,
-    ];
-    bufferList = bbLydian; //7 degrees, and those with key notes - 1, 4, 5
-    let bbLydianWeight = [6, 1, 2, 7, 5, 3, 4]; //weight of each element above
-    totalWeight = eval(bbLydianWeight.join("+")); //get total weight (in this case, 10)
-    let bbLydianWeighed = new Array(); //new array to hold "weighted" notes
-    let currentNote = 0;
-    console.log(bufferList);
-    while (currentNote < bbLydian.length) {
-      //step through each bbDorian[] element
-      for (i = 0; i < bbLydianWeight[currentNote]; i++)
-        bbLydianWeighed[bbLydianWeighed.length] = bbLydian[currentNote];
-      currentNote++;
-    }
-    //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbLydianWeighed);
-  } else if (
-    specificWeather === "light snow" ||
-    specificWeather === "few clouds"
-  ) {
     let bbIonian = [
       bbBufferList,
       cBufferList,
@@ -666,10 +639,11 @@ function gatherNotes() {
       aBufferList,
     ];
     bufferList = bbIonian; //7 degrees, and those with key notes - major key so 1, 3, 5
-    let bbIonianWeight = [7, 1, 6, 2, 5, 3, 4]; //weight of each element above
+    let bbIonianWeight = [8, 3, 6, 0, 5, 1, 4]; //weight of each element above
     totalWeight = eval(bbIonianWeight.join("+")); //get total weight (in this case, 10)
     let bbIonianWeighed = new Array(); //new array to hold "weighted" notes
     let currentNote = 0;
+    console.log("ionian");
     console.log(bufferList);
     while (currentNote < bbIonian.length) {
       //step through each bbDorian[] element
@@ -683,6 +657,34 @@ function gatherNotes() {
     specificWeather === "scattered clouds" ||
     specificWeather === "broken clouds"
   ) {
+    let bbLydian = [
+      bbBufferList,
+      cBufferList,
+      dBufferList,
+      eBufferList,
+      fBufferList,
+      gBufferList,
+      aBufferList,
+    ];
+    bufferList = bbLydian; //7 degrees, and those with key notes - 1, 4, 5
+    let bbLydianWeight = [7, 5, 6, 6, 5, 3, 0]; //weight of each element above
+    totalWeight = eval(bbLydianWeight.join("+")); //get total weight (in this case, 10)
+    let bbLydianWeighed = new Array(); //new array to hold "weighted" notes
+    let currentNote = 0;
+    console.log("lydian");
+    console.log(bufferList);
+    while (currentNote < bbLydian.length) {
+      //step through each bbDorian[] element
+      for (i = 0; i < bbLydianWeight[currentNote]; i++)
+        bbLydianWeighed[bbLydianWeighed.length] = bbLydian[currentNote];
+      currentNote++;
+    }
+    //sent to playNotes, but there is renamed to weighedScale
+    playNotes(bbLydianWeighed);
+  } else if (
+    specificWeather === "light snow" ||
+    specificWeather === "few clouds"
+  ) {
     let bbMixolydian = [
       bbBufferList,
       cBufferList,
@@ -693,11 +695,12 @@ function gatherNotes() {
       abBufferList,
     ];
     bufferList = bbMixolydian; //7 degrees, and those with key notes -  7, 1, 5, 3,
-    let bbMixolydianWeight = [6, 1, 2, 4, 5, 3, 7]; //weight of each element above
+    let bbMixolydianWeight = [7, 1, 2, 4, 5, 3, 6]; //weight of each element above
     totalWeight = eval(bbMixolydianWeight.join("+")); //get total weight (in this case, 10)
     let bbMixolydianWeighed = new Array(); //new array to hold "weighted" notes
     let currentNote = 0;
     console.log(bufferList);
+    console.log("mixolydian");
 
     while (currentNote < bbMixolydian.length) {
       //step through each bbDorian[] element
@@ -720,11 +723,12 @@ function gatherNotes() {
       abBufferList,
     ];
     bufferList = bbDorian; //7 degrees, and those with key notes - 1, 3, 7
-    let bbDorianWeight = [7, 1, 6, 2, 4, 3, 5]; //weight of each element above
+    let bbDorianWeight = [7, 1, 6, 0, 4, 3, 5]; //weight of each element above
     totalWeight = eval(bbDorianWeight.join("+")); //get total weight (in this case, 10)
     let bbDorianWeighed = new Array(); //new array to hold "weighted" notes
     let currentNote = 0;
     console.log(bufferList);
+    console.log("dorian");
     while (currentNote < bbDorian.length) {
       //step through each bbDorian[] element
       for (i = 0; i < bbDorianWeight[currentNote]; i++)
@@ -747,7 +751,7 @@ function gatherNotes() {
       abBufferList,
     ];
     bufferList = bbAeolian; //7 degrees, and those with key notes - 3, 1, 6, 7, 5
-    let bbAeolianWeight = [6, 1, 7, 2, 3, 5, 4]; //weight of each element above
+    let bbAeolianWeight = [7, 1, 6, 2, 5, 0, 3]; //weight of each element above
     totalWeight = eval(bbAeolianWeight.join("+")); //get total weight (in this case, 10)
     let bbAeolianWeighed = new Array(); //new array to hold "weighted" notes
     let currentNote = 0;
@@ -762,30 +766,6 @@ function gatherNotes() {
     }
     //sent to playNotes, but there is renamed to weighedScale
     playNotes(bbAeolianWeighed);
-  } else if (generalWeather === "Thunderstorm") {
-    let bbPhyrgian = [
-      bbBufferList,
-      bBufferList,
-      dbBufferList,
-      ebBufferList,
-      fBufferList,
-      gbBufferList,
-      abBufferList,
-    ];
-    bufferList = bbPhrygian; //7 degrees, and those with key notes -  1, 2, 3, 6, 7
-    let bbPhrygianWeight = [7, 6, 5, 1, 2, 4, 3]; //weight of each element above
-    totalWeight = eval(bbPhrygianWeight.join("+")); //get total weight (in this case, 10)
-    let bbPhrygianWeighed = new Array(); //new array to hold "weighted" notes
-    let currentNote = 0;
-    console.log(bufferList);
-    while (currentNote < bbPhrygian.length) {
-      //step through each bbPhrygian[] element
-      for (i = 0; i < bbPhrygianWeight[currentNote]; i++)
-        bbPhrygianWeighed[bbPhrygianWeighed.length] = bbPhrygian[currentNote];
-      currentNote++;
-    }
-    //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbPhrygianWeighed);
   } else if (
     generalWeather === "Mist" ||
     generalWeather === "Smoke" ||
@@ -798,6 +778,31 @@ function gatherNotes() {
     generalWeather === "Squall" ||
     generalWeather === "Tornado"
   ) {
+    let bbPhrygian = [
+      bbBufferList,
+      bBufferList,
+      dbBufferList,
+      ebBufferList,
+      fBufferList,
+      gbBufferList,
+      abBufferList,
+    ];
+    bufferList = bbPhrygian; //7 degrees, and those with key notes -  1, 2, 3, 6, 7
+    let bbPhrygianWeight = [7, 6, 5, 1, 3, 0, 5]; //weight of each element above
+    totalWeight = eval(bbPhrygianWeight.join("+")); //get total weight (in this case, 10)
+    let bbPhrygianWeighed = new Array(); //new array to hold "weighted" notes
+    let currentNote = 0;
+    console.log(bufferList);
+    console.log("phrygian");
+    while (currentNote < bbPhrygian.length) {
+      //step through each bbPhrygian[] element
+      for (i = 0; i < bbPhrygianWeight[currentNote]; i++)
+        bbPhrygianWeighed[bbPhrygianWeighed.length] = bbPhrygian[currentNote];
+      currentNote++;
+    }
+    //sent to playNotes, but there is renamed to weighedScale
+    playNotes(bbPhrygianWeighed);
+  } else if (generalWeather === "Thunderstorm") {
     let bbLocrian = [
       bbBufferList,
       bBufferList,
@@ -808,10 +813,11 @@ function gatherNotes() {
       abBufferList,
     ];
     bufferList = bbLocrian; //7 degrees, and those with key notes - 1, 5, 2, 3, 6, 7, 4
-    let bbLocrianWeight = [7, 5, 4, 1, 6, 3, 2]; //weight of each element above
+    let bbLocrianWeight = [7, 0, 5, 2, 6, 0, 3]; //weight of each element above
     totalWeight = eval(bbLocrianWeight.join("+")); //get total weight (in this case, 10)
     let bbLocrianWeighed = new Array(); //new array to hold "weighted" notes
     let currentNote = 0;
+    console.log("locrian");
     console.log(bufferList);
     while (currentNote < bbLocrian.length) {
       //step through each bbLocrian[] element
@@ -860,7 +866,7 @@ function gatherNotes() {
   //if ionion, key notes - I, VI, V, I
   //bflat Dorian - bb c db eb f g ab
   //key notes - i, iii, vii
-  //bflat Phyrgian - bb b db eb f gb ab
+  //bflat Phrygian - bb b db eb f gb ab
   //key notes -  1, 2, 3, 6, 7
   //b flat Lydian - bb c d e f g a
   //key notes - i, iv, v
@@ -902,9 +908,9 @@ function playRandomNote(weighedScale) {
   //play the indexed number (singleNote) of the weighedScale passed to this function
   Audio.play(note);
 
-  intervalTiming = Math.floor(Math.random() * 5000); //vary the interval timing between 500 - 5000 millis
+  intervalTiming = Math.floor(Math.random() * 6000); //vary the interval timing between 400 - 4000 millis
 
-  Audio.gainNode.gain.value = 0.3 + Math.random() * 0.7; //vary volume - set between 0.3 and 1
+  Audio.gainNode.gain.value = 0.2 + Math.random() * 0.5; //vary volume - set between 0.2 and 0.6
 
   setTimeout(function () {
     playRandomNote(weighedScale);
