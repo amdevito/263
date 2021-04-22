@@ -29,6 +29,7 @@ let abBufferList = undefined;
 
 let view = undefined; // Created when notes are loaded
 
+let musicTimeout;
 //track when all notes have been loaded
 //start at 12 and take one away at each note loaded function
 let numNotesToLoad = 12;
@@ -56,8 +57,8 @@ $(`#first-button`).on("click", function () {
     .then((response) => response.json())
     // .then((data) => console.log(data))
     .then(displayData)
-    .then(gatherNotes);
-  // .catch((err) => alert("Wrong city name!"));
+    .then(gatherNotes)
+    .catch((err) => alert("City name not recognized please try again!"));
 });
 
 $(`#second-button`).on("click", function () {
@@ -69,8 +70,8 @@ $(`#second-button`).on("click", function () {
     .then((response) => response.json())
     // .then((data) => console.log(data))
     .then(displayData)
-    .then(gatherNotes);
-  // .catch((err) => alert("Wrong city name!"));
+    .then(gatherNotes)
+    .catch((err) => alert("City name not recognized please try again!"));
 });
 
 function displayData(data) {
@@ -791,7 +792,7 @@ function gatherNotes() {
     //   currentNote++;
     // }
     //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbAeolian, bbAeolianWeight);
+    playNotes(bbAeolian, bbAeolianWeight, "aeolian");
   } else if (
     generalWeather === "Mist" ||
     generalWeather === "Smoke" ||
@@ -914,8 +915,9 @@ function gatherNotes() {
   //
 }
 
-function playNotes(mode, weightings) {
-  playRandomNote(mode, weightings);
+function playNotes(mode, weightings, modeString) {
+  clearTimeout(musicTimeout);
+  playRandomNote(mode, weightings, modeString);
 }
 ///DONE***1st: turn all synth notes waves into mp3s
 ///Done*** 2nd: create audio buffers for each note
@@ -925,7 +927,8 @@ function playNotes(mode, weightings) {
 // *** 3rd: Create the arrays for the key notes to be hit in each MODE
 // ***4th:create function to choose notes and feed the primaryNotes array to hit on most often
 ///
-function playRandomNote(mode, weightings) {
+function playRandomNote(mode, weightings, modeString) {
+  console.log(modeString);
   let weightedIndexes = [];
   for (let i = 0; i < weightings.length; i++) {
     for (let j = 0; j < weightings[i]; j++) {
@@ -950,8 +953,8 @@ function playRandomNote(mode, weightings) {
 
   view.addCircle(x, y, maxRadius);
 
-  setTimeout(function () {
-    playRandomNote(mode, weightings);
+  musicTimeout = setTimeout(function () {
+    playRandomNote(mode, weightings, modeString);
   }, intervalTiming);
 }
 

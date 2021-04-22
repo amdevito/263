@@ -90,7 +90,7 @@ input[type="text"] {
 /* containers for the animating ripples that are draggable */
 .container {
   position: absolute;
-  top: 10%;
+  top: 9%;
   /* starting location for ripples */
   left: 5%;
   transform: translate(-20%, -50%);

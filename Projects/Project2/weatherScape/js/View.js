@@ -3,7 +3,7 @@ class View {
   constructor(canvas) {
     this.canvas = canvas;
     //set click array to collect the click location information
-    this.clicks = [];
+    this.circle = [];
     ///representing the frames per second - 3o frames per second.
     this.frameRate = 1000 / 30;
 
@@ -35,7 +35,13 @@ class View {
     // $(`#radio-7`).on(`click`, () => {
     //   this.loopRate = 12000; /// 12 seconds
     // });
+    setInterval(function () {
+      let ctx = canvas.getContext("2d");
+      ctx.fillStyle = "rgba(0,0,0,0.02)";
+      ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    }, 3000);
   }
+
   ///>>>>
   ///>>>!!! THIS NEED TO BE TRIGGERED WHEN playNotes function at weatherScape.js plays a note, rather than on the click
   ///>>>rather than take the position of the x click on canvas to pick the note, have the index of the note played from the array determine the position of the rings appearing on the canvas
@@ -51,13 +57,13 @@ class View {
   //
   //   //push the mouse coordinate click location into an array - (event.offsetX, event.offsetY, radius (which is currently set at 0, because it will grow))
   //   //pos is the variable storing the length of the array
-  //   let pos = view.clicks.push({ x: x, y: y, radius: 0 });
+  //   let pos = view.circle.push({ x: x, y: y, radius: 0 });
   //   Audio.play(x % 10); //play the audio file when the circle begins to animate (when the circle radius is 0)( this is the initial CLICK )
   //   //timer to reset the radius to a random number to create more variance in the ripples (rather than just to 0)
   //   //!!>>could also vary the interval here by math random, but * a variable in the weather data.
   //   setInterval(function () {
   //     //anonymous function
-  //     view.clicks[pos - 1].radius = Math.random() * 20;
+  //     view.circle[pos - 1].radius = Math.random() * 20;
   //     x += 1; // addind this makes the sounds that play back (the repeated trigger) vary at each repeat
   //     Audio.play(x % 10); //get a number between 0 and 9, based on the x location of the circle - x % (modulus) 10: divide x by 10 and take the remainder - the width of the canvas is 1000, returning an number divisible by 10.
   //     //the location of the x value determines which sounds is played CHANGE THIS TO SOMETHING MORE RESPONSIVE? X AND Y?  THE CHANGING WEATHER? SOMETHING IN THE WEATHER THAT CHANGES REGULARLY?
@@ -65,10 +71,10 @@ class View {
   // }
 
   addCircle(x, y, maxRadius) {
-    view.clicks.push({ x: x, y: y, radius: 0, maxRadius: maxRadius });
+    view.circle.push({ x: x, y: y, radius: 0, maxRadius: maxRadius });
     // setInterval(function () {
     //   //anonymous function
-    //   view.clicks[pos - 1].radius = Math.random() * 20;
+    //   view.circle[pos - 1].radius = Math.random() * 20;
     // }, view.loopRate); //called every 10 sec.
   }
 
@@ -86,9 +92,9 @@ class View {
     // context.fillStyle = "black"; //what colour you are filling the above rectangle
     // context.fillRect(0, 0, view.canvas.width, view.canvas.height); //draw the rectangle starting at point 0, 0 and fill the entire canvas's width and height
 
-    //for loop interating through the clicks array (collecting the number of clicks)
-    for (let i = 0; i < view.clicks.length; i++) {
-      let circle = view.clicks[i];
+    //for loop interating through the circle array (collecting the number of circle)
+    for (let i = 0; i < view.circle.length; i++) {
+      let circle = view.circle[i];
       let circleMaxRadius = circle.maxRadius;
 
       //if the circle's radius is bigger than the max, stop drawing that circle and create a new one
@@ -98,10 +104,10 @@ class View {
 
       ///maybe have the circles shrink at a setInterval? or when they get to a certain alpha value?
       // console.log(circleMaxRadius);
-      let alpha = 0.05;
-      if (circle.radius > circleMaxRadius - 15) {
-        alpha = (circleMaxRadius - circle.radius) / 70;
-      }
+      let alpha = (circleMaxRadius - circle.radius) / circleMaxRadius;
+
+      if (circle.radius > circleMaxRadius) alpha = 0;
+
       view.drawCircle(context, circle.x, circle.y, circle.radius, alpha);
       circle.x += 0.008; /// add by fractals?
       circle.y += -0.009; // circles move slightly giveing a blurred movement effect - change this to switch between x and y? or negative and positive?
