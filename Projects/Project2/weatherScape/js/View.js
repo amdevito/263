@@ -5,8 +5,8 @@ class View {
     //set click array to collect the click location information
     this.circle = [];
     ///representing the frames per second - 3o frames per second.
-    this.frameRate = 1000 / 30;
-
+    // this.frameRate = 1000 / 30;
+    this.frameRate = 24;
     this.loopRate = 10000; ///amount of time before the circle is redrawn - 10sec. nice and slow. **MAP THE HIDDEN DIALOG CHOICES FOR REPLAY RATE HERE.
     this.maxRadius = 100; //*** IF BIGGER IS CHOSEN ADD 20 FOR BIGGER, MINUS 20 FOR SMALLER.
 
@@ -109,13 +109,15 @@ class View {
       if (circle.radius > circleMaxRadius) alpha = 0;
 
       view.drawCircle(context, circle.x, circle.y, circle.radius, alpha);
-      circle.x += 0.008; /// add by fractals?
-      circle.y += -0.009; // circles move slightly giveing a blurred movement effect - change this to switch between x and y? or negative and positive?
+      circle.x += 0.08; /// add by fractals?
+      circle.y += 0.09; // circles move slightly giveing a blurred movement effect - change this to switch between x and y? or negative and positive?
     }
   }
   drawCircle(context, x, y, radius, alpha) {
+    alpha += 0.04;
     context.lineWidth = 4;
-
+    //interesting pattern
+    // context.lineWidth += 0.05;
     context.beginPath(); //context = what you want to do , 'begin to draw ' or 'begin path'
     //draw the circle - x, y = location, radius, starting angle ('0' RADIANS - fraction of constant pi), specify 360 as radians, so 2xPI (math function Math.PI)
     context.arc(x, y, radius, 0, 2 * Math.PI);

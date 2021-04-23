@@ -641,13 +641,20 @@ function loadedNote() {
 //   ],
 //   weightings: [8, 3, 6, 0, 5, 1, 4]
 // };
-//
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!!!!!Here
 // let weatherModes = {
 //   Clear: bbIonian,
-//   Drizzle: bbIonian
+//   Drizzle: bbIonian,
+//
+//
+// / let weatherModes = {
+//   Clear: bbIonian,
+//   Drizzle: bbIonian,
+//
 // };
 
 function gatherNotes() {
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>AND HERE!
   // let mode = weatherModes[specificWeather];
   // if (mode === undefined) {
   //   mode = bbIonian;
