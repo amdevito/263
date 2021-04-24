@@ -36,13 +36,12 @@ let numNotesToLoad = 12;
 
 ///time between each note -
 let intervalTiming = 3000;
+let intervalMultiple = 1000;
 
 //get general weather description (from main, as opposed to 'description' which is more detailed) to then connect with a mode
 let generalWeather = undefined;
 
 let specificWeather = undefined;
-
-let intervalMultiple = 3000;
 
 let bufferList = undefined;
 
@@ -78,14 +77,14 @@ $(`#second-button`).on("click", function () {
 
 function displayData(data) {
   let nameValue = data["name"];
-  let temperatureValue = data["main"]["temp"];
+  temperatureValue = data["main"]["temp"];
   let descriptionValue = data["weather"][0]["description"];
 
   generalWeather = data["weather"][0]["main"];
   specificWeather = data["weather"][0]["description"];
 
   // let windSpeedValue = data["wind"]["speed"];
-  let humidityValue = data["main"]["humidity"];
+  humidityValue = data["main"]["humidity"];
 
   let cloudDensityValue = data["clouds"]["all"];
 
@@ -169,13 +168,23 @@ window.onload = function () {
       "sounds/synth/a/a.1-frozenPiano.mp3",
       "sounds/synth/a/a.2-mellow.mp3",
       "sounds/synth/a/a.3-synthi.mp3",
-      // "sounds/synth/a/a.4-synclav.mp3",
       "sounds/synth/a/a.mp3",
       "sounds/synth/a/a2.1-frozenPiano.mp3",
       "sounds/synth/a/a2.2-mellow.mp3",
       "sounds/synth/a/a2.3-synthi.mp3",
-      // "sounds/synth/a/a2.4-synclav.mp3",
       "sounds/synth/a/a2.mp3",
+      "sounds/synth/a/ORC.a-bass.mp3",
+      "sounds/synth/a/ORC.a-celesta.mp3",
+      // "sounds/synth/a/ORC.a-cello.mp3",
+      "sounds/synth/a/ORC.a-harp.mp3",
+      "sounds/synth/a/ORC.a-violin.mp3",
+      "sounds/synth/a/ORC.a.mp3",
+      "sounds/synth/a/ORC.a2-bass.mp3",
+      "sounds/synth/a/ORC.a2-celesta.mp3",
+      // "sounds/synth/a/ORC.a2-cello.mp3",
+      "sounds/synth/a/ORC.a2-harp.mp3",
+      "sounds/synth/a/ORC.a2-violin.mp3",
+      "sounds/synth/a/ORC.a2.mp3",
     ],
     aBufferLoaded //the callback function
   );
@@ -207,13 +216,21 @@ window.onload = function () {
       "sounds/synth/ab/ab.1-frozenPiano.mp3",
       "sounds/synth/ab/ab.2-mellow.mp3",
       "sounds/synth/ab/ab.3-synthi.mp3",
-      // "sounds/synth/ab/ab.4-synclav.mp3",
       "sounds/synth/ab/ab.mp3",
       "sounds/synth/ab/ab2.1-frozenPiano.mp3",
       "sounds/synth/ab/ab2.2-mellow.mp3",
       "sounds/synth/ab/ab2.3-synthi.mp3",
-      // "sounds/synth/ab/ab2.4-synclav.mp3",
       "sounds/synth/ab/ab2.mp3",
+      "sounds/synth/ab/ORC.ab-bass.mp3",
+      "sounds/synth/ab/ORC.ab-celesta.mp3",
+      "sounds/synth/ab/ORC.ab-harp.mp3",
+      "sounds/synth/ab/ORC.ab-violin.mp3",
+      "sounds/synth/ab/ORC.ab.mp3",
+      "sounds/synth/ab/ORC.ab2-bass.mp3",
+      "sounds/synth/ab/ORC.ab2-celesta.mp3",
+      "sounds/synth/ab/ORC.ab2-harp.mp3",
+      "sounds/synth/ab/ORC.ab2-violin.mp3",
+      "sounds/synth/ab/ORC.ab2.mp3",
     ],
     abBufferLoaded //the callback function
   );
@@ -245,13 +262,21 @@ window.onload = function () {
       "sounds/synth/b/b.1-frozenPiano.mp3",
       "sounds/synth/b/b.2-mellow.mp3",
       "sounds/synth/b/b.3-synthi.mp3",
-      // "sounds/synth/b/b.4-synclav.mp3",
       "sounds/synth/b/b.mp3",
       "sounds/synth/b/b2.1-frozenPiano.mp3",
       "sounds/synth/b/b2.2-mellow.mp3",
       "sounds/synth/b/b2.3-synthi.mp3",
-      // "sounds/synth/b/b2.4-synclav.mp3",
       "sounds/synth/b/b2.mp3",
+      "sounds/synth/b/ORC.b-bass.mp3",
+      "sounds/synth/b/ORC.b-celesta.mp3",
+      "sounds/synth/b/ORC.b-harp.mp3",
+      "sounds/synth/b/ORC.b-violin.mp3",
+      "sounds/synth/b/ORC.b.mp3",
+      "sounds/synth/b/ORC.b2-bass.mp3",
+      "sounds/synth/b/ORC.b2-celesta.mp3",
+      "sounds/synth/b/ORC.b2-harp.mp3",
+      "sounds/synth/b/ORC.b2-violin.mp3",
+      "sounds/synth/b/ORC.b2.mp3",
     ],
     bBufferLoaded //the callback function
   );
@@ -282,13 +307,21 @@ window.onload = function () {
       "sounds/synth/bb/bb.1-frozenPiano.mp3",
       "sounds/synth/bb/bb.2-mellow.mp3",
       "sounds/synth/bb/bb.3-synthi.mp3",
-      // "sounds/synth/bb/bb.4-synclav.mp3",
       "sounds/synth/bb/bb.mp3",
       "sounds/synth/bb/bb2.1-frozenPiano.mp3",
       "sounds/synth/bb/bb2.2-mellow.mp3",
       "sounds/synth/bb/bb2.3-synthi.mp3",
-      // "sounds/synth/bb/bb2.4-synclav.mp3",
       "sounds/synth/bb/bb2.mp3",
+      "sounds/synth/bb/ORC.bb-bass.mp3",
+      "sounds/synth/bb/ORC.bb-celesta.mp3",
+      "sounds/synth/bb/ORC.bb-harp.mp3",
+      "sounds/synth/bb/ORC.bb-violin.mp3",
+      "sounds/synth/bb/ORC.bb.mp3",
+      "sounds/synth/bb/ORC.bb2-bass.mp3",
+      "sounds/synth/bb/ORC.bb2-celesta.mp3",
+      "sounds/synth/bb/ORC.bb2-harp.mp3",
+      "sounds/synth/bb/ORC.bb2-violin.mp3",
+      "sounds/synth/bb/ORC.bb2.mp3",
     ],
     bbBufferLoaded //the callback function
   );
@@ -319,13 +352,21 @@ window.onload = function () {
       "sounds/synth/c/c.1-frozenPiano.mp3",
       "sounds/synth/c/c.2-mellow.mp3",
       "sounds/synth/c/c.3-synthi.mp3",
-      // "sounds/synth/c/c.4-synclav.mp3",
       "sounds/synth/c/c.mp3",
       "sounds/synth/c/c2.1-frozenPiano.mp3",
       "sounds/synth/c/c2.2-mellow.mp3",
       "sounds/synth/c/c2.3-synthi.mp3",
-      // "sounds/synth/c/c2.4-synclav.mp3",
       "sounds/synth/c/c2.mp3",
+      "sounds/synth/c/ORC.c-bass.mp3",
+      "sounds/synth/c/ORC.c-celesta.mp3",
+      "sounds/synth/c/ORC.c-harp.mp3",
+      "sounds/synth/c/ORC.c-violin.mp3",
+      "sounds/synth/c/ORC.c.mp3",
+      "sounds/synth/c/ORC.c2-bass.mp3",
+      "sounds/synth/c/ORC.c2-celesta.mp3",
+      "sounds/synth/c/ORC.c2-harp.mp3",
+      "sounds/synth/c/ORC.c2-violin.mp3",
+      "sounds/synth/c/ORC.c2.mp3",
     ],
     cBufferLoaded //the callback function
   );
@@ -356,13 +397,21 @@ window.onload = function () {
       "sounds/synth/d/d.1-frozenPiano.mp3",
       "sounds/synth/d/d.2-mellow.mp3",
       "sounds/synth/d/d.3-synthi.mp3",
-      // "sounds/synth/d/d.4-synclav.mp3",
       "sounds/synth/d/d.mp3",
       "sounds/synth/d/d2.1-frozenPiano.mp3",
       "sounds/synth/d/d2.2-mellow.mp3",
       "sounds/synth/d/d2.3-synthi.mp3",
-      // "sounds/synth/d/d2.4-synclav.mp3",
       "sounds/synth/d/d2.mp3",
+      "sounds/synth/d/ORC.d-bass.mp3",
+      "sounds/synth/d/ORC.d-celesta.mp3",
+      "sounds/synth/d/ORC.d-harp.mp3",
+      "sounds/synth/d/ORC.d-violin.mp3",
+      "sounds/synth/d/ORC.d.mp3",
+      "sounds/synth/d/ORC.d2-bass.mp3",
+      "sounds/synth/d/ORC.d2-celesta.mp3",
+      "sounds/synth/d/ORC.d2-harp.mp3",
+      "sounds/synth/d/ORC.d2-violin.mp3",
+      "sounds/synth/d/ORC.d2.mp3",
     ],
     dBufferLoaded //the callback function
   );
@@ -394,13 +443,21 @@ window.onload = function () {
       "sounds/synth/db/db.1-frozenPiano.mp3",
       "sounds/synth/db/db.2-mellow.mp3",
       "sounds/synth/db/db.3-synthi.mp3",
-      // "sounds/synth/db/db.4-synclav.mp3",
       "sounds/synth/db/db.mp3",
       "sounds/synth/db/db2.1-frozenPiano.mp3",
       "sounds/synth/db/db2.2-mellow.mp3",
       "sounds/synth/db/db2.3-synthi.mp3",
-      // "sounds/synth/db/db2.4-synclav.mp3",
       "sounds/synth/db/db2.mp3",
+      "sounds/synth/db/ORC.db-bass.mp3",
+      "sounds/synth/db/ORC.db-celesta.mp3",
+      "sounds/synth/db/ORC.db-harp.mp3",
+      "sounds/synth/db/ORC.db-violin.mp3",
+      "sounds/synth/db/ORC.db.mp3",
+      "sounds/synth/db/ORC.db2-bass.mp3",
+      "sounds/synth/db/ORC.db2-celesta.mp3",
+      "sounds/synth/db/ORC.db2-harp.mp3",
+      "sounds/synth/db/ORC.db2-violin.mp3",
+      "sounds/synth/db/ORC.db2.mp3",
     ],
     dbBufferLoaded //the callback function
   );
@@ -431,13 +488,21 @@ window.onload = function () {
       "sounds/synth/e/e.1-frozenPiano.mp3",
       "sounds/synth/e/e.2-mellow.mp3",
       "sounds/synth/e/e.3-synthi.mp3",
-      // "sounds/synth/e/e.4-synclav.mp3",
       "sounds/synth/e/e.mp3",
       "sounds/synth/e/e2.1-frozenPiano.mp3",
       "sounds/synth/e/e2.2-mellow.mp3",
       "sounds/synth/e/e2.3-synthi.mp3",
-      // "sounds/synth/e/e2.4-synclav.mp3",
       "sounds/synth/e/e2.mp3",
+      "sounds/synth/e/ORC.e-bass.mp3",
+      "sounds/synth/e/ORC.e-celesta.mp3",
+      "sounds/synth/e/ORC.e-harp.mp3",
+      "sounds/synth/e/ORC.e-violin.mp3",
+      "sounds/synth/e/ORC.e.mp3",
+      "sounds/synth/e/ORC.e2-bass.mp3",
+      "sounds/synth/e/ORC.e2-celesta.mp3",
+      "sounds/synth/e/ORC.e2-harp.mp3",
+      "sounds/synth/e/ORC.e2-violin.mp3",
+      "sounds/synth/e/ORC.e2.mp3",
     ],
     eBufferLoaded //the callback function
   );
@@ -468,13 +533,21 @@ window.onload = function () {
       "sounds/synth/eb/eb.1-frozenPiano.mp3",
       "sounds/synth/eb/eb.2-mellow.mp3",
       "sounds/synth/eb/eb.3-synthi.mp3",
-      // "sounds/synth/eb/eb.4-synclav.mp3",
       "sounds/synth/eb/eb.mp3",
       "sounds/synth/eb/eb2.1-frozenPiano.mp3",
       "sounds/synth/eb/eb2.2-mellow.mp3",
       "sounds/synth/eb/eb2.3-synthi.mp3",
-      // "sounds/synth/eb/eb2.4-synclav.mp3",
       "sounds/synth/eb/eb2.mp3",
+      "sounds/synth/eb/ORC.eb-bass.mp3",
+      "sounds/synth/eb/ORC.eb-celesta.mp3",
+      "sounds/synth/eb/ORC.eb-harp.mp3",
+      "sounds/synth/eb/ORC.eb-violin.mp3",
+      "sounds/synth/eb/ORC.eb.mp3",
+      "sounds/synth/eb/ORC.eb2-bass.mp3",
+      "sounds/synth/eb/ORC.eb2-celesta.mp3",
+      "sounds/synth/eb/ORC.eb2-harp.mp3",
+      "sounds/synth/eb/ORC.eb2-violin.mp3",
+      "sounds/synth/eb/ORC.eb2.mp3",
     ],
     ebBufferLoaded //the callback function
   );
@@ -505,13 +578,21 @@ window.onload = function () {
       "sounds/synth/f/f.1-frozenPiano.mp3",
       "sounds/synth/f/f.2-mellow.mp3",
       "sounds/synth/f/f.3-synthi.mp3",
-      // "sounds/synth/f/f.4-synclav.mp3",
       "sounds/synth/f/f.mp3",
       "sounds/synth/f/f2.1-frozenPiano.mp3",
       "sounds/synth/f/f2.2-mellow.mp3",
       "sounds/synth/f/f2.3-synthi.mp3",
-      // "sounds/synth/f/f2.4-synclav.mp3",
       "sounds/synth/f/f2.mp3",
+      "sounds/synth/f/ORC.f-bass.mp3",
+      "sounds/synth/f/ORC.f-celesta.mp3",
+      "sounds/synth/f/ORC.f-harp.mp3",
+      "sounds/synth/f/ORC.f-violin.mp3",
+      "sounds/synth/f/ORC.f.mp3",
+      "sounds/synth/f/ORC.f2-bass.mp3",
+      "sounds/synth/f/ORC.f2-celesta.mp3",
+      "sounds/synth/f/ORC.f2-harp.mp3",
+      "sounds/synth/f/ORC.f2-violin.mp3",
+      "sounds/synth/f/ORC.f2.mp3",
     ],
     fBufferLoaded //the callback function
   );
@@ -542,13 +623,21 @@ window.onload = function () {
       "sounds/synth/g/g.1-frozenPiano.mp3",
       "sounds/synth/g/g.2-mellow.mp3",
       "sounds/synth/g/g.3-synthi.mp3",
-      // "sounds/synth/g/g.4-synclav.mp3",
       "sounds/synth/g/g.mp3",
       "sounds/synth/g/g2.1-frozenPiano.mp3",
       "sounds/synth/g/g2.2-mellow.mp3",
       "sounds/synth/g/g2.3-synthi.mp3",
-      // "sounds/synth/g/g2.4-synclav.mp3",
       "sounds/synth/g/g2.mp3",
+      "sounds/synth/g/ORC.g-bass.mp3",
+      "sounds/synth/g/ORC.g-celesta.mp3",
+      "sounds/synth/g/ORC.g-harp.mp3",
+      "sounds/synth/g/ORC.g-violin.mp3",
+      "sounds/synth/g/ORC.g.mp3",
+      "sounds/synth/g/ORC.g2-bass.mp3",
+      "sounds/synth/g/ORC.g2-celesta.mp3",
+      "sounds/synth/g/ORC.g2-harp.mp3",
+      "sounds/synth/g/ORC.g2-violin.mp3",
+      "sounds/synth/g/ORC.g2.mp3",
     ],
     gBufferLoaded //the callback function
   );
@@ -579,13 +668,21 @@ window.onload = function () {
       "sounds/synth/gb/gb.1-frozenPiano.mp3",
       "sounds/synth/gb/gb.2-mellow.mp3",
       "sounds/synth/gb/gb.3-synthi.mp3",
-      // "sounds/synth/gb/gb.4-synclav.mp3",
       "sounds/synth/gb/gb.mp3",
       "sounds/synth/gb/gb2.1-frozenPiano.mp3",
       "sounds/synth/gb/gb2.2-mellow.mp3",
       "sounds/synth/gb/gb2.3-synthi.mp3",
-      // "sounds/synth/gb/gb2.4-synclav.mp3",
       "sounds/synth/gb/gb2.mp3",
+      "sounds/synth/gb/ORC.gb-bass.mp3",
+      "sounds/synth/gb/ORC.gb-celesta.mp3",
+      "sounds/synth/gb/ORC.gb-harp.mp3",
+      "sounds/synth/gb/ORC.gb-violin.mp3",
+      "sounds/synth/gb/ORC.gb.mp3",
+      "sounds/synth/gb/ORC.gb2-bass.mp3",
+      "sounds/synth/gb/ORC.gb2-celesta.mp3",
+      "sounds/synth/gb/ORC.gb2-harp.mp3",
+      "sounds/synth/gb/ORC.gb2-violin.mp3",
+      "sounds/synth/gb/ORC.gb2.mp3",
     ],
     gbBufferLoaded //the callback function
   );
@@ -1007,6 +1104,8 @@ function playRandomNote(mode, weightings, modeString) {
 
   //>>>>!!! do a weighted indexes for the buffer list below that chooses the different synth sounds depending on temperature.
   //Need to convert strings coming from an API into an integer
+  console.log("temp: " + temperatureValue);
+  console.log("humidity: " + humidityValue);
   // if (temperatureValue >= 26 || temperatureValue <= 0) {
   // let weightedNotesIndexes = [];
   // let noteWeightings = [1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3];
