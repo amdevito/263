@@ -42,6 +42,8 @@ let generalWeather = undefined;
 
 let specificWeather = undefined;
 
+let intervalMultiple = 3000;
+
 let bufferList = undefined;
 
 let singleNote = undefined;
@@ -112,7 +114,7 @@ function displayData(data) {
 $(`#introduction-dialog`).dialog({
   modal: true,
   buttons: {
-    "Make background white": function () {
+    "Make background begin lighter (creates different kind of texture/ generative image)": function () {
       //for P2: change to - Modulate background by wind speed
       // $(`body`).css({ background: "white" });
       $(`canvas`).css({
@@ -771,7 +773,7 @@ function gatherNotes() {
     //   currentNote++;
     // }
     //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbLydian, bbLydianWeight);
+    playNotes(bbLydian, bbLydianWeight, "lydian");
   } else if (
     specificWeather === "light snow" ||
     specificWeather === "few clouds"
@@ -801,7 +803,7 @@ function gatherNotes() {
     //   currentNote++;
     // }
     //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbMixolydian, bbMixolydianWeight);
+    playNotes(bbMixolydian, bbMixolydianWeight, "mixolydian");
   } else if (generalWeather === "Drizzle" || specificWeather === "Snow") {
     let bbDorian = [
       bbBufferList,
@@ -1000,18 +1002,52 @@ function playRandomNote(mode, weightings, modeString) {
   }
   let randomIndex =
     weightedIndexes[Math.floor(Math.random() * weightedIndexes.length)];
+
   let bufferList = mode[randomIndex];
 
   //>>>>!!! do a weighted indexes for the buffer list below that chooses the different synth sounds depending on temperature.
+  //Need to convert strings coming from an API into an integer
+  // if (temperatureValue >= 26 || temperatureValue <= 0) {
+  // let weightedNotesIndexes = [];
+  // let noteWeightings = [1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3];
+  // for (let i = 0; i < noteWeightings.length; i++) {
+  //   for (let j = 0; j < noteWeightings[i]; j++) {
+  //     weightedNotesIndexes.push(i);
+  //   }
+  // }
+  // } else if (temperatureValue < 26 || temperatureValue > 0) {
+  // let weightedNotesIndexes = [];
+  // let noteWeightings = [3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1];
+  // for (let i = 0; i < noteWeightings.length; i++) {
+  //   for (let j = 0; j < noteWeightings[i]; j++) {
+  //     weightedNotesIndexes.push(i);
+  //   }
+  // }
+  // let randomNoteIndex =
+  //   weightedNotesIndexes[Math.floor(Math.random() * weightedNotesIndexes.length)];
+  //   // let note = ???????
+
   let note = Math.floor(Math.random() * bufferList.length);
+
   Audio.init(bufferList);
   //play the indexed number (singleNote) of the weighedScale passed to this function
   Audio.play(note);
 
   //>>>>>!!!/maybe if humidity is above a certain level, interval timing increases?
+  // // Try
+  ///!!!>>> need to convert string to integer
   //
-  intervalTiming = Math.floor(Math.random() * 3000); //vary the interval timing between 300 - 3000 millis
-  // console.log(intervalTiming);
+  ///
+
+  // if (humidityValue >= "70") {
+  //   intervalMultiple = 6000;
+  // } else if (humidityValue < "70") {
+  //   intervalMultiple = 3000;
+  //   console.log("humidity");
+  // }
+
+  intervalTiming = Math.floor(Math.random() * intervalMultiple); //vary the interval timing between 300 - 3000 millis
+  console.log(intervalMultiple);
 
   Audio.gainNode.gain.value = 0.1 + Math.random() * 0.5; //vary volume - set between 0.1 and 0.5
 

@@ -38,7 +38,7 @@ class View {
     //every 3 seconds draw a black square over thecircles with a low opacity to slowly fade out the past drawn circles
     setInterval(function () {
       let context = canvas.getContext("2d");
-      context.fillStyle = "rgba(0,0,0,0.02)";
+      context.fillStyle = "rgba(0,0,0,0.01)";
       context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }, 3000);
   }
@@ -124,7 +124,7 @@ class View {
     alpha += 0.04;
     // context.lineWidth = 4;
     //interesting pattern
-    context.lineWidth += 0.005; //the circles start with very thin lines and then increase over time until they are beautiful washed out circles of rippled colour
+    context.lineWidth += 0.01; //the circles start with very thin lines and then increase over time until they are beautiful washed out circles of rippled colour
     context.beginPath(); //context = what you want to do , 'begin to draw ' or 'begin path'
     //draw the circle - x, y = location, radius, starting angle ('0' RADIANS - fraction of constant pi), specify 360 as radians, so 2xPI (math function Math.PI)
     context.arc(x, y, radius, 0, 2 * Math.PI);
