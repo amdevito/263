@@ -6,7 +6,7 @@ class View {
     this.circle = [];
     ///representing the frames per second - 3o frames per second.
     // this.frameRate = 1000 / 30;
-    this.frameRate = 24;
+    this.frameRate = 20;
     this.loopRate = 10000; ///amount of time before the circle is redrawn - 10sec. nice and slow. **MAP THE HIDDEN DIALOG CHOICES FOR REPLAY RATE HERE.
     this.maxRadius = 100; //*** IF BIGGER IS CHOSEN ADD 20 FOR BIGGER, MINUS 20 FOR SMALLER.
 
@@ -35,10 +35,11 @@ class View {
     // $(`#radio-7`).on(`click`, () => {
     //   this.loopRate = 12000; /// 12 seconds
     // });
+    //every 3 seconds draw a black square over thecircles with a low opacity to slowly fade out the past drawn circles
     setInterval(function () {
-      let ctx = canvas.getContext("2d");
-      ctx.fillStyle = "rgba(0,0,0,0.02)";
-      ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      let context = canvas.getContext("2d");
+      context.fillStyle = "rgba(0,0,0,0.02)";
+      context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }, 3000);
   }
 
@@ -80,13 +81,19 @@ class View {
 
   updateDisplay() {
     //setting to the view object
+    //setting to the view object
     let view = this;
 
     let context = view.canvas.getContext("2d"); //tell the browser how you want to draw in the canvas - '2D', and save in the variable = context
-    //clear canvas
-    //commenting out all 3 lines below makes the ripples bubble up and stay on screen giving a really soothing effect
 
-    //
+    // Draw transparent rect over canvas (to gradually erase current circles
+    // context.beginPath();
+    // context.fillStyle = "rgba(0, 0, 0, 0.1)"; // Transparent fill
+    // context.rect(0, 0, view.canvas.width, view.canvas.height); // Rectangle over whole canvas
+    // context.fillStyle = "rgba(0, 0, 0, 0)"; // Removing fill for the circles later on
+    // context.endPath();
+
+    // Then the rest of updateDisplay down here...
 
     // context.clearRect(0, 0, view.canvas.width, view.canvas.height);
     // context.fillStyle = "black"; //what colour you are filling the above rectangle
@@ -115,9 +122,9 @@ class View {
   }
   drawCircle(context, x, y, radius, alpha) {
     alpha += 0.04;
-    context.lineWidth = 4;
+    // context.lineWidth = 4;
     //interesting pattern
-    // context.lineWidth += 0.05;
+    context.lineWidth += 0.005; //the circles start with very thin lines and then increase over time until they are beautiful washed out circles of rippled colour
     context.beginPath(); //context = what you want to do , 'begin to draw ' or 'begin path'
     //draw the circle - x, y = location, radius, starting angle ('0' RADIANS - fraction of constant pi), specify 360 as radians, so 2xPI (math function Math.PI)
     context.arc(x, y, radius, 0, 2 * Math.PI);

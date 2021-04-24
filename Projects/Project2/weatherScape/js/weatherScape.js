@@ -593,7 +593,8 @@ window.onload = function () {
 
   function gbBufferLoaded(bufferList) {
     gbBufferList = bufferList;
-    Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
+    Audio.init(bufferList);
+    //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
     //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
     /// create variables for each note
 
@@ -641,12 +642,67 @@ function loadedNote() {
 //   ],
 //   weightings: [8, 3, 6, 0, 5, 1, 4]
 // };
-// >>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!!!!!Here
+// // >>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!!!!!Here
 // let weatherModes = {
 //   Clear: bbIonian,
 //   Drizzle: bbIonian,
 //
-//
+
+//thunderstorm with light rain:
+//thunderstorm with rain
+//thunderstorm with heavy rain
+//light thunderstorm
+//thunderstorm
+//heavy thunderstorm
+//ragged thunderstorm
+//thunderstorm with light drizzle
+//thunderstorm with drizzle
+//thunderstorm with heavy drizzle
+//light intensity drizzle
+//drizzle
+//heavy intensity drizzle
+//light intensity drizzle rain
+//drizzle rain
+//heavy intensity drizzle rain
+//shower rain and drizzle
+//heavy shower rain and drizzle
+//shower drizzle
+//light rain
+//moderate rain
+//heavy intensity rain
+//very heavy rain
+//extreme rain
+//freezing rain
+//light intensity shower rain
+//shower rain
+// heavy intensity shower rain
+//ragged shower rain
+//light snow
+//Snow
+//Heavy snow
+//Sleet
+//Light shower sleet
+//Shower sleet
+//Light rain and snow
+//Rain and snow
+//Light shower snow
+//Shower snow
+//Heavy shower snow
+//mist
+//Smoke
+//Haze
+//sand/ dust whirls
+//fog
+//sand
+//dust
+//volcanic ash
+//squalls
+//tornado
+//few clouds
+//scattered clouds
+//broken clouds
+//overcast clouds
+
 // / let weatherModes = {
 //   Clear: bbIonian,
 //   Drizzle: bbIonian,
@@ -687,7 +743,7 @@ function gatherNotes() {
     //   currentNote++;
     // }
     //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbIonian, bbIonianWeight);
+    playNotes(bbIonian, bbIonianWeight, "ionian");
   } else if (
     specificWeather === "scattered clouds" ||
     specificWeather === "broken clouds"
@@ -770,7 +826,7 @@ function gatherNotes() {
     //   currentNote++;
     // }
     //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbDorian, bbDorianWeight);
+    playNotes(bbDorian, bbDorianWeight, "dorian");
   } else if (
     generalWeather === "Rain" ||
     specificWeather === "overcast clouds"
@@ -860,7 +916,7 @@ function gatherNotes() {
     //   currentNote++;
     // }
     //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbLocrian, bbLocrianWeight);
+    playNotes(bbLocrian, bbLocrianWeight, "locrian");
   }
 
   // playRandomNoteFrom(bufferList);
@@ -923,7 +979,7 @@ function gatherNotes() {
 }
 
 function playNotes(mode, weightings, modeString) {
-  clearTimeout(musicTimeout);
+  clearTimeout(musicTimeout); //stop the previous mode playing
   playRandomNote(mode, weightings, modeString);
 }
 ///DONE***1st: turn all synth notes waves into mp3s
@@ -945,14 +1001,19 @@ function playRandomNote(mode, weightings, modeString) {
   let randomIndex =
     weightedIndexes[Math.floor(Math.random() * weightedIndexes.length)];
   let bufferList = mode[randomIndex];
+
+  //>>>>!!! do a weighted indexes for the buffer list below that chooses the different synth sounds depending on temperature.
   let note = Math.floor(Math.random() * bufferList.length);
   Audio.init(bufferList);
   //play the indexed number (singleNote) of the weighedScale passed to this function
   Audio.play(note);
 
-  intervalTiming = Math.floor(Math.random() * 6000); //vary the interval timing between 400 - 4000 millis
+  //>>>>>!!!/maybe if humidity is above a certain level, interval timing increases?
+  //
+  intervalTiming = Math.floor(Math.random() * 3000); //vary the interval timing between 300 - 3000 millis
+  // console.log(intervalTiming);
 
-  Audio.gainNode.gain.value = 0.1 + Math.random() * 0.5; //vary volume - set between 0.2 and 0.6
+  Audio.gainNode.gain.value = 0.1 + Math.random() * 0.5; //vary volume - set between 0.1 and 0.5
 
   let y = map(randomIndex, 0, 7, 100, view.canvas.height);
   let x = Math.random() * view.canvas.width;
