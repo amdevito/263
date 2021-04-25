@@ -1146,54 +1146,48 @@ function playRandomNote(mode, weightings) {
   let randomIndex =
     weightedIndexes[Math.floor(Math.random() * weightedIndexes.length)];
 
-  let bufferList = mode[randomIndex];
-
   //>>>>!!! do a weighted indexes for the buffer list below that chooses the different synth sounds depending on temperature.
-  //Need to convert strings coming from an API into an integer
+  //
   console.log("temp: " + temperatureValue);
-  console.log("humidity: " + humidityValue);
-  // if (temperatureValue >= 26 || temperatureValue <= 0) {
-  // let weightedNotesIndexes = [];
-  // let noteWeightings = [1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3];
-  // for (let i = 0; i < noteWeightings.length; i++) {
-  //   for (let j = 0; j < noteWeightings[i]; j++) {
-  //     weightedNotesIndexes.push(i);
-  //   }
-  // }
-  // } else if (temperatureValue < 26 || temperatureValue > 0) {
-  // let weightedNotesIndexes = [];
-  // let noteWeightings = [3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-  // for (let i = 0; i < noteWeightings.length; i++) {
-  //   for (let j = 0; j < noteWeightings[i]; j++) {
-  //     weightedNotesIndexes.push(i);
-  //   }
-  // }
-  // let randomNoteIndex =
-  //   weightedNotesIndexes[Math.floor(Math.random() * weightedNotesIndexes.length)];
-  //   // let note = ???????
+
+  if (temperatureValue >= 26 || temperatureValue <= 0) {
+    let weightedNotesIndexes = [];
+    let noteWeightings = [1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3];
+    for (let i = 0; i < noteWeightings.length; i++) {
+      for (let j = 0; j < noteWeightings[i]; j++) {
+        weightedNotesIndexes.push(i);
+      }
+    }
+  } else if (temperatureValue < 26 || temperatureValue > 0) {
+    let weightedNotesIndexes = [];
+    let noteWeightings = [3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    for (let i = 0; i < noteWeightings.length; i++) {
+      for (let j = 0; j < noteWeightings[i]; j++) {
+        weightedNotesIndexes.push(i);
+      }
+    }
+  }
+  let randomNoteIndex =
+    weightedNotesIndexes[
+      Math.floor(Math.random() * weightedNotesIndexes.length)
+    ];
+  // let note = ???????
+
+  let bufferList = mode[randomIndex[randomNoteIndex]];
 
   let note = Math.floor(Math.random() * bufferList.length);
+
+  console.log(bufferList.length);
+
+  // let note = Math.floor(Math.random() * bufferList.length);
 
   Audio.init(bufferList);
   //play the indexed number (singleNote) of the weighedScale passed to this function
   Audio.play(note);
 
-  //>>>>>!!!/maybe if humidity is above a certain level, interval timing increases?
-  // // Try
-  ///!!!>>> need to convert string to integer
-  //
-  ///
-
-  // if (humidityValue >= "70") {
-  //   intervalMultiple = 6000;
-  // } else if (humidityValue < "70") {
-  //   intervalMultiple = 3000;
-  //   console.log("humidity");
-  // }
-  ///!!!!!>>>>>>can i keep track of how many notes have been played and every ### notes played, slow down interval speed until you reach a certain number, and then start back to the original humidity value:
-  //
   ///
   ///
+  console.log("humidity: " + humidityValue);
   //turn this into a function? notesCounter
   if (countNotesPlayed <= 20) {
     intervalMultiple = (humidityValue / 2) * 100;
@@ -1237,7 +1231,7 @@ function map(value, fromMin, fromMax, toMin, toMax) {
 ///set up the view, clickhandler for the canvas and start to the calls to updatedisplay to kick off the animation
 // function finishedLoading(bufferList) {}
 
-//make the animated ripples at the top of the page DRAGGABLE// will add 'droppable' for the activation of the delay effect to the tone ripples for the final project.
+//make the animated ripple TITLE at the top of the page DRAGGABLE
 $(`#ripple-one`).draggable();
 $(`#ripple-two`).draggable();
 $(`#ripple-three`).draggable();
