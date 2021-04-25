@@ -121,29 +121,37 @@ class View {
     }
   }
   drawCircle(context, x, y, radius, alpha) {
-    alpha += 0.04;
-    // context.lineWidth = 4;
-    //interesting pattern
-    context.lineWidth += 0.01; //the circles start with very thin lines and then increase over time until they are beautiful washed out circles of rippled colour
-    context.beginPath(); //context = what you want to do , 'begin to draw ' or 'begin path'
-    //draw the circle - x, y = location, radius, starting angle ('0' RADIANS - fraction of constant pi), specify 360 as radians, so 2xPI (math function Math.PI)
-    context.arc(x, y, radius, 0, 2 * Math.PI);
-    //choosing color based on it's x, y coordinate - alpha will change based on the size of the circle
-    //IDEA? instead of filled circles - make it the ouline and have them grow and disappear and fade rather than shrink - stroke? strokeStyle and then stroke weight needs to be defined? can a sparkle also happen?
-    //
-    //changed to stroke effect, now the colours of the previous circles change as you add more circles.
-    context.stroke();
-    context.strokeStyle =
-      "rgba(" +
-      (x % 256) +
-      ", " +
-      (y % 256) +
-      ", " +
-      ((x * y) % 256) +
-      " ," +
-      alpha +
-      ")";
-    //removing the bottom line creates a really beautiful pattern with the circles becoming more like ripples and overlapping
-    // context.fill();
+    if (context.lineWidth <= 25) {
+      alpha += 0.04;
+      // context.lineWidth = 4;
+      //interesting pattern
+      context.lineWidth += 0.01; //the circles start with very thin lines and then increase over time until they are beautiful washed out circles of rippled colour
+      context.beginPath(); //context = what you want to do , 'begin to draw ' or 'begin path'
+      //draw the circle - x, y = location, radius, starting angle ('0' RADIANS - fraction of constant pi), specify 360 as radians, so 2xPI (math function Math.PI)
+      context.arc(x, y, radius, 0, 2 * Math.PI);
+      //choosing color based on it's x, y coordinate - alpha will change based on the size of the circle
+      //IDEA? instead of filled circles - make it the ouline and have them grow and disappear and fade rather than shrink - stroke? strokeStyle and then stroke weight needs to be defined? can a sparkle also happen?
+      //
+      //changed to stroke effect, now the colours of the previous circles change as you add more circles.
+      context.stroke();
+      context.strokeStyle =
+        "rgba(" +
+        (x % 256) +
+        ", " +
+        (y % 256) +
+        ", " +
+        ((x * y) % 256) +
+        " ," +
+        alpha +
+        ")";
+      //removing the bottom line creates a really beautiful pattern with the circles becoming more like ripples and overlapping
+      // context.fill();
+    } else if (context.lineWidth > 25) {
+      context.lineWidth = 0.05;
+
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    console.log("line width: " + context.lineWidth);
   }
 }

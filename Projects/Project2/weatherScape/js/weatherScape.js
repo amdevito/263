@@ -1131,6 +1131,7 @@ function gatherNotes() {
 function playNotes(mode, weightings) {
   clearTimeout(musicTimeout); //stop the previous mode playing when a new mode is chosen (other wise the modes layer and layer...)
   ////!!!!>>>> add a ripples clear? canvas clear? when a new mode is started/new city chosen
+  // View.context.clearRect(0, 0, canvas.width, canvas.height);
   playRandomNote(mode, weightings);
 }
 
