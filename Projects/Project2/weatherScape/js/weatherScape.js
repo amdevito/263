@@ -187,13 +187,11 @@ window.onload = function () {
       "sounds/synth/a/a2.mp3",
       "sounds/synth/a/ORC.a-bass.mp3",
       "sounds/synth/a/ORC.a-celesta.mp3",
-      // "sounds/synth/a/ORC.a-cello.mp3",
       "sounds/synth/a/ORC.a-harp.mp3",
       "sounds/synth/a/ORC.a-violin.mp3",
       "sounds/synth/a/ORC.a.mp3",
       "sounds/synth/a/ORC.a2-bass.mp3",
       "sounds/synth/a/ORC.a2-celesta.mp3",
-      // "sounds/synth/a/ORC.a2-cello.mp3",
       "sounds/synth/a/ORC.a2-harp.mp3",
       "sounds/synth/a/ORC.a2-violin.mp3",
       "sounds/synth/a/ORC.a2.mp3",
@@ -1193,7 +1191,7 @@ function playRandomNote(mode, weightings) {
   //
   ///
   ///
-
+  //turn this into a function? notesCounter
   if (countNotesPlayed <= 20) {
     intervalMultiple = (humidityValue / 2) * 100;
     countNotesPlayed += 1;
