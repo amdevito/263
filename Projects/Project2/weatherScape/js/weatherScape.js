@@ -1178,9 +1178,9 @@ function playRandomNote(mode, weightings) {
 
   let bufferList = mode[randomIndex];
 
-  // let note =
-  //   weightedNotesIndexes[Math.floor(Math.random() * randomNoteIndex.length)];
-  let note = randomNoteIndex;
+  let note =
+    weightedNotesIndexes[Math.floor(Math.random() * randomNoteIndex.length)];
+
   console.log(noteBufferList);
 
   // let note = Math.floor(Math.random() * bufferList.length);
