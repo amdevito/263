@@ -1202,8 +1202,10 @@ function playRandomNote(mode, weightings) {
     ///after 20 notes have played shorten intervals
     intervalMultiple = (humidityValue / 3) * 100; ///faster
     countNotesPlayed += 1;
-  } else if (countNotesPlayed > 40) {
-    intervalMultiple = (humidityValue / 2) * 75;
+  } else if (countNotesPlayed > 40 && countNotesPlayed <= 50) {
+    intervalMultiple = humidityValue * 100;
+    countNotesPlayed += 1;
+  } else if (countNotesPlayed > 50) {
     countNotesPlayed = 0;
   }
   console.log("# of notes played: " + countNotesPlayed);

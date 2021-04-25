@@ -151,7 +151,7 @@ class View {
 
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
-
-    console.log("line width: " + context.lineWidth);
+    //
+    // console.log("line width: " + context.lineWidth);
   }
 }
