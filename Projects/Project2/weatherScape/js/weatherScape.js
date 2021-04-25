@@ -49,6 +49,18 @@ let singleNote = undefined;
 
 let totalWeight = undefined;
 
+let countNotesPlayed = 0;
+
+let modeWeight = [];
+
+let bbIonian = [];
+let bbLydian = [];
+let bbMixolydian = [];
+let bbDorian = [];
+let bbAeolian = [];
+let bbPhrygian = [];
+let bbLocrian = [];
+
 $(`#first-button`).on("click", function () {
   fetch(
     "http://api.openweathermap.org/data/2.5/weather?q=" +
@@ -742,71 +754,17 @@ function loadedNote() {
 //   weightings: [8, 3, 6, 0, 5, 1, 4]
 // };
 // // >>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!!!!!Here
-// let weatherModes = {
-//   Clear: bbIonian,
-//   Drizzle: bbIonian,
-//
 
-//thunderstorm with light rain:
-//thunderstorm with rain
-//thunderstorm with heavy rain
-//light thunderstorm
-//thunderstorm
-//heavy thunderstorm
-//ragged thunderstorm
-//thunderstorm with light drizzle
-//thunderstorm with drizzle
-//thunderstorm with heavy drizzle
-//light intensity drizzle
-//drizzle
-//heavy intensity drizzle
-//light intensity drizzle rain
-//drizzle rain
-//heavy intensity drizzle rain
-//shower rain and drizzle
-//heavy shower rain and drizzle
-//shower drizzle
-//light rain
-//moderate rain
-//heavy intensity rain
-//very heavy rain
-//extreme rain
-//freezing rain
-//light intensity shower rain
-//shower rain
-// heavy intensity shower rain
-//ragged shower rain
-//light snow
-//Snow
-//Heavy snow
-//Sleet
-//Light shower sleet
-//Shower sleet
-//Light rain and snow
-//Rain and snow
-//Light shower snow
-//Shower snow
-//Heavy shower snow
-//mist
-//Smoke
-//Haze
-//sand/ dust whirls
-//fog
-//sand
-//dust
-//volcanic ash
-//squalls
-//tornado
-//few clouds
-//scattered clouds
-//broken clouds
-//overcast clouds
-
-// / let weatherModes = {
-//   Clear: bbIonian,
-//   Drizzle: bbIonian,
 //
-// };
+//
+//MODES and feelings -
+// lydian -  uplifting and quirky, fantasy
+//ionian - happy, positive - happy, bright, innocent, reassuring, cheery, joyous and played at a slower tempo it can sound royal and majestic .
+// mixolydian - happy but serious
+// dorian -  sad but hopeful
+// Aeolian -  sad
+// phrygian -  dark  -  scary, dramatic, and otherworldly
+// locrian -  evil -  scary, dramatic, and otherworldly
 
 function gatherNotes() {
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>AND HERE!
@@ -816,208 +774,302 @@ function gatherNotes() {
   // }
   // playNotes(mode.notes, mode.weightings);
 
+  let weatherModes = {
+    "thunderstorm with light rain": bbLocrian,
+    "thunderstorm with rain": bbLocrian,
+    "thunderstorm with heavy rain": bbLocrian,
+    "light thunderstorm": bbLocrian,
+    thunderstorm: bbLocrian,
+    "heavy thunderstorm": bbLocrian,
+    "ragged thunderstorm": bbLocrian,
+    "thunderstorm with light drizzle": bbLocrian,
+    "thunderstorm with drizzle": bbLocrian,
+    "thunderstorm with heavy drizzle": bbLocrian,
+    "light intensity drizzle": bbMixolydian,
+    drizzle: bbMixolydian,
+    "heavy intensity drizzle": bbDorian,
+    "light intensity drizzle rain": bbDorian,
+    "drizzle rain": bbDorian,
+    "heavy intensity drizzle rain": bbAeolian,
+    "shower rain and drizzle": bbAeolian,
+    "heavy shower rain and drizzle": bbAeolian,
+    "shower drizzle": bbAeolian,
+    "light rain": bbMixolydian,
+    "moderate rain": bbAeolian,
+    "heavy intensity rain": bbLocrian,
+    "very heavy rain": bbLocrian,
+    "extreme rain": bbLocrian,
+    "freezing rain": bbPhrygian,
+    "light intensity shower rain": bbDorian,
+    "shower rain": bbAeolian,
+    "heavy intensity shower rain": bbAeolian,
+    "ragged shower rain": bbAeolian,
+    "light snow": bbMixolydian,
+    Snow: bbMixolydian,
+    "Heavy snow": bbDorian,
+    Sleet: bbAeolian,
+    "Light shower sleet": bbAeolian,
+    "Shower sleet": bbAeolian,
+    "Light rain and snow": bbDorian,
+    "Rain and snow": bbAeolian,
+    "Light shower snow": bbAeolian,
+    "Shower snow": bbDorian,
+    "Heavy shower snow": bbLocrian,
+    mist: bbPhrygian,
+    Smoke: bbPhrygian,
+    Haze: bbPhrygian,
+    "sand/ dust whirls": bbPhrygian,
+    fog: bbPhrygian,
+    sand: bbPhrygian,
+    dust: bbPhrygian,
+    "volcanic ash": bbPhrygian,
+    squalls: bbPhrygian,
+    tornado: bbPhrygian,
+    "clear sky": bbIonian,
+    "few clouds": bbIonian,
+    "scattered clouds": bbMixolydian,
+    "broken clouds": bbLydian,
+    "overcast clouds": bbAeolian,
+  };
+
   console.log("general weather: " + generalWeather);
   console.log("specific weather: " + specificWeather);
-  if (generalWeather === "Clear") {
-    let bbIonian = [
-      bbBufferList,
-      cBufferList,
-      dBufferList,
-      ebBufferList,
-      fBufferList,
-      gBufferList,
-      aBufferList,
-    ];
-    // bufferList = bbIonian; //7 degrees, and those with key notes - major key so 1, 3, 5
-    let bbIonianWeight = [8, 3, 7, 0, 6, 1, 1]; //weight of each element above
-    // totalWeight = eval(bbIonianWeight.join("+")); //get total weight (in this case, 10)
-    // let bbIonianWeighed = new Array(); //new array to hold "weighted" notes
-    // let currentNote = 0;
-    // console.log("ionian");
-    // console.log(bufferList);
-    // while (currentNote < bbIonian.length) {
-    //   //step through each bbDorian[] element
-    //   for (i = 0; i < bbIonianWeight[currentNote]; i++)
-    //     bbIonianWeighed[bbIonianWeighed.length] = bbIonian[currentNote];
-    //   currentNote++;
-    // }
-    //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbIonian, bbIonianWeight, "ionian");
-  } else if (
-    specificWeather === "scattered clouds" ||
-    specificWeather === "broken clouds"
-  ) {
-    let bbLydian = [
-      bbBufferList,
-      cBufferList,
-      dBufferList,
-      eBufferList,
-      fBufferList,
-      gBufferList,
-      aBufferList,
-    ];
-    // bufferList = bbLydian; //7 degrees, and those with key notes - 1, 4, 5
-    let bbLydianWeight = [7, 5, 6, 6, 5, 3, 0]; //weight of each element above
-    // totalWeight = eval(bbLydianWeight.join("+")); //get total weight (in this case, 10)
-    // let bbLydianWeighed = new Array(); //new array to hold "weighted" notes
-    // let currentNote = 0;
-    // console.log("lydian");
-    // console.log(bufferList);
-    // while (currentNote < bbLydian.length) {
-    //   //step through each bbDorian[] element
-    //   for (i = 0; i < bbLydianWeight[currentNote]; i++)
-    //     bbLydianWeighed[bbLydianWeighed.length] = bbLydian[currentNote];
-    //   currentNote++;
-    // }
-    //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbLydian, bbLydianWeight, "lydian");
-  } else if (
-    specificWeather === "light snow" ||
-    specificWeather === "few clouds"
-  ) {
-    let bbMixolydian = [
-      bbBufferList,
-      cBufferList,
-      dBufferList,
-      ebBufferList,
-      fBufferList,
-      gBufferList,
-      abBufferList,
-    ];
-    // bufferList = bbMixolydian; //7 degrees, and those with key notes -  7, 1, 5, 3,
-    let bbMixolydianWeight = [7, 1, 2, 4, 5, 3, 6]; //weight of each element above
-    // totalWeight = eval(bbMixolydianWeight.join("+")); //get total weight (in this case, 10)
-    // let bbMixolydianWeighed = new Array(); //new array to hold "weighted" notes
-    // let currentNote = 0;
-    // console.log(bufferList);
-    // console.log("mixolydian");
-    //
-    // while (currentNote < bbMixolydian.length) {
-    //   //step through each bbDorian[] element
-    //   for (i = 0; i < bbMixolydianWeight[currentNote]; i++)
-    //     bbMixolydianWeighed[bbMixolydianWeighed.length] =
-    //       bbMixolydian[currentNote];
-    //   currentNote++;
-    // }
-    //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbMixolydian, bbMixolydianWeight, "mixolydian");
-  } else if (generalWeather === "Drizzle" || specificWeather === "Snow") {
-    let bbDorian = [
-      bbBufferList,
-      cBufferList,
-      dbBufferList,
-      ebBufferList,
-      fBufferList,
-      gBufferList,
-      abBufferList,
-    ];
-    // bufferList = bbDorian; //7 degrees, and those with key notes - 1, 3, 7
-    let bbDorianWeight = [7, 1, 6, 0, 4, 3, 5]; //weight of each element above
-    // totalWeight = eval(bbDorianWeight.join("+")); //get total weight (in this case, 10)
-    // let bbDorianWeighed = new Array(); //new array to hold "weighted" notes
-    // let currentNote = 0;
-    // console.log(bufferList);
-    // console.log("dorian");
-    // while (currentNote < bbDorian.length) {
-    //   //step through each bbDorian[] element
-    //   for (i = 0; i < bbDorianWeight[currentNote]; i++)
-    //     bbDorianWeighed[bbDorianWeighed.length] = bbDorian[currentNote];
-    //   currentNote++;
-    // }
-    //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbDorian, bbDorianWeight, "dorian");
-  } else if (
-    generalWeather === "Rain" ||
-    specificWeather === "overcast clouds"
-  ) {
-    let bbAeolian = [
-      bbBufferList,
-      cBufferList,
-      dbBufferList,
-      ebBufferList,
-      fBufferList,
-      gbBufferList,
-      abBufferList,
-    ];
-    // bufferList = bbAeolian; //7 degrees, and those with key notes - 3, 1, 6, 7, 5
-    let bbAeolianWeight = [7, 1, 6, 2, 5, 0, 3]; //weight of each element above
-    // totalWeight = eval(bbAeolianWeight.join("+")); //get total weight (in this case, 10)
-    // let bbAeolianWeighed = new Array(); //new array to hold "weighted" notes
-    // let currentNote = 0;
-    // console.log(bufferList);
-    // console.log(bbAeolianWeighed);
-    // console.log("aeolian");
-    // while (currentNote < bbAeolian.length) {
-    //   //step through each bbAolian[] element
-    //   for (i = 0; i < bbAeolianWeight[currentNote]; i++)
-    //     bbAeolianWeighed[bbAeolianWeighed.length] = bbAeolian[currentNote];
-    //   currentNote++;
-    // }
-    //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbAeolian, bbAeolianWeight, "aeolian");
-  } else if (
-    generalWeather === "Mist" ||
-    generalWeather === "Smoke" ||
-    generalWeather === "Haze" ||
-    generalWeather === "Dust" ||
-    generalWeather === "Fog" ||
-    generalWeather === "Sand" ||
-    generalWeather === "Dust" ||
-    generalWeather === "Ash" ||
-    generalWeather === "Squall" ||
-    generalWeather === "Tornado"
-  ) {
-    let bbPhrygian = [
-      bbBufferList,
-      bBufferList,
-      dbBufferList,
-      ebBufferList,
-      fBufferList,
-      gbBufferList,
-      abBufferList,
-    ];
-    // bufferList = bbPhrygian; //7 degrees, and those with key notes -  1, 2, 3, 6, 7
-    let bbPhrygianWeight = [7, 6, 5, 1, 3, 0, 5]; //weight of each element above
-    // totalWeight = eval(bbPhrygianWeight.join("+")); //get total weight (in this case, 10)
-    // let bbPhrygianWeighed = new Array(); //new array to hold "weighted" notes
-    // let currentNote = 0;
-    // console.log(bufferList);
-    // console.log("phrygian");
-    // while (currentNote < bbPhrygian.length) {
-    //   //step through each bbPhrygian[] element
-    //   for (i = 0; i < bbPhrygianWeight[currentNote]; i++)
-    //     bbPhrygianWeighed[bbPhrygianWeighed.length] = bbPhrygian[currentNote];
-    //   currentNote++;
-    // }
-    //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbPhrygian, bbPhrygianWeight);
-  } else if (generalWeather === "Thunderstorm") {
-    let bbLocrian = [
-      bbBufferList,
-      bBufferList,
-      dbBufferList,
-      ebBufferList,
-      eBufferList,
-      gbBufferList,
-      abBufferList,
-    ];
-    // bufferLists = bbLocrian; //7 degrees, and those with key notes - 1, 5, 2, 3, 6, 7, 4
-    let bbLocrianWeight = [7, 0, 5, 2, 6, 0, 3]; //weight of each element above
-    // totalWeight = eval(bbLocrianWeight.join("+")); //get total weight (in this case, 10)
-    // let bbLocrianWeighed = new Array(); //new array to hold "weighted" notes
-    // let currentNote = 0;
-    // console.log("locrian");
-    // console.log(bufferList);
-    // while (currentNote < bbLocrian.length) {
-    //   //step through each bbLocrian[] element
-    //   for (i = 0; i < bbLocrianWeight[currentNote]; i++)
-    //     bbLocrianWeighed[bbLocrianWeighed.length] = bbLocrian[currentNote];
-    //   currentNote++;
-    // }
-    //sent to playNotes, but there is renamed to weighedScale
-    playNotes(bbLocrian, bbLocrianWeight, "locrian");
+  // if (generalWeather === "Clear") {
+  //   bbIonian = [
+  //     bbBufferList,
+  //     cBufferList,
+  //     dBufferList,
+  //     ebBufferList,
+  //     fBufferList,
+  //     gBufferList,
+  //     aBufferList,
+  //   ];
+  //   // bufferList = bbIonian; //7 degrees, and those with key notes - major key so 1, 3, 5
+  //   let bbIonianWeight = [8, 3, 7, 0, 6, 1, 1]; //weight of each element above
+  //   // totalWeight = eval(bbIonianWeight.join("+")); //get total weight (in this case, 10)
+  //   // let bbIonianWeighed = new Array(); //new array to hold "weighted" notes
+  //   // let currentNote = 0;
+  //   // console.log("ionian");
+  //   // console.log(bufferList);
+  //   // while (currentNote < bbIonian.length) {
+  //   //   //step through each bbDorian[] element
+  //   //   for (i = 0; i < bbIonianWeight[currentNote]; i++)
+  //   //     bbIonianWeighed[bbIonianWeighed.length] = bbIonian[currentNote];
+  //   //   currentNote++;
+  //   // }
+  //   //sent to playNotes, but there is renamed to weighedScale
+  //   playNotes(bbIonian, bbIonianWeight, "ionian");
+  // } else if (
+  //   specificWeather === "scattered clouds" ||
+  //   specificWeather === "broken clouds"
+  // ) {
+  //   bbLydian = [
+  //     bbBufferList,
+  //     cBufferList,
+  //     dBufferList,
+  //     eBufferList,
+  //     fBufferList,
+  //     gBufferList,
+  //     aBufferList,
+  //   ];
+  //   // bufferList = bbLydian; //7 degrees, and those with key notes - 1, 4, 5
+  //   let bbLydianWeight = [7, 5, 6, 6, 5, 3, 0]; //weight of each element above
+  //   // totalWeight = eval(bbLydianWeight.join("+")); //get total weight (in this case, 10)
+  //   // let bbLydianWeighed = new Array(); //new array to hold "weighted" notes
+  //   // let currentNote = 0;
+  //   // console.log("lydian");
+  //   // console.log(bufferList);
+  //   // while (currentNote < bbLydian.length) {
+  //   //   //step through each bbDorian[] element
+  //   //   for (i = 0; i < bbLydianWeight[currentNote]; i++)
+  //   //     bbLydianWeighed[bbLydianWeighed.length] = bbLydian[currentNote];
+  //   //   currentNote++;
+  //   // }
+  //   //sent to playNotes, but there is renamed to weighedScale
+  //   playNotes(bbLydian, bbLydianWeight, "lydian");
+  // } else if (
+  //   specificWeather === "light snow" ||
+  //   specificWeather === "few clouds"
+  // ) {
+  //   bbMixolydian = [
+  //     bbBufferList,
+  //     cBufferList,
+  //     dBufferList,
+  //     ebBufferList,
+  //     fBufferList,
+  //     gBufferList,
+  //     abBufferList,
+  //   ];
+  //   // bufferList = bbMixolydian; //7 degrees, and those with key notes -  7, 1, 5, 3,
+  //   let bbMixolydianWeight = [7, 1, 2, 4, 5, 3, 6]; //weight of each element above
+  //   // totalWeight = eval(bbMixolydianWeight.join("+")); //get total weight (in this case, 10)
+  //   // let bbMixolydianWeighed = new Array(); //new array to hold "weighted" notes
+  //   // let currentNote = 0;
+  //   // console.log(bufferList);
+  //   // console.log("mixolydian");
+  //   //
+  //   // while (currentNote < bbMixolydian.length) {
+  //   //   //step through each bbDorian[] element
+  //   //   for (i = 0; i < bbMixolydianWeight[currentNote]; i++)
+  //   //     bbMixolydianWeighed[bbMixolydianWeighed.length] =
+  //   //       bbMixolydian[currentNote];
+  //   //   currentNote++;
+  //   // }
+  //   //sent to playNotes, but there is renamed to weighedScale
+  //   playNotes(bbMixolydian, bbMixolydianWeight, "mixolydian");
+  // } else if (generalWeather === "Drizzle" || specificWeather === "Snow") {
+  //   bbDorian = [
+  //     bbBufferList,
+  //     cBufferList,
+  //     dbBufferList,
+  //     ebBufferList,
+  //     fBufferList,
+  //     gBufferList,
+  //     abBufferList,
+  //   ];
+  //   // bufferList = bbDorian; //7 degrees, and those with key notes - 1, 3, 7
+  //   let bbDorianWeight = [7, 1, 6, 0, 4, 3, 5]; //weight of each element above
+  //   // totalWeight = eval(bbDorianWeight.join("+")); //get total weight (in this case, 10)
+  //   // let bbDorianWeighed = new Array(); //new array to hold "weighted" notes
+  //   // let currentNote = 0;
+  //   // console.log(bufferList);
+  //   // console.log("dorian");
+  //   // while (currentNote < bbDorian.length) {
+  //   //   //step through each bbDorian[] element
+  //   //   for (i = 0; i < bbDorianWeight[currentNote]; i++)
+  //   //     bbDorianWeighed[bbDorianWeighed.length] = bbDorian[currentNote];
+  //   //   currentNote++;
+  //   // }
+  //   //sent to playNotes, but there is renamed to weighedScale
+  //   playNotes(bbDorian, bbDorianWeight, "dorian");
+  // } else if (
+  //   generalWeather === "Rain" ||
+  //   specificWeather === "overcast clouds"
+  // ) {
+  //   bbAeolian = [
+  //     bbBufferList,
+  //     cBufferList,
+  //     dbBufferList,
+  //     ebBufferList,
+  //     fBufferList,
+  //     gbBufferList,
+  //     abBufferList,
+  //   ];
+  //   // bufferList = bbAeolian; //7 degrees, and those with key notes - 3, 1, 6, 7, 5
+  //   let bbAeolianWeight = [7, 1, 6, 2, 5, 0, 3]; //weight of each element above
+  //   // totalWeight = eval(bbAeolianWeight.join("+")); //get total weight (in this case, 10)
+  //   // let bbAeolianWeighed = new Array(); //new array to hold "weighted" notes
+  //   // let currentNote = 0;
+  //   // console.log(bufferList);
+  //   // console.log(bbAeolianWeighed);
+  //   // console.log("aeolian");
+  //   // while (currentNote < bbAeolian.length) {
+  //   //   //step through each bbAeolian[] element
+  //   //   for (i = 0; i < bbAeolianWeight[currentNote]; i++)
+  //   //     bbAeolianWeighed[bbAeolianWeighed.length] = bbAeolian[currentNote];
+  //   //   currentNote++;
+  //   // }
+  //   //sent to playNotes, but there is renamed to weighedScale
+  //   playNotes(bbAeolian, bbAeolianWeight, "aeolian");
+  // } else if (
+  //   generalWeather === "Mist" ||
+  //   generalWeather === "Smoke" ||
+  //   generalWeather === "Haze" ||
+  //   generalWeather === "Dust" ||
+  //   generalWeather === "Fog" ||
+  //   generalWeather === "Sand" ||
+  //   generalWeather === "Dust" ||
+  //   generalWeather === "Ash" ||
+  //   generalWeather === "Squall" ||
+  //   generalWeather === "Tornado"
+  // ) {
+  //   bbPhrygian = [
+  //     bbBufferList,
+  //     bBufferList,
+  //     dbBufferList,
+  //     ebBufferList,
+  //     fBufferList,
+  //     gbBufferList,
+  //     abBufferList,
+  //   ];
+  //   // bufferList = bbPhrygian; //7 degrees, and those with key notes -  1, 2, 3, 6, 7
+  //   let bbPhrygianWeight = [7, 6, 5, 1, 3, 0, 5]; //weight of each element above
+  //   // totalWeight = eval(bbPhrygianWeight.join("+")); //get total weight (in this case, 10)
+  //   // let bbPhrygianWeighed = new Array(); //new array to hold "weighted" notes
+  //   // let currentNote = 0;
+  //   // console.log(bufferList);
+  //   // console.log("phrygian");
+  //   // while (currentNote < bbPhrygian.length) {
+  //   //   //step through each bbPhrygian[] element
+  //   //   for (i = 0; i < bbPhrygianWeight[currentNote]; i++)
+  //   //     bbPhrygianWeighed[bbPhrygianWeighed.length] = bbPhrygian[currentNote];
+  //   //   currentNote++;
+  //   // }
+  //   //sent to playNotes, but there is renamed to weighedScale
+  //   playNotes(bbPhrygian, bbPhrygianWeight);
+  // } else if (generalWeather === "Thunderstorm") {
+  //   bbLocrian = [
+  //     bbBufferList,
+  //     bBufferList,
+  //     dbBufferList,
+  //     ebBufferList,
+  //     eBufferList,
+  //     gbBufferList,
+  //     abBufferList,
+  //   ];
+  //   // bufferLists = bbLocrian; //7 degrees, and those with key notes - 1, 5, 2, 3, 6, 7, 4
+  //   let bbLocrianWeight = [7, 0, 5, 2, 6, 0, 3]; //weight of each element above
+  //   // totalWeight = eval(bbLocrianWeight.join("+")); //get total weight (in this case, 10)
+  //   // let bbLocrianWeighed = new Array(); //new array to hold "weighted" notes
+  //   // let currentNote = 0;
+  //   // console.log("locrian");
+  //   // console.log(bufferList);
+  //   // while (currentNote < bbLocrian.length) {
+  //   //   //step through each bbLocrian[] element
+  //   //   for (i = 0; i < bbLocrianWeight[currentNote]; i++)
+  //   //     bbLocrianWeighed[bbLocrianWeighed.length] = bbLocrian[currentNote];
+  //   //   currentNote++;
+  //   // }
+  //   //sent to playNotes, but there is renamed to weighedScale
+  //   playNotes(bbLocrian, bbLocrianWeight, "locrian");
+  // }
+  console.log(weatherModes[specificWeather]);
+
+  switch (weatherModes[specificWeather]) {
+    case bbIonian:
+      modeWeight = [8, 3, 7, 0, 6, 1, 1];
+      break;
+    case bbLydian:
+      modeWeight = [7, 5, 6, 6, 5, 3, 0];
+      break;
+    case bbMixolydian:
+      modeWeight = [7, 1, 2, 4, 5, 3, 6];
+      break;
+    case bbDorian:
+      modeWeight = [7, 1, 6, 0, 4, 3, 5];
+      break;
+    case bbAeolian:
+      modeWeight = [7, 1, 6, 2, 5, 0, 3];
+      break;
+    case bbPhrygian:
+      modeWeight = [7, 6, 5, 1, 3, 0, 5];
+      break;
+    case bbLocrian:
+      modeWeight = [7, 0, 5, 2, 6, 0, 3];
+      break;
+    default:
+      alert("Mode not found, try another city!");
   }
 
+  // if (weatherModes[specificWeather] === bbIonian) {
+  //   modeWeight = [8, 3, 7, 0, 6, 1, 1];
+  // } else if (weatherModes[specificWeather] === bbLydian) {
+  //   modeWeight = [7, 5, 6, 6, 5, 3, 0];
+  // } else if (weatherModes[specificWeather] === bbMixolydian){
+  //   modeWeight = [7, 1, 2, 4, 5, 3, 6];
+  // }
+
+  playNotes(weatherModes[specificWeather], modeWeight);
   // playRandomNoteFrom(bufferList);
 
   //<timeing between each note
@@ -1032,7 +1084,7 @@ function gatherNotes() {
   //ionian - few clouds -happy, positive
   // mixolydian - scattered clouds, broken clouds - happy, serious
   // dorian - shower rain and snow - sad, hopeful
-  // aolian - rain - sad
+  // Aeolian - rain - sad
   // phrygian - mist - dark
   // locrian - thunderstorm - evil
 
@@ -1077,20 +1129,13 @@ function gatherNotes() {
   //
 }
 
-function playNotes(mode, weightings, modeString) {
-  clearTimeout(musicTimeout); //stop the previous mode playing
-  playRandomNote(mode, weightings, modeString);
+function playNotes(mode, weightings) {
+  clearTimeout(musicTimeout); //stop the previous mode playing when a new mode is chosen (other wise the modes layer and layer...)
+  playRandomNote(mode, weightings);
 }
-///DONE***1st: turn all synth notes waves into mp3s
-///Done*** 2nd: create audio buffers for each note
-//*** then create arrays for each mode in the key of b flat (I am choosing the key of B flat to start, more can be added later):
-// Ie for B flat Dorian: let dorianBB  = [bufferLoaderBb, bufferLoaderC, bufferLoaderDb, bufferLoaderEb, bufferLoaderF, bufferLoaderG, bufferLoaderAb];
-//^bufferLoaders for each note will contain 2 octaves and 4 different synth sounds.
-// *** 3rd: Create the arrays for the key notes to be hit in each MODE
-// ***4th:create function to choose notes and feed the primaryNotes array to hit on most often
-///
-function playRandomNote(mode, weightings, modeString) {
-  console.log(modeString);
+
+function playRandomNote(mode, weightings) {
+  // console.log(weatherModes[specificWeather]);
   let weightedIndexes = [];
   for (let i = 0; i < weightings.length; i++) {
     for (let j = 0; j < weightings[i]; j++) {
@@ -1108,7 +1153,7 @@ function playRandomNote(mode, weightings, modeString) {
   console.log("humidity: " + humidityValue);
   // if (temperatureValue >= 26 || temperatureValue <= 0) {
   // let weightedNotesIndexes = [];
-  // let noteWeightings = [1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3];
+  // let noteWeightings = [1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3];
   // for (let i = 0; i < noteWeightings.length; i++) {
   //   for (let j = 0; j < noteWeightings[i]; j++) {
   //     weightedNotesIndexes.push(i);
@@ -1116,7 +1161,7 @@ function playRandomNote(mode, weightings, modeString) {
   // }
   // } else if (temperatureValue < 26 || temperatureValue > 0) {
   // let weightedNotesIndexes = [];
-  // let noteWeightings = [3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1];
+  // let noteWeightings = [3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   // for (let i = 0; i < noteWeightings.length; i++) {
   //   for (let j = 0; j < noteWeightings[i]; j++) {
   //     weightedNotesIndexes.push(i);
@@ -1144,12 +1189,29 @@ function playRandomNote(mode, weightings, modeString) {
   //   intervalMultiple = 3000;
   //   console.log("humidity");
   // }
+  ///!!!!!>>>>>>can i keep track of how many notes have been played and every ### notes played, slow down interval speed until you reach a certain number, and then start back to the original humidity value:
+  //
+  ///
+  ///
+
+  if (countNotesPlayed <= 20) {
+    intervalMultiple = (humidityValue / 2) * 100;
+    countNotesPlayed += 1;
+  } else if (countNotesPlayed > 20 && countNotesPlayed <= 40) {
+    ///after 20 notes have played shorten intervals
+    intervalMultiple = (humidityValue / 3) * 100; ///faster
+    countNotesPlayed += 1;
+  } else if (countNotesPlayed > 40) {
+    intervalMultiple = (humidityValue / 2) * 75;
+    countNotesPlayed = 0;
+  }
 
   intervalTiming = Math.floor(Math.random() * intervalMultiple); //vary the interval timing between 300 - 3000 millis
   console.log(intervalMultiple);
 
   Audio.gainNode.gain.value = 0.1 + Math.random() * 0.5; //vary volume - set between 0.1 and 0.5
 
+  ///map ripples Y location to to the index of the note played and the radius to the volume the note is played at. X location is a random horizontal position.
   let y = map(randomIndex, 0, 7, 100, view.canvas.height);
   let x = Math.random() * view.canvas.width;
   let maxRadius = map(Audio.gainNode.gain.value, 0, 1, 5, 300);
@@ -1157,7 +1219,7 @@ function playRandomNote(mode, weightings, modeString) {
   view.addCircle(x, y, maxRadius);
 
   musicTimeout = setTimeout(function () {
-    playRandomNote(mode, weightings, modeString);
+    playRandomNote(mode, weightings);
   }, intervalTiming);
 }
 
