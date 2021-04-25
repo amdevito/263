@@ -1,4 +1,4 @@
-//P2: Any Day Music Machine (weather driven generative soundscape)
+//P2: Any Day Music Machine (weather driven generative soundscape) AnthrophoScape
 
 let $button = $(".button");
 
@@ -52,6 +52,9 @@ let totalWeight = undefined;
 let countNotesPlayed = 0;
 
 let modeWeight = [];
+
+let weightedNotesIndexes = [];
+let noteWeightings = [];
 
 let bbIonian = [];
 let bbLydian = [];
@@ -1147,20 +1150,20 @@ function playRandomNote(mode, weightings) {
     weightedIndexes[Math.floor(Math.random() * weightedIndexes.length)];
 
   //>>>>!!! do a weighted indexes for the buffer list below that chooses the different synth sounds depending on temperature.
-  //
+  // --- so if the temperature is below 0 or above 26 make the second half of the synth sounds more probable to play and vice versa for between 0 and 26
   console.log("temp: " + temperatureValue);
 
-  if (temperatureValue >= 26 || temperatureValue <= 0) {
-    let weightedNotesIndexes = [];
-    let noteWeightings = [1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3];
+  if (temperatureValue <= 0 || temperatureValue >= 26) {
+    weightedNotesIndexes = [];
+    noteWeightings = [1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3];
     for (let i = 0; i < noteWeightings.length; i++) {
       for (let j = 0; j < noteWeightings[i]; j++) {
         weightedNotesIndexes.push(i);
       }
     }
-  } else if (temperatureValue < 26 || temperatureValue > 0) {
-    let weightedNotesIndexes = [];
-    let noteWeightings = [3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+  } else if (temperatureValue > 0 || temperatureValue < 26) {
+    weightedNotesIndexes = [];
+    noteWeightings = [3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1];
     for (let i = 0; i < noteWeightings.length; i++) {
       for (let j = 0; j < noteWeightings[i]; j++) {
         weightedNotesIndexes.push(i);
@@ -1173,11 +1176,12 @@ function playRandomNote(mode, weightings) {
     ];
   // let note = ???????
 
-  let bufferList = mode[randomIndex[randomNoteIndex]];
+  let bufferList = mode[randomIndex];
 
-  let note = Math.floor(Math.random() * bufferList.length);
-
-  console.log(bufferList.length);
+  // let note =
+  //   weightedNotesIndexes[Math.floor(Math.random() * randomNoteIndex.length)];
+  let note = randomNoteIndex;
+  console.log(noteBufferList);
 
   // let note = Math.floor(Math.random() * bufferList.length);
 
