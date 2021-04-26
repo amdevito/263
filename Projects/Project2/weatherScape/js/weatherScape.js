@@ -128,7 +128,7 @@ function displayData(data) {
 $(`#introduction-dialog`).dialog({
   modal: true,
   buttons: {
-    "Make background begin lighter (creates different kind of texture/ generative image)": function () {
+    "Light Background": function () {
       //for P2: change to - Modulate background by wind speed
       // $(`body`).css({ background: "white" });
       $(`canvas`).css({
@@ -138,7 +138,7 @@ $(`#introduction-dialog`).dialog({
       // gatherNotes();
       ///need to add back ground modulating by oscillator value that is received and scaled from the user's location and weather information.
     },
-    "Keep background dark": function () {
+    "Dark Background": function () {
       $(this).dialog("close"); //don't do anything but close the dialog box
       //!!!call function to start playing composition here
       // gatherNotes();
@@ -157,6 +157,26 @@ $(function () {
     hide: {
       effect: "explode",
       duration: 1000, //how long to complete this effect
+    },
+    buttons: {
+      "Light Background": function () {
+        //for P2: change to - Modulate background by wind speed
+        // $(`body`).css({ background: "white" });
+        $(`canvas`).css({
+          "background-color": "white",
+        }); //change the css color element to white
+        $(this).dialog("close");
+        // gatherNotes();
+        ///need to add back ground modulating by oscillator value that is received and scaled from the user's location and weather information.
+      },
+      "Dark Background": function () {
+        $(this).dialog("close"); //don't do anything but close the dialog box
+        //!!!call function to start playing composition here
+        // gatherNotes();
+        $(`canvas`).css({
+          "background-color": "black",
+        }); //change the css color element to white
+      },
     },
   });
 
