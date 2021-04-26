@@ -1153,17 +1153,17 @@ function playRandomNote(mode, weightings) {
   // --- so if the temperature is below 0 or above 26 make the second half of the synth sounds more probable to play and vice versa for between 0 and 26
   console.log("temp: " + temperatureValue);
 
-  if (temperatureValue <= 0 || temperatureValue >= 26) {
+  if (temperatureValue <= 10 || temperatureValue >= 26) {
     weightedNotesIndexes = [];
-    noteWeightings = [1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3];
+    noteWeightings = [1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4];
     for (let i = 0; i < noteWeightings.length; i++) {
       for (let j = 0; j < noteWeightings[i]; j++) {
         weightedNotesIndexes.push(i);
       }
     }
-  } else if (temperatureValue > 0 || temperatureValue < 26) {
+  } else if (temperatureValue > 10 || temperatureValue < 26) {
     weightedNotesIndexes = [];
-    noteWeightings = [3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    noteWeightings = [4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1];
     for (let i = 0; i < noteWeightings.length; i++) {
       for (let j = 0; j < noteWeightings[i]; j++) {
         weightedNotesIndexes.push(i);
@@ -1178,10 +1178,9 @@ function playRandomNote(mode, weightings) {
 
   let bufferList = mode[randomIndex];
 
-  let note =
-    weightedNotesIndexes[Math.floor(Math.random() * randomNoteIndex.length)];
+  let note = randomNoteIndex;
 
-  console.log(noteBufferList);
+  // console.log(noteBufferList);
 
   // let note = Math.floor(Math.random() * bufferList.length);
 
@@ -1194,14 +1193,14 @@ function playRandomNote(mode, weightings) {
   console.log("humidity: " + humidityValue);
   //turn this into a function? notesCounter
   if (countNotesPlayed <= 20) {
-    intervalMultiple = (humidityValue / 2) * 100;
+    intervalMultiple = (humidityValue / 2) * 75;
     countNotesPlayed += 1;
   } else if (countNotesPlayed > 20 && countNotesPlayed <= 40) {
     ///after 20 notes have played shorten intervals
-    intervalMultiple = (humidityValue / 3) * 100; ///faster
+    intervalMultiple = (humidityValue / 4) * 75; ///faster
     countNotesPlayed += 1;
   } else if (countNotesPlayed > 40 && countNotesPlayed <= 50) {
-    intervalMultiple = humidityValue * 100;
+    intervalMultiple = humidityValue * 75;
     countNotesPlayed += 1;
   } else if (countNotesPlayed > 50) {
     countNotesPlayed = 0;

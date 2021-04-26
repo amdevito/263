@@ -121,7 +121,7 @@ class View {
     }
   }
   drawCircle(context, x, y, radius, alpha) {
-    if (context.lineWidth <= 25) {
+    if (context.lineWidth <= 20) {
       alpha += 0.04;
       // context.lineWidth = 4;
       //interesting pattern
@@ -146,7 +146,7 @@ class View {
         ")";
       //removing the bottom line creates a really beautiful pattern with the circles becoming more like ripples and overlapping
       // context.fill();
-    } else if (context.lineWidth > 25) {
+    } else if (context.lineWidth > 20) {
       context.lineWidth = 0.05;
 
       context.clearRect(0, 0, canvas.width, canvas.height);
