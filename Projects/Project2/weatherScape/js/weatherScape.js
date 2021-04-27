@@ -245,7 +245,6 @@ window.onload = function () {
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate); ///bind connects the update display to view and not canvas
   }
-  ////////loadedNote(); ///call loadedNote function
 
   //load Ab notes
   abBufferLoader = new BufferLoader( ///create new BufferLoader via the class
@@ -287,7 +286,6 @@ window.onload = function () {
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
-  ////loadedNote(); ///call loadedNote function
 
   //load B notes
   bBufferLoader = new BufferLoader( ///create new BufferLoader via the class
@@ -893,129 +891,55 @@ function playRandomNote(mode, weightings) {
   ///let mode = (bbBufferlist, cbufferlist, debufferList etccc)//this is what we are weighing
   ///let weightings = ["#", "#".... ]
   //
-  let totalWeight = eval(weightings.join("+")); //get sum of the weightings
-  let weightedMode = new Array(); /// new array to hold "weighted" *notes*BufferList
-  let currentNote = 0;
-  while (currentNote < mode.length) {
-    //step through each index in weightings element
-    for (i = 0; i < weightings[currentNote]; i++)
-      weightedMode[weightedMode.length] = mode[currentNote];
-    currentNote++;
-  }
+  // Choose the note (bufferList) to play next randomly
+  let randomBufferListIndex = random(weightings);
+  let randomBufferList = mode[randomBufferListIndex];
 
-  //choose a random number using the confines of the sum of the weightings, totalWeight
-  let randomIndex = Math.floor(Math.random() * totalWeight);
+  // These should really be at the top of the program
+  // They determine the range of indexes for your two "banks" of notes
+  // stored in the same bufferList
+  const extremeBankMin = 0;
+  const extremeBankMax = 9;
+  const temperateBankMin = 9;
+  const temperateBankMax = 18;
 
-  ///take the random Index selected, from the new weightedMode array (which now contains the multiple copies - so the choosen noteBufferList/array is picked based on those weighted values)
+  // Actual min and max to use when choosing the next buffer will be
+  // determined by temperature and probability
+  let bankMin;
+  let bankMax;
 
-  ////selectedModeIndex has one Note with it's 18 different sounds/versions in the array
-  let selectedModeIndex = weightedMode[randomIndex];
-  console.log(selectedModeIndex);
-  // weighted indexes for the *notes*bufferList below that chooses the different synth sounds depending on temperature.
-  //if the temperature is below 10 or above 26 make the second half of the synth sounds more probable to play and vice versa for between 0 and 26
-
+  // Extreme temperature...
   if (temperatureValue <= 10 || temperatureValue >= 26) {
-    ///selectedModeIndex = [sameNote1, sameNote2, samenote, 3...]
-    // weightedNotesIndexes = [];
-    noteWeightings = [
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      4,
-      2,
-      4,
-      4,
-      3,
-      4,
-      4,
-      2,
-      4,
-      4,
-      3,
-      4,
-    ];
-    let totalNotesWeight = eval(noteWeightings.join("+")); //get sum of the weightings
-    let weightedNotes = new Array(); /// new array to hold "weighted" *notes*BufferList
-    let currentNoteSample = 0;
-
-    while (currentNoteSample < selectedModeIndex.length) {
-      //step through each index in weightings element
-      for (i = 0; i < noteWeightings[currentNoteSample]; i++)
-        weightedNotes[weightedNotes.length] =
-          selectedModeIndex[currentNoteSample]; ////?
-      currentNoteSample++;
+    if (Math.random() < 0.7) {
+      // 70% chance of extreme bank
+      bankMin = extremeBankMin;
+      bankMax = extremeBankMax;
+    } else {
+      bankMin = temperateBankMin;
+      bankMax = temperateBankMax;
     }
-    randomNote = Math.floor(Math.random() * totalNotesWeight);
-    selectedNote = weightedNotes[randomNote];
-    console.log(randomNote);
-    console.log(weightedNotes);
-    console.log(selectedNote);
-  } else if (temperatureValue > 10 || temperatureValue < 26) {
-    // weightedNotesIndexes = [];
-    noteWeightings = [
-      4,
-      4,
-      4,
-      2,
-      4,
-      4,
-      4,
-      2,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-    ];
-    let totalNotesWeight = eval(noteWeightings.join("+")); //get sum of the weightings
-    let weightedNotes = new Array(); /// new array to hold "weighted" *notes*BufferList
-    let currentNoteSample = 0;
-
-    while (currentNoteSample < selectedModeIndex.length) {
-      //step through each index in weightings element
-      for (i = 0; i < noteWeightings[currentNoteSample]; i++)
-        weightedNotes[weightedNotes.length] =
-          selectedModeIndex[currentNoteSample];
-      currentNoteSample++;
-    }
-    randomNote = Math.floor(Math.random() * totalNotesWeight);
-    selectedNote = weightedNotes[randomNote];
-    console.log(randomNote);
   }
-  console.log(selectedNote);
-  // let bufferList = mode[randomIndex];
+  // Temperate temperature
+  else {
+    if (Math.random() < 0.7) {
+      // 70% chance of temperate bank
+      bankMin = temperateBankMin;
+      bankMax = temperateBankMax;
+    } else {
+      bankMin = extremeBankMin;
+      bankMax = extremeBankMax;
+    }
+  }
+  // Choose our note index from the selected bank's range of indexesa
+  let randomNoteIndex = randomInRange(bankMin, bankMax);
 
-  // let randomNoteIndex =
-  //   weightedNotesIndexes[
-  //     Math.floor(Math.random() * weightedNotesIndexes.length)
-  //   ];
+  console.log(randomBufferList);
+  console.log(randomNoteIndex);
 
-  // let note = selectedNote;
+  // Initialize the buffer list to play
+  Audio.init(randomBufferList);
 
-  // let note = Math.floor(Math.random() * bufferList.length);
-  // bufferList = mode;
-
-  //initiate the Audio class with the current "stocked" bufferList
-  Audio.init(selectedModeIndex); ///!!! I THINK THIS IS THE WRONG ARGUMENT TO PASS?
-
-  //play the indexed number (note) of the weighedScale passed to this function
-  Audio.play(selectedNote);
-
-  ///
-  ///
-
+  // Work out parameters
   ////track number of notes to vary the composition at different times, after a certain number of notes are played, change the interval timing between each note, after 20 (and 10)played notes. The interval timing is also determined by the humidity percentage of the weather in that location.
   if (countNotesPlayed <= 20) {
     intervalMultiple = (humidityValue / 2) * 75;
@@ -1039,7 +963,7 @@ function playRandomNote(mode, weightings) {
   Audio.gainNode.gain.value = 0.1 + Math.random() * 0.5; //vary volume - set between 0.1 and 0.5
 
   ///map ripples Y location to to the index of the note played and the radius to the volume the note is played at. X location is a random horizontal position.
-  let y = map(randomIndex, 0, 7, 100, view.canvas.height);
+  let y = map(randomBufferListIndex, 0, 7, 100, view.canvas.height);
   let x = Math.random() * view.canvas.width;
   let maxRadius = map(Audio.gainNode.gain.value, 0, 1, 5, 300);
 
@@ -1059,6 +983,13 @@ function map(value, fromMin, fromMax, toMin, toMax) {
   return result;
 }
 
+function random(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+function randomInRange(min, max) {
+  return Math.floor(min + Math.random() * (max - min));
+}
 //make the animated ripple TITLE at the top of the page DRAGGABLE
 $(`#ripple-one`).draggable();
 $(`#ripple-two`).draggable();

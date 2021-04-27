@@ -1,40 +1,14 @@
-///view is the constructor and takes an arguement - the 'canvas' object - that the view is managing
+///View is the constructor and takes an arguement - the 'canvas' object - that the view is managing
 class View {
   constructor(canvas) {
     this.canvas = canvas;
-    //set click array to collect the click location information
+    //set click array to collect the location information from the x position determined by the note value, mapped across the x axis
     this.circle = [];
-    ///representing the frames per second - 3o frames per second.
-    // this.frameRate = 1000 / 30;
+    ///representing the frames per second
     this.frameRate = 20;
-    this.loopRate = 10000; ///amount of time before the circle is redrawn - 10sec. nice and slow. **MAP THE HIDDEN DIALOG CHOICES FOR REPLAY RATE HERE.
-    this.maxRadius = 100; //*** IF BIGGER IS CHOSEN ADD 20 FOR BIGGER, MINUS 20 FOR SMALLER.
+    this.loopRate = 10000; ///amount of time before the ripple is redrawn
+    this.maxRadius = 100; //set default max radius to 100
 
-    ///when clicking the first group of radio buttons, change the size of the ripples - bigger to 300, smaller to 50 and normal, back to 100
-    // //event listener on the clicking action of the radio buttons.
-    // $(`#radio-1`).on(`click`, () => {
-    //   this.maxRadius = 300; //big
-    // });
-    // $(`#radio-2`).on(`click`, () => {
-    //   this.maxRadius = 50; //small
-    // });
-    // $(`#radio-3`).on(`click`, () => {
-    //   this.maxRadius = 100; //back to normal
-    // });
-    //
-    // //when clicking the next round of radio buttons, change the replay delay time on the ripple and tone play back
-    // $(`#radio-4`).on(`click`, () => {
-    //   this.loopRate = 3000; /// 3 seconds
-    // });
-    // $(`#radio-5`).on(`click`, () => {
-    //   this.loopRate = 6000; ///6 seconds
-    // });
-    // $(`#radio-6`).on(`click`, () => {
-    //   this.loopRate = 9000; /// 9 seconds
-    // });
-    // $(`#radio-7`).on(`click`, () => {
-    //   this.loopRate = 12000; /// 12 seconds
-    // });
     //every 3 seconds draw a black square over thecircles with a low opacity to slowly fade out the past drawn circles
     setInterval(function () {
       let context = canvas.getContext("2d");
