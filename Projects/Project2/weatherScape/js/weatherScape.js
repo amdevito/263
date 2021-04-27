@@ -914,7 +914,7 @@ function gatherNotes() {
 //playNotes function carries the mode and weightings, sends them parameteres to playRandom note, where the notes are actually triggered, but also calls clearTimeout, sending the parameter musicTimeout, which stops the previous mode from playing when a new mode is triggered.
 
 function playNotes(mode, weightings) {
-  clearTimeout(musicTimeout); //stop the previous mode playing when a new mode is chosen (other wise the modes layer and layer...)
+  clearTimeout(musicTimeout); //stop the previous mode playing when a new mode is chosen (other wise the modes layer and layer...)///CREDIT - Samuel Paré-Chouinard
 
   playRandomNote(mode, weightings); //call playRandomNote function and send the parameters mode and weightings
 }
