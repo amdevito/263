@@ -93,8 +93,8 @@ $(`#first-button`).on("click", function () {
   )
     .then((response) => response.json()) ///once reponse from user input is received
     .then(displayData) ///show the weather data
-    .then(gatherNotes); ///call function to set up notes, scales, sounds, intervals and intensity/ gain for the composition
-  // >>open this after debugging >>.catch((err) => alert("City name not recognized please try again!")); // if openWeather API does not recognize city name, throw an alert at user to try typing in another city name.
+    .then(gatherNotes) ///call function to set up notes, scales, sounds, intervals and intensity/ gain for the composition
+    .catch((err) => alert("City name not recognized please try again!")); // if openWeather API does not recognize city name, throw an alert at user to try typing in another city name.
 });
 //set up JQUERY UI library for the SECOND dialog box and fetch API openWeather data using unique API key. This can be used to change the composition mid interaction.
 $(`#second-button`).on("click", function () {
@@ -105,8 +105,8 @@ $(`#second-button`).on("click", function () {
   )
     .then((response) => response.json()) ///once reponse from user input is received
     .then(displayData) ///show the weather data
-    .then(gatherNotes); ///call function to set up notes, scales, sounds, intervals and intensity/ gain for the composition
-  // >>open this after debugging >>.catch((err) => alert("City name not recognized please try again!")); // if openWeather API does not recognize city name, throw an alert at user to try typing in another city name.
+    .then(gatherNotes) ///call function to set up notes, scales, sounds, intervals and intensity/ gain for the composition
+    .catch((err) => alert("City name not recognized please try again!")); // if openWeather API does not recognize city name, throw an alert at user to try typing in another city name.
 });
 
 //function to take data from the API and desplay in the dialog box
@@ -245,6 +245,7 @@ window.onload = function () {
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate); ///bind connects the update display to view and not canvas
   }
+  ////////loadedNote(); ///call loadedNote function
 
   //load Ab notes
   abBufferLoader = new BufferLoader( ///create new BufferLoader via the class
@@ -286,6 +287,7 @@ window.onload = function () {
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
+  ////loadedNote(); ///call loadedNote function
 
   //load B notes
   bBufferLoader = new BufferLoader( ///create new BufferLoader via the class
@@ -809,7 +811,7 @@ function gatherNotes() {
     "heavy intensity shower rain": bbAeolian,
     "ragged shower rain": bbAeolian,
     "light snow": bbMixolydian,
-    Snow: bbMixolydian,
+    snow: bbMixolydian,
     "Heavy snow": bbDorian,
     Sleet: bbAeolian,
     "Light shower sleet": bbAeolian,
@@ -870,8 +872,16 @@ function gatherNotes() {
       alert("Mode not found, try another city!"); ///if error and the weather is not connected to a mode, throw alert to user to try another city.
   }
 
+  // Calculate the weightings array
+  let weightings = [];
+  for (let index = 0; index < modeWeight.length; index++) {
+    for (let i = 0; i < modeWeight[index]; i++) {
+      weightings.push(index);
+    }
+  }
+
   ////pass the mode array and the modeWeight as parameters into the function playNotes.
-  playNotes(weatherModes[specificWeather], modeWeight);
+  playNotes(weatherModes[specificWeather], weightings);
 }
 
 //playNotes function carries the mode and weightings, sends them parameteres to playRandom note, where the notes are actually triggered, but also calls clearTimeout, sending the parameter musicTimeout, which stops the previous mode from playing when a new mode is triggered.
@@ -882,8 +892,6 @@ function playNotes(mode, weightings) {
   playRandomNote(mode, weightings); //call playRandomNote function and send the parameters mode and weightings
 }
 
-///playRandomNote function passes the current mode and its weightings and creates new arrays from which a random note is triggered (proability of note selection for each degree or index of that note is increased depending on the position and the specific mode) - Also the weightings for the single notes chosen from the *note*BufferList is handled here. These are dependant on the temperature of the weather.
-///CREDIT: thank you to Prof. Pippin Barr for assistance with this function.
 function playRandomNote(mode, weightings) {
   ///CREDIT: weighted logic and probality modelled after http://www.javascriptkit.com/javatutors/weighrandom2.shtml
   ///
@@ -891,6 +899,11 @@ function playRandomNote(mode, weightings) {
   ///let mode = (bbBufferlist, cbufferlist, debufferList etccc)//this is what we are weighing
   ///let weightings = ["#", "#".... ]
   //
+
+  console.log("-----");
+  console.log(mode);
+  console.log(weightings);
+
   // Choose the note (bufferList) to play next randomly
   let randomBufferListIndex = random(weightings);
   let randomBufferList = mode[randomBufferListIndex];
@@ -898,10 +911,11 @@ function playRandomNote(mode, weightings) {
   // These should really be at the top of the program
   // They determine the range of indexes for your two "banks" of notes
   // stored in the same bufferList
-  const extremeBankMin = 0;
-  const extremeBankMax = 9;
-  const temperateBankMin = 9;
-  const temperateBankMax = 18;
+
+  const temperateBankMin = 0; ///change to 7? or 8?
+  const temperateBankMax = 8;
+  const extremeBankMin = 8;
+  const extremeBankMax = 18; //change to 7
 
   // Actual min and max to use when choosing the next buffer will be
   // determined by temperature and probability
@@ -910,24 +924,28 @@ function playRandomNote(mode, weightings) {
 
   // Extreme temperature...
   if (temperatureValue <= 10 || temperatureValue >= 26) {
-    if (Math.random() < 0.7) {
-      // 70% chance of extreme bank
+    if (Math.random() < 0.8) {
+      // 80% chance of extreme bank
       bankMin = extremeBankMin;
       bankMax = extremeBankMax;
+      console.log("extreme");
     } else {
       bankMin = temperateBankMin;
       bankMax = temperateBankMax;
+      console.log("temperate");
     }
   }
   // Temperate temperature
   else {
-    if (Math.random() < 0.7) {
-      // 70% chance of temperate bank
+    if (Math.random() < 0.8) {
+      // 20% chance of temperate bank
       bankMin = temperateBankMin;
       bankMax = temperateBankMax;
+      console.log("temperate");
     } else {
       bankMin = extremeBankMin;
       bankMax = extremeBankMax;
+      console.log("extreme");
     }
   }
   // Choose our note index from the selected bank's range of indexesa
@@ -940,21 +958,30 @@ function playRandomNote(mode, weightings) {
   Audio.init(randomBufferList);
 
   // Work out parameters
-  ////track number of notes to vary the composition at different times, after a certain number of notes are played, change the interval timing between each note, after 20 (and 10)played notes. The interval timing is also determined by the humidity percentage of the weather in that location.
-  if (countNotesPlayed <= 20) {
-    intervalMultiple = (humidityValue / 2) * 75;
+  ////track number of notes to vary the composition at different times, after a certain number of notes are played, change the interval timing between each note slow to fast, back to slow. The interval timing is also determined by the humidity percentage of the weather in that location.
+  if (countNotesPlayed <= 5) {
+    intervalMultiple = humidityValue * 150;
     countNotesPlayed += 1;
-  } else if (countNotesPlayed > 20 && countNotesPlayed <= 40) {
+  } else if (countNotesPlayed > 5 && countNotesPlayed <= 10) {
+    intervalMultiple = (humidityValue / 2) * 100;
+    countNotesPlayed += 1;
+  } else if (countNotesPlayed > 10 && countNotesPlayed <= 20) {
+    intervalMultiple = (humidityValue / 4) * 100;
+    countNotesPlayed += 1;
+  } else if (countNotesPlayed > 20 && countNotesPlayed <= 60) {
     ///after 20 notes have played shorten intervals
-    intervalMultiple = (humidityValue / 4) * 75; ///faster
+    intervalMultiple = (humidityValue / 6) * 100; ///faster
     countNotesPlayed += 1;
-  } else if (countNotesPlayed > 40 && countNotesPlayed <= 50) {
-    intervalMultiple = humidityValue * 75;
+  } else if (countNotesPlayed > 60 && countNotesPlayed <= 75) {
+    intervalMultiple = (humidityValue / 2) * 100;
     countNotesPlayed += 1;
-  } else if (countNotesPlayed > 50) {
+  } else if (countNotesPlayed > 75 && countNotesPlayed <= 80) {
+    intervalMultiple = humidityValue * 100;
+    countNotesPlayed += 1;
+  } else if (countNotesPlayed > 80) {
     countNotesPlayed = 0;
   }
-  // console.log("# of notes played: " + countNotesPlayed);///for reference
+  console.log("# of notes played: " + countNotesPlayed); ///for reference
 
   intervalTiming = Math.floor(Math.random() * intervalMultiple); //vary the interval timing depending on the humidity and the position of the compostiion
   // console.log("interval multiple: " + intervalMultiple);/// for reference
@@ -964,6 +991,7 @@ function playRandomNote(mode, weightings) {
 
   //play the indexed number (note) of the weighedScale passed to this function
   Audio.play(randomNoteIndex);
+
   ///map ripples Y location to to the index of the note played and the radius to the volume the note is played at. X location is a random horizontal position.
   let y = map(randomBufferListIndex, 0, 7, 100, view.canvas.height);
   let x = Math.random() * view.canvas.width;
@@ -971,10 +999,22 @@ function playRandomNote(mode, weightings) {
 
   view.addCircle(x, y, maxRadius);
 
+  // intervalTiming = Math.floor(Math.random() * intervalMultiple); //vary the interval timing depending on the humidity and the position of the compostiion
+  // console.log("interval multiple: " + intervalMultiple);/// for reference
+  // console.log("interval timing: " + intervalTiming);/// for reference
+
   ///set musicTimeout to play next note.
   musicTimeout = setTimeout(function () {
     playRandomNote(mode, weightings);
   }, intervalTiming);
+}
+
+function random(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+function randomInRange(min, max) {
+  return Math.floor(min + Math.random() * (max - min));
 }
 
 ///mapping function takes the difference between the value and romMin divided by the difference between fromMax and fromMin, and multiply the sum of the difference between toMax and toMin plus toMin.
@@ -985,13 +1025,6 @@ function map(value, fromMin, fromMax, toMin, toMax) {
   return result;
 }
 
-function random(array) {
-  return array[Math.floor(Math.random() * array.length)];
-}
-
-function randomInRange(min, max) {
-  return Math.floor(min + Math.random() * (max - min));
-}
 //make the animated ripple TITLE at the top of the page DRAGGABLE
 $(`#ripple-one`).draggable();
 $(`#ripple-two`).draggable();

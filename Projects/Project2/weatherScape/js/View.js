@@ -54,7 +54,7 @@ class View {
     }
   }
   drawCircle(context, x, y, radius, alpha) {
-    if (context.lineWidth <= 20) {
+    if (context.lineWidth <= 25) {
       ///add to alpha parameter, increasing the opacity overall every time a note is played
       alpha += 0.04;
 
