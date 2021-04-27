@@ -10,7 +10,7 @@
 ///CREDITS - thank you to TAs Dana and Samuel Paré-Chouinard for helping me solve almost all debugging issues throughout the process.
 ///CREDITS - the CSS designed RIPPLES used only in the AnyDay Music Machine Animated and movable title is loosely based off of this tutorial: Ripple animation using only html & css. (2018, December 29). Retrieved March 29, 2021, from
 // https://www.youtube.com/watch?v=FCPNN730c98&ab_channel=DarkCode
-//
+//CREDITS/Attribution - JQuery and jQuery UI elements grew from the lessons and exercises from CART 263, Week 8 and 9.
 // NOTE: A MODE is a type of scale
 // All compostions are in the key of B flat.
 // For the specific feel and colour of the modal composition to be heard, it takes some time for the notes to start blending together to hear the quality in the composition.
