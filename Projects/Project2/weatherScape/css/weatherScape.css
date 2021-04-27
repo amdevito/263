@@ -16,30 +16,17 @@ body {
   margin: 10px 0;
   font-family: "American Typewriter";
 }
-
+/* design for user input box */
 input[type="text"] {
   height: 30px;
   width: 200px;
   text-align: center;
   background: lightgrey;
   font-family: "American Typewriter";
-  /* font-weight: bold; */
   font-size: 20px;
-  /* border: none; */
   border-radius: 2px;
   margin: 10px 0;
 }
-/* input[type="submit"] {
-  height: 30px;
-  width: 200px;
-  background: aqua;
-  font-family: "Nunito" sans-serif;
-  font-weight: bold;
-  font-size: 20px;
-  /* border: none; */
-/* border-radius: 8px;
-} */
-
 .display {
   text-align: center;
   font-size: 12px;
@@ -49,12 +36,14 @@ input[type="text"] {
   font-weight: lighter;
   font-family: "American Typewriter";
 }
+/* main description that composition is based off/ mode is chosen from  */
 .description {
   font-size: 20px;
   font-weight: bold;
   color: darkblue;
   font-family: "American Typewriter";
 }
+/* all other weather forcast parameters */
 .temperature {
   font-size: 18px;
   font-weight: normal;
