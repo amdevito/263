@@ -59,6 +59,10 @@ let specificWeather = undefined; //set variable for holding the specific weather
 
 let bufferList = undefined; /// set variable for holding the notes to be played in the composition
 
+///set variables to hold the notes chosen in the weighted logic in playRandomNote
+let randomNote = undefined;
+let selectedNote = undefined;
+
 //set variable to track number of notes played (start at 0)
 let countNotesPlayed = 0;
 
@@ -883,8 +887,10 @@ function playNotes(mode, weightings) {
 ///playRandomNote function passes the current mode and its weightings and creates new arrays from which a random note is triggered (proability of note selection for each degree or index of that note is increased depending on the position and the specific mode) - Also the weightings for the single notes chosen from the *note*BufferList is handled here. These are dependant on the temperature of the weather.
 ///CREDIT: thank you to Prof. Pippin Barr for assistance with this function.
 function playRandomNote(mode, weightings) {
+  ///CREDIT: weighted logic and probality modelled after http://www.javascriptkit.com/javatutors/weighrandom2.shtml
+  ///
   ///examples of what is in mode and weightings
-  ///let mode = (bbBufferlist, cbufferlist, debufferList etccc)
+  ///let mode = (bbBufferlist, cbufferlist, debufferList etccc)//this is what we are weighing
   ///let weightings = ["#", "#".... ]
   //
   let totalWeight = eval(weightings.join("+")); //get sum of the weightings
@@ -900,15 +906,17 @@ function playRandomNote(mode, weightings) {
   //choose a random number using the confines of the sum of the weightings, totalWeight
   let randomIndex = Math.floor(Math.random() * totalWeight);
 
-  ///take the random Index selected, from the new weightedMode array (which now contains the multiple copies)
+  ///take the random Index selected, from the new weightedMode array (which now contains the multiple copies - so the choosen noteBufferList/array is picked based on those weighted values)
 
+  ////selectedModeIndex has one Note with it's 18 different sounds/versions in the array
   let selectedModeIndex = weightedMode[randomIndex];
   console.log(selectedModeIndex);
   // weighted indexes for the *notes*bufferList below that chooses the different synth sounds depending on temperature.
   //if the temperature is below 10 or above 26 make the second half of the synth sounds more probable to play and vice versa for between 0 and 26
 
   if (temperatureValue <= 10 || temperatureValue >= 26) {
-    weightedNotesIndexes = [];
+    ///selectedModeIndex = [sameNote1, sameNote2, samenote, 3...]
+    // weightedNotesIndexes = [];
     noteWeightings = [
       1,
       1,
@@ -933,22 +941,22 @@ function playRandomNote(mode, weightings) {
     ];
     let totalNotesWeight = eval(noteWeightings.join("+")); //get sum of the weightings
     let weightedNotes = new Array(); /// new array to hold "weighted" *notes*BufferList
-    let currentNote = 0;
+    let currentNoteSample = 0;
 
-    while (currentNote < noteWeightings.length) {
+    while (currentNoteSample < selectedModeIndex.length) {
       //step through each index in weightings element
-      for (i = 0; i < noteWeightings[currentNote]; i++)
-        weightedNotes[weightedNotes.length] = mode[currentNote]; ////?
-      currentNote++;
+      for (i = 0; i < noteWeightings[currentNoteSample]; i++)
+        weightedNotes[weightedNotes.length] =
+          selectedModeIndex[currentNoteSample]; ////?
+      currentNoteSample++;
     }
-
-    for (let i = 0; i < noteWeightings.length; i++) {
-      for (let j = 0; j < noteWeightings[i]; j++) {
-        weightedNotesIndexes.push(i);
-      }
-    }
+    randomNote = Math.floor(Math.random() * totalNotesWeight);
+    selectedNote = weightedNotes[randomNote];
+    console.log(randomNote);
+    console.log(weightedNotes);
+    console.log(selectedNote);
   } else if (temperatureValue > 10 || temperatureValue < 26) {
-    weightedNotesIndexes = [];
+    // weightedNotesIndexes = [];
     noteWeightings = [
       4,
       4,
@@ -973,37 +981,37 @@ function playRandomNote(mode, weightings) {
     ];
     let totalNotesWeight = eval(noteWeightings.join("+")); //get sum of the weightings
     let weightedNotes = new Array(); /// new array to hold "weighted" *notes*BufferList
-    let currentNote = 0;
+    let currentNoteSample = 0;
 
-    while (currentNote < noteWeightings.length) {
+    while (currentNoteSample < selectedModeIndex.length) {
       //step through each index in weightings element
-      for (i = 0; i < noteWeightings[currentNote]; i++)
-        weightedNotes[weightedNotes.length] = mode[currentNote]; ////?
-      currentNote++;
+      for (i = 0; i < noteWeightings[currentNoteSample]; i++)
+        weightedNotes[weightedNotes.length] =
+          selectedModeIndex[currentNoteSample];
+      currentNoteSample++;
     }
-
-    for (let i = 0; i < noteWeightings.length; i++) {
-      for (let j = 0; j < noteWeightings[i]; j++) {
-        weightedNotesIndexes.push(i);
-      }
-    }
+    randomNote = Math.floor(Math.random() * totalNotesWeight);
+    selectedNote = weightedNotes[randomNote];
+    console.log(randomNote);
   }
 
-  let bufferList = mode[randomIndex];
+  // let bufferList = mode[randomIndex];
 
-  let randomNoteIndex =
-    weightedNotesIndexes[
-      Math.floor(Math.random() * weightedNotesIndexes.length)
-    ];
+  // let randomNoteIndex =
+  //   weightedNotesIndexes[
+  //     Math.floor(Math.random() * weightedNotesIndexes.length)
+  //   ];
 
-  let note = randomNoteIndex;
+  // let note = selectedNote;
 
   // let note = Math.floor(Math.random() * bufferList.length);
+  // bufferList = mode;
 
   //initiate the Audio class with the current "stocked" bufferList
-  Audio.init(bufferList);
+  Audio.init(selectedModeIndex); ///!!! I THINK THIS IS THE WRONG ARGUMENT TO PASS?
+
   //play the indexed number (note) of the weighedScale passed to this function
-  Audio.play(note);
+  Audio.play(selectedNote);
 
   ///
   ///
