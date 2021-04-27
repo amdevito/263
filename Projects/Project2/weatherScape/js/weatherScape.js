@@ -967,6 +967,7 @@ function playRandomNote(mode, weightings) {
   Audio.init(randomBufferList);
 
   // Work out parameters
+  //SET INTERVAL TIMINGS by connecting humidity percentages
   ////track number of notes to vary the composition at different times, after a certain number of notes are played, change the interval timing between each note slow to fast, back to slow. The interval timing is also determined by the humidity percentage of the weather in that location.
   if (countNotesPlayed <= 5) {
     intervalMultiple = humidityValue * 50;
