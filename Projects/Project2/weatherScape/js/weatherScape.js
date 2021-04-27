@@ -89,8 +89,8 @@ $(`#first-button`).on("click", function () {
   )
     .then((response) => response.json()) ///once reponse from user input is received
     .then(displayData) ///show the weather data
-    .then(gatherNotes) ///call function to set up notes, scales, sounds, intervals and intensity/ gain for the composition
-    .catch((err) => alert("City name not recognized please try again!")); // if openWeather API does not recognize city name, throw an alert at user to try typing in another city name.
+    .then(gatherNotes); ///call function to set up notes, scales, sounds, intervals and intensity/ gain for the composition
+  // >>open this after debugging >>.catch((err) => alert("City name not recognized please try again!")); // if openWeather API does not recognize city name, throw an alert at user to try typing in another city name.
 });
 //set up JQUERY UI library for the SECOND dialog box and fetch API openWeather data using unique API key. This can be used to change the composition mid interaction.
 $(`#second-button`).on("click", function () {
@@ -101,8 +101,8 @@ $(`#second-button`).on("click", function () {
   )
     .then((response) => response.json()) ///once reponse from user input is received
     .then(displayData) ///show the weather data
-    .then(gatherNotes) ///call function to set up notes, scales, sounds, intervals and intensity/ gain for the composition
-    .catch((err) => alert("City name not recognized please try again!")); // if openWeather API does not recognize city name, throw an alert at user to try typing in another city name.
+    .then(gatherNotes); ///call function to set up notes, scales, sounds, intervals and intensity/ gain for the composition
+  // >>open this after debugging >>.catch((err) => alert("City name not recognized please try again!")); // if openWeather API does not recognize city name, throw an alert at user to try typing in another city name.
 });
 
 //function to take data from the API and desplay in the dialog box
