@@ -1,5 +1,8 @@
 //P2: Any Day Music Machine (Weather Driven Generative Composer)
-// NOT: A MODE is a type of scale
+//CREDITS - Original, very basic idea and the organizations of classes started from the Generative MusicBox tutorial found *******
+///CREDITS - thank you to TAs Dana and Sam for solving almost all debugging issues throughout the process.
+///CREDITS -
+// NOTE: A MODE is a type of scale
 // All compostions are in the key of B flat.
 // For the specific feel and colour of the modal composition to be heard, it takes some time for the notes to start blending together to hear the quality in the composition.
 // The 8 'Church' Modes are used here : Ionian, Lydian, Mixolydian, Dorian, Aeolian, Phrygian, Locrian
@@ -906,10 +909,10 @@ function playNotes(mode, weightings) {
 }
 
 function playRandomNote(mode, weightings) {
-  ///CREDIT: weighted logic and probality modelled after http://www.javascriptkit.com/javatutors/weighrandom2.shtml
+  ///CREDIT: weighted logic and probality first modelled after http://www.javascriptkit.com/javatutors/weighrandom2.shtml, then I drastically reorganized and remodelled, but then Prof. Pippin Barr came up with this cleaner, simplified solution
   ///
   ///examples of what is in mode and weightings
-  ///let mode = (bbBufferlist, cbufferlist, debufferList etccc)//this is what we are weighing
+  ///let mode = (bbBufferlist, cbufferlist, debufferList etc.)//this is what we are weighing
   ///let weightings = ["#", "#".... ]
   //
 
@@ -917,7 +920,7 @@ function playRandomNote(mode, weightings) {
   // console.log(mode);//kept for future compositional adjustments
   // console.log(weightings);///kept for future compositional adjustments
 
-  // Choose the note (bufferList) to play next randomly
+  // Choose the note (bufferList) to play next randomly, based on the weightings.
   let randomBufferListIndex = random(weightings);
   let randomBufferList = mode[randomBufferListIndex];
 
@@ -927,11 +930,11 @@ function playRandomNote(mode, weightings) {
       // 80% chance of extreme bank
       bankMin = extremeBankMin;
       bankMax = extremeBankMax;
-      console.log("extreme");
+      // console.log("extreme");//remains to change and tweak sound banks in future
     } else {
       bankMin = temperateBankMin;
       bankMax = temperateBankMax;
-      console.log("temperate");
+      // console.log("temperate");//remains to change and tweak sound banks in future
     }
   }
   // Temperate temperature
@@ -940,18 +943,15 @@ function playRandomNote(mode, weightings) {
       // 20% chance of temperate bank
       bankMin = temperateBankMin;
       bankMax = temperateBankMax;
-      console.log("temperate");
+      // console.log("temperate");//remains to change and tweak sound banks in future
     } else {
       bankMin = extremeBankMin;
       bankMax = extremeBankMax;
-      console.log("extreme");
+      // console.log("extreme");//remains to change and tweak sound banks in future
     }
   }
   // Choose our note index from the selected bank's range of indexesa
   let randomNoteIndex = randomInRange(bankMin, bankMax);
-
-  console.log(randomBufferList);
-  console.log(randomNoteIndex);
 
   // Initialize the buffer list to play
   Audio.init(randomBufferList);
@@ -980,7 +980,7 @@ function playRandomNote(mode, weightings) {
   } else if (countNotesPlayed > 80) {
     countNotesPlayed = 0;
   }
-  console.log("# of notes played: " + countNotesPlayed); ///for reference
+  // console.log("# of notes played: " + countNotesPlayed); ///for reference and debugging and compostition tweaking
 
   intervalTiming = Math.floor(Math.random() * intervalMultiple); //vary the interval timing depending on the humidity and the position of the compostiion
   // console.log("interval multiple: " + intervalMultiple);/// for reference
@@ -988,7 +988,7 @@ function playRandomNote(mode, weightings) {
 
   Audio.gainNode.gain.value = 0.1 + Math.random() * 0.5; //vary volume - set between 0.1 and 0.5
 
-  //play the indexed number (note) of the weighedScale passed to this function
+  //play the indexed number (note) of the randomNoteIndex passed to this function
   Audio.play(randomNoteIndex);
 
   ///map ripples Y location to to the index of the note played and the radius to the volume the note is played at. X location is a random horizontal position.
@@ -998,7 +998,6 @@ function playRandomNote(mode, weightings) {
 
   view.addCircle(x, y, maxRadius);
 
-  // intervalTiming = Math.floor(Math.random() * intervalMultiple); //vary the interval timing depending on the humidity and the position of the compostiion
   // console.log("interval multiple: " + intervalMultiple);/// for reference
   // console.log("interval timing: " + intervalTiming);/// for reference
 
@@ -1008,10 +1007,11 @@ function playRandomNote(mode, weightings) {
   }, intervalTiming);
 }
 
+///pass an array to this function and then choose a random index based on the array length
 function random(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
-
+///send a min and max value to this function and then return a random selection from within that range.
 function randomInRange(min, max) {
   return Math.floor(min + Math.random() * (max - min));
 }
