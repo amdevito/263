@@ -1,19 +1,32 @@
-//P2: Any Day Music Machine (weather driven generative soundscape) AnthrophoScape
+//P2: Any Day Music Machine (Weather Driven Generative Composer)
+// Mode = a type of scale
+// All compostions are in the key of B flat.
+// For the specific feel and colour of the modal composition to be heard, it takes some time for the notes to start blending together to hear the quality in the composition.
+// The 8 'Church' Modes are used here : Ionian, Lydian, Mixolydian, Dorian, Aeolian, Phrygian, Locrian
+/// Credits - class distribution and OOP set up started using Music Box Tutorial, modified by me with some assistance from Pippn barr
+/// All samples and sound design by Alana DeVito
+///
+//MODES and feelings -
+// lydian -  uplifting and quirky, fantasy
+//ionian - happy, positive - happy, bright, innocent, reassuring, cheery, joyous and played at a slower tempo it can sound royal and majestic .
+// mixolydian - happy but serious
+// dorian -  sad but hopeful
+// Aeolian -  sad
+// phrygian -  dark  -  scary, dramatic, and otherworldly
+// locrian -  evil -  scary, dramatic, and otherworldly
 
-let $button = $(".button");
+///set up varibles for displaying data in dialog boxes
+let $button = $(".button"); //button variable for dialog boxes / interaction
+let $inputValue = $(".inputValue"); // user input - 'desired city name'
+let $description = $(".description"); //detailed weather description (his one is displayed)
+let $generalWeather = $(".main"); //general weather decription
+let $temperature = $(".temperature"); //temperature in Celcius
+let $humidity = $(".humidity"); //humidity percentage
+let $clouds = $(".clouds"); //percentage of cloud coverage
+let $rain = $(".rain"); //amount of rain
+let $name = $(".name"); //city name
 
-let $inputValue = $(".inputValue");
-// let inputValue = document.querySelector(".inputValue");
-let $description = $(".description");
-let $generalWeather = $(".main");
-let $temperature = $(".temperature");
-// let $windSpeed = $(".windSpeed");
-let $humidity = $(".humidity");
-let $clouds = $(".clouds");
-let $rain = $(".rain");
-let $name = $(".name");
-
-//the loader for each note - make note - ab - 'b' is 'flat, - cs - 's' is 'sharp' because # doesnt work.
+//set up variables for each note's bufferList - 'b' is flat
 let aBufferList = undefined;
 let bbBufferList = undefined;
 let bBufferList = undefined;
@@ -29,33 +42,36 @@ let abBufferList = undefined;
 
 let view = undefined; // Created when notes are loaded
 
-let musicTimeout;
-//track when all notes have been loaded
-//start at 12 and take one away at each note loaded function
-let numNotesToLoad = 12;
+let musicTimeout; // set timeout function to stop the previous mode playing.
 
-///time between each note -
+//set variable to track when all notes have been loaded into their appropriate bufferLoaders - 12 semi-tones/notes per octave
+let numNotesToLoad = 12; //start at 12 and take one away at each note loaded function
+
+///time between each triggered note/sample in milliseconds
 let intervalTiming = 3000;
+///set variable to multiply humidity percentage by to get intervalTiming value
 let intervalMultiple = 1000;
 
-//get general weather description (from main, as opposed to 'description' which is more detailed) to then connect with a mode
+//set variable for general weather description (from {[main}] in API data, as opposed to 'description' which is more detailed)
 let generalWeather = undefined;
 
-let specificWeather = undefined;
+let specificWeather = undefined; //set variable for holding the specific weather description (from [{description}] in API data - this is used to connect weather to a mode)
 
-let bufferList = undefined;
+let bufferList = undefined; /// set variable for holding the ntoes to be played in the composition
 
-let singleNote = undefined;
-
-let totalWeight = undefined;
-
+//set variable to track number of notes played (start at 0)
 let countNotesPlayed = 0;
 
+// set array variable to hold all the required 'weightings' for each degree of mode ([index 0] - 1st degree = root note, [index 2] - 3rd degree  = mediant). The higher the value, the more copies of the item in that index, therefore when a note is randomly chosen, it is more likely to be the one picked. In modal music (which this is creating) it is important to land on certain notes more often to create the modal emotion/feeling of that scale.
 let modeWeight = [];
 
-let weightedNotesIndexes = [];
+// same logic as modeWeight, but for the note samples or 'sound banks' in each note BuffList (i.e abBufferList, aBufferList etc.)
 let noteWeightings = [];
 
+///variable to contain the new indexes of the noteWeightings, once the copies have been made.
+let weightedNotesIndexes = [];
+
+//set array variables for each mode to hold each note's BufferList needed for that particular mode ('scale')
 let bbIonian = [];
 let bbLydian = [];
 let bbMixolydian = [];
@@ -64,46 +80,47 @@ let bbAeolian = [];
 let bbPhrygian = [];
 let bbLocrian = [];
 
+//set up JQUERY UI library for the FIRST INTRO dialog boxe and fetch API openWeather data using unique API key.
 $(`#first-button`).on("click", function () {
   fetch(
     "http://api.openweathermap.org/data/2.5/weather?q=" +
       $(`#first-input`).val() +
-      "&units=metric&appid=332933c03ee033d1701669b418461a0f"
+      "&units=metric&appid=332933c03ee033d1701669b418461a0f" ///set unit of measurment to 'metric'
   )
-    .then((response) => response.json())
-    // .then((data) => console.log(data))
-    .then(displayData)
-    .then(gatherNotes)
-    .catch((err) => alert("City name not recognized please try again!"));
+    .then((response) => response.json()) ///once reponse from user input is received
+    .then(displayData) ///show the weather data
+    .then(gatherNotes) ///call function to set up notes, scales, sounds, intervals and intensity/ gain for the composition
+    .catch((err) => alert("City name not recognized please try again!")); // if openWeather API does not recognize city name, throw an alert at user to try typing in another city name.
 });
-
+//set up JQUERY UI library for the SECOND dialog box and fetch API openWeather data using unique API key. This can be used to change the composition mid interaction.
 $(`#second-button`).on("click", function () {
   fetch(
     "http://api.openweathermap.org/data/2.5/weather?q=" +
       $(`#second-input`).val() +
-      "&units=metric&appid=332933c03ee033d1701669b418461a0f"
+      "&units=metric&appid=332933c03ee033d1701669b418461a0f" ///set unit of measurment to 'metric'
   )
-    .then((response) => response.json())
-    // .then((data) => console.log(data))
-    .then(displayData)
-    .then(gatherNotes)
-    .catch((err) => alert("City name not recognized please try again!"));
+    .then((response) => response.json()) ///once reponse from user input is received
+    .then(displayData) ///show the weather data
+    .then(gatherNotes) ///call function to set up notes, scales, sounds, intervals and intensity/ gain for the composition
+    .catch((err) => alert("City name not recognized please try again!")); // if openWeather API does not recognize city name, throw an alert at user to try typing in another city name.
 });
 
+//function to take data from the API and desplay in the dialog box
 function displayData(data) {
-  let nameValue = data["name"];
-  temperatureValue = data["main"]["temp"];
-  let descriptionValue = data["weather"][0]["description"];
+  let nameValue = data["name"]; ///name of city
+  temperatureValue = data["main"]["temp"]; ///display temperature in chosen city in Celcius
+  let descriptionValue = data["weather"][0]["description"]; ///show specific description of weather in that city - given as a string - ie. 'overcast clouds'
 
-  generalWeather = data["weather"][0]["main"];
-  specificWeather = data["weather"][0]["description"];
+  generalWeather = data["weather"][0]["main"]; ///set generalWeather variable to data fetched under 'main' - stored for future calibrations and testing
+  specificWeather = data["weather"][0]["description"]; /// set specificWeather variable to also recieve specific weather description to use in other elements of code(differnt variable for different use)
 
-  // let windSpeedValue = data["wind"]["speed"];
-  humidityValue = data["main"]["humidity"];
+  humidityValue = data["main"]["humidity"]; ///set humidity to variable to be displayed and to be used to determine note interval timing (kind of 'note values - quarter note, half, whole etc...')
 
-  let cloudDensityValue = data["clouds"]["all"];
+  let cloudDensityValue = data["clouds"]["all"]; ///set percentage of cloud coverage to variable for display purposes for now
 
+  ///set rain variable to 0 to begin
   let rainAmount = 0;
+  ////if data.rain is true - if there is rain forcast in 1h or 3h, display that amount, otherwise display 0.
   if (data.rain) {
     if (data["rain"]["3h"]) {
       rainAmount = data["rain"]["3h"];
@@ -112,8 +129,9 @@ function displayData(data) {
     }
   }
 
-  console.log(data);
+  // console.log(data); /// display data arrays and JSON data fetched from the openWeather API - for calibrating and future iterations.
 
+  ////take the values in each variable and diaply where $VALUE is in dialog boxes
   $name.text(nameValue);
   $temperature.text(temperatureValue);
   $description.text(descriptionValue);
@@ -126,79 +144,67 @@ function displayData(data) {
 
 //first dialog box on entry to application
 $(`#introduction-dialog`).dialog({
-  modal: true,
+  modal: true, ///must answer prompts before interaction can begin
   buttons: {
     "Light Background": function () {
-      //for P2: change to - Modulate background by wind speed
-      // $(`body`).css({ background: "white" });
+      ///lighter background option creates differently textured visuals with the ripples.
       $(`canvas`).css({
+        ///access the canvas variable in css
         "background-color": "white",
-      }); //change the css color element to white
+      }); //change the css background-color element to white
       $(this).dialog("close");
-      // gatherNotes();
-      ///need to add back ground modulating by oscillator value that is received and scaled from the user's location and weather information.
+      /// after the light background button is pressed, close the dialog box.
     },
     "Dark Background": function () {
-      $(this).dialog("close"); //don't do anything but close the dialog box
-      //!!!call function to start playing composition here
-      // gatherNotes();
+      $(this).dialog("close"); //don't do anything but close the dialog box, since black is the default background -color
     },
   },
 });
 
-//'hidden' dialog box - click button with '¯\_(ツ)_/¯'
+//'hidden' dialog box - click button with '¯\_(ツ)_/¯' to access it after the original introdialog back is closed.
 $(function () {
   $("#dialog").dialog({
     autoOpen: false,
     show: {
-      effect: "blind",
+      effect: "blind", ////open with this animated design effect
       duration: 1000, //how long to complete this effect
     },
     hide: {
-      effect: "explode",
+      effect: "explode", ////open with this animated design effect
       duration: 1000, //how long to complete this effect
     },
     buttons: {
       "Light Background": function () {
-        //for P2: change to - Modulate background by wind speed
-        // $(`body`).css({ background: "white" });
         $(`canvas`).css({
+          //access the css variable 'canvas'
           "background-color": "white",
         }); //change the css color element to white
-        $(this).dialog("close");
-        // gatherNotes();
-        ///need to add back ground modulating by oscillator value that is received and scaled from the user's location and weather information.
+        $(this).dialog("close"); ///close dialog box after making the selection
       },
       "Dark Background": function () {
-        $(this).dialog("close"); //don't do anything but close the dialog box
-        //!!!call function to start playing composition here
-        // gatherNotes();
+        $(this).dialog("close"); ///after making the selection, close the dialog box
         $(`canvas`).css({
-          "background-color": "black",
-        }); //change the css color element to white
+          ///access the canvas variable in css doc
+          "background-color": "black", ///set background color to black
+        });
       },
     },
   });
 
   $("#opener").on("click", function () {
+    ///open dialog box after clicking on button
     $("#dialog").dialog("open");
   });
-  ///add restart composition with new weather here?
-  // gatherNotes();
-});
-
-$(function () {
-  $("input1").checkboxradio();
 });
 
 window.onload = function () {
-  //what gets passed to the loadBuffer method is the URL of the file containing the sound and the index of that sound in the list.
+  //what gets passed to the BufferLoader class is the poject paths of the file containing the sound sample (the notes) and the index of that sound in the list.
   //create new bufferLoader object via the BufferLoader Class - send 3 arguements -  audio context, which is the property of the Audio object /class , and array of the soundfiles, and callBack funtion to call once the sounds have been successfully loaded.
-  //for final, the buffer loader will be sent the synth object containing the parameters of the FM synth and the notes that will make up the melody lines of the composition.
+
   //
   //load the A notes :
-  aBufferLoader = new BufferLoader(
-    Audio.audioContext,
+  aBufferLoader = new BufferLoader( ///create new BufferLoader via the class
+    Audio.audioContext, ///set the audio files  into the array using the Audio class
     [
       "sounds/synth/a/a.1-frozenPiano.mp3",
       "sounds/synth/a/a.2-mellow.mp3",
@@ -219,32 +225,27 @@ window.onload = function () {
       "sounds/synth/a/ORC.a2-violin.mp3",
       "sounds/synth/a/ORC.a2.mp3",
     ],
-    aBufferLoaded //the callback function
+    aBufferLoaded //the callback function for when all notes are finished loading
   );
 
-  aBufferLoader.load();
+  aBufferLoader.load(); ///load the buffer loader
 
+  ///callback function with the bufferList as a parameter - this function activates a note, sets the interval and draws a ripple when the note is called.
   function aBufferLoaded(bufferList) {
-    aBufferList = bufferList;
-    Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
-    //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
-    /// create variables for each note
+    aBufferList = bufferList; ///take the *note*BufferList just loaded and set it to bufferList
+    Audio.init(bufferList); //initiate the audio by passing in the bufferList array and storing in the Audio object and used when we call the Audio.play method for that note ("A" in this case).
 
-    let canvas = document.getElementById("canvas");
-    //get a new view from the View.js file (the constructor that manages the canvas object)
-    view = new View(canvas);
+    let canvas = document.getElementById("canvas"); //set canvas from the DOM in html and pass as a parameter to View class. This is the destination for the images drawn in the View class.
+    view = new View(canvas); ///create new view visual object using the View class - a ripple gets constructed every time this note is played.
 
-    ///bind connects the update display via handleClick to view and not canvas
-    // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
-    // ***instead of this^ have the composition being playing notes after the first dialog box/modal is closed once the weather is choosen and loaded.
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
-    setInterval(view.updateDisplay.bind(view), view.frameRate);
+    setInterval(view.updateDisplay.bind(view), view.frameRate); ///bind connects the update display to view and not canvas
   }
-  loadedNote();
+  ////////loadedNote(); ///call loadedNote function
 
-  //load ab notes
-  abBufferLoader = new BufferLoader(
-    Audio.audioContext,
+  //load Ab notes
+  abBufferLoader = new BufferLoader( ///create new BufferLoader via the class
+    Audio.audioContext, ///set the audio files into the array using the Audio class
     [
       "sounds/synth/ab/ab.1-frozenPiano.mp3",
       "sounds/synth/ab/ab.2-mellow.mp3",
@@ -265,32 +266,28 @@ window.onload = function () {
       "sounds/synth/ab/ORC.ab2-violin.mp3",
       "sounds/synth/ab/ORC.ab2.mp3",
     ],
-    abBufferLoaded //the callback function
+    abBufferLoaded ///the callback function for when all notes are finished loading
   );
 
-  abBufferLoader.load();
+  abBufferLoader.load(); ///load the buffer loader
 
+  ///callback function with the bufferList as a parameter - this function activates a note, sets the interval and draws a ripple when the note is called.
   function abBufferLoaded(bufferList) {
-    abBufferList = bufferList;
-    Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
-    //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
-    /// create variables for each note
-    console.log(abBufferList);
-    let canvas = document.getElementById("canvas");
-    //get a new view from the View.js file (the constructor that manages the canvas object)
-    view = new View(canvas);
+    abBufferList = bufferList; ///take the *note*BufferList just loaded and set it to bufferList
+    Audio.init(bufferList); //initiate the audio by passing in the bufferList array and storing in the Audio object and used when we call the Audio.play method for that note
 
-    ///bind connects the update display via handleClick to view and not canvas
-    // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
-    // ***instead of this^ have the composition being playing notes after the first dialog box/modal is closed once the weather is choosen and loaded.
+    let canvas = document.getElementById("canvas"); //set canvas from the DOM in html and pass as a parameter to View class. This is the destination for the images drawn in the View class.
+
+    view = new View(canvas); ///create new view visual object using the View class - a ripple gets constructed every time this note is played.
+
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
-  loadedNote();
+  ////loadedNote(); ///call loadedNote function
 
-  //load b notes
-  bBufferLoader = new BufferLoader(
-    Audio.audioContext,
+  //load B notes
+  bBufferLoader = new BufferLoader( ///create new BufferLoader via the class
+    Audio.audioContext, ///set the audio files into the array using the Audio class
     [
       "sounds/synth/b/b.1-frozenPiano.mp3",
       "sounds/synth/b/b.2-mellow.mp3",
@@ -311,31 +308,27 @@ window.onload = function () {
       "sounds/synth/b/ORC.b2-violin.mp3",
       "sounds/synth/b/ORC.b2.mp3",
     ],
-    bBufferLoaded //the callback function
+    bBufferLoaded ///the callback function for when all notes are finished loading
   );
 
-  bBufferLoader.load();
+  bBufferLoader.load(); ///load the buffer loader
 
+  ///callback function with the bufferList as a parameter - this function activates a note, sets the interval and draws a ripple when the note is called.
   function bBufferLoaded(bufferList) {
-    bBufferList = bufferList;
-    Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
-    //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
-    /// create variables for each note
+    bBufferList = bufferList; ///take the *note*BufferList just loaded and set it to bufferList
+    Audio.init(bufferList); //initiate the audio by passing in the bufferList array and storing in the Audio object and used when we call the Audio.play method for that note
 
-    let canvas = document.getElementById("canvas");
-    //get a new view from the View.js file (the constructor that manages the canvas object)
-    view = new View(canvas);
+    let canvas = document.getElementById("canvas"); //set canvas from the DOM in html and pass as a parameter to View class. This is the destination for the images drawn in the View class.
 
-    ///bind connects the update display via handleClick to view and not canvas
-    // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
-    // ***instead of this^ have the composition being playing notes after the first dialog box/modal is closed once the weather is choosen and loaded.
+    view = new View(canvas); ///create new view visual object using the View class - a ripple gets constructed every time this note is played.
+
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
-  loadedNote();
-  //load bb notes
-  bbBufferLoader = new BufferLoader(
-    Audio.audioContext,
+
+  //load Bb notes
+  bbBufferLoader = new BufferLoader( ///create new BufferLoader via the class
+    Audio.audioContext, ///set the audio files into the array using the Audio class
     [
       "sounds/synth/bb/bb.1-frozenPiano.mp3",
       "sounds/synth/bb/bb.2-mellow.mp3",
@@ -356,31 +349,27 @@ window.onload = function () {
       "sounds/synth/bb/ORC.bb2-violin.mp3",
       "sounds/synth/bb/ORC.bb2.mp3",
     ],
-    bbBufferLoaded //the callback function
+    bbBufferLoaded ///the callback function for when all notes are finished loading
   );
 
-  bbBufferLoader.load();
+  bbBufferLoader.load(); ///load the buffer loader
 
+  ///callback function with the bufferList as a parameter - this function activates a note, sets the interval and draws a ripple when the note is called.
   function bbBufferLoaded(bufferList) {
-    bbBufferList = bufferList;
-    Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
-    //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
-    /// create variables for each note
+    bbBufferList = bufferList; ///take the *note*BufferList just loaded and set it to bufferList
+    Audio.init(bufferList); //initiate the audio by passing in the bufferList array and storing in the Audio object and used when we call the Audio.play method for that note
 
-    let canvas = document.getElementById("canvas");
-    //get a new view from the View.js file (the constructor that manages the canvas object)
-    view = new View(canvas);
+    let canvas = document.getElementById("canvas"); //set canvas from the DOM in html and pass as a parameter to View class. This is the destination for the images drawn in the View class.
 
-    ///bind connects the update display via handleClick to view and not canvas
-    // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
-    // ***instead of this^ have the composition being playing notes after the first dialog box/modal is closed once the weather is choosen and loaded.
+    view = new View(canvas); ///create new view visual object using the View class - a ripple gets constructed every time this note is played.
+
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
-  loadedNote();
-  //load c notes
-  cBufferLoader = new BufferLoader(
-    Audio.audioContext,
+
+  //load C notes
+  cBufferLoader = new BufferLoader( ///create new BufferLoader via the class
+    Audio.audioContext, ///set the audio files into the array using the Audio class
     [
       "sounds/synth/c/c.1-frozenPiano.mp3",
       "sounds/synth/c/c.2-mellow.mp3",
@@ -401,31 +390,26 @@ window.onload = function () {
       "sounds/synth/c/ORC.c2-violin.mp3",
       "sounds/synth/c/ORC.c2.mp3",
     ],
-    cBufferLoaded //the callback function
+    cBufferLoaded ///the callback function for when all notes are finished loading
   );
 
-  cBufferLoader.load();
+  cBufferLoader.load(); ///load the buffer loader
 
+  ///callback function with the bufferList as a parameter - this function activates a note, sets the interval and draws a ripple when the note is called.
   function cBufferLoaded(bufferList) {
-    cBufferList = bufferList;
-    Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
-    //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
-    /// create variables for each note
+    cBufferList = bufferList; ///take the *note*BufferList just loaded and set it to bufferList
+    Audio.init(bufferList); //initiate the audio by passing in the bufferList array and storing in the Audio object and used when we call the Audio.play method for that note
 
-    let canvas = document.getElementById("canvas");
-    //get a new view from the View.js file (the constructor that manages the canvas object)
-    view = new View(canvas);
+    let canvas = document.getElementById("canvas"); //set canvas from the DOM in html and pass as a parameter to View class. This is the destination for the images drawn in the View class.
+    view = new View(canvas); ///create new view visual object using the View class - a ripple gets constructed every time this note is played.
 
-    ///bind connects the update display via handleClick to view and not canvas
-    // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
-    // ***instead of this^ have the composition being playing notes after the first dialog box/modal is closed once the weather is choosen and loaded.
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
-  loadedNote();
-  //load d notes
-  dBufferLoader = new BufferLoader(
-    Audio.audioContext,
+
+  //load D notes
+  dBufferLoader = new BufferLoader( ///create new BufferLoader via the class
+    Audio.audioContext, ///set the audio files into the array using the Audio class
     [
       "sounds/synth/d/d.1-frozenPiano.mp3",
       "sounds/synth/d/d.2-mellow.mp3",
@@ -446,32 +430,28 @@ window.onload = function () {
       "sounds/synth/d/ORC.d2-violin.mp3",
       "sounds/synth/d/ORC.d2.mp3",
     ],
-    dBufferLoaded //the callback function
+    dBufferLoaded ///the callback function for when all notes are finished loading
   );
-  console.log(dBufferLoader);
-  dBufferLoader.load();
 
+  dBufferLoader.load(); ///load the buffer loader
+
+  ///callback function with the bufferList as a parameter - this function activates a note, sets the interval and draws a ripple when the note is called.
   function dBufferLoaded(bufferList) {
-    dBufferList = bufferList;
+    dBufferList = bufferList; ///take the *note*BufferList just loaded and set it to bufferList
 
-    Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
-    //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
-    /// create variables for each note
+    Audio.init(bufferList); //initiate the audio by passing in the bufferList array and storing in the Audio object and used when we call the Audio.play method for that note
 
-    let canvas = document.getElementById("canvas");
-    //get a new view from the View.js file (the constructor that manages the canvas object)
-    view = new View(canvas);
+    let canvas = document.getElementById("canvas"); //set canvas from the DOM in html and pass as a parameter to View class. This is the destination for the images drawn in the View class.
 
-    ///bind connects the update display via handleClick to view and not canvas
-    // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
-    // ***instead of this^ have the composition being playing notes after the first dialog box/modal is closed once the weather is choosen and loaded.
+    view = new View(canvas); ///create new view visual object using the View class - a ripple gets constructed every time this note is played.
+
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
-  loadedNote();
-  //load db notes
-  dbBufferLoader = new BufferLoader(
-    Audio.audioContext,
+
+  //load Db notes
+  dbBufferLoader = new BufferLoader( ///create new BufferLoader via the class
+    Audio.audioContext, ///set the audio files into the array using the Audio class
     [
       "sounds/synth/db/db.1-frozenPiano.mp3",
       "sounds/synth/db/db.2-mellow.mp3",
@@ -492,31 +472,27 @@ window.onload = function () {
       "sounds/synth/db/ORC.db2-violin.mp3",
       "sounds/synth/db/ORC.db2.mp3",
     ],
-    dbBufferLoaded //the callback function
+    dbBufferLoaded ///the callback function for when all notes are finished loading
   );
 
-  dbBufferLoader.load();
+  dbBufferLoader.load(); ///load the buffer loader
+
+  ///callback function with the bufferList as a parameter - this function activates a note, sets the interval and draws a ripple when the note is called.
 
   function dbBufferLoaded(bufferList) {
-    dbBufferList = bufferList;
-    Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
-    //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
-    /// create variables for each note
+    dbBufferList = bufferList; ///take the *note*BufferList just loaded and set it to bufferList
+    Audio.init(bufferList); //initiate the audio by passing in the bufferList array and storing in the Audio object and used when we call the Audio.play method for that note
 
-    let canvas = document.getElementById("canvas");
-    //get a new view from the View.js file (the constructor that manages the canvas object)
-    view = new View(canvas);
+    let canvas = document.getElementById("canvas"); //set canvas from the DOM in html and pass as a parameter to View class. This is the destination for the images drawn in the View class.
+    view = new View(canvas); ///create new view visual object using the View class - a ripple gets constructed every time this note is played.
 
-    ///bind connects the update display via handleClick to view and not canvas
-    // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
-    // ***instead of this^ have the composition being playing notes after the first dialog box/modal is closed once the weather is choosen and loaded.
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
-  loadedNote();
-  //load e notes
-  eBufferLoader = new BufferLoader(
-    Audio.audioContext,
+
+  //load E notes
+  eBufferLoader = new BufferLoader( //create new BufferLoader via the class
+    Audio.audioContext, ///set the audio files into the array using the Audio class
     [
       "sounds/synth/e/e.1-frozenPiano.mp3",
       "sounds/synth/e/e.2-mellow.mp3",
@@ -537,31 +513,26 @@ window.onload = function () {
       "sounds/synth/e/ORC.e2-violin.mp3",
       "sounds/synth/e/ORC.e2.mp3",
     ],
-    eBufferLoaded //the callback function
+    eBufferLoaded ///the callback function for when all notes are finished loading
   );
 
-  eBufferLoader.load();
+  eBufferLoader.load(); ///load the buffer loader
 
+  ///callback function with the bufferList as a parameter - this function activates a note, sets the interval and draws a ripple when the note is called.
   function eBufferLoaded(bufferList) {
-    eBufferList = bufferList;
-    Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
-    //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
-    /// create variables for each note
+    eBufferList = bufferList; ///take the *note*BufferList just loaded and set it to bufferList
+    Audio.init(bufferList); ///initiate the audio by passing in the bufferList array and storing in the Audio object and used when we call the Audio.play method for that note
 
-    let canvas = document.getElementById("canvas");
-    //get a new view from the View.js file (the constructor that manages the canvas object)
-    view = new View(canvas);
+    let canvas = document.getElementById("canvas"); //set canvas from the DOM in html and pass as a parameter to View class. This is the destination for the images drawn in the View class.
+    view = new View(canvas); ///create new view visual object using the View class - a ripple gets constructed every time this note is played.
 
-    ///bind connects the update display via handleClick to view and not canvas
-    // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
-    // ***instead of this^ have the composition being playing notes after the first dialog box/modal is closed once the weather is choosen and loaded.
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
-  loadedNote();
-  //load eb notes
-  ebBufferLoader = new BufferLoader(
-    Audio.audioContext,
+
+  //load Eb notes
+  ebBufferLoader = new BufferLoader( //create new BufferLoader via the class
+    Audio.audioContext, ///set the audio files into the array using the Audio class
     [
       "sounds/synth/eb/eb.1-frozenPiano.mp3",
       "sounds/synth/eb/eb.2-mellow.mp3",
@@ -582,31 +553,27 @@ window.onload = function () {
       "sounds/synth/eb/ORC.eb2-violin.mp3",
       "sounds/synth/eb/ORC.eb2.mp3",
     ],
-    ebBufferLoaded //the callback function
+    ebBufferLoaded ///the callback function for when all notes are finished loading
   );
 
-  ebBufferLoader.load();
+  ebBufferLoader.load(); ///load the buffer loader
 
+  ///callback function with the bufferList as a parameter - this function activates a note, sets the interval and draws a ripple when the note is called.
   function ebBufferLoaded(bufferList) {
-    ebBufferList = bufferList;
-    Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
-    //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
-    /// create variables for each note
+    ebBufferList = bufferList; ///take the *note*BufferList just loaded and set it to bufferList
+    Audio.init(bufferList); ///initiate the audio by passing in the bufferList array and storing in the Audio object and used when we call the Audio.play method for that note.
 
-    let canvas = document.getElementById("canvas");
-    //get a new view from the View.js file (the constructor that manages the canvas object)
-    view = new View(canvas);
+    let canvas = document.getElementById("canvas"); //set canvas from the DOM in html and pass as a parameter to View class. This is the destination for the images drawn in the View class.
 
-    ///bind connects the update display via handleClick to view and not canvas
-    // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
-    // ***instead of this^ have the composition being playing notes after the first dialog box/modal is closed once the weather is choosen and loaded.
+    view = new View(canvas); ///create new view visual object using the View class - a ripple gets constructed every time this note is played.
+
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
-  loadedNote();
-  //load f notes
-  fBufferLoader = new BufferLoader(
-    Audio.audioContext,
+
+  //load F notes
+  fBufferLoader = new BufferLoader( //create new BufferLoader via the class
+    Audio.audioContext, ///set the audio files into the array using the Audio class
     [
       "sounds/synth/f/f.1-frozenPiano.mp3",
       "sounds/synth/f/f.2-mellow.mp3",
@@ -627,31 +594,27 @@ window.onload = function () {
       "sounds/synth/f/ORC.f2-violin.mp3",
       "sounds/synth/f/ORC.f2.mp3",
     ],
-    fBufferLoaded //the callback function
+    fBufferLoaded ///the callback function for when all notes are finished loading
   );
 
-  fBufferLoader.load();
+  fBufferLoader.load(); ///load the buffer loader
 
+  ///callback function with the bufferList as a parameter - this function activates a note, sets the interval and draws a ripple when the note is called.
   function fBufferLoaded(bufferList) {
-    fBufferList = bufferList;
-    Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
-    //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
-    /// create variables for each note
+    fBufferList = bufferList; ///take the *note*BufferList just loaded and set it to bufferList
+    Audio.init(bufferList); ///initiate the audio by passing in the bufferList array and storing in the Audio object and used when we call the Audio.play method for that note.
 
-    let canvas = document.getElementById("canvas");
-    //get a new view from the View.js file (the constructor that manages the canvas object)
-    view = new View(canvas);
+    let canvas = document.getElementById("canvas"); //set canvas from the DOM in html and pass as a parameter to View class. This is the destination for the images drawn in the View class.
 
-    ///bind connects the update display via handleClick to view and not canvas
-    // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
-    // ***instead of this^ have the composition being playing notes after the first dialog box/modal is closed once the weather is choosen and loaded.
+    view = new View(canvas); ///create new view visual object using the View class - a ripple gets constructed every time this note is played.
+
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
-  loadedNote();
-  //load g notes
-  gBufferLoader = new BufferLoader(
-    Audio.audioContext,
+
+  //load G notes
+  gBufferLoader = new BufferLoader( //create new BufferLoader via the class
+    Audio.audioContext, ///set the audio files into the array using the Audio class
     [
       "sounds/synth/g/g.1-frozenPiano.mp3",
       "sounds/synth/g/g.2-mellow.mp3",
@@ -672,31 +635,27 @@ window.onload = function () {
       "sounds/synth/g/ORC.g2-violin.mp3",
       "sounds/synth/g/ORC.g2.mp3",
     ],
-    gBufferLoaded //the callback function
+    gBufferLoaded ///the callback function for when all notes are finished loading
   );
 
-  gBufferLoader.load(); //iterates through all the file names in the array, passes the file name w the index number of the name in the list, to the loadBuffer method which is responsible for loading the sounds as binary data, using XMLHTTpRequest
+  gBufferLoader.load(); ///load the buffer loader
 
+  ///callback function with the bufferList as a parameter - this function activates a note, sets the interval and draws a ripple when the note is called.
   function gBufferLoaded(bufferList) {
-    gBufferList = bufferList;
-    Audio.init(bufferList); //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
-    //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
-    /// create variables for each note
+    gBufferList = bufferList; ///take the *note*BufferList just loaded and set it to bufferList
+    Audio.init(bufferList); ///initiate the audio by passing in the bufferList array and storing in the Audio object and used when we call the Audio.play method for that note.
 
-    let canvas = document.getElementById("canvas");
-    //get a new view from the View.js file (the constructor that manages the canvas object)
-    view = new View(canvas);
+    let canvas = document.getElementById("canvas"); //set canvas from the DOM in html and pass as a parameter to View class. This is the destination for the images drawn in the View class.
 
-    ///bind connects the update display via handleClick to view and not canvas
-    // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
-    // ***instead of this^ have the composition being playing notes after the first dialog box/modal is closed once the weather is choosen and loaded.
+    view = new View(canvas); ///create new view visual object using the View class - a ripple gets constructed every time this note is played.
+
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
-  loadedNote();
-  //load gb notes
-  gbBufferLoader = new BufferLoader(
-    Audio.audioContext,
+
+  //load Gb notes
+  gbBufferLoader = new BufferLoader( //create new BufferLoader via the class
+    Audio.audioContext, ///set the audio files into the array using the Audio class
     [
       "sounds/synth/gb/gb.1-frozenPiano.mp3",
       "sounds/synth/gb/gb.2-mellow.mp3",
@@ -717,87 +676,32 @@ window.onload = function () {
       "sounds/synth/gb/ORC.gb2-violin.mp3",
       "sounds/synth/gb/ORC.gb2.mp3",
     ],
-    gbBufferLoaded //the callback function
+    gbBufferLoaded ///the callback function for when all notes are finished loading
   );
 
-  gbBufferLoader.load();
-  console.log(gbBufferLoader);
+  gbBufferLoader.load(); ///load the buffer loader
 
+  ///callback function with the bufferList as a parameter - this function activates a note, sets the interval and draws a ripple when the note is called.
   function gbBufferLoaded(bufferList) {
-    gbBufferList = bufferList;
-    Audio.init(bufferList);
-    //passes in the buffer list array and gets stored in the Audio object and used when we call the Audio.play method.
-    //finihsedloading for note is called - assign to scale index position  -  let bbNote = bufferLoaderBb then  bbNote = random(bufferloaderB)
-    /// create variables for each note
+    gbBufferList = bufferList; ///take the *note*BufferList just loaded and set it to bufferList
+    Audio.init(bufferList); ///initiate the audio by passing in the bufferList array and storing in the Audio object and used when we call the Audio.play method for that note.
 
-    let canvas = document.getElementById("canvas");
-    //get a new view from the View.js file (the constructor that manages the canvas object)
-    view = new View(canvas);
+    let canvas = document.getElementById("canvas"); //set canvas from the DOM in html and pass as a parameter to View class. This is the destination for the images drawn in the View class.
+    view = new View(canvas); ///create new view visual object using the View class - a ripple gets constructed every time this note is played.
 
-    ///bind connects the update display via handleClick to view and not canvas
-    // canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
-    // ***instead of this^ have the composition being playing notes after the first dialog box/modal is closed once the weather is choosen and loaded.
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
-  loadedNote();
 };
 
-function loadedNote() {
-  numNotesToLoad--;
-  if (numNotesToLoad === 0) {
-    // Everything is loaded! We can stop the preload screen or whatever...
-    // Show the interface
-  }
-}
-
-///when you're ready to play
-// gatherNotes();
-
-// function playRandomNoteFrom(bufferList) {
-//   let note = Audio.context.createBufferSource();
-//   note.buffer =
-//     bufferList[Math.floor(bufferList.length * Math.random() * totalWeight)];
-//   note.connect(Audio.context.destination);
-//   note.start(0);
-// }
-
-// let bbIonian = {
-//   notes: [
-//     bbBufferList,
-//     cBufferList,
-//     dBufferList,
-//     ebBufferList,
-//     fBufferList,
-//     gBufferList,
-//     aBufferList,
-//   ],
-//   weightings: [8, 3, 6, 0, 5, 1, 4]
-// };
-// // >>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!!!!!Here
-
-//
-//
-//MODES and feelings -
-// lydian -  uplifting and quirky, fantasy
-//ionian - happy, positive - happy, bright, innocent, reassuring, cheery, joyous and played at a slower tempo it can sound royal and majestic .
-// mixolydian - happy but serious
-// dorian -  sad but hopeful
-// Aeolian -  sad
-// phrygian -  dark  -  scary, dramatic, and otherworldly
-// locrian -  evil -  scary, dramatic, and otherworldly
+///The gatherNotes function sets up the mode arrays with the *note*BufferLists (each *note*BufferList variable cantains an array of 18 different sounds of the same note) in the appropriate index for the note's location as a degree in that mode/scale. i.e ROOT note for bbIoniian is b-flat (Bb), so set bbBufferList at the first index position of bbIonian.
+///The weatherMode object is here as well. It sets every 'string' description fetched from the openWeather API, set to specificWeather to it's corresponding MODE (remember, a mode is a type of musical scale).
 
 function gatherNotes() {
-  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>AND HERE!
-  // let mode = weatherModes[specificWeather];
-  // if (mode === undefined) {
-  //   mode = bbIonian;
-  // }
-  // playNotes(mode.notes, mode.weightings);
-
-  console.log("general weather: " + generalWeather);
-  console.log("specific weather: " + specificWeather);
-  // if (generalWeather === "Clear") {
+  console.log("general weather: " + generalWeather); //for reference
+  console.log("temp: " + temperatureValue); // for reference
+  console.log("humidity: " + humidityValue); // for reference
+  //set up b-flat ionian with all the notes contained in it
   bbIonian = [
     bbBufferList,
     cBufferList,
@@ -807,25 +711,7 @@ function gatherNotes() {
     gBufferList,
     aBufferList,
   ];
-  //   // bufferList = bbIonian; //7 degrees, and those with key notes - major key so 1, 3, 5
-  //   let bbIonianWeight = [8, 3, 7, 0, 6, 1, 1]; //weight of each element above
-  //   // totalWeight = eval(bbIonianWeight.join("+")); //get total weight (in this case, 10)
-  //   // let bbIonianWeighed = new Array(); //new array to hold "weighted" notes
-  //   // let currentNote = 0;
-  //   // console.log("ionian");
-  //   // console.log(bufferList);
-  //   // while (currentNote < bbIonian.length) {
-  //   //   //step through each bbDorian[] element
-  //   //   for (i = 0; i < bbIonianWeight[currentNote]; i++)
-  //   //     bbIonianWeighed[bbIonianWeighed.length] = bbIonian[currentNote];
-  //   //   currentNote++;
-  //   // }
-  //   //sent to playNotes, but there is renamed to weighedScale
-  //   playNotes(bbIonian, bbIonianWeight, "ionian");
-  // } else if (
-  //   specificWeather === "scattered clouds" ||
-  //   specificWeather === "broken clouds"
-  // ) {
+  ///set up b-flat lydian with all the notes contained in it
   bbLydian = [
     bbBufferList,
     cBufferList,
@@ -835,25 +721,7 @@ function gatherNotes() {
     gBufferList,
     aBufferList,
   ];
-  //   // bufferList = bbLydian; //7 degrees, and those with key notes - 1, 4, 5
-  //   let bbLydianWeight = [7, 5, 6, 6, 5, 3, 0]; //weight of each element above
-  //   // totalWeight = eval(bbLydianWeight.join("+")); //get total weight (in this case, 10)
-  //   // let bbLydianWeighed = new Array(); //new array to hold "weighted" notes
-  //   // let currentNote = 0;
-  //   // console.log("lydian");
-  //   // console.log(bufferList);
-  //   // while (currentNote < bbLydian.length) {
-  //   //   //step through each bbDorian[] element
-  //   //   for (i = 0; i < bbLydianWeight[currentNote]; i++)
-  //   //     bbLydianWeighed[bbLydianWeighed.length] = bbLydian[currentNote];
-  //   //   currentNote++;
-  //   // }
-  //   //sent to playNotes, but there is renamed to weighedScale
-  //   playNotes(bbLydian, bbLydianWeight, "lydian");
-  // } else if (
-  //   specificWeather === "light snow" ||
-  //   specificWeather === "few clouds"
-  // ) {
+  ///set up b-flat mixolydian with all the notes contained in it
   bbMixolydian = [
     bbBufferList,
     cBufferList,
@@ -863,24 +731,7 @@ function gatherNotes() {
     gBufferList,
     abBufferList,
   ];
-  //   // bufferList = bbMixolydian; //7 degrees, and those with key notes -  7, 1, 5, 3,
-  //   let bbMixolydianWeight = [7, 1, 2, 4, 5, 3, 6]; //weight of each element above
-  //   // totalWeight = eval(bbMixolydianWeight.join("+")); //get total weight (in this case, 10)
-  //   // let bbMixolydianWeighed = new Array(); //new array to hold "weighted" notes
-  //   // let currentNote = 0;
-  //   // console.log(bufferList);
-  //   // console.log("mixolydian");
-  //   //
-  //   // while (currentNote < bbMixolydian.length) {
-  //   //   //step through each bbDorian[] element
-  //   //   for (i = 0; i < bbMixolydianWeight[currentNote]; i++)
-  //   //     bbMixolydianWeighed[bbMixolydianWeighed.length] =
-  //   //       bbMixolydian[currentNote];
-  //   //   currentNote++;
-  //   // }
-  //   //sent to playNotes, but there is renamed to weighedScale
-  //   playNotes(bbMixolydian, bbMixolydianWeight, "mixolydian");
-  // } else if (generalWeather === "Drizzle" || specificWeather === "Snow") {
+  ///set up b-flat dorian with all the notes contained in it
   bbDorian = [
     bbBufferList,
     cBufferList,
@@ -890,25 +741,7 @@ function gatherNotes() {
     gBufferList,
     abBufferList,
   ];
-  //   // bufferList = bbDorian; //7 degrees, and those with key notes - 1, 3, 7
-  //   let bbDorianWeight = [7, 1, 6, 0, 4, 3, 5]; //weight of each element above
-  //   // totalWeight = eval(bbDorianWeight.join("+")); //get total weight (in this case, 10)
-  //   // let bbDorianWeighed = new Array(); //new array to hold "weighted" notes
-  //   // let currentNote = 0;
-  //   // console.log(bufferList);
-  //   // console.log("dorian");
-  //   // while (currentNote < bbDorian.length) {
-  //   //   //step through each bbDorian[] element
-  //   //   for (i = 0; i < bbDorianWeight[currentNote]; i++)
-  //   //     bbDorianWeighed[bbDorianWeighed.length] = bbDorian[currentNote];
-  //   //   currentNote++;
-  //   // }
-  //   //sent to playNotes, but there is renamed to weighedScale
-  //   playNotes(bbDorian, bbDorianWeight, "dorian");
-  // } else if (
-  //   generalWeather === "Rain" ||
-  //   specificWeather === "overcast clouds"
-  // ) {
+  ///set up b-flat aeolian with all the notes contained in it
   bbAeolian = [
     bbBufferList,
     cBufferList,
@@ -918,34 +751,7 @@ function gatherNotes() {
     gbBufferList,
     abBufferList,
   ];
-  //   // bufferList = bbAeolian; //7 degrees, and those with key notes - 3, 1, 6, 7, 5
-  //   let bbAeolianWeight = [7, 1, 6, 2, 5, 0, 3]; //weight of each element above
-  //   // totalWeight = eval(bbAeolianWeight.join("+")); //get total weight (in this case, 10)
-  //   // let bbAeolianWeighed = new Array(); //new array to hold "weighted" notes
-  //   // let currentNote = 0;
-  //   // console.log(bufferList);
-  //   // console.log(bbAeolianWeighed);
-  //   // console.log("aeolian");
-  //   // while (currentNote < bbAeolian.length) {
-  //   //   //step through each bbAeolian[] element
-  //   //   for (i = 0; i < bbAeolianWeight[currentNote]; i++)
-  //   //     bbAeolianWeighed[bbAeolianWeighed.length] = bbAeolian[currentNote];
-  //   //   currentNote++;
-  //   // }
-  //   //sent to playNotes, but there is renamed to weighedScale
-  //   playNotes(bbAeolian, bbAeolianWeight, "aeolian");
-  // } else if (
-  //   generalWeather === "Mist" ||
-  //   generalWeather === "Smoke" ||
-  //   generalWeather === "Haze" ||
-  //   generalWeather === "Dust" ||
-  //   generalWeather === "Fog" ||
-  //   generalWeather === "Sand" ||
-  //   generalWeather === "Dust" ||
-  //   generalWeather === "Ash" ||
-  //   generalWeather === "Squall" ||
-  //   generalWeather === "Tornado"
-  // ) {
+  ///set up b-flat phrygian with all the notes contained in it
   bbPhrygian = [
     bbBufferList,
     bBufferList,
@@ -955,22 +761,7 @@ function gatherNotes() {
     gbBufferList,
     abBufferList,
   ];
-  //   // bufferList = bbPhrygian; //7 degrees, and those with key notes -  1, 2, 3, 6, 7
-  //   let bbPhrygianWeight = [7, 6, 5, 1, 3, 0, 5]; //weight of each element above
-  //   // totalWeight = eval(bbPhrygianWeight.join("+")); //get total weight (in this case, 10)
-  //   // let bbPhrygianWeighed = new Array(); //new array to hold "weighted" notes
-  //   // let currentNote = 0;
-  //   // console.log(bufferList);
-  //   // console.log("phrygian");
-  //   // while (currentNote < bbPhrygian.length) {
-  //   //   //step through each bbPhrygian[] element
-  //   //   for (i = 0; i < bbPhrygianWeight[currentNote]; i++)
-  //   //     bbPhrygianWeighed[bbPhrygianWeighed.length] = bbPhrygian[currentNote];
-  //   //   currentNote++;
-  //   // }
-  //   //sent to playNotes, but there is renamed to weighedScale
-  //   playNotes(bbPhrygian, bbPhrygianWeight);
-  // } else if (generalWeather === "Thunderstorm") {
+  ///set up b-flat locrian with all the notes contained in it
   bbLocrian = [
     bbBufferList,
     bBufferList,
@@ -980,23 +771,8 @@ function gatherNotes() {
     gbBufferList,
     abBufferList,
   ];
-  //   // bufferLists = bbLocrian; //7 degrees, and those with key notes - 1, 5, 2, 3, 6, 7, 4
-  //   let bbLocrianWeight = [7, 0, 5, 2, 6, 0, 3]; //weight of each element above
-  //   // totalWeight = eval(bbLocrianWeight.join("+")); //get total weight (in this case, 10)
-  //   // let bbLocrianWeighed = new Array(); //new array to hold "weighted" notes
-  //   // let currentNote = 0;
-  //   // console.log("locrian");
-  //   // console.log(bufferList);
-  //   // while (currentNote < bbLocrian.length) {
-  //   //   //step through each bbLocrian[] element
-  //   //   for (i = 0; i < bbLocrianWeight[currentNote]; i++)
-  //   //     bbLocrianWeighed[bbLocrianWeighed.length] = bbLocrian[currentNote];
-  //   //   currentNote++;
-  //   // }
-  //   //sent to playNotes, but there is renamed to weighedScale
-  //   playNotes(bbLocrian, bbLocrianWeight, "locrian");
-  // }
 
+  ///the weatherMode object that sets every 'string' description fetched from the openWeather API, set to specificWeather to it's corresponding MODE (remember, a mode is a type of musical scale).
   let weatherModes = {
     "thunderstorm with light rain": bbLocrian,
     "thunderstorm with rain": bbLocrian,
@@ -1055,127 +831,94 @@ function gatherNotes() {
     "overcast clouds": bbAeolian,
   };
 
-  console.log(weatherModes[specificWeather]);
-
+  ///Switch case handles the object above, and chooses correct mode by referencing the data stored in the specificWeather variable. Also, each one sets the specific weight for each note in the mode, copying that note numberous times in the array and thus increases its chances of being triggered. This gives the modes their distinct wuality from each other. Each case sets the unique weightings in the array variable, modeWeight.
   switch (weatherModes[specificWeather]) {
     case bbIonian:
-      modeWeight = [8, 3, 7, 0, 6, 1, 1];
+      modeWeight = [8, 3, 7, 0, 6, 3, 2];
+      console.log("ionian"); //print current mode, kept for reference and music theory practice/education
       break;
     case bbLydian:
       modeWeight = [7, 5, 6, 6, 5, 3, 0];
+      console.log("lydian"); //print current mode, kept for reference and music theory practice/education
       break;
     case bbMixolydian:
       modeWeight = [7, 1, 2, 4, 5, 3, 6];
+      console.log("mixolydian"); //print current mode, kept for reference and music theory practice/education
       break;
     case bbDorian:
       modeWeight = [7, 1, 6, 0, 4, 3, 5];
+      console.log("dorian"); //print current mode, kept for reference and music theory practice/education
       break;
     case bbAeolian:
       modeWeight = [7, 1, 6, 2, 5, 0, 3];
+      console.log("aeolian"); //print current mode, kept for reference and music theory practice/education
       break;
     case bbPhrygian:
       modeWeight = [7, 6, 5, 1, 3, 0, 5];
+      console.log("phrygian"); //print current mode, kept for reference and music theory practice/education
       break;
     case bbLocrian:
       modeWeight = [7, 0, 5, 2, 6, 0, 3];
+      console.log("locrian"); //print current mode, kept for reference and music theory practice/education
       break;
     default:
-      alert("Mode not found, try another city!");
+      alert("Mode not found, try another city!"); ///if error and the weather is not connected to a mode, throw alert to user to try another city.
   }
 
-  // if (weatherModes[specificWeather] === bbIonian) {
-  //   modeWeight = [8, 3, 7, 0, 6, 1, 1];
-  // } else if (weatherModes[specificWeather] === bbLydian) {
-  //   modeWeight = [7, 5, 6, 6, 5, 3, 0];
-  // } else if (weatherModes[specificWeather] === bbMixolydian){
-  //   modeWeight = [7, 1, 2, 4, 5, 3, 6];
-  // }
-
+  ////pass the mode array and the modeWeight as parameters into the function playNotes.
   playNotes(weatherModes[specificWeather], modeWeight);
-  // playRandomNoteFrom(bufferList);
-
-  //<timeing between each note
-  //!!!then play notes from new weighed array by random selection
-  // let randomNote = Math.floor(Math.random() * totalWeight);
-
-  // let primaryNotes = [modeIndex, modeIndex, modeIndex, modeIndex]; //going to be scale degree minus one
-
-  //THIS IS DONE FOR EACH NOTE PLAY back
-  //MODES and feelings -
-  // lydian - clear sky - brightest, uplifting and quirky
-  //ionian - few clouds -happy, positive
-  // mixolydian - scattered clouds, broken clouds - happy, serious
-  // dorian - shower rain and snow - sad, hopeful
-  // Aeolian - rain - sad
-  // phrygian - mist - dark
-  // locrian - thunderstorm - evil
-
-  ///POSSIBLE WEATHER DESCRIPTIONS - these might only be the 'main'
-  //set to variable: generalWeather
-  // clear sky
-  // few clouds
-  // scattered clouds
-  // broken clouds
-  // shower rain
-  // rain
-  // mist
-  //snow
-  // thunderstorm
-
-  ////
-  // let modeIndex = progression[primaryNotes]; ///play key notes most often- primaryNotes array assigned when creating modes below
-  //// notes are picked randomly but must land on these most often
-  //Bflat Ionian - bb c d eb f g a
-  //if ionion, key notes - I, VI, V, I
-  //bflat Dorian - bb c db eb f g ab
-  //key notes - i, iii, vii
-  //bflat Phrygian - bb b db eb f gb ab
-  //key notes -  1, 2, 3, 6, 7
-  //b flat Lydian - bb c d e f g a
-  //key notes - i, iv, v
-  //b flat Mixolydian - bb c d eb f g ab
-  // key notes -  1, 5, 3, 7
-  // b flat Aeolian - bb c db eb f gb ab
-  // key notes - 1, 3, 6, 7, 5,
-  // b flat locrian - bb b db eb e gb ab
-  // key notes - 1, 5, 2, 3, 6, 7, 4
-  //
-
-  //weightedNotes logic : {increasing the odds of certain notes in the playback}
-
-  // http://www.javascriptkit.com/javatutors/weighrandom2.shtml
-  /// once this has been done start playing the notes once the modal (the intro dialog box or the hidden one is closed)
-  // DO THIS BUT IN RELATION TO WHAT IS CURRENTLY GOING ON///bind connects the update display via handleClick to view and not canvas
-  //
-  //canvas.addEventListener("mousedown", view.handleClick.bind(view), false);
-  //
 }
+
+//playNotes function carries the mode and weightings, sends them parameteres to playRandom note, where the notes are actually triggered, but also calls clearTimeout, sending the parameter musicTimeout, which stops the previous mode from playing when a new mode is triggered.
 
 function playNotes(mode, weightings) {
   clearTimeout(musicTimeout); //stop the previous mode playing when a new mode is chosen (other wise the modes layer and layer...)
-  ////!!!!>>>> add a ripples clear? canvas clear? when a new mode is started/new city chosen
-  // View.context.clearRect(0, 0, canvas.width, canvas.height);
-  playRandomNote(mode, weightings);
+
+  playRandomNote(mode, weightings); //call playRandomNote function and send the parameters mode and weightings
 }
 
+///playRandomNote function passes the current mode and its weightings and creates new arrays from which a random note is triggered (proability of note selection for each degree or index of that note is increased depending on the position and the specific mode) - Also the weightings for the single notes chosen from the *note*BufferList is handled here. These are dependant on the temperature of the weather.
+///CREDIT: thank you to Prof. Pippin Barr for assistance with this function.
 function playRandomNote(mode, weightings) {
-  // console.log(weatherModes[specificWeather]);
-  let weightedIndexes = [];
+  let weightedIndexes = []; //create a weightedIndexes array which will store the newly copied/weighted mode indexes
   for (let i = 0; i < weightings.length; i++) {
+    ///start at 0, go through the weightings
     for (let j = 0; j < weightings[i]; j++) {
-      weightedIndexes.push(i);
+      ///at each index of the weightings create the number of copies that is indicated in that index/note's WEIGHT.
+      weightedIndexes.push(i); ///push those copies into the weightedIndexes array
     }
   }
+  ///choose a random index from the weightedIndexes array (which now contains the multiple copies)
   let randomIndex =
     weightedIndexes[Math.floor(Math.random() * weightedIndexes.length)];
 
-  //>>>>!!! do a weighted indexes for the buffer list below that chooses the different synth sounds depending on temperature.
-  // --- so if the temperature is below 0 or above 26 make the second half of the synth sounds more probable to play and vice versa for between 0 and 26
-  console.log("temp: " + temperatureValue);
+  // weighted indexes for the *notes*bufferList below that chooses the different synth sounds depending on temperature.
+  //if the temperature is below 10 or above 26 make the second half of the synth sounds more probable to play and vice versa for between 0 and 26
 
   if (temperatureValue <= 10 || temperatureValue >= 26) {
     weightedNotesIndexes = [];
-    noteWeightings = [1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4];
+    noteWeightings = [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      4,
+      2,
+      4,
+      4,
+      3,
+      4,
+      4,
+      2,
+      4,
+      4,
+      3,
+      4,
+    ];
     for (let i = 0; i < noteWeightings.length; i++) {
       for (let j = 0; j < noteWeightings[i]; j++) {
         weightedNotesIndexes.push(i);
@@ -1183,7 +926,28 @@ function playRandomNote(mode, weightings) {
     }
   } else if (temperatureValue > 10 || temperatureValue < 26) {
     weightedNotesIndexes = [];
-    noteWeightings = [4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    noteWeightings = [
+      4,
+      4,
+      4,
+      2,
+      4,
+      4,
+      4,
+      2,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+    ];
     for (let i = 0; i < noteWeightings.length; i++) {
       for (let j = 0; j < noteWeightings[i]; j++) {
         weightedNotesIndexes.push(i);
@@ -1194,24 +958,22 @@ function playRandomNote(mode, weightings) {
     weightedNotesIndexes[
       Math.floor(Math.random() * weightedNotesIndexes.length)
     ];
-  // let note = ???????
 
   let bufferList = mode[randomIndex];
 
   let note = randomNoteIndex;
 
-  // console.log(noteBufferList);
-
   // let note = Math.floor(Math.random() * bufferList.length);
 
+  //initiate the Audio class with the current "stocked" bufferList
   Audio.init(bufferList);
-  //play the indexed number (singleNote) of the weighedScale passed to this function
+  //play the indexed number (note) of the weighedScale passed to this function
   Audio.play(note);
 
   ///
   ///
-  console.log("humidity: " + humidityValue);
-  //turn this into a function? notesCounter
+
+  ////track number of notes to vary the composition at different times, after a certain number of notes are played, change the interval timing between each note, after 20 (and 10)played notes. The interval timing is also determined by the humidity percentage of the weather in that location.
   if (countNotesPlayed <= 20) {
     intervalMultiple = (humidityValue / 2) * 75;
     countNotesPlayed += 1;
@@ -1225,11 +987,11 @@ function playRandomNote(mode, weightings) {
   } else if (countNotesPlayed > 50) {
     countNotesPlayed = 0;
   }
-  console.log("# of notes played: " + countNotesPlayed);
+  // console.log("# of notes played: " + countNotesPlayed);///for reference
 
-  intervalTiming = Math.floor(Math.random() * intervalMultiple); //vary the interval timing between 300 - 3000 millis
-  console.log("interval multiple: " + intervalMultiple);
-  console.log("interval timing: " + intervalTiming);
+  intervalTiming = Math.floor(Math.random() * intervalMultiple); //vary the interval timing depending on the humidity and the position of the compostiion
+  // console.log("interval multiple: " + intervalMultiple);/// for reference
+  // console.log("interval timing: " + intervalTiming);/// for reference
 
   Audio.gainNode.gain.value = 0.1 + Math.random() * 0.5; //vary volume - set between 0.1 and 0.5
 
@@ -1240,6 +1002,7 @@ function playRandomNote(mode, weightings) {
 
   view.addCircle(x, y, maxRadius);
 
+  ///set musicTimeout to play next note.
   musicTimeout = setTimeout(function () {
     playRandomNote(mode, weightings);
   }, intervalTiming);
@@ -1250,9 +1013,6 @@ function map(value, fromMin, fromMax, toMin, toMax) {
     ((value - fromMin) / (fromMax - fromMin)) * (toMax - toMin) + toMin;
   return result;
 }
-//once loadBuffer has successfully loaded the sounds, the callback function, 'finishedLoading' is called. -
-///set up the view, clickhandler for the canvas and start to the calls to updatedisplay to kick off the animation
-// function finishedLoading(bufferList) {}
 
 //make the animated ripple TITLE at the top of the page DRAGGABLE
 $(`#ripple-one`).draggable();
