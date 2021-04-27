@@ -994,7 +994,7 @@ function playRandomNote(mode, weightings) {
     selectedNote = weightedNotes[randomNote];
     console.log(randomNote);
   }
-
+  console.log(selectedNote);
   // let bufferList = mode[randomIndex];
 
   // let randomNoteIndex =
