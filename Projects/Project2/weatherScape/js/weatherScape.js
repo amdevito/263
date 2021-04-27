@@ -711,6 +711,7 @@ function gatherNotes() {
     gBufferList,
     aBufferList,
   ];
+
   ///set up b-flat lydian with all the notes contained in it
   bbLydian = [
     bbBufferList,
@@ -761,6 +762,25 @@ function gatherNotes() {
     gbBufferList,
     abBufferList,
   ];
+  ///
+  ///
+  //   // bufferList = bbPhrygian; //7 degrees, and those with key notes -  1, 2, 3, 6, 7
+  //   let bbPhrygianWeight = [7, 6, 5, 1, 3, 0, 5]; //weight of each element above
+  //   // totalWeight = eval(bbPhrygianWeight.join("+")); //get total weight (in this case, 10)
+  //   // let bbPhrygianWeighed = new Array(); //new array to hold "weighted" notes
+  //   // let currentNote = 0;
+  //   // console.log(bufferList);
+  //   // console.log("phrygian");
+  //   // while (currentNote < bbPhrygian.length) {
+  //   //   //step through each bbPhrygian[] element
+  //   //   for (i = 0; i < bbPhrygianWeight[currentNote]; i++)
+  //   //     bbPhrygianWeighed[bbPhrygianWeighed.length] = bbPhrygian[currentNote];
+  //   //   currentNote++;
+  //   // }
+  //   //sent to playNotes, but there is renamed to weighedScale
+  ///
+  ///
+  //
   ///set up b-flat locrian with all the notes contained in it
   bbLocrian = [
     bbBufferList,
@@ -881,6 +901,17 @@ function playNotes(mode, weightings) {
 ///CREDIT: thank you to Prof. Pippin Barr for assistance with this function.
 function playRandomNote(mode, weightings) {
   let weightedIndexes = []; //create a weightedIndexes array which will store the newly copied/weighted mode indexes
+  let totalWeight = eval(weightings.join("+")); //get sum of the weightings
+  let weightedMode = new Array(); /// new array to hold "weighted" *notes*BufferList
+  let currentNote = 0;
+  bufferList = mode;
+  while (currentNote < weightings.length) {
+    //step through each index in weightings element
+    for (i = 0; i < weightings[currentNote]; i++)
+      weightedMode[weightedMode.length] = mode[currentNote];
+    currentNote++;
+  }
+
   for (let i = 0; i < weightings.length; i++) {
     ///start at 0, go through the weightings
     for (let j = 0; j < weightings[i]; j++) {
@@ -919,6 +950,17 @@ function playRandomNote(mode, weightings) {
       3,
       4,
     ];
+    let totalNotesWeight = eval(noteWeightings.join("+")); //get sum of the weightings
+    let weightedNotes = new Array(); /// new array to hold "weighted" *notes*BufferList
+    let currentNote = 0;
+
+    while (currentNote < noteWeightings.length) {
+      //step through each index in weightings element
+      for (i = 0; i < noteWeightings[currentNote]; i++)
+        weightedNotes[weightedNotes.length] = mode[currentNote]; ////?
+      currentNote++;
+    }
+
     for (let i = 0; i < noteWeightings.length; i++) {
       for (let j = 0; j < noteWeightings[i]; j++) {
         weightedNotesIndexes.push(i);
@@ -948,18 +990,30 @@ function playRandomNote(mode, weightings) {
       1,
       1,
     ];
+    let totalNotesWeight = eval(noteWeightings.join("+")); //get sum of the weightings
+    let weightedNotes = new Array(); /// new array to hold "weighted" *notes*BufferList
+    let currentNote = 0;
+
+    while (currentNote < noteWeightings.length) {
+      //step through each index in weightings element
+      for (i = 0; i < noteWeightings[currentNote]; i++)
+        weightedNotes[weightedNotes.length] = mode[currentNote]; ////?
+      currentNote++;
+    }
+
     for (let i = 0; i < noteWeightings.length; i++) {
       for (let j = 0; j < noteWeightings[i]; j++) {
         weightedNotesIndexes.push(i);
       }
     }
   }
+
+  let bufferList = mode[randomIndex];
+
   let randomNoteIndex =
     weightedNotesIndexes[
       Math.floor(Math.random() * weightedNotesIndexes.length)
     ];
-
-  let bufferList = mode[randomIndex];
 
   let note = randomNoteIndex;
 
@@ -1008,6 +1062,8 @@ function playRandomNote(mode, weightings) {
   }, intervalTiming);
 }
 
+///mapping function takes the difference between the value and romMin divided by the difference between fromMax and fromMin, and multiply the sum of the difference between toMax and toMin plus toMin.
+/// this scales a range of values to another range of values and returns the result.
 function map(value, fromMin, fromMax, toMin, toMax) {
   let result =
     ((value - fromMin) / (fromMax - fromMin)) * (toMax - toMin) + toMin;
