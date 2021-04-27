@@ -1,15 +1,26 @@
 //P2: Any Day Music Machine (Weather Driven Generative Composer)
-//CREDITS - Original, very basic idea and the organizations of classes started from the Generative MusicBox tutorial found *******
-///CREDITS - thank you to TAs Dana and Sam for solving almost all debugging issues throughout the process.
-///CREDITS -
+//by: Alana DeVito
+///
+///Please see README file for full project description.
+///
+//CREDITS - Original, very basic idea and the organizations of classes started from the Generative MusicBox tutorial: (https://www.youtube.com/watch?v=PTzUXTE_GtA&ab_channel=WickedlySmart and http://bit.ly/wickedlysmart )
+//A generative music box project. (2016, July 12). Retrieved March 29, 2021, from
+// https://www.youtube.com/watch?v=PTzUXTE_GtA&ab_channel=WickedlySmart+and
+//CREDITS - Concept is loosely inspired by both Brian Eno’s music and his Bloom application and Grimes & Endel’s AI Lullaby.
+///CREDITS - thank you to TAs Dana and Samuel Paré-Chouinard for helping me solve almost all debugging issues throughout the process.
+///CREDITS - the CSS designed RIPPLES used only in the AnyDay Music Machine Animated and movable title is loosely based off of this tutorial: Ripple animation using only html & css. (2018, December 29). Retrieved March 29, 2021, from
+// https://www.youtube.com/watch?v=FCPNN730c98&ab_channel=DarkCode
+//
 // NOTE: A MODE is a type of scale
 // All compostions are in the key of B flat.
 // For the specific feel and colour of the modal composition to be heard, it takes some time for the notes to start blending together to hear the quality in the composition.
 // The 8 'Church' Modes are used here : Ionian, Lydian, Mixolydian, Dorian, Aeolian, Phrygian, Locrian
-/// Credits - class distribution and OOP set up started using Music Box Tutorial, modified by me with some assistance from Pippn Barr and Dana
+/// Credits - class distribution and OOP set up started using Music Box Tutorial, modified and moderized by me with assistance from Pippn Barr and TA Dana Ryashy
 /// All samples and sound design by Alana DeVito
 ///
 //MODES and feelings -
+//citation: Valverde, R. (2020, October 27). How to project emotions through music: Choosing the key. Retrieved March 29, 2021, from https://blog.flat.io/choosing-the-key/
+//
 // Lydian -  uplifting and quirky, fantasy
 // Ionian - happy, positive - happy, bright, innocent, reassuring, cheery, joyous and played at a slower tempo it can sound royal and majestic .
 // Mixolydian - happy but serious
@@ -166,7 +177,7 @@ $(`#introduction-dialog`).dialog({
   width: $(window).width() - 200, ///resize dialog box depending on window heigh and width
   height: $(window).height() - 100,
   buttons: {
-    "Light Background": function () {
+    "Light Theme": function () {
       ///lighter background option creates differently textured visuals with the ripples.
       $(`canvas`).css({
         ///access the canvas variable in css
@@ -176,7 +187,7 @@ $(`#introduction-dialog`).dialog({
       /// after the light background button is pressed, close the dialog box.
     },
 
-    "Dark Background": function () {
+    "Dark Theme": function () {
       $(this).dialog("close"); //don't do anything but close the dialog box, since black is the default background -color
     },
   },
@@ -197,14 +208,14 @@ $(function () {
       duration: 1000, //how long to complete this effect
     },
     buttons: {
-      "Light Background": function () {
+      "Light Theme": function () {
         $(`canvas`).css({
           //access the css variable 'canvas'
           "background-color": "white",
         }); //change the css color element to white
         $(this).dialog("close"); ///close dialog box after making the selection
       },
-      "Dark Background": function () {
+      "Dark Theme": function () {
         $(this).dialog("close"); ///after making the selection, close the dialog box
         $(`canvas`).css({
           ///access the canvas variable in css doc
@@ -916,7 +927,6 @@ function playRandomNote(mode, weightings) {
   ///let weightings = ["#", "#".... ]
   //
 
-  console.log("-----");
   // console.log(mode);//kept for future compositional adjustments
   // console.log(weightings);///kept for future compositional adjustments
 

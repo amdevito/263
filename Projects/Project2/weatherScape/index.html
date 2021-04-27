@@ -2,10 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <!-- title ddisplayed at top in tab -->
     <title>The AnyDay Music Machine</title>
     <meta
       name="description"
-      content="Let the weather determine your soundscape"
+      content="Let the weather compose a beautiful soundscape."
     />
     <meta name="author" content="Am DeVito" />
     <!-- CSS stylesheet(s) -->
@@ -17,9 +18,10 @@
     />
     <!-- Library scripts -->
 
-    <script src="js/libraries/p5.min.js"></script>
+    <!-- Keeping some of these old scripts and libraries here for possible future iterations and experimentation -->
+    <!-- <script src="js/libraries/p5.min.js"></script> -->
 
-    <script src="js/libraries/tone.js"></script>
+    <!-- <script src="js/libraries/tone.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/@tonaljs/tonal/browser/tonal.min.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -36,7 +38,7 @@
     <script src="https://unpkg.com/tone@14.7.58/build/Tone.js"></script>
   </head>
 
-  <!-- introdcution modulo dialog box to choose the canvas color -->
+  <!-- introduction dialog box explaining the project and where you to choose the canvas shade -->
   <body>
     <div id="introduction-dialog" title="Your Generative WeatherScape">
       <p>
@@ -51,11 +53,13 @@
           href="http://blog.dubspot.com/music-theory-modes/#:~:text=A%20Mode%20is%20a%20type,be%20in%20the%20Ionian%20Mode."
           target="_blank"
           >MODES</a
-        >. Timing between notes is determined by the humidity and the sounds are
-        dependent on temperature. Explore the weather and thus different
-        soundscapes in different cities around the world. Close this dialog
-        using the [x] and access this menu again by clicking the ¯\_(ツ)_/¯
-        button. The animated rippling title is movable for your convenience.
+        >. Timing between notes is determined by the humidity (high humidity
+        makes the composition slower) and the sounds are dependent on
+        temperature. Explore the weather and thus different soundscapes in
+        different cities around the world. Close this dialog using the [x] and
+        access this menu again by clicking the ¯\_(ツ)_/¯ button. The animated
+        rippling title is movable for your convenience. This dialog box will
+        also close if you specify a light or dark visualization theme below.
       </p>
 
       <div class="input">
@@ -101,39 +105,15 @@
           href="http://blog.dubspot.com/music-theory-modes/#:~:text=A%20Mode%20is%20a%20type,be%20in%20the%20Ionian%20Mode."
           target="_blank"
           >MODES</a
-        >. Timing between notes is determined by the humidity and the sounds are
-        dependent on temperature. Explore the weather and thus different
-        soundscapes in different cities around the world. Access this menu again
-        by clicking the ¯\_(ツ)_/¯ button. The animated rippling title is
-        movable for your convenience.
+        >. Timing between notes is determined by the humidity (high humidity
+        makes the composition slower) and the sounds are dependent on
+        temperature. Explore the weather and thus different soundscapes in
+        different cities around the world. Access this menu again by clicking
+        the ¯\_(ツ)_/¯ button. The animated rippling title is movable for your
+        convenience. This dialog box will also close if you specify a light or
+        dark visualization theme below.
       </p>
-
-      <!-- selectable radio items -->
-      <div class="widget">
-        <!-- <h2>Customize Visuals:</h2>
-        <fieldset>
-          <legend>Ripple Size:</legend>
-          <label for="radio-1">Bigger</label>
-          <input type="radio" name="radio-1" id="radio-1" />
-          <label for="radio-2">Smaller</label>
-          <input type="radio" name="radio-1" id="radio-2" />
-          <label for="radio-3">Normal</label>
-          <input type="radio" name="radio-1" id="radio-3" />
-        </fieldset>
-        <h2>Customize Sound:</h2>
-        <fieldset>
-          <legend>Timing between tone replays:</legend>
-          <label for="radio-4">3 seconds</label>
-          <input type="radio" name="radio-2" id="radio-4" />
-          <label for="radio-5">6 seconds</label>
-          <input type="radio" name="radio-2" checkbox id="radio-5" />
-          <label for="radio-6">9 seconds</label>
-          <input type="radio" name="radio-2" id="radio-6" />
-          <label for="radio-7">12 seconds</label>
-          <input type="radio" name="radio-2" id="radio-7" />
-        </fieldset> -->
-      </div>
-      <!-- not working for some reason (below) -->
+      <!-- input box and submit button for user interaction (user to choose city name)-->
       <div class="input">
         <input
           type="text"
@@ -143,6 +123,7 @@
         />
         <input type="submit" value="Submit" class="button" id="second-button" />
       </div>
+      <!-- these classes will be called in js script to display the weather data fetched -->
       <div class="display">
         <p>City:</p>
         <h1 class="name"></h1>
@@ -150,22 +131,18 @@
         <p class="description"></p>
         <p>Temperature (in Celcius):</p>
         <p class="temperature"></p>
-        <!-- <p>Wind Speed:</p>
-        <p class="wind_speed"></p> -->
         <p>Humidity %:</p>
         <p class="humidity"></p>
         <p>Cloudiness %:</p>
         <p class="clouds"></p>
         <p>Rain Fall (mm):</p>
         <p class="rain"></p>
-        <!-- <p>Precipitation (mm):</p>
-        <p class="rain"></p> -->
       </div>
     </div>
     <!-- 'hidden button' to access customization during soundscape playback -->
     <button id="opener">¯\_(ツ)_/¯</button>
 
-    <!-- the movable animated ripples - each circle contained in their seperate containers, delayed in css to create this ripple effect -->
+    <!-- the movable animated ripples (THE TITLE is inside 'AnyDay Music Machine') - each circle contained in their seperate containers, delayed in css to create this ripple effect -->
     <div class="container" id="ripple-one">
       <span class="ripple r1">AnyDay Music Machine</span>
       <span class="ripple r2">AnyDay Music Machine</span>
