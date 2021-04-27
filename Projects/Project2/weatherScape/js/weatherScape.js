@@ -962,6 +962,8 @@ function playRandomNote(mode, weightings) {
 
   Audio.gainNode.gain.value = 0.1 + Math.random() * 0.5; //vary volume - set between 0.1 and 0.5
 
+  //play the indexed number (note) of the weighedScale passed to this function
+  Audio.play(randomNoteIndex);
   ///map ripples Y location to to the index of the note played and the radius to the volume the note is played at. X location is a random horizontal position.
   let y = map(randomBufferListIndex, 0, 7, 100, view.canvas.height);
   let x = Math.random() * view.canvas.width;
