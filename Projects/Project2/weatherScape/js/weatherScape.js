@@ -57,7 +57,7 @@ let generalWeather = undefined;
 
 let specificWeather = undefined; //set variable for holding the specific weather description (from [{description}] in API data - this is used to connect weather to a mode)
 
-let bufferList = undefined; /// set variable for holding the ntoes to be played in the composition
+let bufferList = undefined; /// set variable for holding the notes to be played in the composition
 
 //set variable to track number of notes played (start at 0)
 let countNotesPlayed = 0;
@@ -898,12 +898,12 @@ function playRandomNote(mode, weightings) {
   }
 
   //choose a random number using the confines of the sum of the weightings, totalWeight
-  let randomIndex = Math.floor(Math.random() * totalWeight.length);
+  let randomIndex = Math.floor(Math.random() * totalWeight);
 
   ///take the random Index selected, from the new weightedMode array (which now contains the multiple copies)
 
   let selectedModeIndex = weightedMode[randomIndex];
-
+  console.log(selectedModeIndex);
   // weighted indexes for the *notes*bufferList below that chooses the different synth sounds depending on temperature.
   //if the temperature is below 10 or above 26 make the second half of the synth sounds more probable to play and vice versa for between 0 and 26
 
