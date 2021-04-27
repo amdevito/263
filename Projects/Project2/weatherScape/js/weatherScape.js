@@ -66,6 +66,18 @@ let countNotesPlayed = 0;
 // set array variable to hold all the required 'weightings' for each degree of mode ([index 0] - 1st degree = root note, [index 2] - 3rd degree  = mediant). The higher the value, the more copies of the item in that index, therefore when a note is randomly chosen, it is more likely to be the one picked. In modal music (which this is creating) it is important to land on certain notes more often to create the modal emotion/feeling of that scale.
 let modeWeight = [];
 
+//Determine the range of indexes for two sample or sound "banks" of notes
+// stored in the same bufferList
+let temperateBankMin = 0; ///index 0 to
+let temperateBankMax = 8; /// index 8 (first bank with soft synth pads)
+let extremeBankMin = 8; ///index 8 to
+let extremeBankMax = 18; //index 18 (second bank is orchestral samples which are more intense, with more defined transients with a ringing quality)
+
+// Actual min and max to use when choosing the next buffer will be
+// determined by temperature and probability
+let bankMin;
+let bankMax;
+
 //set array variables for each mode to hold each note's BufferList needed for that particular mode ('scale')
 let bbIonian = [];
 let bbLydian = [];
@@ -140,6 +152,16 @@ function displayData(data) {
 //first dialog box on entry to application
 $(`#introduction-dialog`).dialog({
   modal: true, ///must answer prompts before interaction can begin
+  hide: {
+    effect: "explode", ////close with this animated design effect
+    duration: 1000, //how long to complete this effect
+  },
+  show: {
+    effect: "blind", ////open with this animated design effect
+    duration: 1000, //how long to complete this effect
+  },
+  width: $(window).width() - 200, ///resize dialog box depending on window heigh and width
+  height: $(window).height() - 100,
   buttons: {
     "Light Background": function () {
       ///lighter background option creates differently textured visuals with the ripples.
@@ -150,6 +172,7 @@ $(`#introduction-dialog`).dialog({
       $(this).dialog("close");
       /// after the light background button is pressed, close the dialog box.
     },
+
     "Dark Background": function () {
       $(this).dialog("close"); //don't do anything but close the dialog box, since black is the default background -color
     },
@@ -160,6 +183,8 @@ $(`#introduction-dialog`).dialog({
 $(function () {
   $("#dialog").dialog({
     autoOpen: false,
+    width: $(window).width() - 200, //resize dialog box depending on window heigh and width
+    height: $(window).height() - 100,
     show: {
       effect: "blind", ////open with this animated design effect
       duration: 1000, //how long to complete this effect
@@ -826,7 +851,7 @@ function gatherNotes() {
     "overcast clouds": bbAeolian,
   };
 
-  ///Switch case handles the object above, and chooses correct mode by referencing the data stored in the specificWeather variable. Also, each one sets the specific weight for each note in the mode, copying that note numberous times in the array and thus increases its chances of being triggered. This gives the modes their distinct wuality from each other. Each case sets the unique weightings in the array variable, modeWeight.
+  ///Switch case handles the object above, and chooses correct mode by referencing the data stored in the specificWeather variable. Also, each one sets the specific weight for each note in the mode, increaseing or decreasing its chances of being triggered. This gives the modes their distinct quality from each other. Each case sets the unique weightings in the array variable, modeWeight.
   switch (weatherModes[specificWeather]) {
     case bbIonian:
       modeWeight = [8, 3, 7, 0, 6, 3, 2];
@@ -889,26 +914,12 @@ function playRandomNote(mode, weightings) {
   //
 
   console.log("-----");
-  console.log(mode);
-  console.log(weightings);
+  // console.log(mode);//kept for future compositional adjustments
+  // console.log(weightings);///kept for future compositional adjustments
 
   // Choose the note (bufferList) to play next randomly
   let randomBufferListIndex = random(weightings);
   let randomBufferList = mode[randomBufferListIndex];
-
-  // These should really be at the top of the program
-  // They determine the range of indexes for your two "banks" of notes
-  // stored in the same bufferList
-
-  const temperateBankMin = 0; ///change to 7? or 8?
-  const temperateBankMax = 8;
-  const extremeBankMin = 8;
-  const extremeBankMax = 18; //change to 7
-
-  // Actual min and max to use when choosing the next buffer will be
-  // determined by temperature and probability
-  let bankMin;
-  let bankMax;
 
   // Extreme temperature...
   if (temperatureValue <= 10 || temperatureValue >= 26) {
