@@ -762,25 +762,7 @@ function gatherNotes() {
     gbBufferList,
     abBufferList,
   ];
-  ///
-  ///
-  //   // bufferList = bbPhrygian; //7 degrees, and those with key notes -  1, 2, 3, 6, 7
-  //   let bbPhrygianWeight = [7, 6, 5, 1, 3, 0, 5]; //weight of each element above
-  //   // totalWeight = eval(bbPhrygianWeight.join("+")); //get total weight (in this case, 10)
-  //   // let bbPhrygianWeighed = new Array(); //new array to hold "weighted" notes
-  //   // let currentNote = 0;
-  //   // console.log(bufferList);
-  //   // console.log("phrygian");
-  //   // while (currentNote < bbPhrygian.length) {
-  //   //   //step through each bbPhrygian[] element
-  //   //   for (i = 0; i < bbPhrygianWeight[currentNote]; i++)
-  //   //     bbPhrygianWeighed[bbPhrygianWeighed.length] = bbPhrygian[currentNote];
-  //   //   currentNote++;
-  //   // }
-  //   //sent to playNotes, but there is renamed to weighedScale
-  ///
-  ///
-  //
+
   ///set up b-flat locrian with all the notes contained in it
   bbLocrian = [
     bbBufferList,
@@ -793,6 +775,7 @@ function gatherNotes() {
   ];
 
   ///the weatherMode object that sets every 'string' description fetched from the openWeather API, set to specificWeather to it's corresponding MODE (remember, a mode is a type of musical scale).
+  ///CREDIT: Thank you to Prof. Pippin Barr for this modification and suggestion.
   let weatherModes = {
     "thunderstorm with light rain": bbLocrian,
     "thunderstorm with rain": bbLocrian,
@@ -900,28 +883,26 @@ function playNotes(mode, weightings) {
 ///playRandomNote function passes the current mode and its weightings and creates new arrays from which a random note is triggered (proability of note selection for each degree or index of that note is increased depending on the position and the specific mode) - Also the weightings for the single notes chosen from the *note*BufferList is handled here. These are dependant on the temperature of the weather.
 ///CREDIT: thank you to Prof. Pippin Barr for assistance with this function.
 function playRandomNote(mode, weightings) {
-  let weightedIndexes = []; //create a weightedIndexes array which will store the newly copied/weighted mode indexes
+  ///examples of what is in mode and weightings
+  ///let mode = (bbBufferlist, cbufferlist, debufferList etccc)
+  ///let weightings = ["#", "#".... ]
+  //
   let totalWeight = eval(weightings.join("+")); //get sum of the weightings
   let weightedMode = new Array(); /// new array to hold "weighted" *notes*BufferList
   let currentNote = 0;
-  bufferList = mode;
-  while (currentNote < weightings.length) {
+  while (currentNote < mode.length) {
     //step through each index in weightings element
     for (i = 0; i < weightings[currentNote]; i++)
       weightedMode[weightedMode.length] = mode[currentNote];
     currentNote++;
   }
 
-  for (let i = 0; i < weightings.length; i++) {
-    ///start at 0, go through the weightings
-    for (let j = 0; j < weightings[i]; j++) {
-      ///at each index of the weightings create the number of copies that is indicated in that index/note's WEIGHT.
-      weightedIndexes.push(i); ///push those copies into the weightedIndexes array
-    }
-  }
-  ///choose a random index from the weightedIndexes array (which now contains the multiple copies)
-  let randomIndex =
-    weightedIndexes[Math.floor(Math.random() * weightedIndexes.length)];
+  //choose a random number using the confines of the sum of the weightings, totalWeight
+  let randomIndex = Math.floor(Math.random() * totalWeight.length);
+
+  ///take the random Index selected, from the new weightedMode array (which now contains the multiple copies)
+
+  let selectedModeIndex = weightedMode[randomIndex];
 
   // weighted indexes for the *notes*bufferList below that chooses the different synth sounds depending on temperature.
   //if the temperature is below 10 or above 26 make the second half of the synth sounds more probable to play and vice versa for between 0 and 26
