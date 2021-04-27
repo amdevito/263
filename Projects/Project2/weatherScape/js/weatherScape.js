@@ -838,7 +838,7 @@ function gatherNotes() {
     "heavy intensity shower rain": bbAeolian,
     "ragged shower rain": bbAeolian,
     "light snow": bbMixolydian,
-    snow: bbMixolydian,
+    snow: bbDorian,
     "Heavy snow": bbDorian,
     Sleet: bbAeolian,
     "Light shower sleet": bbAeolian,
@@ -862,7 +862,7 @@ function gatherNotes() {
     "few clouds": bbIonian,
     "scattered clouds": bbMixolydian,
     "broken clouds": bbLydian,
-    "overcast clouds": bbAeolian,
+    "overcast clouds": bbPhrygian,
   };
 
   ///Switch case handles the object above, and chooses correct mode by referencing the data stored in the specificWeather variable. Also, each one sets the specific weight for each note in the mode, increaseing or decreasing its chances of being triggered. This gives the modes their distinct quality from each other. Each case sets the unique weightings in the array variable, modeWeight.

@@ -1,6 +1,7 @@
 #canvas {
   border: 4px solid #8d91ad;
-  /*call and replace this when the button in the modulo is chosen for dark or light background */
+  /*call and replace this when the button in the dialog box is chosen for dark or light theme */
+  /* default is black */
   background-color: black;
 }
 /* style for body elements */
@@ -9,7 +10,7 @@ body {
   padding-left: 10%;
   background: black;
 }
-
+/* style design for data input displayed */
 .input {
   text-align: center;
   margin: 10px 0;
