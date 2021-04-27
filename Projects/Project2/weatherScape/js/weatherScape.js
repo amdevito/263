@@ -899,7 +899,7 @@ function gatherNotes() {
       alert("Mode not found, try another city!"); ///if error and the weather is not connected to a mode, throw alert to user to try another city.
   }
 
-  // Calculate the weightings array
+  // Create the weightings array but making copies of each *note*BufferList depending on its importance (example, root notes (index 0) is most important so make 7 copies)
   let weightings = [];
   for (let index = 0; index < modeWeight.length; index++) {
     for (let i = 0; i < modeWeight[index]; i++) {
