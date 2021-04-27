@@ -56,6 +56,6 @@ class BufferLoader {
     for (let i = 0; i < this.urlList.length; ++i) {
       this.loadBuffer(this.urlList[i], i);
     }
-    console.log(this.bufferList);
+    // console.log(this.bufferList);///for reference and debugging
   }
 }

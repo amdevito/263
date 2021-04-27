@@ -1,19 +1,19 @@
 //P2: Any Day Music Machine (Weather Driven Generative Composer)
-// Mode = a type of scale
+// NOT: A MODE is a type of scale
 // All compostions are in the key of B flat.
 // For the specific feel and colour of the modal composition to be heard, it takes some time for the notes to start blending together to hear the quality in the composition.
 // The 8 'Church' Modes are used here : Ionian, Lydian, Mixolydian, Dorian, Aeolian, Phrygian, Locrian
-/// Credits - class distribution and OOP set up started using Music Box Tutorial, modified by me with some assistance from Pippn barr
+/// Credits - class distribution and OOP set up started using Music Box Tutorial, modified by me with some assistance from Pippn Barr and Dana
 /// All samples and sound design by Alana DeVito
 ///
 //MODES and feelings -
-// lydian -  uplifting and quirky, fantasy
-//ionian - happy, positive - happy, bright, innocent, reassuring, cheery, joyous and played at a slower tempo it can sound royal and majestic .
-// mixolydian - happy but serious
-// dorian -  sad but hopeful
+// Lydian -  uplifting and quirky, fantasy
+// Ionian - happy, positive - happy, bright, innocent, reassuring, cheery, joyous and played at a slower tempo it can sound royal and majestic .
+// Mixolydian - happy but serious
+// Dorian -  sad but hopeful
 // Aeolian -  sad
-// phrygian -  dark  -  scary, dramatic, and otherworldly
-// locrian -  evil -  scary, dramatic, and otherworldly
+// Phrygian -  dark  -  scary, dramatic, and otherworldly
+// Locrian -  evil -  scary, dramatic, and otherworldly
 
 ///set up varibles for displaying data in dialog boxes
 let $button = $(".button"); //button variable for dialog boxes / interaction
@@ -40,40 +40,31 @@ let gbBufferList = undefined;
 let gBufferList = undefined;
 let abBufferList = undefined;
 
-let view = undefined; // Created when notes are loaded
+let view = undefined; // Created when notes are triggered and ripples need to be created on canvas
 
 let musicTimeout; // set timeout function to stop the previous mode playing.
 
 //set variable to track when all notes have been loaded into their appropriate bufferLoaders - 12 semi-tones/notes per octave
 let numNotesToLoad = 12; //start at 12 and take one away at each note loaded function
 
-///time between each triggered note/sample in milliseconds
+///time between each triggered note/sample in milliseconds. 3000 is a place holder, it will vary depending on the humidity in forecast.
 let intervalTiming = 3000;
-///set variable to multiply humidity percentage by to get intervalTiming value
+///set variable to multiply humidity percentage by to get randomized intervalTiming value for each note.
 let intervalMultiple = 1000;
 
 //set variable for general weather description (from {[main}] in API data, as opposed to 'description' which is more detailed)
+//good for future iterations, composition tweaking and debugging
 let generalWeather = undefined;
 
 let specificWeather = undefined; //set variable for holding the specific weather description (from [{description}] in API data - this is used to connect weather to a mode)
 
 let bufferList = undefined; /// set variable for holding the notes to be played in the composition
 
-///set variables to hold the notes chosen in the weighted logic in playRandomNote
-let randomNote = undefined;
-let selectedNote = undefined;
-
 //set variable to track number of notes played (start at 0)
 let countNotesPlayed = 0;
 
 // set array variable to hold all the required 'weightings' for each degree of mode ([index 0] - 1st degree = root note, [index 2] - 3rd degree  = mediant). The higher the value, the more copies of the item in that index, therefore when a note is randomly chosen, it is more likely to be the one picked. In modal music (which this is creating) it is important to land on certain notes more often to create the modal emotion/feeling of that scale.
 let modeWeight = [];
-
-// same logic as modeWeight, but for the note samples or 'sound banks' in each note BuffList (i.e abBufferList, aBufferList etc.)
-let noteWeightings = [];
-
-///variable to contain the new indexes of the noteWeightings, once the copies have been made.
-let weightedNotesIndexes = [];
 
 //set array variables for each mode to hold each note's BufferList needed for that particular mode ('scale')
 let bbIonian = [];
@@ -84,10 +75,10 @@ let bbAeolian = [];
 let bbPhrygian = [];
 let bbLocrian = [];
 
-//set up JQUERY UI library for the FIRST INTRO dialog boxe and fetch API openWeather data using unique API key.
+//set up JQUERY UI library for the FIRST INTRO dialog box and fetch API openWeather data using unique API key.
 $(`#first-button`).on("click", function () {
   fetch(
-    "http://api.openweathermap.org/data/2.5/weather?q=" +
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
       $(`#first-input`).val() +
       "&units=metric&appid=332933c03ee033d1701669b418461a0f" ///set unit of measurment to 'metric'
   )
@@ -99,7 +90,7 @@ $(`#first-button`).on("click", function () {
 //set up JQUERY UI library for the SECOND dialog box and fetch API openWeather data using unique API key. This can be used to change the composition mid interaction.
 $(`#second-button`).on("click", function () {
   fetch(
-    "http://api.openweathermap.org/data/2.5/weather?q=" +
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
       $(`#second-input`).val() +
       "&units=metric&appid=332933c03ee033d1701669b418461a0f" ///set unit of measurment to 'metric'
   )
@@ -123,6 +114,7 @@ function displayData(data) {
   let cloudDensityValue = data["clouds"]["all"]; ///set percentage of cloud coverage to variable for display purposes for now
 
   ///set rain variable to 0 to begin
+  ///CREDIT: Thank you to Prof. Pippin Barr for this solution.
   let rainAmount = 0;
   ////if data.rain is true - if there is rain forcast in 1h or 3h, display that amount, otherwise display 0.
   if (data.rain) {
@@ -139,7 +131,6 @@ function displayData(data) {
   $name.text(nameValue);
   $temperature.text(temperatureValue);
   $description.text(descriptionValue);
-  // $windSpeed.text(windSpeedValue);
   $humidity.text(humidityValue);
   $clouds.text(cloudDensityValue);
   $rain.text(rainAmount);
@@ -165,7 +156,7 @@ $(`#introduction-dialog`).dialog({
   },
 });
 
-//'hidden' dialog box - click button with '¯\_(ツ)_/¯' to access it after the original introdialog back is closed.
+//'hidden' dialog box - click button with '¯\_(ツ)_/¯' to access it after the original intro dialog back is closed.
 $(function () {
   $("#dialog").dialog({
     autoOpen: false,
@@ -174,7 +165,7 @@ $(function () {
       duration: 1000, //how long to complete this effect
     },
     hide: {
-      effect: "explode", ////open with this animated design effect
+      effect: "explode", ////close with this animated design effect
       duration: 1000, //how long to complete this effect
     },
     buttons: {
@@ -203,7 +194,7 @@ $(function () {
 
 window.onload = function () {
   //what gets passed to the BufferLoader class is the poject paths of the file containing the sound sample (the notes) and the index of that sound in the list.
-  //create new bufferLoader object via the BufferLoader Class - send 3 arguements -  audio context, which is the property of the Audio object /class , and array of the soundfiles, and callBack funtion to call once the sounds have been successfully loaded.
+  //create new bufferLoader object via the BufferLoader Class - send 3 arguements -  audio context, which is the property of the Audio object /class , an array of the soundfiles, and callBack funtion to call once the sounds have been successfully loaded.
 
   //
   //load the A notes :
@@ -245,7 +236,6 @@ window.onload = function () {
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate); ///bind connects the update display to view and not canvas
   }
-  ////////loadedNote(); ///call loadedNote function
 
   //load Ab notes
   abBufferLoader = new BufferLoader( ///create new BufferLoader via the class
@@ -287,7 +277,6 @@ window.onload = function () {
     ///call updateDisplay at each frame rate  (< this is the interval), bind is making sure updateDisaplay is the method of the View
     setInterval(view.updateDisplay.bind(view), view.frameRate);
   }
-  ////loadedNote(); ///call loadedNote function
 
   //load B notes
   bBufferLoader = new BufferLoader( ///create new BufferLoader via the class
@@ -700,11 +689,10 @@ window.onload = function () {
 
 ///The gatherNotes function sets up the mode arrays with the *note*BufferLists (each *note*BufferList variable cantains an array of 18 different sounds of the same note) in the appropriate index for the note's location as a degree in that mode/scale. i.e ROOT note for bbIoniian is b-flat (Bb), so set bbBufferList at the first index position of bbIonian.
 ///The weatherMode object is here as well. It sets every 'string' description fetched from the openWeather API, set to specificWeather to it's corresponding MODE (remember, a mode is a type of musical scale).
-
 function gatherNotes() {
-  console.log("general weather: " + generalWeather); //for reference
-  console.log("temp: " + temperatureValue); // for reference
-  console.log("humidity: " + humidityValue); // for reference
+  console.log("general weather: " + generalWeather); //for fun and reference
+  console.log("temp: " + temperatureValue); // for fun and reference
+  console.log("humidity: " + humidityValue); // for fun and reference
   //set up b-flat ionian with all the notes contained in it
   bbIonian = [
     bbBufferList,
@@ -779,7 +767,7 @@ function gatherNotes() {
   ];
 
   ///the weatherMode object that sets every 'string' description fetched from the openWeather API, set to specificWeather to it's corresponding MODE (remember, a mode is a type of musical scale).
-  ///CREDIT: Thank you to Prof. Pippin Barr for this modification and suggestion.
+  ///CREDIT: Thank you to Prof. Pippin Barr for this modification and suggestion. Originally I had coded a large conditional statement.
   let weatherModes = {
     "thunderstorm with light rain": bbLocrian,
     "thunderstorm with rain": bbLocrian,
@@ -960,7 +948,7 @@ function playRandomNote(mode, weightings) {
   // Work out parameters
   ////track number of notes to vary the composition at different times, after a certain number of notes are played, change the interval timing between each note slow to fast, back to slow. The interval timing is also determined by the humidity percentage of the weather in that location.
   if (countNotesPlayed <= 5) {
-    intervalMultiple = humidityValue * 150;
+    intervalMultiple = humidityValue * 50;
     countNotesPlayed += 1;
   } else if (countNotesPlayed > 5 && countNotesPlayed <= 10) {
     intervalMultiple = (humidityValue / 2) * 100;
